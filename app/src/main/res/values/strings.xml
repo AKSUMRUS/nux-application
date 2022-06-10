@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">TheBestProjectEver</string>
+    <string name="sign_up">Sign up</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="nickname">Nickname</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forgot Password?</string>
+    <string name="dont_have_an_account">Don\'t have an account? Sign Up</string>
+    <string name="already_have_an_account">Already have an account? Login</string>
 </resources>

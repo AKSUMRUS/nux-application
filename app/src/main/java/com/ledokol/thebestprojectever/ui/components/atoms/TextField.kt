@@ -30,7 +30,7 @@ fun TextField(
         ).copy(imeAction = imeAction),
         keyboardActions = keyboardActions,
         modifier = modifier,
-        maxLines = 1
+        singleLine = true
     )
 }
 
