@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.ui.components.screens
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.Profile
+import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
 import com.ledokol.thebestprojectever.ui.components.atoms.TextButton
@@ -21,12 +24,10 @@ import com.ledokol.thebestprojectever.ui.components.atoms.TextField
 
 
 @Composable
-fun LoginScreen(navController: NavController,navController2: NavController){
-
-    val pref : SharedPreferences = LocalContext.current.getSharedPreferences("Data",
-        Context.MODE_PRIVATE
-    )
-    var editor: SharedPreferences.Editor = pref.edit()
+fun LoginScreen(
+    navController: NavController,
+    viewModel: MainViewModel
+) {
 
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
@@ -47,12 +48,9 @@ fun LoginScreen(navController: NavController,navController2: NavController){
             onValueChange = { setPassword(it) },
         )
         Button(text = stringResource(R.string.login), onClick = {
-            editor.putString("nickname",nickname)
-            editor.putString("passwords",password)
-            editor.putString("token","jsadjksadkjh")
-            editor.apply()
-            navController2.navigate("main") {
-                popUpTo("main")
+            viewModel.insertProfile(Profile(token = "dassda",nickname = nickname))
+            navController.navigate("quick_game") {
+                popUpTo("quick_game")
                 launchSingleTop = true
             }
         })

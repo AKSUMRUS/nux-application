@@ -17,6 +17,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.Profile
+import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
 import com.ledokol.thebestprojectever.ui.components.atoms.TextButton
@@ -25,12 +27,10 @@ import org.intellij.lang.annotations.JdkConstants
 
 
 @Composable
-fun SignUpScreen(navController: NavController,navController2: NavController){
-
-    val pref : SharedPreferences = LocalContext.current.getSharedPreferences("Data",
-        Context.MODE_PRIVATE
-    )
-    var editor: SharedPreferences.Editor = pref.edit()
+fun SignUpScreen(
+    viewModel: MainViewModel,
+    navController: NavController
+){
 
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
@@ -51,12 +51,9 @@ fun SignUpScreen(navController: NavController,navController2: NavController){
             onValueChange = { setPassword(it) },
         )
         Button(text = stringResource(R.string.login), onClick = {
-            editor.putString("nickname",nickname)
-            editor.putString("passwords",password)
-            editor.putString("token","jsadjksadkjh")
-            editor.apply()
-            navController2.navigate("main") {
-                popUpTo("main")
+            viewModel.insertProfile(Profile(token = "dassda",nickname = nickname))
+            navController.navigate("quick_game") {
+                popUpTo("quick_game")
                 launchSingleTop = true
             }
         })

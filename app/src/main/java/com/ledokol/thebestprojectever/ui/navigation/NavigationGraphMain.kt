@@ -1,16 +1,18 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.screens.FriendsScreen
 import com.ledokol.thebestprojectever.ui.components.screens.ProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.QuickGameScreen
 
 @Composable
-fun NavigationGraph(
-    navController: NavHostController
+fun NavigationGraphMain(
+    navController: NavHostController,
 ) {
     // Какой путь какой экран должен запустить
 
