@@ -91,7 +91,7 @@ fun StartNavigation(
                     ProfileScreen()
                 }
                 composable(BottomNavItemMain.Friends.screen_route) {
-                    FriendsScreen()
+                    ListFriends()
                 }
             })
     }

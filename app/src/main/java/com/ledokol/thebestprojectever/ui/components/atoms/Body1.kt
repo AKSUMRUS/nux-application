@@ -12,6 +12,7 @@ fun Body1(
 ) {
     Text(
         text = text,
+        color = MaterialTheme.colors.primary,
         style = MaterialTheme.typography.body1,
         modifier = modifier
     )

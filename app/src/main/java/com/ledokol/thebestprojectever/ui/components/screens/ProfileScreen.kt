@@ -18,7 +18,8 @@ fun ProfileScreen(){
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Body1(text = "Profile", modifier = Modifier
+        Body1(text = "Profile",
+            modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
         )

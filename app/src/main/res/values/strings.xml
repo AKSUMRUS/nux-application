@@ -13,8 +13,8 @@
     <string name="already_have_an_account">Already have an account? Login</string>
 
 <!--  Navigation  -->
-    <string name="nav_quick_game">Quick game</string>
-    <string name="nav_friends">Friends</string>
-    <string name="nav_profile">Profile</string>
+    <string name="nav_quick_game">Быстрая игра</string>
+    <string name="nav_friends">Команда</string>
+    <string name="nav_profile">Профиль</string>
 
 </resources>
