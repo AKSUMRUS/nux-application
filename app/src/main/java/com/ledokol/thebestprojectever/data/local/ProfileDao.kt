@@ -11,10 +11,10 @@ interface ProfileDao {
     @Insert
     fun insertProfile(profile: Profile)
 
-    @Query("SELECT * FROM users")
+    @Query("SELECT * FROM profile")
     fun getProfile(): List<Profile>
 
-    @Query("DELETE FROM users")
+    @Query("DELETE FROM profile")
     fun clearProfile()
 
 }

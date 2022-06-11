@@ -32,29 +32,29 @@ fun StartNavigation(
 
     when (navBackStackEntry?.destination?.route) {
         "signup_screen" -> {
-            // Show BottomBar and TopBar
+            // Show BottomBar
             bottomBarState.value = false
         }
         "login_screen" -> {
-            // Show BottomBar and TopBar
+            // Show BottomBar
             bottomBarState.value = false
         }
         BottomNavItemMain.QuickGame.screen_route -> {
-            // Show BottomBar and TopBar
+            // Show BottomBar
             bottomBarState.value = true
         }
         BottomNavItemMain.Profile.screen_route -> {
-            // Hide BottomBar and TopBar
+            // Hide BottomBar
             bottomBarState.value = true
         }
         BottomNavItemMain.Friends.screen_route -> {
-            // Hide BottomBar and TopBar
+            // Hide BottomBar
             bottomBarState.value = true
         }
     }
 
 
-    val start: String = if(profile.value == null){
+    val start: String = if(profile == null || profile.isEmpty()){
         "login_screen"
     }
     else{
@@ -62,7 +62,7 @@ fun StartNavigation(
     }
 
     Log.e("Error",start)
-    Log.e("Error",profile.toString())
+    Log.e("ERERER",profile.toString())
 
     Scaffold(
 

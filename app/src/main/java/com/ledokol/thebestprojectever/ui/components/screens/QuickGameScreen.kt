@@ -22,5 +22,6 @@ fun QuickGameScreen(){
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
         )
+
     }
 }

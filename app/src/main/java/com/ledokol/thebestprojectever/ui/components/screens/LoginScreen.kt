@@ -57,7 +57,7 @@ fun LoginScreen(
         TextButton(text = stringResource(R.string.forget_password), onClick = { /*TODO*/ })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
             navController.navigate("signup_screen") {
-                popUpTo(navController.graph.startDestinationId)
+                popUpTo("login_screen")
                 launchSingleTop = true
             }
         })

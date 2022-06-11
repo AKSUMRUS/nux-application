@@ -23,7 +23,7 @@ abstract class ProfileDatabase: RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         ProfileDatabase::class.java,
-                        "user_database"
+                        "profile_database"
                     )
                         .fallbackToDestructiveMigration()
                         .allowMainThreadQueries()

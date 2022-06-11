@@ -9,7 +9,7 @@ import com.ledokol.thebestprojectever.data.local.ProfileDatabase
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 
 class MainViewModel(application: Application): ViewModel() {
-    val profile: MutableLiveData<List<Profile>>
+    val profile: List<Profile>
     private val repository: ProfileRepository
 
     init {

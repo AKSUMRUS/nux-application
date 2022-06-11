@@ -39,7 +39,7 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadlineH1(text = stringResource(R.string.login))
+        HeadlineH1(text = stringResource(R.string.sign_up))
         TextField(
             label = stringResource(R.string.nickname),
             text = nickname,
@@ -59,7 +59,7 @@ fun SignUpScreen(
         })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
             navController.navigate("login_screen") {
-                popUpTo(navController.graph.startDestinationId)
+                popUpTo("login_screen")
                 launchSingleTop = true
             }
         })
