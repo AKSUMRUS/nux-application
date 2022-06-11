@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,9 +25,14 @@ import org.intellij.lang.annotations.JdkConstants
 
 
 @Composable
-fun SignUpScreen(navController: NavController){
+fun SignUpScreen(navController: NavController,navController2: NavController){
+
+    val pref : SharedPreferences = LocalContext.current.getSharedPreferences("Data",
+        Context.MODE_PRIVATE
+    )
+    var editor: SharedPreferences.Editor = pref.edit()
+
     val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (phoneNumber,setPhoneNumber) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -38,16 +46,20 @@ fun SignUpScreen(navController: NavController){
             onValueChange = { setNickname(it) },
         )
         TextField(
-            label = stringResource(R.string.phone_number),
-            text = phoneNumber,
-            onValueChange = { setPhoneNumber(it) },
-        )
-        TextField(
             label = stringResource(R.string.password),
             text = password,
             onValueChange = { setPassword(it) },
         )
-        Button(text = stringResource(R.string.login), onClick = {  })
+        Button(text = stringResource(R.string.login), onClick = {
+            editor.putString("nickname",nickname)
+            editor.putString("passwords",password)
+            editor.putString("token","jsadjksadkjh")
+            editor.apply()
+            navController2.navigate("main") {
+                popUpTo("main")
+                launchSingleTop = true
+            }
+        })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
             navController.navigate("login_screen") {
                 popUpTo(navController.graph.startDestinationId)

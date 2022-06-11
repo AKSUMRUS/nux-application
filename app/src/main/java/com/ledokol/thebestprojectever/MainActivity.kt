@@ -19,6 +19,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.MainScreen
 import com.ledokol.thebestprojectever.ui.components.screens.TestScreen
 import com.ledokol.thebestprojectever.ui.navigation.LoginAndSignUp
+import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
             TheBestProjectEverTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                    MainScreen()
+                    StartNavigation()
                 }
             }
         }
