@@ -34,6 +34,10 @@ fun StartNavigation(
             // Show BottomBar
             bottomBarState.value = false
         }
+        "splash_screen" -> {
+            // Show BottomBar
+            bottomBarState.value = false
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             // Show BottomBar
             bottomBarState.value = true
@@ -49,14 +53,11 @@ fun StartNavigation(
     }
 
     val start: String = if(profile.isEmpty()){
-        "login_screen"
+        "splash_screen"
     }
     else{
-        "quick_game"
+        BottomNavItemMain.QuickGame.screen_route
     }
-
-    Log.e("Error",start)
-    Log.e("ERERER",profile.toString())
 
     Scaffold(
 
@@ -74,6 +75,12 @@ fun StartNavigation(
                 }
                 composable("signup_screen") {
                     SignUpScreen(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                }
+                composable("splash_screen") {
+                    SplashScreen(
                         navController = navController,
                         viewModel = viewModel
                     )

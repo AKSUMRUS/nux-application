@@ -1,7 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,12 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.Profile
@@ -26,7 +20,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
 import com.ledokol.thebestprojectever.ui.components.atoms.TextButton
 import com.ledokol.thebestprojectever.ui.components.atoms.TextField
-import org.intellij.lang.annotations.JdkConstants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,7 +50,7 @@ fun SignUpScreen(
             onValueChange = { setPassword(it) },
         )
         Button(text = stringResource(R.string.sign_up), onClick = {
-            var postmap: HashMap<String,String> = HashMap()
+            val postmap: HashMap<String,String> = HashMap()
             postmap["username"] = nickname
             postmap["password"] = password
             val profileCall : Call<Profile> = retrofitServices.createProfile(

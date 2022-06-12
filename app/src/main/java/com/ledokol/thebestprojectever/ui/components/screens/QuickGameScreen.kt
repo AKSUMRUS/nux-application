@@ -15,8 +15,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.*
 @Composable
 fun QuickGameScreen(){
     Column(
-        modifier = Modifier
-            .fillMaxSize()
     ) {
         Body1(text = "Quick game", modifier = Modifier
             .fillMaxSize()

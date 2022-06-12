@@ -32,7 +32,7 @@ val Typography = Typography(
         h3 = TextStyle(
                 fontFamily = SansPro,
                 fontWeight = FontWeight.W400,
-                fontSize = 48.sp
+                fontSize = 48.sp,
         ),
         h4 = TextStyle(
                 fontFamily = SansPro,

@@ -17,8 +17,6 @@ fun ProfileScreen(
     viewModel: MainViewModel
 ){
     Column(
-        modifier = Modifier
-            .fillMaxSize()
     ) {
         Button(text = "Quit",
             onClick = { viewModel.clearProfile() },
