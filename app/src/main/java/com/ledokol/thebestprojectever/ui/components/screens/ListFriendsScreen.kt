@@ -19,7 +19,7 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 
 @Composable
-fun ListFriends(){
+fun ListFriendsScreen(){
     var friends = remember{ mutableStateListOf<String>("Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий")}
 
     LazyColumn(content = {

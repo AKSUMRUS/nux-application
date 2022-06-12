@@ -9,16 +9,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 
-@Preview(showBackground = true)
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+    viewModel: MainViewModel
+){
     Column(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        Body1(text = "Profile",
+        Button(text = "Quit",
+            onClick = { viewModel.clearProfile() },
             modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)

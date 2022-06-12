@@ -12,7 +12,7 @@ interface ProfileDao {
     fun insertProfile(profile: Profile)
 
     @Query("SELECT * FROM profile")
-    fun getProfile(): List<Profile>
+    fun getProfile(): LiveData<List<Profile>>
 
     @Query("DELETE FROM profile")
     fun clearProfile()

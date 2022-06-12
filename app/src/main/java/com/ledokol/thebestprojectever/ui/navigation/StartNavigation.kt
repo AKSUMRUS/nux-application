@@ -1,7 +1,5 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -9,8 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -23,8 +19,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.*
 fun StartNavigation(
     viewModel: MainViewModel
 ) {
-    viewModel.getProfile()
-    val profile = viewModel.profile
+    val profile by viewModel.profile.observeAsState(listOf())
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -53,8 +48,7 @@ fun StartNavigation(
         }
     }
 
-
-    val start: String = if(profile == null || profile.isEmpty()){
+    val start: String = if(profile.isEmpty()){
         "login_screen"
     }
     else{
@@ -88,10 +82,10 @@ fun StartNavigation(
                     QuickGameScreen()
                 }
                 composable(BottomNavItemMain.Profile.screen_route) {
-                    ProfileScreen()
+                    ProfileScreen(viewModel = viewModel)
                 }
                 composable(BottomNavItemMain.Friends.screen_route) {
-                    ListFriends()
+                    ListFriendsScreen()
                 }
             })
     }

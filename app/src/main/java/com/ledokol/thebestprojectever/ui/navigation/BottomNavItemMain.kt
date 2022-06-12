@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
+import android.content.Context
+import androidx.compose.ui.res.stringResource
 import com.ledokol.thebestprojectever.R
 
 // Какие экраны в навигации должны быть, класс принимает одно из значений

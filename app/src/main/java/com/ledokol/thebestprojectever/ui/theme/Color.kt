@@ -8,7 +8,8 @@ import com.ledokol.thebestprojectever.R
 
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
-val Background = Color(0xFF0a0a0a)
+val Background = Color(0xFFFFFFFF)
+//val Background = Color(0xFF0a0a0a)
 val TextColorNormal = Color(0xFFbbbbbd)
 val blockBackground = Color(0xFF3b3a40)
 val buttonMainBackground = Color(0xFF9a73ff)

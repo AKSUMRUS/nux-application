@@ -26,6 +26,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.TestScreen
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 
 class MainViewModelFactory(val application: Application) :
     ViewModelProvider.Factory {
