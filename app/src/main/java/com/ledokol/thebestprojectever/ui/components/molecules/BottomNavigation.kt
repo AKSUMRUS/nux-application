@@ -42,8 +42,8 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                         )
                     },
                     label = { Subtitle2(text = item.title) },
-                    selectedContentColor = MaterialTheme.colors.primary,
-                    unselectedContentColor = MaterialTheme.colors.secondary,
+                    selectedContentColor = MaterialTheme.colors.onPrimary,
+                    unselectedContentColor = MaterialTheme.colors.onSecondary,
 //                    alwaysShowLabel = true,
                     selected = currentRoute == item.screen_route,
                     onClick = {

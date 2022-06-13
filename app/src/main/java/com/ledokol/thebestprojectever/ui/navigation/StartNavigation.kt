@@ -52,7 +52,7 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(profile.isEmpty()){
+    val start: String = if(false && profile.isEmpty()){
         "splash_screen"
     }
     else{
@@ -85,14 +85,17 @@ fun StartNavigation(
                         viewModel = viewModel
                     )
                 }
+                composable("friend_screen") {
+                    FriendScreen(viewModel = viewModel)
+                }
                 composable(BottomNavItemMain.QuickGame.screen_route) {
                     QuickGameScreen()
                 }
                 composable(BottomNavItemMain.Profile.screen_route) {
-                    ProfileScreen(viewModel = viewModel)
+                    RequestPermission()
                 }
                 composable(BottomNavItemMain.Friends.screen_route) {
-                    ListFriendsScreen()
+                    ListFriendsScreen(navController = navController)
                 }
             })
     }

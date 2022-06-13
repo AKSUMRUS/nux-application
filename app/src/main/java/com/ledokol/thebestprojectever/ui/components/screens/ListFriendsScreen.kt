@@ -19,14 +19,21 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 
 @Composable
-fun ListFriendsScreen(){
-    var friends = remember{ mutableStateListOf<String>("Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий")}
+fun ListFriendsScreen(navController: NavController){
+    val friends = remember{ mutableStateListOf<String>("Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий")}
 
-    LazyColumn(content = {
-        items(friends){
-            friend -> FriendInList(name = friend)
+    fun onClick(navController: NavController){
+        navController.navigate("friend_screen") {
+            popUpTo("friend_screen")
+            launchSingleTop = true
         }
-    },
-//        verticalArrangement = Arrangement.SpaceAround,
-        )
+    }
+
+    LazyColumn(
+        content = {
+            items(friends) { friend ->
+                FriendInList(name = friend, onClick = { onClick(navController = navController) })
+            }
+        },
+    )
 }

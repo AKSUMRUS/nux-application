@@ -12,7 +12,8 @@ fun HeadlineH5(
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.h5
+        style = MaterialTheme.typography.h5,
+        modifier = modifier
     )
 }
 

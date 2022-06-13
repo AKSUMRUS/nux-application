@@ -2,9 +2,11 @@ package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,19 +18,19 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.ui.theme.TextColorNormal
-import com.ledokol.thebestprojectever.ui.theme.blockBackground
+import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 
 //import com.ledokol.thebestprojectever.ui.theme.Background
 
 @Composable
-fun FriendInList(name: String){
+fun FriendInList(name: String, onClick: () -> Unit){
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, top = 15.dp, bottom = 10.dp)
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
-            .background(blockBackground)
+            .clickable(onClick = onClick )
+            .background(MaterialTheme.colors.surface)
             .padding(10.dp)
     ){
         Icon(
@@ -39,8 +41,7 @@ fun FriendInList(name: String){
                 .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
             tint = Color.Unspecified,
         )
-        Text(text = name,
-            color = TextColorNormal,
+        Body1(text = name,
         modifier = Modifier.padding(start = 10.dp))
     }
 }

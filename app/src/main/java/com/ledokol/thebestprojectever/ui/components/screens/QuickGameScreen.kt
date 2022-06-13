@@ -18,7 +18,8 @@ fun QuickGameScreen(){
     ) {
         Body1(text = "Quick game", modifier = Modifier
             .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+            .wrapContentSize(Alignment.Center),
+            type = "surface"
         )
 
     }
