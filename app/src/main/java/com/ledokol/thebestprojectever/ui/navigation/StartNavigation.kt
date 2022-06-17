@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
-import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,7 +51,7 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(false && profile.isEmpty()){
+    val start: String = if(profile.isEmpty()){
         "splash_screen"
     }
     else{
@@ -92,7 +91,7 @@ fun StartNavigation(
                     QuickGameScreen()
                 }
                 composable(BottomNavItemMain.Profile.screen_route) {
-                    RequestPermission()
+                    ProfileScreen(viewModel = viewModel)
                 }
                 composable(BottomNavItemMain.Friends.screen_route) {
                     ListFriendsScreen(navController = navController)

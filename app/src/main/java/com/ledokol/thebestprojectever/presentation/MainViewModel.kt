@@ -2,10 +2,9 @@ package com.ledokol.thebestprojectever.presentation
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ledokol.thebestprojectever.data.local.Profile
-import com.ledokol.thebestprojectever.data.local.ProfileDatabase
+import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.profile.ProfileDatabase
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 
 class MainViewModel(application: Application): ViewModel() {

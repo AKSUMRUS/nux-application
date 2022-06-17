@@ -12,9 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.Profile
+import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
@@ -50,22 +51,23 @@ fun SignUpScreen(
             onValueChange = { setPassword(it) },
         )
         Button(text = stringResource(R.string.sign_up), onClick = {
-            val postmap: HashMap<String,String> = HashMap()
-            postmap["username"] = nickname
-            postmap["password"] = password
+            val query: ProfileJSON = ProfileJSON(nickname = nickname,password = password)
+            Log.e("Tock",query.toString())
             val profileCall : Call<Profile> = retrofitServices.createProfile(
-                nickname = nickname,
-                password = password
+                query
             )
             profileCall.enqueue(object : Callback<Profile> {
                 override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                     if (response.isSuccessful) {
                         Log.e("ERRtR",response.body().toString())
-                        viewModel.insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname))
+                        viewModel.insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname, password = password))
                         navController.navigate("quick_game") {
                             popUpTo("quick_game")
                             launchSingleTop = true
                         }
+                    }
+                    else{
+                        Log.e("Err",response.code().toString())
                     }
                 }
 
