@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.data.local.profile
+package com.ledokol.thebestprojectever.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -16,5 +16,7 @@ interface ProfileDao {
 
     @Query("DELETE FROM profile")
     fun clearProfile()
+
+
 
 }
