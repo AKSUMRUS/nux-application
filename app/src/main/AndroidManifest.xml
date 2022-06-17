@@ -3,19 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ledokol.thebestprojectever">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Used for the permissions sample -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Used for the permissions sample -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +23,11 @@
         android:theme="@style/Theme.TheBestProjectEver"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <service
+            android:name="com.ledokol.thebestprojectever.services.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -37,7 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

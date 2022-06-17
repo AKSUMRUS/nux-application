@@ -17,4 +17,6 @@ interface ProfileDao {
     @Query("DELETE FROM profile")
     fun clearProfile()
 
+
+
 }

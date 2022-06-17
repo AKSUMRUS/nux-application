@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.presentation
 
 import android.app.Application
+import android.content.pm.ApplicationInfo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,4 +28,11 @@ class MainViewModel(application: Application): ViewModel() {
     fun clearProfile(){
         repository.clearProfile()
     }
+
+//    fun addInstalledGamesInProfile(listGames: List<ApplicationInfo>){
+////        profile.value.
+//    }
+
+
+
 }
