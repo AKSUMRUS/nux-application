@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.data.local
+package com.ledokol.thebestprojectever.data.local.profile
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

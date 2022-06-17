@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
+
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -25,7 +26,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.*
 fun StartNavigation(
     viewModel: MainViewModel
 ) {
-    val profile by viewModel.profile.observeAsState(listOf())
+    val profile = viewModel.profile.observeAsState(listOf())
 
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -58,11 +59,11 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(false && profile.isEmpty()){
+    val start: String = if(profile.value.isEmpty()){
         "splash_screen"
     }
     else{
-        "signup_screen"
+        "quick_game"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 

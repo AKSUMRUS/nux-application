@@ -58,7 +58,7 @@ fun LoginScreen(
                 override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                     if (response.isSuccessful) {
                         Log.e("ERRtR",response.body().toString())
-                        viewModel.insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname, password = password))
+                        viewModel.insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname))
                         navController.navigate("quick_game") {
                             popUpTo("quick_game")
                             launchSingleTop = true
