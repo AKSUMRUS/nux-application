@@ -1,14 +1,8 @@
 package com.ledokol.thebestprojectever.data.repository
 
-import android.text.BoringLayout
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.ledokol.thebestprojectever.data.local.Profile
-import com.ledokol.thebestprojectever.data.local.ProfileDao
+import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import kotlinx.coroutines.*
 
 class ProfileRepository(

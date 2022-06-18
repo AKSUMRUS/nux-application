@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
-import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import kotlinx.coroutines.delay
 
 @Composable
