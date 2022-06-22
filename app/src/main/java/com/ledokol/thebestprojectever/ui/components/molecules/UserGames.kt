@@ -5,16 +5,24 @@ import android.app.AppOpsManager
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
+import android.os.Build.VERSION
+import android.os.Build.VERSION_CODES
+import android.os.PowerManager
 import android.os.Process
+import android.os.UserManager
 import android.provider.Settings
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,28 +36,132 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
+import java.lang.ClassCastException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 private const val flags = PackageManager.GET_META_DATA or
         PackageManager.GET_SHARED_LIBRARY_FILES or
         PackageManager.GET_UNINSTALLED_PACKAGES
 
-    @SuppressLint("WrongConstant")
-@RequiresApi(Build.VERSION_CODES.M)
+class GamesStatistic{
+
+    init{
+
+    }
+
+    companion object{
+        fun getInstalledAppGamesList(packageManager: PackageManager): List<ApplicationInfo> {
+            val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
+            val installedApps: MutableList<ApplicationInfo> = ArrayList()
+            for (info in infos) {
+                if(info.category == ApplicationInfo.CATEGORY_GAME){
+                    installedApps.add(info)
+                }
+            }
+            Log.d("INSTALLEDAPPS", installedApps.toString())
+            return installedApps
+        }
+
+        fun getIcon(app: ApplicationInfo, packageManager: PackageManager): ImageBitmap{
+            Log.d("INSTALLEDAPPS", app.packageName)
+//            try{
+                return (packageManager.getApplicationIcon(app.packageName) as BitmapDrawable).bitmap.asImageBitmap()
+//            }catch (e: ClassCastException){
+//            }
+
+        }
+
+        fun applicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String {
+            return p.getApplicationLabel(packageInfo).toString()
+        }
+    }
+
+    public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
+            val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
+            if (userManager.isUserUnlocked && (VERSION.SDK_INT >= VERSION_CODES.KITKAT_WATCH && powerManager!!.isInteractive || VERSION.SDK_INT < VERSION_CODES.KITKAT_WATCH && powerManager!!.isScreenOn)) {
+                val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+                val time = System.currentTimeMillis()
+                val appList =
+                    usm.queryUsageStats(
+                        UsageStatsManager.INTERVAL_DAILY,
+                        time - 10000 * 10000,
+                        time
+                    )
+                if (appList != null && appList.size == 0) {
+                    Log.d("Executed app", "######### NO APP FOUND ##########")
+                }
+                if (appList != null && appList.size > 0) {
+                    val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
+                    for (usageStats in appList) {
+                        Log.d(
+                            "Executed app",
+                            "usage stats executed : " + usageStats.packageName + "\t\t ID: "
+                        )
+                        mySortedMap!![usageStats.lastTimeUsed] = usageStats
+                    }
+                    if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                        val currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
+                        if (!usm.isAppInactive(currentApp)) {
+                            return currentApp
+                        }
+                    }
+                }
+            }
+        }
+
+        return null
+    }
+
+    fun checkForPermission(context: Context): Boolean {
+        val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
+        val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
+        return mode == AppOpsManager.MODE_ALLOWED
+    }
+
+    fun getStatisticGames(context: Context, packageManager: PackageManager): MutableList<UsageStats> {
+        val usageStatsManager = context.getSystemService("usagestats") as UsageStatsManager
+
+        val usageStats = usageStatsManager.queryAndAggregateUsageStats(
+            getStartTime(),
+            System.currentTimeMillis()
+        )
+
+        var games: MutableList<UsageStats> = mutableListOf()
+
+        for ((key,value) in usageStats) {
+            try{
+                val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
+                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
+                if(application.category == ApplicationInfo.CATEGORY_GAME){
+                    games.add(value)
+                }
+            }catch (e: PackageManager.NameNotFoundException){
+                Log.d("APPLICATION_GAME", key + " Такой пакет не найден")
+            }
+        }
+
+        return games
+    }
+
+}
+
+@SuppressLint("WrongConstant")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun UserGames() {
@@ -64,16 +176,16 @@ fun UserGames() {
 //
 //            val finalList: List<UsageStatsWrapper> = buildUsageStatsWrapper(installedApps, stats)
 //            view.onUsageStatsRetrieved(finalList)
-
+    val gamesStatistic:GamesStatistic = GamesStatistic()
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
-                checkPermission.value = checkForPermission(context)
+                checkPermission.value = gamesStatistic.checkForPermission(context)
             }else if (event == Lifecycle.Event.ON_RESUME) {
-                checkPermission.value = checkForPermission(context)
-                installedGames.value = getInstalledAppGamesList(packageManager)
-                statisticGames.value = getStatisticGames(context, packageManager)
+                checkPermission.value = gamesStatistic.checkForPermission(context)
+                installedGames.value = GamesStatistic.getInstalledAppGamesList(packageManager)
+                statisticGames.value = gamesStatistic.getStatisticGames(context, packageManager)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -116,7 +228,7 @@ fun UserGames() {
                             )
 
                             Text(
-                                text = applicationLabel(packageManager, app),
+                                text = GamesStatistic.applicationLabel(packageManager, app),
                             )
                             Text(
                                 text = app.packageName,
@@ -152,61 +264,6 @@ private fun getStartTime(): Long {
     calendar.add(Calendar.MONTH, -1)
     return calendar.getTimeInMillis()
 }
-
-private fun checkForPermission(context: Context): Boolean {
-    val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-    val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
-    return mode == AppOpsManager.MODE_ALLOWED
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-private fun getInstalledAppGamesList(packageManager: PackageManager): List<ApplicationInfo> {
-    val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
-    val installedApps: MutableList<ApplicationInfo> = ArrayList()
-    for (info in infos) {
-        if(info.category == ApplicationInfo.CATEGORY_GAME){
-            installedApps.add(info)
-        }
-    }
-    Log.d("INSTALLEDAPPS", installedApps.toString())
-    return installedApps
-}
-
-private fun getStatisticGames(context: Context, packageManager: PackageManager): MutableList<UsageStats> {
-    val usageStatsManager = context.getSystemService("usagestats") as UsageStatsManager
-
-    val usageStats = usageStatsManager.queryAndAggregateUsageStats(
-        getStartTime(),
-        System.currentTimeMillis()
-    )
-//    usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_WEEKLY, start, end);
-
-
-//    var games: MutableMap<String, UsageStats> = HashMap<String,UsageStats>()
-    var games: MutableList<UsageStats> = mutableListOf()
-
-//    var games: List<UsageStats> = List<UsageStats>()
-    for ((key,value) in usageStats) {
-        try{
-        val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
-            Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
-            if(application.category == ApplicationInfo.CATEGORY_GAME){
-                games.add(value)
-            }
-        }catch (e: PackageManager.NameNotFoundException){
-            Log.d("APPLICATION_GAME", key + " Такой пакет не найден")
-        }
-    }
-
-//    Log.d("INSTALLEDAPPS", installedApps.toString())
-    return games
-}
-
-
-private fun applicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String {
-    return p.getApplicationLabel(packageInfo).toString()
-}
-
 
 fun convertLongToDate(time: Long): String {
     val date = Date(time)

@@ -27,7 +27,7 @@ fun FriendInList(name: String, onClick: () -> Unit){
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 15.dp, bottom = 10.dp)
+            .padding(top = 15.dp, bottom = 10.dp)
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
             .clickable(onClick = onClick )
             .background(MaterialTheme.colors.surface)

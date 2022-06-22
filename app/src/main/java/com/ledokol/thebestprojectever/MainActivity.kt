@@ -1,33 +1,27 @@
 package com.ledokol.thebestprojectever
 
 import android.app.Application
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.ledokol.thebestprojectever.presentation.MainViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.*
-import com.ledokol.thebestprojectever.ui.components.screens.LoginScreen
+import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+
 
 class MainViewModelFactory(val application: Application) :
     ViewModelProvider.Factory {
@@ -38,12 +32,14 @@ class MainViewModelFactory(val application: Application) :
 
 class MainActivity : ComponentActivity() {
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startService(Intent(this, MyService::class.java))
+
         setContent {
             TheBestProjectEverTheme {
 
+//                setStatusBarTransparent()
                 val owner = LocalViewModelStoreOwner.current
 
                 owner?.let {
@@ -63,4 +59,19 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+@Composable
+fun setStatusBarTransparent(){
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setSystemBarsColor(
+        color = Color.Transparent
+    )
+
+//    WindowCompat.setDecorFitsSystemWindows(window, false)
+//    window.setFlags(
+//        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//    )
+
 }
