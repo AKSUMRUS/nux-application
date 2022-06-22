@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.data.repository
 
+import android.text.BoringLayout
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,35 +10,26 @@ import androidx.lifecycle.MutableLiveData
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDatabase
+import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okhttp3.Dispatcher
 
-class UsersRepository(
-    private val usersDao: UsersDao
-) {
-    val users: LiveData<List<User>> = usersDao.getUsers()
+interface UsersRepository{
 
+    fun insertUser(
+        user: User
+    )
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    fun getUsers(
+        fetchFromRemote: Boolean,
+        query: String = ""
+    ): Flow<Resource<List<User>>>
 
-    fun insertUser(user : User){
-        coroutineScope.launch {
-            usersDao.insertUser(user)
-        }
-    }
-
-    fun clearUsers(){
-        coroutineScope.launch {
-            usersDao.clearUsers()
-        }
-    }
-
-    fun getUser(id: Int){
-        coroutineScope.launch {
-
-        }
-    }
+    fun getUser(
+        id: Int
+    ): Resource<User>
 
 }

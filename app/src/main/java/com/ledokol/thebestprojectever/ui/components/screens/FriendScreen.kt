@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -9,20 +10,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+//import com.google.accompanist.swiperefresh.SwipeRefresh
+//import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.user.User
+import com.ledokol.thebestprojectever.data.local.user.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
 
 @Composable
 fun FriendScreen(
-    viewModel: MainViewModel
+    viewModel: MainViewModel,
 ){
+
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -28,10 +28,4 @@ class MainViewModel(application: Application): ViewModel() {
         repository.clearProfile()
     }
 
-//    fun addInstalledGamesInProfile(listGames: List<ApplicationInfo>){
-////        profile.value.
-//    }
-
-
-
 }

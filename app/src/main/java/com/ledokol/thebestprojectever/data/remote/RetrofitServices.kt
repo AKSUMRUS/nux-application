@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.data.remote
 
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import retrofit2.Call
 import retrofit2.http.*
@@ -19,4 +20,8 @@ interface RetrofitServices {
     fun createProfile(@Body profile: ProfileJSON)
             : Call<Profile>
 
+    @Headers("Content-Type: application/json")
+    @GET("friend")
+    fun getFriends()
+            : Call<List<User>>
 }
