@@ -18,7 +18,7 @@ sealed class BottomNavItemMain(var title: String, var icon: Int, var screen_rout
     )
 
     object Friends : BottomNavItemMain(
-        "Команда",
+        "Друзья",
         R.drawable.ic_friends,
         "team"
     )

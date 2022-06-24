@@ -15,7 +15,9 @@
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
-    <string name="nav_friends">Команда</string>
+    <string name="nav_friends">Друзья</string>
     <string name="nav_profile">Профиль</string>
+    <string name="description_quick_game">Выберите игру, в которую вы пойдете играть</string>
+    <string name="description_find_crew">Выберите своих тиммейтов</string>
 
 </resources>

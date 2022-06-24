@@ -12,14 +12,13 @@ fun Button(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.small
-    ) {
+    shape: Shape = MaterialTheme.shapes.small,
+) {
 
     Button(
-        onClick = onClick,
         modifier = modifier,
-        shape = shape
-    ) {
+        shape = shape,
+        onClick = onClick){
         Body2(text = text)
     }
 
