@@ -30,54 +30,47 @@ import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 fun ListFriendsScreen(
     navController: NavController,
     userViewModel: UserViewModel
-//){
-//    val friends = remember{ mutableStateListOf<String>("Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий","Петя", "Вася", "Анатолий","Георгий")}
-//
-//    fun onClick(navController: NavController){
-//        navController.navigate("friend_screen") {
-//            popUpTo("friend_screen")
-//            launchSingleTop = true
-//        }
-//    }
-//
-//    LazyColumn(
-//        content = {
-//            items(friends) { friend ->
-//                FriendInList(name = friend, onClick = { onClick(navController = navController) })
-//            }
-//        },
-//    )
-//}
 ){
+    val state = userViewModel.state
+
+    fun onClick(navController: NavController){
+        navController.navigate("friend_screen") {
+            popUpTo("friend_screen")
+            launchSingleTop = true
+        }
+    }
+
+    LazyColumn(
+        content = {
+            items(state.users!!.size) { friend ->
+                val user = state.users[friend]
+                FriendInList(name = user.nickname, onClick = { onClick(navController = navController) })
+            }
+        },
+    )
+}
+//){
 
 //    val swipeRefreshState = rememberSwipeRefreshState(
 //        isRefreshing = viewModel.state.isRefreshing
 //    )
 
-    val state = userViewModel.state
-
-    var i = 0
-    while (i < 100){
-        userViewModel.insertUser(User(nickname = "@Pashka", id = 1))
-        ++i
-    }
-
-    Log.e("USERS",state.toString())
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            items(state.users!!.size) { i ->
-                val user = state.users[i]
-                Body1(text = user.nickname)
-            }
-        }
-    }
-}
+//    Log.e("USERS",state.toString())
+//
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//    ) {
+//        LazyColumn(
+//            modifier = Modifier.fillMaxSize()
+//        ) {
+//            items(state.users!!.size) { i ->
+//                val user = state.users[i]
+//                Body1(text = user.nickname)
+//            }
+//        }
+//    }
+//}
 
 
 //mainViewModel: MainViewModel,

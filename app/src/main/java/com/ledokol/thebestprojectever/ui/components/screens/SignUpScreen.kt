@@ -31,7 +31,6 @@ fun SignUpScreen(
     viewModel: MainViewModel,
     navController: NavController
 ){
-    val retrofitServices: RetrofitServices = Common.retrofitService
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
     Column(
@@ -51,30 +50,7 @@ fun SignUpScreen(
             onValueChange = { setPassword(it) },
         )
         Button(text = stringResource(R.string.sign_up), onClick = {
-            val query: ProfileJSON = ProfileJSON(nickname = nickname,password = password)
-            Log.e("Tock",query.toString())
-            val profileCall : Call<Profile> = retrofitServices.createProfile(
-                query
-            )
-            profileCall.enqueue(object : Callback<Profile> {
-                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                    if (response.isSuccessful) {
-                        Log.e("ERRtR",response.body().toString())
-                        viewModel.insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname))
-                        navController.navigate("quick_game") {
-                            popUpTo("quick_game")
-                            launchSingleTop = true
-                        }
-                    }
-                    else{
-                        Log.e("Err",response.code().toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<Profile>, t: Throwable) {
-                    Log.e("ERRR",t.toString())
-                }
-            })
+            viewModel.signUp(nickname = nickname,password = password)
         })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
             navController.navigate("login_screen") {

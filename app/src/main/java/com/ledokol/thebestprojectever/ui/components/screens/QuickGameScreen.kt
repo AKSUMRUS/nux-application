@@ -18,7 +18,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.*
 @Composable
 fun QuickGameScreen(){
 //    val serviceClass = MyService::class.java
-    val context = LocalContext.current
 
     Log.d("START_QUICK_GAME","START_QUICK_GAME")
 //    val intent = Intent(context, serviceClass)

@@ -3,14 +3,8 @@ package com.ledokol.thebestprojectever.data.local.user
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ledokol.thebestprojectever.StockApplication
-import com.ledokol.thebestprojectever.data.local.profile.Profile
-import com.ledokol.thebestprojectever.data.local.profile.ProfileDatabase
-import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.data.repository.UsersRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +23,7 @@ class UserViewModel @Inject constructor(
     private var searchUser: Job? = null
 
     init {
+//        repository.clearUsers()
         getUsers()
     }
 

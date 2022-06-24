@@ -3,9 +3,14 @@ package com.ledokol.thebestprojectever.data.repository
 import androidx.lifecycle.LiveData
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
+import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProfileRepository(
+@Singleton
+class ProfileRepository @Inject constructor(
     private val profileDao: ProfileDao
     ) {
     val profile: LiveData<List<Profile>> = profileDao.getProfile()
