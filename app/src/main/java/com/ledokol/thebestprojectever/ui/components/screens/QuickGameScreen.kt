@@ -126,6 +126,6 @@ fun Context.toast(message: String) {
     Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Context.log(message: String) {
+fun log(message: String) {
     Log.d("BACKGROUND_SERVICE", message)
 }

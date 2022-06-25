@@ -60,8 +60,9 @@ fun StartNavigation(
     }
 
     val start: String = if(profile.value.isEmpty()){
-        "splash_screen"
-    }
+//        "splash_screen"
+        "quick_game"
+        }
     else{
         "quick_game"
 //        BottomNavItemMain.QuickGame.screen_route

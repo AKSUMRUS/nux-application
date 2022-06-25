@@ -95,7 +95,7 @@ fun ProfileScreen(
             )
         }
 
-        UserOverviewProfile(games = games)
+//        UserOverviewProfile(games = games)
         UserGames()
     }
 }

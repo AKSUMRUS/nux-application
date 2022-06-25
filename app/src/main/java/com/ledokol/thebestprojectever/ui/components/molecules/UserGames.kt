@@ -48,6 +48,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.ui.components.screens.log
 import java.lang.ClassCastException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -91,35 +92,34 @@ class GamesStatistic{
     }
 
     public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
-            val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
-            if (userManager.isUserUnlocked && (VERSION.SDK_INT >= VERSION_CODES.KITKAT_WATCH && powerManager!!.isInteractive || VERSION.SDK_INT < VERSION_CODES.KITKAT_WATCH && powerManager!!.isScreenOn)) {
-                val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-                val time = System.currentTimeMillis()
-                val appList =
-                    usm.queryUsageStats(
-                        UsageStatsManager.INTERVAL_DAILY,
-                        time - 10000 * 10000,
-                        time
+        val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
+        val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
+        if (userManager.isUserUnlocked && (VERSION.SDK_INT >= VERSION_CODES.KITKAT_WATCH && powerManager!!.isInteractive || VERSION.SDK_INT < VERSION_CODES.KITKAT_WATCH && powerManager!!.isScreenOn)) {
+            log("fdlkfldjk")
+            val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            val time = System.currentTimeMillis()
+            val appList =
+                usm.queryUsageStats(
+                    UsageStatsManager.INTERVAL_DAILY,
+                    time - 10000 * 10000,
+                    time
+                )
+            if (appList != null && appList.size == 0) {
+                Log.d("Executed app", "######### NO APP FOUND ##########")
+            }
+            if (appList != null && appList.size > 0) {
+                val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
+                for (usageStats in appList) {
+                    Log.d(
+                        "Executed app",
+                        "usage stats executed : " + usageStats.packageName + "\t\t ID: "
                     )
-                if (appList != null && appList.size == 0) {
-                    Log.d("Executed app", "######### NO APP FOUND ##########")
+                    mySortedMap!![usageStats.lastTimeUsed] = usageStats
                 }
-                if (appList != null && appList.size > 0) {
-                    val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
-                    for (usageStats in appList) {
-                        Log.d(
-                            "Executed app",
-                            "usage stats executed : " + usageStats.packageName + "\t\t ID: "
-                        )
-                        mySortedMap!![usageStats.lastTimeUsed] = usageStats
-                    }
-                    if (mySortedMap != null && !mySortedMap.isEmpty()) {
-                        val currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
-                        if (!usm.isAppInactive(currentApp)) {
-                            return currentApp
-                        }
+                if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                    val currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
+                    if (!usm.isAppInactive(currentApp)) {
+                        return currentApp
                     }
                 }
             }
@@ -184,8 +184,10 @@ fun UserGames() {
                 checkPermission.value = gamesStatistic.checkForPermission(context)
             }else if (event == Lifecycle.Event.ON_RESUME) {
                 checkPermission.value = gamesStatistic.checkForPermission(context)
-                installedGames.value = GamesStatistic.getInstalledAppGamesList(packageManager)
-                statisticGames.value = gamesStatistic.getStatisticGames(context, packageManager)
+                if(checkPermission.value){
+                    installedGames.value = GamesStatistic.getInstalledAppGamesList(packageManager)
+                    statisticGames.value = gamesStatistic.getStatisticGames(context, packageManager)
+                }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)

@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -71,16 +68,16 @@ fun ListFriendsScreen(navController: NavController){
                     value = textInSearch.value,
                     onValueChange = {textInSearch.value = it},
                     textStyle = androidx.compose.ui.text.TextStyle(fontSize = 17.sp),
-                    leadingIcon = { Icon(Icons.Filled.Search, null, tint = Color.Gray) },
+                    leadingIcon = { Icon(Icons.Filled.Search, null, tint = MaterialTheme.colors.onBackground) },
                     maxLines = 1,
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(bottom = 20.dp)
                         .fillMaxWidth()
-                        .background(Color(0xFFE7F1F1), RoundedCornerShape(16.dp)),
+                        .background(MaterialTheme.colors.onBackground.copy(alpha = 0.36f), RoundedCornerShape(16.dp)),
                     placeholder = { Text(text = "Bun") },
                     colors = TextFieldDefaults.textFieldColors(
-                        textColor = Color.Black,
-                        placeholderColor = Color.LightGray,
+                        textColor = Color.White,
+                        placeholderColor = MaterialTheme.colors.onBackground,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         backgroundColor = Color.Transparent,
@@ -89,7 +86,10 @@ fun ListFriendsScreen(navController: NavController){
                 )
             }
             items(items = friends.filter{ it.lowercase().contains(textInSearch.value.lowercase()) }) { friend ->
-                FriendInList(name = friend, onClick = { onClick(navController = navController) })
+                FriendInList(
+                    name = friend,
+                    onClick = { onClick(navController = navController) },
+                    )
             }
         },
     )
