@@ -30,7 +30,6 @@ fun FriendInList(name: String, onClick: () -> Unit){
             .padding(top = 15.dp, bottom = 10.dp)
             .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
             .clickable(onClick = onClick )
-            .background(MaterialTheme.colors.surface)
             .padding(10.dp)
     ){
         Icon(

@@ -51,11 +51,12 @@ fun ProfileScreen(
     viewModel: MainViewModel
 ){
     val games = remember{ mutableStateListOf(
-        Game("com.supercell.clashroyale"),
-        Game("com.dodreams.driveaheadsports"),
-        Game("yio.tro.antiyoy.android"),
-        Game("com.geishatokyo.trafficrun"),
-        Game("com.mind.quiz.brain.out"),
+//        Game("com.supercell.clashroyale"),
+//        Game("com.dodreams.driveaheadsports"),
+//        Game("yio.tro.antiyoy.android"),
+//        Game("com.geishatokyo.trafficrun"),
+//        Game("com.mind.quiz.brain.out"),
+    Game("")
     )}
 
     Column(

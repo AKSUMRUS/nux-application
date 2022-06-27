@@ -1,10 +1,13 @@
-package com.ledokol.thebestprojectever.data.local.user
+package com.ledokol.thebestprojectever.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ledokol.thebestprojectever.data.local.user.User
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
+import com.ledokol.thebestprojectever.data.local.user.UserState
 import com.ledokol.thebestprojectever.data.repository.UsersRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel

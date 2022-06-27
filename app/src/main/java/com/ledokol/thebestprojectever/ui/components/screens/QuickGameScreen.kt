@@ -31,6 +31,7 @@ import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitile
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -97,14 +98,7 @@ fun GridGames(games: List<ApplicationInfo>) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                 ){
-                    HeadlineH4(
-                        text = stringResource(id = R.string.nav_quick_game),
-                        fontWeight = FontWeight.W700,
-                    )
-                    Body1(
-                        text = stringResource(id = R.string.description_quick_game),
-                        type = "background"
-                    )
+                    ScreenTitile(name = stringResource(id = R.string.nav_quick_game), description = stringResource(id = R.string.description_quick_game))
                 }
             }
 

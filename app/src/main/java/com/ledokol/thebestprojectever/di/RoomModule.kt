@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.di
 import android.content.Context
 import androidx.room.Room
 import com.ledokol.thebestprojectever.data.local.MyDatabase
+import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
@@ -80,5 +81,9 @@ class RoomModule {
     fun provideRetrofitServices2(retrofit: Retrofit): RetrofitServices {
         return retrofit.create(RetrofitServices::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
 
 }

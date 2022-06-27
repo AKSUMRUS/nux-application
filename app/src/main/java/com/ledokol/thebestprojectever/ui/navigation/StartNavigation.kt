@@ -1,9 +1,6 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -18,11 +15,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.ledokol.thebestprojectever.data.local.user.UserViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
-import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun StartNavigation(
@@ -62,7 +58,9 @@ fun StartNavigation(
     }
 
     val start: String = if(profile.value.isEmpty()){
-        "splash_screen"
+//        ВРЕМЕННО
+//        "splash_screen"
+        "quick_game"
     }
     else{
         "quick_game"
