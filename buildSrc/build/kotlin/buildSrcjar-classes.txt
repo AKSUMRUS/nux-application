@@ -1,0 +1,1 @@
+C:\Users\mi\OneDrive\Progs\Ledokol\TheBestProjectEver\buildSrc\build\classes\kotlin\main\Config.class;C:\Users\mi\OneDrive\Progs\Ledokol\TheBestProjectEver\buildSrc\build\classes\kotlin\main\Dependencies$Lifecycle.class;C:\Users\mi\OneDrive\Progs\Ledokol\TheBestProjectEver\buildSrc\build\classes\kotlin\main\Dependencies.class

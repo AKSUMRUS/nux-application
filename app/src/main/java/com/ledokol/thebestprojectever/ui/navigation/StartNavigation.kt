@@ -1,9 +1,6 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -13,23 +10,23 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
-import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
-@RequiresApi(Build.VERSION_CODES.M)
 @Composable
 fun StartNavigation(
-    viewModel: MainViewModel
+    navController: NavHostController
 ) {
+    val userViewModel = hiltViewModel<UserViewModel>()
+    val viewModel = hiltViewModel<MainViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
-
-    val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
 
@@ -118,7 +115,11 @@ fun StartNavigation(
                             ProfileScreen(viewModel = viewModel)
                         }
                         composable(BottomNavItemMain.Friends.screen_route) {
-                            ListFriendsScreen(navController = navController)
+//                            val userViewModel = hiltViewModel<UserViewModel>()
+                            ListFriendsScreen(
+                                navController = navController,
+                                userViewModel = userViewModel
+                            )
                         }
                     })
             }

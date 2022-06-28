@@ -19,10 +19,10 @@ import com.ledokol.thebestprojectever.ui.components.atoms.TextField
 
 
 @Composable
-fun LoginScreen(
-    navController: NavController,
+fun SignUpScreen(
     viewModel: MainViewModel,
-) {
+    navController: NavController
+){
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
     Column(
@@ -30,7 +30,7 @@ fun LoginScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadlineH1(text = stringResource(R.string.login))
+        HeadlineH1(text = stringResource(R.string.sign_up))
         TextField(
             label = stringResource(R.string.nickname),
             text = nickname,
@@ -41,17 +41,12 @@ fun LoginScreen(
             text = password,
             onValueChange = { setPassword(it) },
         )
-        Button(text = stringResource(R.string.login), onClick = {
-//            navController.navigate("quick_game") {
-//                popUpTo("quick_game")
-//                launchSingleTop = true
-//            }
-            viewModel.login(nickname = nickname,password = password)
+        Button(text = stringResource(R.string.sign_up), onClick = {
+            viewModel.signUp(nickname = nickname,password = password)
         })
-        TextButton(text = stringResource(R.string.forget_password), onClick = { /*TODO*/ })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
-            navController.navigate("signup_screen_first") {
-                popUpTo("signup_screen_first")
+            navController.navigate("login_screen") {
+                popUpTo("login_screen")
                 launchSingleTop = true
             }
         })
