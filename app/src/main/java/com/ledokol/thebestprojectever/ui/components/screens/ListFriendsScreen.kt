@@ -43,7 +43,11 @@ fun ListFriendsScreen(navController: NavController){
     }
 
     LazyColumn(
-        modifier = Modifier,
+        modifier = Modifier.gradientBackground(
+            listOf(MaterialTheme.colors.primaryVariant, MaterialTheme.colors.primary),
+            angle = 105f
+        )
+        ,
         contentPadding = PaddingValues(top = 120.dp, start = 20.dp, end = 20.dp),
         content = {
             item(){
@@ -58,7 +62,7 @@ fun ListFriendsScreen(navController: NavController){
                     )
                     Body1(
                         text = "Выберите игру, в которую вы пойдете играть",
-                        type = "background"
+                        color = MaterialTheme.colors.onBackground,
                     )
                 }
             }

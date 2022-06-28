@@ -15,7 +15,6 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
-import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
@@ -27,10 +26,10 @@ import retrofit2.Response
 
 
 @Composable
-fun SignUpScreen(
-    viewModel: MainViewModel,
-    navController: NavController
-){
+fun LoginScreen(
+    navController: NavController,
+    viewModel: MainViewModel
+) {
     val retrofitServices: RetrofitServices = Common.retrofitService
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }
@@ -39,7 +38,7 @@ fun SignUpScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HeadlineH1(text = stringResource(R.string.sign_up))
+        HeadlineH1(text = stringResource(R.string.login))
         TextField(
             label = stringResource(R.string.nickname),
             text = nickname,
@@ -50,24 +49,23 @@ fun SignUpScreen(
             text = password,
             onValueChange = { setPassword(it) },
         )
-        Button(text = stringResource(R.string.sign_up), onClick = {
-            val query: ProfileJSON = ProfileJSON(nickname = nickname,password = password)
-            Log.e("Tock",query.toString())
-            val profileCall : Call<Profile> = retrofitServices.createProfile(
-                query
+        Button(text = stringResource(R.string.login), onClick = {
+            val profileCall : Call<Profile> = retrofitServices.login(
+                nickname = nickname,
+                password = password
             )
             profileCall.enqueue(object : Callback<Profile> {
                 override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                     if (response.isSuccessful) {
                         Log.e("ERRtR",response.body().toString())
-                        viewModel.insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname))
+                        viewModel.insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname))
                         navController.navigate("quick_game") {
                             popUpTo("quick_game")
                             launchSingleTop = true
                         }
                     }
                     else{
-                        Log.e("Err",response.code().toString())
+                        Log.e("pshel nahui",response.code().toString())
                     }
                 }
 
@@ -76,9 +74,10 @@ fun SignUpScreen(
                 }
             })
         })
+        TextButton(text = stringResource(R.string.forget_password), onClick = { /*TODO*/ })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
-            navController.navigate("login_screen") {
-                popUpTo("login_screen")
+            navController.navigate("signup_screen_first") {
+                popUpTo("signup_screen_first")
                 launchSingleTop = true
             }
         })

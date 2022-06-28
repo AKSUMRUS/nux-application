@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.ui.components.molecules
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -28,7 +29,7 @@ fun UserInformationProfile(name: String, cntGames: Int, cntFriends: Int){
     ){
         Body1(
             text = "Добрый вечер,",
-            type = "background"
+            color = MaterialTheme.colors.onBackground
         )
         HeadlineH4(
             text = name,
@@ -59,26 +60,26 @@ fun UserInformationProfile(name: String, cntGames: Int, cntFriends: Int){
                 Column(){
                     HeadlineH5(
                         text = cntGames.toString(),
-                        type = "background",
+                        color = MaterialTheme.colors.onBackground,
                         fontWeight = FontWeight.W700,
                         modifier = Modifier.align(CenterHorizontally),
                     )
                     Body1(
                         text = "Игр",
-                        type = "background",
+                        color = MaterialTheme.colors.onBackground,
                         modifier = Modifier.align(CenterHorizontally),
                     )
                 }
                 Column(){
                     HeadlineH5(
                         text = cntFriends.toString(),
-                        type = "background",
+                        color = MaterialTheme.colors.onBackground,
                         fontWeight = FontWeight.W700,
                         modifier = Modifier.align(CenterHorizontally),
                     )
                     Body1(
                         text = "Друзей",
-                        type = "background",
+                        color = MaterialTheme.colors.onBackground,
                         modifier = Modifier.align(CenterHorizontally),
                     )
                 }

@@ -11,11 +11,9 @@ import androidx.compose.ui.text.font.FontWeight
 fun Body1(
     text: String,
     modifier: Modifier = Modifier,
-    type: String = "surface",
+    color: Color = MaterialTheme.colors.onSurface,
     fontWeight: FontWeight? = MaterialTheme.typography.body1.fontWeight,
 ) {
-
-    val color: Color = getColorText(type)
 
     Text(
         text = text,
@@ -33,6 +31,7 @@ fun getColorText(type: String): Color {
     when(type) {
         "surface" -> color = MaterialTheme.colors.onSurface
         "primary" -> color = MaterialTheme.colors.onPrimary
+        "primaryInit" -> color = MaterialTheme.colors.primary
         "secondary" -> color = MaterialTheme.colors.onSecondary
         "background" -> color = MaterialTheme.colors.onBackground
         else -> color = MaterialTheme.colors.onError

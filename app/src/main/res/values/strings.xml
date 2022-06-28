@@ -3,15 +3,22 @@
     <string name="app_name">TheBestProjectEver</string>
 
 <!--    Authentication-->
-    <string name="sign_up">Sign up</string>
-    <string name="login">Login</string>
-    <string name="email">Email</string>
-    <string name="phone_number">Phone number</string>
-    <string name="nickname">Nickname</string>
-    <string name="password">Password</string>
-    <string name="forget_password">Forgot Password?</string>
-    <string name="dont_have_an_account">Don\'t have an account? Sign Up</string>
-    <string name="already_have_an_account">Already have an account? Login</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="login">Вход</string>
+    <string name="email">Почта</string>
+    <string name="phone_number">Телефон</string>
+    <string name="nickname">Ник</string>
+    <string name="password">Пароль</string>
+    <string name="forget_password">Забыл пароль?</string>
+    <string name="dont_have_an_account">Нету аккаунта? Зарегистрируйся</string>
+    <string name="already_have_an_account">Уже есть аккаунт? Войди</string>
+    <string name="description_signup_first">Мы хотим узнать тебя получше</string>
+    <string name="choose_nickname">Выбери свой ник</string>
+    <string name="choose_name">Как к тебе можно обращаться?</string>
+    <string name = "profile_nickname">Ник профиля</string>
+    <string name = "profile_name">Твое имя (для уведомлений)</string>
+    <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
+    <string name = "hello_registration">Добро пожаловать в ledokol</string>
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
@@ -20,4 +27,7 @@
     <string name="description_quick_game">Выберите игру, в которую вы пойдете играть</string>
     <string name="description_find_crew">Выберите своих тиммейтов</string>
 
+
+<!--Common-->
+    <string name = "back">Назад</string>
 </resources>

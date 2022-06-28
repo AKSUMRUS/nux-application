@@ -103,7 +103,7 @@ fun GridGames(games: List<ApplicationInfo>) {
                     )
                     Body1(
                         text = stringResource(id = R.string.description_quick_game),
-                        type = "background"
+                        color = MaterialTheme.colors.onBackground,
                     )
                 }
             }

@@ -11,11 +11,9 @@ import androidx.compose.ui.text.font.FontWeight
 fun HeadlineH6(
     text: String,
     modifier: Modifier = Modifier,
-    type: String = "surface",
+    color: Color = MaterialTheme.colors.onSurface,
     fontWeight: FontWeight? = MaterialTheme.typography.h6.fontWeight,
 ) {
-
-    val color: Color = getColorText(type)
 
     Text(
         text = text,
