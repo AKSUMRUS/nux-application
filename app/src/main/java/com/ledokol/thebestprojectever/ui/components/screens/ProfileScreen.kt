@@ -35,7 +35,7 @@ import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Game(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
+class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
 
     fun getName(context: Context, packageManager: PackageManager): String{
         return packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0)).toString()
@@ -50,13 +50,13 @@ class Game(private val packageName: String, val name: String = "Name", val icon:
 fun ProfileScreen(
     viewModel: MainViewModel
 ){
-    val games = remember{ mutableStateListOf(
+    val gameProfiles = remember{ mutableStateListOf(
 //        Game("com.supercell.clashroyale"),
 //        Game("com.dodreams.driveaheadsports"),
 //        Game("yio.tro.antiyoy.android"),
 //        Game("com.geishatokyo.trafficrun"),
 //        Game("com.mind.quiz.brain.out"),
-    Game("")
+    GameProfile("")
     )}
 
     Column(
@@ -96,7 +96,7 @@ fun ProfileScreen(
             )
         }
 
-//        UserOverviewProfile(games = games)
+        UserOverviewProfile(gameProfiles = gameProfiles)
         UserGames()
     }
 }

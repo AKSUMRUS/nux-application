@@ -14,7 +14,7 @@ interface UsersDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUsers(users: List<User>)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
 
     @Query(
@@ -26,8 +26,8 @@ interface UsersDao{
     )
     fun getUsers(query: String) : List<User>
 
-    @Query("SELECT * FROM users WHERE id = :id")
-    fun getUser(id: Int) : User
+    @Query("SELECT * FROM users WHERE nickname = :nickname")
+    fun getUser(nickname: String) : User
 
     @Query("DELETE FROM users")
     fun clearUsers()

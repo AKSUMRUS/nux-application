@@ -14,6 +14,8 @@ data class Profile(
     var access_token: String,
     @ColumnInfo(name = "nickname")
     var nickname: String,
+    @ColumnInfo(name = "password")
+    var password: String,
 
 //    var userGames: List<ApplicationInfo>,
 

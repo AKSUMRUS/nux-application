@@ -1,18 +1,13 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -30,7 +25,11 @@ fun ListFriendsScreen(
 ){
     val state = userViewModel.state
 
-    fun onClick(navController: NavController){
+    fun onClick(
+        navController: NavController,
+        nickname: String,
+    ){
+        userViewModel.onEvent(UserEvent.GetFriendUser(nickname = nickname))
         navController.navigate("friend_screen") {
             popUpTo("friend_screen")
             launchSingleTop = true
@@ -58,7 +57,7 @@ fun ListFriendsScreen(
                         val user = state.users[friend]
                         FriendInList(
                             name = user.nickname,
-                            onClick = { onClick(navController = navController) })
+                            onClick = { onClick(navController = navController,nickname = user.nickname) })
                     }
                 },
             )
@@ -79,7 +78,9 @@ fun ListFriendsScreen_preview(){
         content = {
             items(state.size) { friend ->
                 val user = state[friend]
-                FriendInList(name = user.nickname, onClick = { })
+                FriendInList(name = user.nickname, onClick = {
+
+                })
             }
         },
     )
