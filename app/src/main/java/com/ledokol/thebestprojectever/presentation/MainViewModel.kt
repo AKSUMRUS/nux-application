@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.presentation
 
+import android.app.Application
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -32,8 +34,7 @@ class MainViewModel @Inject constructor(
         profileCall.enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
-                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname))
-
+                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password))
                 }
                 else{
                     Log.e("pshel nahui",response.code().toString())
@@ -56,7 +57,7 @@ class MainViewModel @Inject constructor(
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
                     Log.e("ERRtR",response.body().toString())
-                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname))
+                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password))
                 }
                 else{
                     Log.e("Err",response.code().toString())

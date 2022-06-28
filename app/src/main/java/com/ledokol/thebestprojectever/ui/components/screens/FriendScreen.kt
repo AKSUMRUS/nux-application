@@ -14,13 +14,17 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
 
 @Composable
 fun FriendScreen(
-    viewModel: MainViewModel,
+    userViewModel: UserViewModel
 ){
+
+    val user = userViewModel.state.friendUser
 
     Column(
         modifier = Modifier
@@ -35,7 +39,7 @@ fun FriendScreen(
             tint = Color.Unspecified,
         )
         HeadlineH3(
-            text = "Имя пользователя",
+            text = user!!.nickname,
 
         )
     }

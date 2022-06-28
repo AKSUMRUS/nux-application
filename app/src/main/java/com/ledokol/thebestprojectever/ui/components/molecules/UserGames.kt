@@ -48,6 +48,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.game.Game
 import java.lang.ClassCastException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -76,10 +77,11 @@ class GamesStatistic{
             return installedApps
         }
 
-        fun getIcon(app: ApplicationInfo, packageManager: PackageManager): ImageBitmap{
-            Log.d("INSTALLEDAPPS", app.packageName)
+        fun getIcon(game: Game): ImageBitmap{
+//            Log.d("INSTALLEDAPPS", game.icon.toString())
 //            try{
-                return (packageManager.getApplicationIcon(app.packageName) as BitmapDrawable).bitmap.asImageBitmap()
+                return ImageBitmap(0,0)
+//            return null
 //            }catch (e: ClassCastException){
 //            }
 

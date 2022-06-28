@@ -2,13 +2,16 @@ package com.ledokol.thebestprojectever.data.repository
 
 import android.provider.ContactsContract
 import android.util.Log
+import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.room.Insert
 import com.ledokol.thebestprojectever.data.local.MyDatabase
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Call
@@ -22,7 +25,7 @@ import javax.inject.Singleton
 @Singleton
 class UsersRepository @Inject constructor(
     private val api : RetrofitServices,
-    private val dao : UsersDao
+    private val dao : UsersDao,
 ){
     fun insertUser(user: User) {
         dao.insertUser(user)
@@ -34,7 +37,8 @@ class UsersRepository @Inject constructor(
 
     fun getUsers(
         fetchFromRemote: Boolean,
-        query: String
+        query: String,
+        accesToken: String
     ): Flow<Resource<List<User>>> {
         return flow{
             emit(Resource.Loading(true))
@@ -50,7 +54,7 @@ class UsersRepository @Inject constructor(
                 return@flow
             }
             val remoteUsers = try{
-                val usersCall = api.getFriends()
+                val usersCall = api.getFriends(authHeader = "Bearer $accesToken")
                 var myResponse: List<User> = emptyList()
                 usersCall.enqueue(object : Callback<List<User>> {
                     override fun onResponse(
@@ -97,8 +101,43 @@ class UsersRepository @Inject constructor(
         }
     }
 
-    fun getUser(id: Int): Resource<User> {
-        TODO("Not yet implemented")
+    fun getUser(nickname: String): Flow<Resource<User>> {
+        return flow {
+            emit(Resource.Loading(true))
+            val friend = try {
+                val friendCall = api.getUser(nickname)
+                var myResponse: User? = null
+                friendCall.enqueue(object : Callback<User> {
+                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                        if (response.isSuccessful) {
+                            Log.e("Friend", response.body().toString())
+                            myResponse = response.body()!!
+                        } else {
+                            Log.e("Friend", response.code().toString())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        Log.e("Friend", t.toString())
+                    }
+                })
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+            emit(Resource.Success(
+                data = friend
+            ))
+
+            emit(Resource.Loading(false))
+        }
     }
 
 }

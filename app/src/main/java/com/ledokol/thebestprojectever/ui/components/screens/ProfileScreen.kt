@@ -3,30 +3,20 @@ package com.ledokol.thebestprojectever.ui.components.screens
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LifecycleOwner
-import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.MainViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.GradientButton
 import com.ledokol.thebestprojectever.ui.components.molecules.UserGames
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
@@ -35,7 +25,7 @@ import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Game(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
+class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
 
     fun getName(context: Context, packageManager: PackageManager): String{
         return packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0)).toString()
@@ -50,13 +40,13 @@ class Game(private val packageName: String, val name: String = "Name", val icon:
 fun ProfileScreen(
     viewModel: MainViewModel
 ){
-    val games = remember{ mutableStateListOf(
+    val gameProfiles = remember{ mutableStateListOf(
 //        Game("com.supercell.clashroyale"),
 //        Game("com.dodreams.driveaheadsports"),
 //        Game("yio.tro.antiyoy.android"),
 //        Game("com.geishatokyo.trafficrun"),
 //        Game("com.mind.quiz.brain.out"),
-    Game("")
+    GameProfile("")
     )}
 
     Column(
@@ -96,7 +86,7 @@ fun ProfileScreen(
             )
         }
 
-        UserOverviewProfile(games = games)
+        UserOverviewProfile(gameProfiles = gameProfiles)
         UserGames()
     }
 }

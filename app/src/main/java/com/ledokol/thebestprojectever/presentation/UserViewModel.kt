@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.presentation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -18,15 +19,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(
-    private val repository: UsersRepository
+    private val repository: UsersRepository,
 ): ViewModel() {
 
     var state by mutableStateOf(UserState())
 
+    val accesToken = ""
+
     private var searchUser: Job? = null
 
     init {
-//        repository.clearUsers()
         getUsers()
     }
 
@@ -43,6 +45,11 @@ class UserViewModel @Inject constructor(
                     getUsers()
                 }
             }
+            is UserEvent.GetFriendUser -> {
+                viewModelScope.launch {
+                    getUser(nickname = event.nickname)
+                }
+            }
         }
 
     }
@@ -55,13 +62,15 @@ class UserViewModel @Inject constructor(
         }
     }
 
+
+
     private fun getUsers(
         query: String = state.searchQuery.lowercase(),
         fetchRemote: Boolean = false
     ) {
 
         viewModelScope.launch {
-            repository.getUsers(fetchRemote,query)
+            repository.getUsers(fetchFromRemote = fetchRemote, accesToken = accesToken,query = query)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
@@ -82,6 +91,32 @@ class UserViewModel @Inject constructor(
                 }
         }
 
+    }
+
+    private fun getUser(
+        nickname: String
+    ){
+        viewModelScope.launch {
+            repository.getUser(nickname = nickname)
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let {
+                                user ->
+                                state = state.copy(
+                                    friendUser = user
+                                )
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                    }
+                }
+        }
     }
 
 }

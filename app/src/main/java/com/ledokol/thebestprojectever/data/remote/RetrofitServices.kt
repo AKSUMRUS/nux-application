@@ -24,10 +24,17 @@ interface RetrofitServices {
     fun createProfile(@Body profile: ProfileJSON)
             : Call<Profile>
 
-    @Headers("Content-Type: application/json")
-    @GET("friend")
-    fun getFriends()
+    @GET("friends")
+    fun getFriends(
+        @Header("Authorization") authHeader: String
+    )
             : Call<List<User>>
 
+    @Headers("Content-Type: application/json")
+    @GET("user/{nickname}")
+    fun getUser(
+        @Path("nickname") nickname: String
+    )
+            : Call<User>
 
 }

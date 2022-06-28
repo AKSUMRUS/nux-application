@@ -3,17 +3,15 @@ package com.ledokol.thebestprojectever.ui.components.molecules
 import android.content.Context
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
-import com.ledokol.thebestprojectever.ui.components.screens.Game
+import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
 
 @Composable
-fun UserOverviewProfile(games: List<Game>){
+fun UserOverviewProfile(gameProfiles: List<GameProfile>){
 
     val context: Context = LocalContext.current
     val packageManager = context.packageManager
@@ -21,7 +19,7 @@ fun UserOverviewProfile(games: List<Game>){
 
     LazyColumn(
         content = {
-            items(games){ game ->
+            items(gameProfiles){ game ->
                 GameInList(
                     name = game.getName(context, packageManager),
                     icon = game.getIcon(context, packageManager),

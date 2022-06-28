@@ -1,6 +1,9 @@
 package com.ledokol.thebestprojectever.ui.navigation
 
 
+import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -10,11 +13,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ledokol.thebestprojectever.data.local.game.Game
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
@@ -24,11 +31,19 @@ import com.ledokol.thebestprojectever.ui.components.screens.*
 fun StartNavigation(
     navController: NavHostController
 ) {
-    val userViewModel = hiltViewModel<UserViewModel>()
     val viewModel = hiltViewModel<MainViewModel>()
+    val gamesViewModel = hiltViewModel<GamesViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
+
+//    val context: Context = LocalContext.current
+//    val packageManager = context.packageManager
+////    , icon = (packageManager.getApplicationIcon(i.toString()) as BitmapDrawable).bitmap.asImageBitmap()
+//
+//    for (i in 0..10) {
+//        gamesViewModel.insertGame(Game(gamePackage = i.toString(), name = i.toString()))
+//    }
 
     when (navBackStackEntry?.destination?.route) {
         "signup_screen" -> {
@@ -59,8 +74,8 @@ fun StartNavigation(
 
     val start: String = if(profile.value.isEmpty()){
 //        ВРЕМЕННО
-//        "splash_screen"
-        "quick_game"
+        "splash_screen"
+//        "quick_game"
     }
     else{
         "quick_game"
@@ -95,16 +110,17 @@ fun StartNavigation(
                             )
                         }
                         composable("friend_screen") {
-                            FriendScreen(viewModel = viewModel)
+                            val userViewModel = hiltViewModel<UserViewModel>()
+                            FriendScreen(userViewModel = userViewModel)
                         }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
-                            QuickGameScreen()
+                            QuickGameScreen(viewModel = gamesViewModel)
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
                             ProfileScreen(viewModel = viewModel)
                         }
                         composable(BottomNavItemMain.Friends.screen_route) {
-//                            val userViewModel = hiltViewModel<UserViewModel>()
+                            val userViewModel = hiltViewModel<UserViewModel>()
                             ListFriendsScreen(
                                 navController = navController,
                                 userViewModel = userViewModel
