@@ -12,11 +12,9 @@ import androidx.compose.ui.text.input.KeyboardType
 fun Subtitle2(
     text: String,
     modifier: Modifier = Modifier,
-    type: String = "surface",
+    color: Color = MaterialTheme.colors.onSurface,
     fontWeight: FontWeight? = MaterialTheme.typography.subtitle2.fontWeight,
 ) {
-
-    val color: Color = getColorText(type)
 
     Text(
         text = text,

@@ -32,12 +32,12 @@ fun SignUpScreen(
     ) {
         HeadlineH1(text = stringResource(R.string.sign_up))
         TextField(
-            label = stringResource(R.string.nickname),
+            placeholder = stringResource(R.string.nickname),
             text = nickname,
             onValueChange = { setNickname(it) },
         )
         TextField(
-            label = stringResource(R.string.password),
+            placeholder = stringResource(R.string.password),
             text = password,
             onValueChange = { setPassword(it) },
         )

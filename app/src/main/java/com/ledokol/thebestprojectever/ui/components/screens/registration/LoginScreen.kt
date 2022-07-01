@@ -32,12 +32,12 @@ fun LoginScreen(
     ) {
         HeadlineH1(text = stringResource(R.string.login))
         TextField(
-            label = stringResource(R.string.nickname),
+            placeholder = stringResource(R.string.nickname),
             text = nickname,
             onValueChange = { setNickname(it) },
         )
         TextField(
-            label = stringResource(R.string.password),
+            placeholder = stringResource(R.string.password),
             text = password,
             onValueChange = { setPassword(it) },
         )
@@ -50,8 +50,8 @@ fun LoginScreen(
         })
         TextButton(text = stringResource(R.string.forget_password), onClick = { /*TODO*/ })
         TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
-            navController.navigate("signup_screen") {
-                popUpTo("signup_screen")
+            navController.navigate("signup_screen_first") {
+                popUpTo("signup_screen_first")
                 launchSingleTop = true
             }
         })

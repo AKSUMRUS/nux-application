@@ -19,8 +19,8 @@ fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true){
         delay(1000)
-        navController.navigate("login_screen"){
-            popUpTo("login_screen"){
+        navController.navigate("start_registration_screen"){
+            popUpTo("start_registration_screen"){
                 inclusive = true
             }
             launchSingleTop = true

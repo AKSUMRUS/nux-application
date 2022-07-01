@@ -3,4 +3,8 @@
     <dimen name="normal_round">15.dp</dimen>
     <dimen name="width">200.dp</dimen>
     <dimen name="height">150.dp</dimen>
+    <dimen name = "padding_title_top">110.dp</dimen>
+    <dimen name = "padding_little">20.dp</dimen>
+    <dimen name = "padding_medium">40.dp</dimen>
+    <dimen name = "padding_big">80.dp</dimen>
 </resources>

@@ -26,11 +26,13 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
 @Composable
 fun StartNavigation(
     navController: NavHostController
 ) {
+    val userViewModel = hiltViewModel<UserViewModel>()
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
@@ -75,8 +77,8 @@ fun StartNavigation(
 
     val start: String = if(profile.value.isEmpty()){
 //        ВРЕМЕННО
-        "splash_screen"
-//        "quick_game"
+//        "splash_screen"
+        "quick_game"
     }
     else{
         accessToken = profile.value[0].access_token
@@ -101,8 +103,20 @@ fun StartNavigation(
                         composable("login_screen") {
                             LoginScreen(navController = navController, viewModel = viewModel)
                         }
-                        composable("signup_screen") {
-                            SignUpScreen(
+                        composable("signup_screen_first") {
+                            SignUpScreenFirst(
+                                navController = navController,
+                                viewModel = viewModel
+                            )
+                        }
+                        composable("start_registration_screen") {
+                            StartRegistrationScreen(
+                                navController = navController,
+                                viewModel = viewModel
+                            )
+                        }
+                        composable("signup_screen_second") {
+                            SignUpScreenSecond(
                                 navController = navController,
                                 viewModel = viewModel
                             )
