@@ -66,7 +66,7 @@ fun SignUpScreenFirst(
                 description = stringResource(R.string.description_signup_first),
             )
 
-            TextFieldTrailingIcon(
+            TextFieldWithCaptionTrailingIcon(
                 textCaption = stringResource(R.string.choose_email),
                 text = nickname,
                 placeholder = stringResource(id = R.string.profile_nickname),
@@ -77,7 +77,7 @@ fun SignUpScreenFirst(
                 icon = Icons.Default.Close,
             )
 
-            TextFieldTrailingIcon(
+            TextFieldWithCaptionTrailingIcon(
                 textCaption = stringResource(R.string.choose_password),
                 text = name,
                 placeholder = stringResource(id = R.string.profile_name),

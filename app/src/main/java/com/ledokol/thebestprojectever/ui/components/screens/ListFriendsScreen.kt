@@ -19,7 +19,6 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.data.local.user.UserState
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.TextField
-import com.ledokol.thebestprojectever.ui.components.atoms.TextFieldTrailingIcon
 import com.ledokol.thebestprojectever.ui.components.atoms.textfield.Search
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
