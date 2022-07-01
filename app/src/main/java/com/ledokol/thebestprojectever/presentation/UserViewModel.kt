@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,20 +23,16 @@ class UserViewModel @Inject constructor(
     private val repository: UsersRepository,
 ): ViewModel() {
 
+    var accessToken: String = ""
     var state by mutableStateOf(UserState())
 
-    val accesToken = ""
-
     private var searchUser: Job? = null
-
-    init {
-        getUsers()
-    }
 
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
-                getUsers()
+                getUsers(fetchRemote = true)
+                state = state.copy(isRefreshing = false)
             }
             is UserEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
@@ -64,16 +61,19 @@ class UserViewModel @Inject constructor(
 
 
 
-    private fun getUsers(
+    fun getUsers(
         query: String = state.searchQuery.lowercase(),
         fetchRemote: Boolean = false
     ) {
 
+        Log.e("ACCESS VIEW MODEL",accessToken)
+
         viewModelScope.launch {
-            repository.getUsers(fetchFromRemote = fetchRemote, accesToken = accesToken,query = query)
+            repository.getUsers(fetchFromRemote = fetchRemote, accessToken = accessToken,query = query)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
+                            Log.e("USER VIEW MODEL","SUCCESS")
                             result.data.let { users ->
                                 state = state.copy(
                                     users = users

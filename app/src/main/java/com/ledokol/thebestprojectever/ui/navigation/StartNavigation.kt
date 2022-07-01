@@ -4,13 +4,12 @@ package com.ledokol.thebestprojectever.ui.navigation
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -21,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ledokol.thebestprojectever.data.local.game.Game
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
@@ -36,6 +36,7 @@ fun StartNavigation(
     val profile = viewModel.profile.observeAsState(listOf())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
+    var accessToken = ""
 
 //    val context: Context = LocalContext.current
 //    val packageManager = context.packageManager
@@ -78,9 +79,12 @@ fun StartNavigation(
 //        "quick_game"
     }
     else{
+        accessToken = profile.value[0].access_token
         "quick_game"
 //        BottomNavItemMain.QuickGame.screen_route
     }
+
+    Log.e("ACCESS",accessToken)
 
     Scaffold(
 
@@ -121,6 +125,7 @@ fun StartNavigation(
                         }
                         composable(BottomNavItemMain.Friends.screen_route) {
                             val userViewModel = hiltViewModel<UserViewModel>()
+                            userViewModel.accessToken = accessToken
                             ListFriendsScreen(
                                 navController = navController,
                                 userViewModel = userViewModel

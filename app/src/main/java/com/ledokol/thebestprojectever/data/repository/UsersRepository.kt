@@ -38,7 +38,7 @@ class UsersRepository @Inject constructor(
     fun getUsers(
         fetchFromRemote: Boolean,
         query: String,
-        accesToken: String
+        accessToken: String
     ): Flow<Resource<List<User>>> {
         return flow{
             emit(Resource.Loading(true))
@@ -54,7 +54,7 @@ class UsersRepository @Inject constructor(
                 return@flow
             }
             val remoteUsers = try{
-                val usersCall = api.getFriends(authHeader = "Bearer $accesToken")
+                val usersCall = api.getFriends(authHeader = "Bearer $accessToken")
                 var myResponse: List<User> = emptyList()
                 usersCall.enqueue(object : Callback<List<User>> {
                     override fun onResponse(

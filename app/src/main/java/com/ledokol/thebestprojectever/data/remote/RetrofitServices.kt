@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.data.remote
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.ProfileJSON
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import dagger.Binds
 import dagger.internal.DaggerGenerated
 import retrofit2.Call
@@ -37,4 +38,13 @@ interface RetrofitServices {
     )
             : Call<User>
 
+    @PUT("status/set/android")
+    fun setStatus(
+        @Body status: StatusJSON
+    )
+
+    @PUT("status/leave")
+    fun leaveStatus(
+
+    )
 }

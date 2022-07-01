@@ -27,6 +27,11 @@ fun ListFriendsScreen(
 ){
     val state = userViewModel.state
 
+    if(state.isRefreshing){
+        userViewModel.onEvent(UserEvent.Refresh)
+    }
+
+
     fun onClick(
         navController: NavController,
         nickname: String,
@@ -52,7 +57,8 @@ fun ListFriendsScreen(
         ) {
             ScreenTitile(name = stringResource(id = R.string.nav_friends))
             Search(state = state,
-            viewModel = userViewModel)
+            viewModel = userViewModel
+                )
             LazyColumn(
                 content = {
                     items(state.users!!.size) { friend ->
@@ -100,7 +106,7 @@ fun Search(
         var text by remember { mutableStateOf("") }
         TextField(label = "Enter @nickname", text = text, onValueChange = {
             text = it
-            viewModel.onEvent(UserEvent.OnSearchQueryChange(text))
+            viewModel.onEvent(UserEvent.OnSearchQueryChange(query = text))
         })
     }
 }
