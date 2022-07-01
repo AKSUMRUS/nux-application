@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
 
 @Composable
 fun ButtonSecondary(
@@ -28,7 +29,7 @@ fun ButtonSecondary(
             backgroundColor = MaterialTheme.colors.primaryVariant,
         )
     ) {
-        Body1(
+        HeadlineH6(
             text = text,
             modifier = Modifier.padding(10.dp)
         )

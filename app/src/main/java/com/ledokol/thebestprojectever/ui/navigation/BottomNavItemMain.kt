@@ -7,19 +7,19 @@ sealed class BottomNavItemMain(var title: String, var icon: Int, var screen_rout
 
     object QuickGame : BottomNavItemMain(
         "Быстрая игра",
-        R.drawable.ic_quick_game,
+        R.drawable.game_icon_bottomnav,
         "quick_game"
     )
 
     object Profile : BottomNavItemMain(
         "Профиль",
-        R.drawable.ic_profile,
+        R.drawable.home_icon_bottomnav,
         "profile"
     )
 
     object Friends : BottomNavItemMain(
         "Друзья",
-        R.drawable.ic_friends,
+        R.drawable.friends_icon_bottomnav,
         "team"
     )
 }
