@@ -1,7 +1,5 @@
 package com.ledokol.thebestprojectever.presentation
 
-import android.app.Application
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -48,7 +46,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun signUp(nickname: String,password: String){
-        val query: ProfileJSON = ProfileJSON(nickname = nickname,password = password)
+        val query = ProfileJSON(nickname = nickname,password = password)
         Log.e("Tock",query.toString())
         val profileCall : Call<Profile> = api.createProfile(
             query
