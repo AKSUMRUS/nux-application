@@ -3,17 +3,22 @@ package com.ledokol.thebestprojectever.ui.components.molecules
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ledokol.thebestprojectever.ui.components.atoms.Subtitle1
 import com.ledokol.thebestprojectever.ui.components.atoms.Subtitle2
 
 @Composable
@@ -27,8 +32,9 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
     AnimatedVisibility(visible = bottomBarState.value) {
 
         BottomNavigation(
-            backgroundColor = MaterialTheme.colors.surface,
+            backgroundColor = MaterialTheme.colors.onBackground,
             contentColor = Color.Gray,
+            modifier = Modifier.height(90.dp),
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
@@ -38,10 +44,21 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                         Icon(
                             painterResource(id = item.icon),
                             contentDescription = item.title,
-                            modifier = Modifier.height(30.dp)
+                            modifier = Modifier
+                                .padding(bottom = 10.dp)
+                                .height(40.dp)
+                                .align(CenterVertically)
+                            ,
                         )
                     },
-                    label = { Subtitle2(text = item.title) },
+                    label = {
+                        Subtitle2(
+                            text = item.title,
+                            fontWeight = W700,
+                            modifier = Modifier.padding(bottom = 0.dp)
+                            ,
+                        )
+                    },
                     selectedContentColor = MaterialTheme.colors.onPrimary,
                     unselectedContentColor = MaterialTheme.colors.onSecondary,
 //                    alwaysShowLabel = true,
@@ -54,7 +71,8 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             launchSingleTop = true
 //                            restoreState = true
                         }
-                    }
+                    },
+                    modifier = Modifier.align(CenterVertically).padding(bottom = 8.dp),
                 )
             }
 

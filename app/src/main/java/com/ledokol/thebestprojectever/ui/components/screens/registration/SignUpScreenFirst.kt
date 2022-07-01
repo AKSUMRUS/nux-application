@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.Profile
-import com.ledokol.thebestprojectever.data.remote.Common
+//import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.presentation.MainViewModel
@@ -37,7 +37,7 @@ fun SignUpScreenFirst(
     viewModel: MainViewModel,
     navController: NavController
 ){
-    val retrofitServices: RetrofitServices = Common.retrofitService
+//    val retrofitServices: RetrofitServices = Common.retrofitService
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (name,setName) = remember{ mutableStateOf("") }
 

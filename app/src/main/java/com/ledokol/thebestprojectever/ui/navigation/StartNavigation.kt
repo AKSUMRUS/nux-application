@@ -26,6 +26,7 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
 @Composable
 fun StartNavigation(
@@ -75,8 +76,8 @@ fun StartNavigation(
 
     val start: String = if(profile.value.isEmpty()){
 //        ВРЕМЕННО
-        "splash_screen"
-//        "quick_game"
+//        "splash_screen"
+        "quick_game"
     }
     else{
         "quick_game"

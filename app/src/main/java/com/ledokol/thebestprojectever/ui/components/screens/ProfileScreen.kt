@@ -1,16 +1,17 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
+import android.provider.Settings
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -23,11 +24,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.GradientButton
+import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.molecules.UserGames
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
@@ -50,21 +55,40 @@ class GameProfile(private val packageName: String, val name: String = "Name", va
 fun ProfileScreen(
     viewModel: MainViewModel
 ){
-    val gameProfiles = remember{ mutableStateListOf(
-//        Game("com.supercell.clashroyale"),
-//        Game("com.dodreams.driveaheadsports"),
-//        Game("yio.tro.antiyoy.android"),
-//        Game("com.geishatokyo.trafficrun"),
-//        Game("com.mind.quiz.brain.out"),
-    GameProfile("")
-    )}
+    val context = LocalContext.current
+    val gamesProfiles = remember{ mutableStateListOf<GameProfile>() }
+
+    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+    val checkPermission = remember{ mutableStateOf(false) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                checkPermission.value = GamesStatistic.checkForPermission(context)
+
+                if(checkPermission.value){
+                    gamesProfiles.clear()
+                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                }
+            }else if (event == Lifecycle.Event.ON_RESUME) {
+                checkPermission.value = GamesStatistic.checkForPermission(context)
+
+                if(checkPermission.value){
+                    gamesProfiles.clear()
+                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .gradientBackground(
-                listOf(MaterialTheme.colors.primaryVariant, MaterialTheme.colors.primary),
-                angle = 105f
+            .background(
+                MaterialTheme.colors.background
             )
 //            .verticalScroll(rememberScrollState())
     ) {
@@ -96,8 +120,20 @@ fun ProfileScreen(
             )
         }
 
-        UserOverviewProfile(gameProfiles = gameProfiles)
-        UserGames()
+        if(!checkPermission.value){
+            Text("Не получен доступ!")
+            androidx.compose.material.Button(
+                onClick = {
+                    context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                }
+            ) {
+                Text("Получить разрешение")
+            }
+        }else{
+            Text("Доступ получен!")
+            UserOverviewProfile(gameProfiles = gamesProfiles)
+            UserGames()
+        }
     }
 }
 

@@ -30,4 +30,6 @@
 
 <!--Common-->
     <string name = "back">Назад</string>
+    <string name = "enter_nickname_search">Введи ник</string>
+    <string name = "good_evening">Добрый вечер, </string>
 </resources>

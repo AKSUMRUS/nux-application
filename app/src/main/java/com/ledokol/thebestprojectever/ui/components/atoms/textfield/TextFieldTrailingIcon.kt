@@ -64,14 +64,14 @@ fun TextFieldTrailingIcon(
                 .fillMaxWidth()
                 .padding(top = 10.dp, bottom = 15.dp)
                 .background(
-                    MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
+                    MaterialTheme.colors.secondary,
                     RoundedCornerShape(0.dp)
                 )
                 .then(modifier),
             placeholder = { Text(text = placeholder) },
             colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.White,
-                placeholderColor = MaterialTheme.colors.onBackground,
+                textColor = MaterialTheme.colors.onPrimary,
+                placeholderColor = MaterialTheme.colors.onSecondary,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 backgroundColor = Color.Transparent,

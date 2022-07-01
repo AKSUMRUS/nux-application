@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.MaterialTheme
@@ -20,6 +21,7 @@ import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -34,9 +36,8 @@ fun QuickGameScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .gradientBackground(
-                listOf(MaterialTheme.colors.primaryVariant, MaterialTheme.colors.primary),
-                angle = 105f
+            .background(
+                MaterialTheme.colors.background
             )
 //            .verticalScroll(remem berScrollState())
     ) {
@@ -89,7 +90,7 @@ fun GridGames(games: List<Game>) {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                 ){
-                    ScreenTitile(name = stringResource(id = R.string.nav_quick_game), description = stringResource(id = R.string.description_quick_game))
+                    ScreenTitle(name = stringResource(id = R.string.nav_quick_game), description = stringResource(id = R.string.description_quick_game))
                 }
             }
 

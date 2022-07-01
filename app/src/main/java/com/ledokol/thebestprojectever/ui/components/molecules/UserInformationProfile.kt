@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
@@ -21,26 +22,33 @@ import com.ledokol.thebestprojectever.ui.components.atoms.*
 
 @Composable
 fun UserInformationProfile(name: String, cntGames: Int, cntFriends: Int){
-    Column(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, top = 120.dp, bottom = 10.dp)
             .padding(10.dp)
     ){
-        Body1(
-            text = "Добрый вечер,",
-            color = MaterialTheme.colors.onBackground
-        )
-        HeadlineH4(
-            text = name,
-            fontWeight = FontWeight.W700,
-        )
+        Column(
+            modifier = Modifier
+                .weight(2f),
+        ){
+            Body1(
+                text = stringResource(id = R.string.good_evening),
+                color = MaterialTheme.colors.onBackground,
+            )
+            HeadlineH4(
+                text = name,
+                fontWeight = FontWeight.W700,
+            )
+        }
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp),
+                .padding(top = 0.dp)
+                .weight(1f)
+            ,
         ){
             Icon(
                 bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
@@ -53,37 +61,37 @@ fun UserInformationProfile(name: String, cntGames: Int, cntFriends: Int){
                 tint = Color.Unspecified,
             )
 
-            Row(
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier.weight(1f),
-            ){
-                Column(){
-                    HeadlineH5(
-                        text = cntGames.toString(),
-                        color = MaterialTheme.colors.onBackground,
-                        fontWeight = FontWeight.W700,
-                        modifier = Modifier.align(CenterHorizontally),
-                    )
-                    Body1(
-                        text = "Игр",
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.align(CenterHorizontally),
-                    )
-                }
-                Column(){
-                    HeadlineH5(
-                        text = cntFriends.toString(),
-                        color = MaterialTheme.colors.onBackground,
-                        fontWeight = FontWeight.W700,
-                        modifier = Modifier.align(CenterHorizontally),
-                    )
-                    Body1(
-                        text = "Друзей",
-                        color = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.align(CenterHorizontally),
-                    )
-                }
-            }
+//            Row(
+//                horizontalArrangement = Arrangement.SpaceEvenly,
+//                modifier = Modifier.weight(1f),
+//            ){
+//                Column(){
+//                    HeadlineH5(
+//                        text = cntGames.toString(),
+//                        color = MaterialTheme.colors.onBackground,
+//                        fontWeight = FontWeight.W700,
+//                        modifier = Modifier.align(CenterHorizontally),
+//                    )
+//                    Body1(
+//                        text = "Игр",
+//                        color = MaterialTheme.colors.onBackground,
+//                        modifier = Modifier.align(CenterHorizontally),
+//                    )
+//                }
+//                Column(){
+//                    HeadlineH5(
+//                        text = cntFriends.toString(),
+//                        color = MaterialTheme.colors.onBackground,
+//                        fontWeight = FontWeight.W700,
+//                        modifier = Modifier.align(CenterHorizontally),
+//                    )
+//                    Body1(
+//                        text = "Друзей",
+//                        color = MaterialTheme.colors.onBackground,
+//                        modifier = Modifier.align(CenterHorizontally),
+//                    )
+//                }
+//            }
         }
     }
 }
