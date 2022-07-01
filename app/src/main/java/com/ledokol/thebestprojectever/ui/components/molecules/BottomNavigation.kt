@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -46,7 +47,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             contentDescription = item.title,
                             modifier = Modifier
                                 .padding(bottom = 10.dp)
-                                .height(40.dp)
+                                .size(40.dp)
                                 .align(CenterVertically)
                             ,
                         )

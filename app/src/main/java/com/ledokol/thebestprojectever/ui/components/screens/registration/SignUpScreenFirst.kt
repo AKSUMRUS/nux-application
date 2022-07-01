@@ -27,6 +27,7 @@ import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +52,7 @@ fun SignUpScreenFirst(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BackToolbar()
+        BackToolbar(navController)
 
         Column(
             modifier = Modifier
@@ -60,22 +61,13 @@ fun SignUpScreenFirst(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
         ) {
+            TitleRegistration(
+                title = stringResource(R.string.sign_up),
+                description = stringResource(R.string.description_signup_first),
+            )
 
-            Column(
-                modifier = Modifier.padding(bottom = 40.dp)
-            ) {
-                HeadlineH2(
-                    text = stringResource(R.string.sign_up),
-                    fontWeight = FontWeight.W700,
-                )
-                HeadlineH6(
-                    text = stringResource(R.string.description_signup_first),
-                    fontWeight = FontWeight.W700,
-                    color = MaterialTheme.colors.onBackground,
-                )
-            }
             TextFieldTrailingIcon(
-                textCaption = stringResource(R.string.choose_nickname),
+                textCaption = stringResource(R.string.choose_email),
                 text = nickname,
                 placeholder = stringResource(id = R.string.profile_nickname),
                 onValueChange = setNickname,
@@ -86,7 +78,7 @@ fun SignUpScreenFirst(
             )
 
             TextFieldTrailingIcon(
-                textCaption = stringResource(R.string.choose_name),
+                textCaption = stringResource(R.string.choose_password),
                 text = name,
                 placeholder = stringResource(id = R.string.profile_name),
                 onValueChange = setName,
@@ -105,15 +97,15 @@ fun SignUpScreenFirst(
                 ButtonWithIcon(
                     icon = Icons.Default.ArrowForward,
                     onClick = buttonClick,
-                    modifier = Modifier.background(MaterialTheme.colors.primary),
+                    modifier = Modifier,
                 )
             }
-            TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
-                navController.navigate("login_screen") {
-                    popUpTo("login_screen")
-                    launchSingleTop = true
-                }
-            })
+//            TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
+//                navController.navigate("login_screen") {
+//                    popUpTo("login_screen")
+//                    launchSingleTop = true
+//                }
+//            })
         }
     }
 }

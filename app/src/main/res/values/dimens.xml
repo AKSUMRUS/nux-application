@@ -7,4 +7,5 @@
     <dimen name = "padding_little">20.dp</dimen>
     <dimen name = "padding_medium">40.dp</dimen>
     <dimen name = "padding_big">80.dp</dimen>
+    <dimen name = "small_icon">20.dp</dimen>
 </resources>

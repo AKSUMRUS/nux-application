@@ -13,7 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,8 @@ import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,46 +56,43 @@ fun SignUpScreenSecond(
         setCheckPrivacy(newCheck)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
-    ) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ){
+        BackToolbar(navController)
+
         Column(
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_medium))
-        ){
-            HeadlineH2(
-                text = stringResource(R.string.sign_up),
-                fontWeight = FontWeight.W700,
-            )
-            HeadlineH6(
-                text = stringResource(R.string.description_signup_first),
-                fontWeight = FontWeight.W700,
-                color = MaterialTheme.colors.onBackground,
-            )
-        }
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 20.dp, end = 20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start,
+        ) {
 
-        TextFieldTrailingIcon(
-            text = nickname,
-            placeholder = stringResource(id = R.string.profile_nickname),
-            onValueChange = setNickname,
-            buttonClick = {
-                setNickname("")
-            },
-            icon = Icons.Default.Close,
-        )
+            TitleRegistration(
+                title = stringResource(R.string.sign_up),
+                description = stringResource(R.string.description_signup_first),
+            )
 
-        TextFieldTrailingIcon(
-            text = password,
-            placeholder = stringResource(id = R.string.profile_name),
-            onValueChange = setPassword,
-            buttonClick = {
-                setPassword("")
-            },
-            icon = Icons.Default.Close,
-        )
+            TextFieldTrailingImage(
+                text = nickname,
+                placeholder = stringResource(id = R.string.profile_nickname),
+                onValueChange = setNickname,
+                buttonClick = {
+                    setNickname("")
+                },
+                image = ImageBitmap.imageResource(id = R.drawable.cross),
+            )
+
+            TextFieldTrailingImage(
+                text = password,
+                placeholder = stringResource(id = R.string.profile_name),
+                onValueChange = setPassword,
+                buttonClick = {
+                    setPassword("")
+                },
+                image = ImageBitmap.imageResource(id = R.drawable.cross),
+            )
 
 
 //        Button(text = stringResource(R.string.sign_up), onClick = {
@@ -121,39 +122,40 @@ fun SignUpScreenSecond(
 //            })
 //        })
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-            ,
-            horizontalArrangement = Arrangement.Center,
-//            verticalAlignment = Alignment.CenterVertically
-        ){
-            Column(
-                modifier = Modifier
-                    .weight(4f)
-            ){
-                com.ledokol.thebestprojectever.ui.components.atoms.Checkbox(
-                    value = checkPrivacy,
-                    onChange = {checkboxChanged(it)},
-                    modifier = Modifier.padding(start = 0.dp),
-                )
-                Body1(
-                    text = stringResource(id = R.string.privacy_police),
-                )
-            }
-
             Row(
                 modifier = Modifier
-                    .padding(top = 0.dp)
-                    .weight(1f)
+                    .fillMaxWidth()
                 ,
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.Center,
+//            verticalAlignment = Alignment.CenterVertically
             ){
-                ButtonWithIcon(
-                    icon = Icons.Default.ArrowForward,
-                    onClick = buttonClick,
-                    modifier = Modifier.background(MaterialTheme.colors.primary),
-                )
+                Column(
+                    modifier = Modifier
+                        .weight(4f)
+                ){
+                    com.ledokol.thebestprojectever.ui.components.atoms.Checkbox(
+                        value = checkPrivacy,
+                        onChange = {checkboxChanged(it)},
+                        modifier = Modifier.padding(start = 0.dp),
+                    )
+                    Body1(
+                        text = stringResource(id = R.string.privacy_police),
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(top = 0.dp)
+                        .weight(1f)
+                    ,
+                    horizontalArrangement = Arrangement.End,
+                ){
+                    ButtonWithIcon(
+                        icon = Icons.Default.ArrowForward,
+                        onClick = buttonClick,
+                        modifier = Modifier.background(MaterialTheme.colors.primary),
+                    )
+                }
             }
         }
     }

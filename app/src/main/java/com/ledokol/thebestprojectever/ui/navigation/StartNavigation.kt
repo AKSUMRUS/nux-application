@@ -76,8 +76,8 @@ fun StartNavigation(
 
     val start: String = if(profile.value.isEmpty()){
 //        ВРЕМЕННО
-//        "splash_screen"
-        "quick_game"
+        "splash_screen"
+//        "quick_game"
     }
     else{
         "quick_game"

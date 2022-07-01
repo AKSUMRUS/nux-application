@@ -121,7 +121,7 @@ fun ProfileScreen(
         }
 
         if(!checkPermission.value){
-            Text("Не получен доступ!")
+            Text("Предоставьте, пожалуйста, доступ!")
             androidx.compose.material.Button(
                 onClick = {
                     context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
@@ -130,9 +130,8 @@ fun ProfileScreen(
                 Text("Получить разрешение")
             }
         }else{
-            Text("Доступ получен!")
             UserOverviewProfile(gameProfiles = gamesProfiles)
-            UserGames()
+//            UserGames()
         }
     }
 }

@@ -29,7 +29,7 @@ fun TextFieldWithCaptionTrailingIcon(
     placeholder: String,
     text: String,
     icon: ImageVector,
-    textCaption: String? = null,
+    textCaption: String,
     onValueChange: (String) -> Unit,
     buttonClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -37,14 +37,11 @@ fun TextFieldWithCaptionTrailingIcon(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
 ) {
-
-    if(textCaption != null){
-        HeadlineH5(
-            text = textCaption,
-            fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
-        )
-    }
+    HeadlineH5(
+        text = textCaption,
+        fontWeight = FontWeight.W700,
+        modifier = Modifier.padding(top=10.dp)
+    )
 
     androidx.compose.material.TextField(
             value = text,
@@ -57,21 +54,21 @@ fun TextFieldWithCaptionTrailingIcon(
             singleLine = true,
             trailingIcon = {
                 IconButton(onClick =  buttonClick) {
-                    Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
+                    Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onBackground)
                 }
            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 10.dp, bottom = 15.dp)
                 .background(
-                    MaterialTheme.colors.secondary,
+                    MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
                     RoundedCornerShape(0.dp)
                 )
                 .then(modifier),
             placeholder = { Text(text = placeholder) },
             colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colors.onPrimary,
-                placeholderColor = MaterialTheme.colors.onSecondary,
+                textColor = Color.White,
+                placeholderColor = MaterialTheme.colors.onBackground,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 backgroundColor = Color.Transparent,
