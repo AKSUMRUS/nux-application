@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -29,14 +31,19 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.convertListApplicationToListGame
+import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.ui.components.screens.*
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StartNavigation(
     navController: NavHostController
 ) {
+    val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
@@ -45,13 +52,10 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
 
-//    val context: Context = LocalContext.current
-//    val packageManager = context.packageManager
-////    , icon = (packageManager.getApplicationIcon(i.toString()) as BitmapDrawable).bitmap.asImageBitmap()
-//
-//    for (i in 0..10) {
-//        gamesViewModel.insertGame(Game(gamePackage = i.toString(), name = i.toString()))
-//    }
+    gamesViewModel.insertGames(
+        convertListApplicationToListGame(context.packageManager, getInstalledAppGamesList(LocalContext.current.packageManager))
+    )
+
 
     when (navBackStackEntry?.destination?.route) {
         "signup_screen" -> {

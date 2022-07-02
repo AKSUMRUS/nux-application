@@ -51,6 +51,11 @@ class GameProfile(private val packageName: String, val name: String = "Name", va
     }
 }
 
+fun getIcon(packageManager: PackageManager, packageName: String): ImageBitmap {
+    return (packageManager.getApplicationIcon(packageName) as BitmapDrawable).bitmap.asImageBitmap()
+}
+
+
 @Composable
 fun ProfileScreen(
     viewModel: MainViewModel

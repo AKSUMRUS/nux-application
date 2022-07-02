@@ -97,8 +97,9 @@ fun GridGames(games: List<Game>) {
             items(games) { game ->
                 GameInQuickGames(
                     packageName = "fdfdfd",
-                    icon = GamesStatistic.getIcon(
-                        game = game,
+                    icon = getIcon(
+                        packageManager = context.packageManager,
+                        packageName = game.gamePackage,
                     ),
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous)
                 )
