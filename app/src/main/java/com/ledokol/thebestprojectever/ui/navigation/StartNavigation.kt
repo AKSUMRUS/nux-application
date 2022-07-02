@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -31,19 +30,15 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
-import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.convertListApplicationToListGame
-import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StartNavigation(
     navController: NavHostController
 ) {
-    val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
@@ -91,7 +86,7 @@ fun StartNavigation(
         "splash_screen"
     }
     else{
-        accessToken = profile.value[0].access_token
+//        accessToken = profile.value[0].access_token
         BottomNavItemMain.QuickGame.screen_route
     }
 

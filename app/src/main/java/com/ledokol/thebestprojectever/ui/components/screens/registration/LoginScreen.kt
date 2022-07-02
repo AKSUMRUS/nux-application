@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.registration
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -30,10 +30,10 @@ fun LoginScreen(
 
     val buttonClick = {
         viewModel.login(nickname = nickname,password = password)
-        navController.navigate("quick_game") {
-            popUpTo("quick_game")
-            launchSingleTop = true
-        }
+//        navController.navigate("quick_game") {
+//            popUpTo("quick_game")
+//            launchSingleTop = true
+//        }
     }
 
     fun buttonBackClick(){
