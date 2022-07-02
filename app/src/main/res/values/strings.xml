@@ -16,6 +16,7 @@
     <string name="dont_have_an_account">Нету аккаунта? Зарегистрируйся</string>
     <string name="already_have_an_account">Уже есть аккаунт? Войди</string>
     <string name="description_signup_first">Мы хотим узнать тебя получше</string>
+    <string name="description_login">Рады видеть вас вновь</string>
     <string name="choose_nickname">Выбери свой ник</string>
     <string name="choose_name">Как к тебе можно обращаться?</string>
     <string name="choose_email">Почта</string>

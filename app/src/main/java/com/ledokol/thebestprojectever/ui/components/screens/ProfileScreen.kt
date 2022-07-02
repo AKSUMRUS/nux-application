@@ -98,28 +98,6 @@ fun ProfileScreen(
             cntFriends = 17,
         )
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ){
-            GradientButton(
-                text = "Обзор",
-                gradient = Brush.horizontalGradient(
-                    listOf(MaterialTheme.colors.primary, Color(0xFF1d295d))
-                ),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 9.dp)
-            )
-            GradientButton(
-                text = "Статистика",
-                gradient = Brush.horizontalGradient(
-                    listOf(MaterialTheme.colors.primary, Color(0xFF1d295d))
-                ),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 9.dp)
-            )
-        }
-
         if(!checkPermission.value){
             Text("Предоставьте, пожалуйста, доступ!")
             androidx.compose.material.Button(

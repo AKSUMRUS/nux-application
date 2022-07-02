@@ -42,12 +42,12 @@ fun SignUpScreenSecond(
 ){
 //    val retrofitServices: RetrofitServices = Common.retrofitService
     val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (password,setPassword) = remember{ mutableStateOf("") }
+    val (name,setName) = remember{ mutableStateOf("") }
     val (checkPrivacy,setCheckPrivacy) = remember{ mutableStateOf(false) }
 
     val buttonClick = {
-        navController.navigate("signup_screen_second") {
-            popUpTo("signup_screen_second")
+        navController.navigate("quick_game") {
+            popUpTo("quick_game")
             launchSingleTop = true
         }
     }
@@ -75,6 +75,7 @@ fun SignUpScreenSecond(
             )
 
             TextFieldTrailingImage(
+                textCaption = stringResource(id = R.string.choose_nickname),
                 text = nickname,
                 placeholder = stringResource(id = R.string.profile_nickname),
                 onValueChange = setNickname,
@@ -85,49 +86,22 @@ fun SignUpScreenSecond(
             )
 
             TextFieldTrailingImage(
-                text = password,
+                textCaption = stringResource(id = R.string.choose_name),
+                text = name,
                 placeholder = stringResource(id = R.string.profile_name),
-                onValueChange = setPassword,
+                onValueChange = setName,
                 buttonClick = {
-                    setPassword("")
+                    setName("")
                 },
                 image = ImageBitmap.imageResource(id = R.drawable.cross),
             )
 
-
-//        Button(text = stringResource(R.string.sign_up), onClick = {
-//            val query: ProfileJSON = ProfileJSON(nickname = nickname,password = password)
-//            Log.e("Tock",query.toString())
-//            val profileCall : Call<Profile> = retrofitServices.createProfile(
-//                query
-//            )
-//            profileCall.enqueue(object : Callback<Profile> {
-//                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-//                    if (response.isSuccessful) {
-//                        Log.e("ERRtR",response.body().toString())
-//                        viewModel.insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname))
-//                        navController.navigate("quick_game") {
-//                            popUpTo("quick_game")
-//                            launchSingleTop = true
-//                        }
-//                    }
-//                    else{
-//                        Log.e("Err",response.code().toString())
-//                    }
-//                }
-//
-//                override fun onFailure(call: Call<Profile>, t: Throwable) {
-//                    Log.e("ERRR",t.toString())
-//                }
-//            })
-//        })
 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                 ,
                 horizontalArrangement = Arrangement.Center,
-//            verticalAlignment = Alignment.CenterVertically
             ){
                 Column(
                     modifier = Modifier

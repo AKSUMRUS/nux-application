@@ -16,7 +16,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.screens.log
 import com.ledokol.thebestprojectever.ui.components.screens.toast
 
 
@@ -44,6 +43,10 @@ class MyService : Service() {
         return START_STICKY;
     }
 
+    fun logApps(text: String){
+        Log.d("APP_ACTIVE", text)
+    }
+
     fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
 
@@ -53,10 +56,10 @@ class MyService : Service() {
             val activeApp = gamesStatistic.getActiveApp(context, packageManager)
 
             if(activeApp==null){
-                log("Сейчас нету запущенных приложений")
+                logApps("Сейчас нету запущенных приложений")
 //                toast("Сейчас нету запущенных приложений")
             }else{
-                log("Сейчас запущено приложение $activeApp")
+                logApps("Сейчас запущено приложение $activeApp")
 //                toast("Сейчас запущено приложение $activeApp")
             }
             runnable?.let { handler.postDelayed(it, 3000) }
@@ -78,9 +81,11 @@ class MyService : Service() {
     private fun createNotification() {
         toast("Start notification")
         val context: Context = this
+
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)

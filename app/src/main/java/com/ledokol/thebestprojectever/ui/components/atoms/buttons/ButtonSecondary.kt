@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.ui.components.atoms.buttons
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -27,7 +28,8 @@ fun ButtonSecondary(
 
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.primaryVariant,
-        )
+        ),
+        shape = RoundedCornerShape(0.dp),
     ) {
         HeadlineH6(
             text = text,

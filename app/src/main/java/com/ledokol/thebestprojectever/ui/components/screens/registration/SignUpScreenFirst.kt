@@ -40,9 +40,10 @@ fun SignUpScreenFirst(
 ){
 //    val retrofitServices: RetrofitServices = Common.retrofitService
     val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (name,setName) = remember{ mutableStateOf("") }
+    val (password,setPassword) = remember{ mutableStateOf("") }
 
     val buttonClick = {
+        viewModel.signUp(nickname, password)
         navController.navigate("signup_screen_second") {
             popUpTo("signup_screen_second")
             launchSingleTop = true
@@ -66,10 +67,9 @@ fun SignUpScreenFirst(
                 description = stringResource(R.string.description_signup_first),
             )
 
-            TextFieldWithCaptionTrailingIcon(
-                textCaption = stringResource(R.string.choose_email),
+            TextFieldTrailingIcon(
                 text = nickname,
-                placeholder = stringResource(id = R.string.profile_nickname),
+                placeholder = stringResource(id = R.string.email),
                 onValueChange = setNickname,
                 buttonClick = {
                     setNickname("")
@@ -77,13 +77,12 @@ fun SignUpScreenFirst(
                 icon = Icons.Default.Close,
             )
 
-            TextFieldWithCaptionTrailingIcon(
-                textCaption = stringResource(R.string.choose_password),
-                text = name,
-                placeholder = stringResource(id = R.string.profile_name),
-                onValueChange = setName,
+            TextFieldTrailingIcon(
+                text = password,
+                placeholder = stringResource(id = R.string.password),
+                onValueChange = setPassword,
                 buttonClick = {
-                    setName("")
+                    setPassword("")
                 },
                 icon = Icons.Default.Close,
             )

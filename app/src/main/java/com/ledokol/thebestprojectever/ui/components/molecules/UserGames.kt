@@ -17,6 +17,7 @@ import android.os.Process
 import android.os.UserManager
 import android.provider.Settings
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -78,35 +79,23 @@ class GamesStatistic{
         }
 
 
+        @RequiresApi(VERSION_CODES.O)
         fun getInstalledAppGamesList(packageManager: PackageManager): List<ApplicationInfo> {
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if (info.flags and ApplicationInfo.FLAG_SYSTEM === 1) {
-                    // System application
-                } else {
-                    Log.d("INSTALLEDAPPS", info.packageName+" "+info.category.toString())
-
-                    // Installed by user
-                }
+//                if (info.flags and ApplicationInfo.FLAG_SYSTEM === 1) {
+//                    // System application
+//                } else {
+//                    Log.d("INSTALLEDAPPS", info.packageName+" "+info.category.toString())
+//
+//                    // Installed by user
+//                }
                 if(info.category == ApplicationInfo.CATEGORY_GAME){
                     installedApps.add(info)
                 }
             }
             Log.d("INSTALLEDAPPS", installedApps.toString())
-            return installedApps
-        }
-
-        fun getInstalledAppGamesList2(packageManager: PackageManager): List<ApplicationInfo> {
-            val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
-            val installedApps: MutableList<ApplicationInfo> = ArrayList()
-            for (info in infos) {
-                Log.d("INSTALLEDAPPS2", info.packageName+" "+info.category.toString())
-                if(info.category == ApplicationInfo.CATEGORY_GAME){
-                    installedApps.add(info)
-                }
-            }
-            Log.d("INSTALLEDAPPS2", installedApps.toString())
             return installedApps
         }
 
@@ -133,7 +122,7 @@ class GamesStatistic{
             val time = System.currentTimeMillis()
             val appList =
                 usm.queryUsageStats(
-                    UsageStatsManager.INTERVAL_DAILY,
+                    UsageStatsManager.INTERVAL_BEST,
                     time - 10000 * 10000,
                     time
                 )
@@ -143,10 +132,10 @@ class GamesStatistic{
             if (appList != null && appList.size > 0) {
                 val mySortedMap: SortedMap<Long, UsageStats> = TreeMap()
                 for (usageStats in appList) {
-                    Log.d(
-                        "Executed app",
-                        "usage stats executed : " + usageStats.packageName + "\t\t ID: "
-                    )
+//                    Log.d(
+//                        "Executed app",
+//                        "usage stats executed : " + usageStats.packageName + "\t\t ID: "
+//                    )
                     mySortedMap!![usageStats.lastTimeUsed] = usageStats
                 }
                 if (mySortedMap != null && !mySortedMap.isEmpty()) {
@@ -174,7 +163,7 @@ class GamesStatistic{
         for ((key,value) in usageStats) {
             try{
                 val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
-                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
+//                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
                 if(application.category == ApplicationInfo.CATEGORY_GAME){
                     games.add(value)
                 }

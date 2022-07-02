@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.ledokol.thebestprojectever.R
 
 @Composable
-fun TextFieldWithCaptionTrailingIcon(
+fun TextFieldTrailingIcon(
     placeholder: String,
     text: String,
     icon: ImageVector,
@@ -47,36 +47,36 @@ fun TextFieldWithCaptionTrailingIcon(
     }
 
     androidx.compose.material.TextField(
-            value = text,
-            onValueChange = { onValueChange(it) },
-            textStyle = TextStyle(fontSize = 17.sp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ).copy(imeAction = imeAction),
-            keyboardActions = keyboardActions,
-            singleLine = true,
-            trailingIcon = {
-                IconButton(onClick =  buttonClick) {
-                    Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
-                }
-           },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 15.dp)
-                .background(
-                    MaterialTheme.colors.secondary,
-                    RoundedCornerShape(0.dp)
-                )
-                .then(modifier),
-            placeholder = { Text(text = placeholder) },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colors.onPrimary,
-                placeholderColor = MaterialTheme.colors.onSecondary,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
-                cursorColor = Color.DarkGray
+        value = text,
+        onValueChange = { onValueChange(it) },
+        textStyle = TextStyle(fontSize = 17.sp),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ).copy(imeAction = imeAction),
+        keyboardActions = keyboardActions,
+        singleLine = true,
+        trailingIcon = {
+            IconButton(onClick =  buttonClick) {
+                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp, bottom = 15.dp)
+            .background(
+                MaterialTheme.colors.secondary,
+                RoundedCornerShape(0.dp)
             )
+            .then(modifier),
+        placeholder = { Text(text = placeholder) },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colors.onPrimary,
+            placeholderColor = MaterialTheme.colors.onSecondary,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = Color.Transparent,
+            cursorColor = Color.DarkGray
         )
+    )
 }
 

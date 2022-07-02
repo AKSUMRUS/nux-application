@@ -49,41 +49,41 @@ fun TextFieldTrailingImage(
     }
 
     androidx.compose.material.TextField(
-            value = text,
-            onValueChange = { onValueChange(it) },
-            textStyle = TextStyle(fontSize = 17.sp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ).copy(imeAction = imeAction),
-            keyboardActions = keyboardActions,
-            singleLine = true,
-            trailingIcon = {
-                IconButton(onClick =  buttonClick) {
-                    Icon(
-                        image,
-                        contentDescription = null,
-                        tint = MaterialTheme.colors.onSecondary,
-                        modifier = Modifier.size(dimensionResource(id = R.dimen.small_icon)),
-                    )
-                }
-           },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 10.dp, bottom = 15.dp)
-                .background(
-                    MaterialTheme.colors.secondary,
-                    RoundedCornerShape(0.dp)
+        value = text,
+        onValueChange = { onValueChange(it) },
+        textStyle = TextStyle(fontSize = 17.sp),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ).copy(imeAction = imeAction),
+        keyboardActions = keyboardActions,
+        singleLine = true,
+        trailingIcon = {
+            IconButton(onClick =  buttonClick) {
+                Icon(
+                    image,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSecondary,
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.small_icon)),
                 )
-                .then(modifier),
-            placeholder = { Text(text = placeholder) },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colors.onPrimary,
-                placeholderColor = MaterialTheme.colors.onSecondary,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
-                cursorColor = Color.DarkGray
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp, bottom = 15.dp)
+            .background(
+                MaterialTheme.colors.secondary,
+                RoundedCornerShape(0.dp)
             )
+            .then(modifier),
+        placeholder = { Text(text = placeholder) },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = MaterialTheme.colors.onPrimary,
+            placeholderColor = MaterialTheme.colors.onSecondary,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = Color.Transparent,
+            cursorColor = Color.DarkGray
         )
+    )
 }
 
