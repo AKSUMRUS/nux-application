@@ -8,9 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.InspectableModifier
@@ -35,25 +33,19 @@ import retrofit2.Response
 
 @Composable
 fun SignUpScreenFirst(
-    viewModel: MainViewModel,
-    navController: NavController
+    navController: NavController,
+    email: String,
+    setEmail: (String) -> Unit,
+    password: String,
+    setPassword: (String) -> Unit,
+    buttonBackClick: () -> Unit,
+    buttonNextClick: () -> Unit,
 ){
-//    val retrofitServices: RetrofitServices = Common.retrofitService
-    val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (password,setPassword) = remember{ mutableStateOf("") }
-
-    val buttonClick = {
-        viewModel.signUp(nickname, password)
-        navController.navigate("signup_screen_second") {
-            popUpTo("signup_screen_second")
-            launchSingleTop = true
-        }
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BackToolbar(navController)
+        BackToolbar(buttonBackClick)
 
         Column(
             modifier = Modifier
@@ -68,13 +60,13 @@ fun SignUpScreenFirst(
             )
 
             TextFieldTrailingIcon(
-                text = nickname,
+                text = email,
                 placeholder = stringResource(id = R.string.email),
-                onValueChange = setNickname,
                 buttonClick = {
-                    setNickname("")
+                      setEmail("")
                 },
                 icon = Icons.Default.Close,
+                onValueChange = setEmail,
             )
 
             TextFieldTrailingIcon(
@@ -95,16 +87,10 @@ fun SignUpScreenFirst(
             ) {
                 ButtonWithIcon(
                     icon = Icons.Default.ArrowForward,
-                    onClick = buttonClick,
+                    onClick = buttonNextClick,
                     modifier = Modifier,
                 )
             }
-//            TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
-//                navController.navigate("login_screen") {
-//                    popUpTo("login_screen")
-//                    launchSingleTop = true
-//                }
-//            })
         }
     }
 }

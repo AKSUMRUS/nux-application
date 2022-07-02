@@ -21,11 +21,9 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 
 @Composable
-fun BackToolbar(navController: NavController,) {
-    fun buttonBackClick() {
-        navController.popBackStack()
-    }
-
+fun BackToolbar(
+    buttonBackClick: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

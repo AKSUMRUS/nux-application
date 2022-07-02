@@ -28,6 +28,7 @@ import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
 @Composable
@@ -48,13 +49,22 @@ fun StartNavigation(
     context.startService(intentService)
 
     when (navBackStackEntry?.destination?.route) {
-        "signup_screen" -> {
+        "signup_screen_first" -> {
             bottomBarState.value = false
         }
         "login_screen" -> {
             bottomBarState.value = false
         }
+        "start_registration_screen" -> {
+            bottomBarState.value = false
+        }
+        "signup_screen_second" -> {
+            bottomBarState.value = false
+        }
         "splash_screen" -> {
+            bottomBarState.value = false
+        }
+        "friend_screen" -> {
             bottomBarState.value = false
         }
         BottomNavItemMain.QuickGame.screen_route -> {
@@ -88,23 +98,14 @@ fun StartNavigation(
             Box(modifier = Modifier.padding(innerPadding)) {
                 NavHost(navController = navController, startDestination = start,
                     builder = {
+                        composable("start_registration_screen") {
+                            StartRegistrationScreen(navController = navController, viewModel = viewModel)
+                        }
                         composable("login_screen") {
                             LoginScreen(navController = navController, viewModel = viewModel)
                         }
-                        composable("signup_screen_first") {
-                            SignUpScreenFirst(
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
-                        composable("start_registration_screen") {
-                            StartRegistrationScreen(
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
-                        composable("signup_screen_second") {
-                            SignUpScreenSecond(
+                        composable("signup_screen") {
+                            SignUpScreen(
                                 navController = navController,
                                 viewModel = viewModel
                             )

@@ -79,7 +79,7 @@ class MyService : Service() {
     }
 
     private fun createNotification() {
-        toast("Start notification")
+//        toast("Start notification")
         val context: Context = this
 
         val intent = Intent(this, MainActivity::class.java).apply {

@@ -37,29 +37,20 @@ import retrofit2.Response
 
 @Composable
 fun SignUpScreenSecond(
-    viewModel: MainViewModel,
-    navController: NavController
+    nickname: String,
+    setNickname: (String) -> Unit,
+    name: String,
+    setName: (String) -> Unit,
+    buttonNextClick: () -> Unit,
+    buttonBackClick: () -> Unit,
+    checkPrivacy: Boolean,
+    setCheckPrivacy: (Boolean) -> Unit,
 ){
-//    val retrofitServices: RetrofitServices = Common.retrofitService
-    val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (name,setName) = remember{ mutableStateOf("") }
-    val (checkPrivacy,setCheckPrivacy) = remember{ mutableStateOf(false) }
-
-    val buttonClick = {
-        navController.navigate("quick_game") {
-            popUpTo("quick_game")
-            launchSingleTop = true
-        }
-    }
-
-    fun checkboxChanged(newCheck: Boolean){
-        setCheckPrivacy(newCheck)
-    }
 
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        BackToolbar(navController)
+        BackToolbar(buttonBackClick)
 
         Column(
             modifier = Modifier
@@ -109,7 +100,7 @@ fun SignUpScreenSecond(
                 ){
                     com.ledokol.thebestprojectever.ui.components.atoms.Checkbox(
                         value = checkPrivacy,
-                        onChange = {checkboxChanged(it)},
+                        onChange = setCheckPrivacy,
                         modifier = Modifier.padding(start = 0.dp),
                     )
                     Body1(
@@ -126,7 +117,7 @@ fun SignUpScreenSecond(
                 ){
                     ButtonWithIcon(
                         icon = Icons.Default.ArrowForward,
-                        onClick = buttonClick,
+                        onClick = buttonNextClick,
                         modifier = Modifier.background(MaterialTheme.colors.primary),
                     )
                 }

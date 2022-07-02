@@ -36,10 +36,14 @@ fun LoginScreen(
         }
     }
 
+    fun buttonBackClick(){
+        navController.popBackStack()
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BackToolbar(navController)
+        BackToolbar(buttonBackClick = {buttonBackClick()})
 
         Column(
             modifier = Modifier
