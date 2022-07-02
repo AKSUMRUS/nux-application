@@ -60,7 +60,8 @@ class MainViewModel @Inject constructor(
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
                     Log.e("ERRtR",response.body().toString())
-                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password,email = response.body()!!.email, name = response.body()!!.name))
+                    Log.e("PASS",password)
+                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password,email = email, name = name))
                 }
                 else{
                     Log.e("Err",response.code().toString())

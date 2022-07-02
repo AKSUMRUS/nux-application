@@ -50,11 +50,6 @@ fun ListFriendsScreen(
     if(state.isRefreshing){
         userViewModel.onEvent(UserEvent.Refresh)
     }
-
-//    SwipeRefresh(
-//        state = rememberSwipeRefreshState(isRefreshing),
-//        onRefresh = { userViewModel.onEvent(UserEvent.Refresh) },
-//    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -69,21 +64,30 @@ fun ListFriendsScreen(
             ) {
                 ScreenTitle(name = stringResource(id = R.string.nav_friends))
                 showSearch(userViewModel = userViewModel)
-                LazyColumn(
-                    content = {
-                        items(state.users!!.size) { friend ->
-                            val user = state.users[friend]
-                            FriendInList(
-                                name = user.nickname,
-                                onClick = {
-                                    onClick(
-                                        navController = navController,
-                                        nickname = user.nickname
-                                    )
-                                })
-                        }
-                    },
-                )
+//                SwipeRefresh(
+//                    state = rememberSwipeRefreshState(isRefreshing),
+//                    onRefresh = { userViewModel.onEvent(UserEvent.Refresh) },
+//                ) {
+                    if (state.isLoading) {
+                        LoadingView()
+                    } else {
+                        LazyColumn(
+                            content = {
+                                items(state.users!!.size) { friend ->
+                                    val user = state.users[friend]
+                                    FriendInList(
+                                        name = user.nickname,
+                                        onClick = {
+                                            onClick(
+                                                navController = navController,
+                                                nickname = user.nickname
+                                            )
+                                        })
+                                }
+                            },
+                        )
+//                    }
+                }
             }
         }
 //    }

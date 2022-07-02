@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.data.local.game
 
+import android.graphics.Bitmap
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -14,7 +15,6 @@ data class Game(
     val gamePackage: String,
     @ColumnInfo(name = "name")
     val name: String,
-//    @NotNull
-//    @ColumnInfo(name = "icon")
-//    val icon: ImageBitmap?
+    @ColumnInfo(name = "icon")
+    val icon: Bitmap?
 )
