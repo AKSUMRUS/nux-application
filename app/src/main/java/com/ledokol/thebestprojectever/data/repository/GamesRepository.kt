@@ -33,8 +33,8 @@ class GamesRepository @Inject constructor(
             emit(Resource.Success(
                 data = localGames
             ))
+            emit(Resource.Loading(false))
             return@flow
-
         }
     }
 

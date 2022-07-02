@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.data.local.profile
 
-import android.content.pm.ApplicationInfo
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -16,6 +15,10 @@ data class Profile(
     var nickname: String,
     @ColumnInfo(name = "password")
     var password: String,
+    @ColumnInfo(name = "email")
+    var email: String,
+    @ColumnInfo(name = "name")
+    var name: String,
 
 //    var userGames: List<ApplicationInfo>,
 

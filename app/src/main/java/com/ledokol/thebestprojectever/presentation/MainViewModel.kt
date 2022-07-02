@@ -32,7 +32,7 @@ class MainViewModel @Inject constructor(
         profileCall.enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
-                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password))
+                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password, email = response.body()!!.email, name = response.body()!!.name))
                 }
                 else{
                     Log.e("pshel nahui",response.code().toString())
@@ -45,8 +45,13 @@ class MainViewModel @Inject constructor(
         })
     }
 
-    fun signUp(nickname: String,password: String){
-        val query = ProfileJSON(nickname = nickname,password = password)
+    fun signUp(
+        nickname: String,
+        password: String,
+        email: String,
+        name: String,
+    ){
+        val query = ProfileJSON(nickname = nickname,password = password,email = email,name = name)
         Log.e("Tock",query.toString())
         val profileCall : Call<Profile> = api.createProfile(
             query
@@ -55,7 +60,7 @@ class MainViewModel @Inject constructor(
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
                     Log.e("ERRtR",response.body().toString())
-                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password))
+                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password,email = response.body()!!.email, name = response.body()!!.name))
                 }
                 else{
                     Log.e("Err",response.code().toString())

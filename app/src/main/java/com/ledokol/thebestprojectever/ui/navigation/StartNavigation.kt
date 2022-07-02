@@ -9,8 +9,10 @@ import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -35,7 +37,6 @@ import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRe
 fun StartNavigation(
     navController: NavHostController
 ) {
-    val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
@@ -44,12 +45,16 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
 
-    val intentService = Intent(context, MyService::class.java)
-    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    context.startService(intentService)
+//    val context: Context = LocalContext.current
+//    val packageManager = context.packageManager
+////    , icon = (packageManager.getApplicationIcon(i.toString()) as BitmapDrawable).bitmap.asImageBitmap()
+//
+//    for (i in 0..10) {
+//        gamesViewModel.insertGame(Game(gamePackage = i.toString(), name = i.toString()))
+//    }
 
     when (navBackStackEntry?.destination?.route) {
-        "signup_screen_first" -> {
+        "signup_screen" -> {
             bottomBarState.value = false
         }
         "login_screen" -> {
@@ -83,7 +88,7 @@ fun StartNavigation(
     }
     else{
         accessToken = profile.value[0].access_token
-        "quick_game"
+        BottomNavItemMain.QuickGame.screen_route
     }
 
     Log.e("ACCESS",accessToken)

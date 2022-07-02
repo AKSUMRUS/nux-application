@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.rememberSwipeableState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,11 +14,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.data.local.user.UserState
+import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.TextField
 import com.ledokol.thebestprojectever.ui.components.atoms.textfield.Search
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
@@ -29,11 +34,7 @@ fun ListFriendsScreen(
     userViewModel: UserViewModel
 ){
     val state = userViewModel.state
-
-    if(state.isRefreshing){
-        userViewModel.onEvent(UserEvent.Refresh)
-    }
-
+    val isRefreshing = state.isRefreshing
 
     fun onClick(
         navController: NavController,
@@ -46,32 +47,48 @@ fun ListFriendsScreen(
         }
     }
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .background(
-            MaterialTheme.colors.background
-        )
-    ) {
+    if(state.isRefreshing){
+        userViewModel.onEvent(UserEvent.Refresh)
+    }
+
+//    SwipeRefresh(
+//        state = rememberSwipeRefreshState(isRefreshing),
+//        onRefresh = { userViewModel.onEvent(UserEvent.Refresh) },
+//    ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 100.dp, start = 20.dp, end = 20.dp)
+                .fillMaxSize()
+                .background(
+                    MaterialTheme.colors.background
+                )
         ) {
-            ScreenTitle(name = stringResource(id = R.string.nav_friends))
-            showSearch(userViewModel = userViewModel)
-            LazyColumn(
-                content = {
-                    items(state.users!!.size) { friend ->
-                        val user = state.users[friend]
-                        FriendInList(
-                            name = user.nickname,
-                            onClick = { onClick(navController = navController,nickname = user.nickname) })
-                    }
-                },
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 100.dp, start = 20.dp, end = 20.dp)
+            ) {
+                ScreenTitle(name = stringResource(id = R.string.nav_friends))
+                showSearch(userViewModel = userViewModel)
+                LazyColumn(
+                    content = {
+                        items(state.users!!.size) { friend ->
+                            val user = state.users[friend]
+                            FriendInList(
+                                name = user.nickname,
+                                onClick = {
+                                    onClick(
+                                        navController = navController,
+                                        nickname = user.nickname
+                                    )
+                                })
+                        }
+                    },
+                )
+            }
         }
-    }
+//    }
 }
+
 
 @Composable
 @Preview

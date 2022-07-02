@@ -31,6 +31,7 @@ class UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
+                state = state.copy(isRefreshing = true)
                 getUsers(fetchRemote = true)
                 state = state.copy(isRefreshing = false)
             }

@@ -91,6 +91,12 @@ fun SignUpScreenFirst(
                     modifier = Modifier,
                 )
             }
+//            TextButton(text = stringResource(R.string.dont_have_an_account), onClick = {
+//                navController.navigate("login_screen") {
+//                    popUpTo("login_screen")
+//                    launchSingleTop = true
+//                }
+//            })
         }
     }
 }
