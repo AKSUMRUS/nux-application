@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
@@ -19,6 +20,7 @@ class ProfileRepository @Inject constructor(
 
     fun insertProfile(newProfile: Profile){
         coroutineScope.launch {
+            Log.e("Insert Profile",newProfile.toString())
             profileDao.insertProfile(newProfile)
         }
     }

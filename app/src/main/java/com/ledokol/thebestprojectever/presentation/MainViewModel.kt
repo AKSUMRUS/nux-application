@@ -32,7 +32,8 @@ class MainViewModel @Inject constructor(
         profileCall.enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
-                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password, email = response.body()!!.email, name = response.body()!!.name))
+//                    Log.e()
+                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password, email = "", name = ""))
                 }
                 else{
                     Log.e("pshel nahui",response.code().toString())
