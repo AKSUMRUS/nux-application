@@ -19,7 +19,7 @@ fun SignUpScreen(
     var checkPrivacy by remember{ mutableStateOf(false) }
 
     val buttonNextClickSecond = {
-        viewModel.signUp(email, password)
+        viewModel.signUp(nickname, password,email,name)
     }
 
     val buttonNextClickFirst = {
@@ -53,7 +53,7 @@ fun SignUpScreen(
             setNickname = {
                 nickname = it
             },
-            name = nickname,
+            name = name,
             setName = {
                 name = it
             },
