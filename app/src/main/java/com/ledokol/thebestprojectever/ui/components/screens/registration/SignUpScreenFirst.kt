@@ -43,7 +43,7 @@ fun SignUpScreenFirst(
     val (password,setPassword) = remember{ mutableStateOf("") }
 
     val buttonClick = {
-        viewModel.signUp(nickname, password)
+//        viewModel.signUp()
         navController.navigate("signup_screen_second") {
             popUpTo("signup_screen_second")
             launchSingleTop = true

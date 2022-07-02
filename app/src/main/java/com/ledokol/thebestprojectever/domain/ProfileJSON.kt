@@ -8,4 +8,8 @@ data class ProfileJSON(
     var nickname: String?,
     @field:Json(name = "password")
     var password: String?,
+    @field:Json(name = "email")
+    var email: String?,
+    @field:Json(name = "name")
+    var name: String?,
 )
