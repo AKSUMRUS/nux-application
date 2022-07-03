@@ -15,6 +15,8 @@ data class Game(
     val gamePackage: String,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "category")
+    val category: Int,
     @ColumnInfo(name = "icon")
     val icon: Bitmap?
 )

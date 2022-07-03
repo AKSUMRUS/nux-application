@@ -9,7 +9,9 @@ import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.PowerManager
@@ -84,34 +86,41 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-//                if (info.flags and ApplicationInfo.FLAG_SYSTEM === 1) {
-//                    // System application
-//                } else {
-//                    Log.d("INSTALLEDAPPS", info.packageName+" "+info.category.toString())
-//
-//                    // Installed by user
-//                }
                 if(info.category == ApplicationInfo.CATEGORY_GAME){
                     installedApps.add(info)
                 }
             }
+
             Log.d("INSTALLEDAPPS", installedApps.toString())
             return installedApps
         }
 
-        fun getIcon(game: Game): ImageBitmap{
-//            Log.d("INSTALLEDAPPS", game.icon.toString())
-//            try{
-                return ImageBitmap(0,0)
-//            return null
-//            }catch (e: ClassCastException){
-//            }
+        @RequiresApi(VERSION_CODES.O)
+        fun convertListApplicationToListGame(packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
+            val newGames: MutableList<Game> = ArrayList()
 
+            for (game in games) {
+                val packageName = game.packageName
+                val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
+                var bitmapIcon: Bitmap
+                if(applicationIcon.getIntrinsicWidth() <= 0 || applicationIcon.getIntrinsicHeight() <= 0) {
+                    bitmapIcon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+                } else {
+                    bitmapIcon = Bitmap.createBitmap(applicationIcon.getIntrinsicWidth(), applicationIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+                }
+                newGames.add(
+                    Game(
+                        packageName,
+                        getApplicationLabel(packageManager,game),
+                        game.category,
+                        bitmapIcon,
+                    )
+                )
+            }
+
+            return newGames
         }
 
-        fun applicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String {
-            return p.getApplicationLabel(packageInfo).toString()
-        }
     }
 
     public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
@@ -176,6 +185,21 @@ class GamesStatistic{
     }
 
 }
+
+fun getApplicationIcon(game: Game): ImageBitmap{
+//            Log.d("INSTALLEDAPPS", game.icon.toString())
+//            try{
+    return ImageBitmap(0,0)
+//            return null
+//            }catch (e: ClassCastException){
+//            }
+
+}
+
+fun getApplicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String {
+    return p.getApplicationLabel(packageInfo).toString()
+}
+
 
 @SuppressLint("WrongConstant")
 @OptIn(ExperimentalPermissionsApi::class)
@@ -247,7 +271,7 @@ fun UserGames() {
                             )
 
                             Text(
-                                text = GamesStatistic.applicationLabel(packageManager, app),
+                                text = getApplicationLabel(packageManager, app),
                             )
                             Text(
                                 text = app.packageName,

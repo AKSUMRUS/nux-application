@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
         repository.insertProfile(profile)
     }
 
-    fun login(nickname: String,password: String){
+    fun login(nickname: String, password: String){
         val profileCall : Call<Profile> = api.login(
             nickname = nickname,
             password = password
@@ -65,6 +65,7 @@ class MainViewModel @Inject constructor(
                     insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password,email = email, name = name))
                 }
                 else{
+
                     Log.e("Err",response.code().toString())
                 }
             }

@@ -31,6 +31,12 @@ class GamesViewModel @Inject constructor(
         }
     }
 
+    fun insertGames(games: List<Game>){
+        for (game in games){
+            insertGame(game)
+        }
+    }
+
 
     fun getGames(
         query: String = state.searchQuery.lowercase()
