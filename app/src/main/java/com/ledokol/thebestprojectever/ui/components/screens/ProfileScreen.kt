@@ -3,17 +3,18 @@ package com.ledokol.thebestprojectever.ui.components.screens
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.provider.Settings
-import android.util.Log
+import androidx.annotation.NonNull
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -22,24 +23,20 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.GradientButton
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.molecules.UserGames
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
 import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
+
 
 class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
 
@@ -52,8 +49,24 @@ class GameProfile(private val packageName: String, val name: String = "Name", va
     }
 }
 
-fun getIcon(packageManager: PackageManager, packageName: String): ImageBitmap {
-    return (packageManager.getApplicationIcon(packageName) as BitmapDrawable).bitmap.asImageBitmap()
+fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
+    val icon: Drawable = (packageManager.getApplicationIcon(packageName))
+//    if (icon == null)
+//        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));
+    return getBitmapFromDrawable(icon)
+}
+
+@NonNull
+private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
+    val bmp: Bitmap = Bitmap.createBitmap(
+        drawable.intrinsicWidth,
+        drawable.intrinsicHeight,
+        Bitmap.Config.ARGB_8888
+    )
+    val canvas = Canvas(bmp)
+    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight())
+    drawable.draw(canvas)
+    return bmp
 }
 
 
