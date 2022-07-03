@@ -67,14 +67,14 @@ class UserViewModel @Inject constructor(
         fetchRemote: Boolean = false
     ) {
 
-        Log.e("ACCESS VIEW MODEL",accessToken)
+        Log.e("ACCESS VIEW MODEL GET USERS",accessToken)
 
         viewModelScope.launch {
             repository.getUsers(fetchFromRemote = fetchRemote, accessToken = accessToken,query = query)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
-                            Log.e("USER VIEW MODEL","SUCCESS")
+                            Log.e("USER VIEW MODEL  GET USERS","SUCCESS")
                             result.data.let { users ->
                                 state = state.copy(
                                     users = users

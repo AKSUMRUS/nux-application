@@ -71,7 +71,9 @@ class MyService : Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         //create a intent that you want to start again..
         val intent = Intent(applicationContext, MyService::class.java)
-        val pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_ONE_SHOT)
+        intent.action = Intent.ACTION_MAIN;
+
+        val pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent
@@ -87,7 +89,7 @@ class MyService : Service() {
         }
 
         intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         var builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -97,7 +99,7 @@ class MyService : Service() {
             .setContentText("Ваши данные в безопасности")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
+            .setAutoCancel(false)
             .setWhen(System.currentTimeMillis());
 
 

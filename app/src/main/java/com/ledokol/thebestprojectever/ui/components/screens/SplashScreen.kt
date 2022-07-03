@@ -1,15 +1,22 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.navigation.NavController
+import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import kotlinx.coroutines.delay
 
 @Composable
@@ -18,7 +25,7 @@ fun SplashScreen(
     viewModel: MainViewModel
 ) {
     LaunchedEffect(key1 = true){
-        delay(1000)
+        delay(1500)
         navController.navigate("start_registration_screen"){
             popUpTo("start_registration_screen"){
                 inclusive = true
@@ -27,10 +34,15 @@ fun SplashScreen(
         }
     }
     Column(
+        modifier = Modifier.background(MaterialTheme.colors.background)
     ) {
-        Body1(text = "Splash Screen", modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
+        HeadlineH4(text = stringResource(id = R.string.hello_splash_screen),
+            color = MaterialTheme.colors.primary,
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentSize(Alignment.Center)
+        ,
+            fontWeight = W500,
         )
 
     }

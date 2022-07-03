@@ -11,7 +11,8 @@ import retrofit2.http.*
 import javax.inject.Singleton
 
 
-interface RetrofitServices {
+interface
+RetrofitServices {
 
     @FormUrlEncoded
     @POST("token")
