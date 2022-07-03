@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7afa917d3e27398c98aeb12e1fd6b2b6",
+    "identityHash": "d6575b381075ba93de07b260a8729670",
     "entities": [
       {
         "tableName": "profile",
@@ -76,7 +76,7 @@
       },
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`package` TEXT NOT NULL, `name` TEXT NOT NULL, `icon` BLOB, PRIMARY KEY(`package`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`package` TEXT NOT NULL, `name` TEXT NOT NULL, `category` INTEGER NOT NULL, `icon` BLOB, PRIMARY KEY(`package`))",
         "fields": [
           {
             "fieldPath": "gamePackage",
@@ -88,6 +88,12 @@
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -110,7 +116,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7afa917d3e27398c98aeb12e1fd6b2b6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd6575b381075ba93de07b260a8729670')"
     ]
   }
 }
