@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -35,32 +36,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startService(intentService)
+        if (!isMyServiceRunning(MyService::class.java)) {
+            Log.e("START SERVICE RUNNING","START SERVICE")
+            startForegroundService(intentService)
+        }
 
-        startService(intentService)
+
         setContent {
             TheBestProjectEverTheme {
-
-//                val owner = LocalViewModelStoreOwner.current
-
                 val navController = rememberNavController()
-//
-//                owner?.let {
-//                    val viewModel: MainViewModel = viewModel(
-//                        it,
-//                        "MainViewModel",
-//                        MainViewModelFactory(
-//                            LocalContext.current.applicationContext
-//                                    as Application
-//                        )
-//                    )
-                    // A surface container using the 'background' color from the theme
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                         StartNavigation(
                             navController = navController
                         )
                     }
-//                }
             }
         }
+    }
+
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Int.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
     }
 }

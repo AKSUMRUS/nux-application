@@ -25,6 +25,12 @@ class GamesViewModel @Inject constructor(
         getGames()
     }
 
+    fun clearGames(){
+        viewModelScope.launch {
+            repository.clearGames()
+        }
+    }
+
     fun insertGame(game : Game){
         viewModelScope.launch {
             repository.insertGame(game)

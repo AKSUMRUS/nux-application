@@ -32,15 +32,15 @@ class MyService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        notificationManager =
-            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+//        notificationManager =
+//            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val packageManager: PackageManager = context.packageManager
         createNotification()
 
-        doTask(packageManager)
+//        doTask(packageManager)
         return START_STICKY;
     }
 
@@ -96,7 +96,7 @@ class MyService : Service() {
             .setContentTitle("TheBestProjectEver работает...")
             .setContentText("Ваши данные в безопасности")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
+//            .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setWhen(System.currentTimeMillis());
 
@@ -128,7 +128,7 @@ class MyService : Service() {
         super.onDestroy()
 
         //Removing any notifications
-        notificationManager!!.cancel(NOTIFICATION_ID)
+//        notificationManager!!.cancel(NOTIFICATION_ID)
 
         //Disabling service
         stopSelf()

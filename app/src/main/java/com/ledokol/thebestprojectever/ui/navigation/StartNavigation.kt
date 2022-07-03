@@ -136,7 +136,10 @@ fun StartNavigation(
                             QuickGameScreen(viewModel = gamesViewModel)
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
-                            ProfileScreen(viewModel = viewModel)
+                            ProfileScreen(
+                                mainViewModel = viewModel,
+                                gamesViewModel = gamesViewModel,
+                            )
                         }
                         composable(BottomNavItemMain.Friends.screen_route) {
                             val userViewModel = hiltViewModel<UserViewModel>()

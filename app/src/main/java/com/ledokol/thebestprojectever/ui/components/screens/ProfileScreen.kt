@@ -7,8 +7,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.provider.Settings
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -28,11 +30,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
+import java.lang.Exception
 import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -50,6 +54,11 @@ class GameProfile(private val packageName: String, val name: String = "Name", va
 }
 
 fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
+//    try{
+//
+//    }catch (e: Exception){
+//        return Bitmap.createBitmap(0,0,)
+//    }
     val icon: Drawable = (packageManager.getApplicationIcon(packageName))
 //    if (icon == null)
 //        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));
@@ -70,12 +79,14 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
-    viewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    gamesViewModel: GamesViewModel,
 ){
     val context = LocalContext.current
-    val gamesProfiles = remember{ mutableStateListOf<GameProfile>() }
+    val games = gamesViewModel.state.games
 
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val checkPermission = remember{ mutableStateOf(false) }
@@ -85,15 +96,23 @@ fun ProfileScreen(
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
-                    gamesProfiles.clear()
-                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                    gamesViewModel.insertGames(
+                        GamesStatistic.convertListApplicationToListGame(
+                            context.packageManager,
+                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
+                        )
+                    )
                 }
             }else if (event == Lifecycle.Event.ON_RESUME) {
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
-                    gamesProfiles.clear()
-                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                    gamesViewModel.insertGames(
+                        GamesStatistic.convertListApplicationToListGame(
+                            context.packageManager,
+                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
+                        )
+                    )
                 }
             }
         }
@@ -120,7 +139,7 @@ fun ProfileScreen(
         Button(
             text = stringResource(id = R.string.logout),
             onClick = {
-                viewModel.clearProfile()
+                mainViewModel.clearProfile()
             }
         )
 
@@ -134,7 +153,7 @@ fun ProfileScreen(
                 Text("Получить разрешение")
             }
         }else{
-            UserOverviewProfile(gameProfiles = gamesProfiles)
+            UserOverviewProfile(games = games)
 //            UserGames()
         }
     }
