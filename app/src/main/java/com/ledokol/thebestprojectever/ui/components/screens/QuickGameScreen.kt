@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
@@ -98,9 +99,10 @@ fun GridGames(games: List<Game>) {
                 GameInQuickGames(
                     packageName = "fdfdfd",
                     icon = getIcon(
+                        context = context,
                         packageManager = context.packageManager,
                         packageName = game.gamePackage,
-                    ),
+                    )!!.asImageBitmap(),
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous)
                 )
             }

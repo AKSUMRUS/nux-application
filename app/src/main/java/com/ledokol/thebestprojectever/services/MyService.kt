@@ -10,13 +10,11 @@ import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.Nullable
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.screens.toast
 
 
 class MyService : Service() {
@@ -33,6 +31,9 @@ class MyService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        notificationManager =
+            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -57,10 +58,8 @@ class MyService : Service() {
 
             if(activeApp==null){
                 logApps("Сейчас нету запущенных приложений")
-//                toast("Сейчас нету запущенных приложений")
             }else{
                 logApps("Сейчас запущено приложение $activeApp")
-//                toast("Сейчас запущено приложение $activeApp")
             }
             runnable?.let { handler.postDelayed(it, 3000) }
         }
@@ -81,7 +80,6 @@ class MyService : Service() {
     }
 
     private fun createNotification() {
-//        toast("Start notification")
         val context: Context = this
 
         val intent = Intent(this, MainActivity::class.java).apply {
@@ -89,7 +87,7 @@ class MyService : Service() {
         }
 
         intent.setAction(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         var builder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -130,7 +128,7 @@ class MyService : Service() {
         super.onDestroy()
 
         //Removing any notifications
-        NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID)
+        notificationManager!!.cancel(NOTIFICATION_ID)
 
         //Disabling service
         stopSelf()
