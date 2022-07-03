@@ -25,6 +25,7 @@
     <string name = "profile_name">Твое имя (для уведомлений)</string>
     <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
+    <string name = "logout">Выйти</string>
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
@@ -36,7 +37,8 @@
 
 <!--Common-->
     <string name = "back">Назад</string>
-    <string name = "enter_nickname_search">Введи ик</string>
+    <string name = "enter_nickname_search">Введи ник</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
+    <string name = "hello_splash_screen">Добро пожаловать!</string>
 </resources>

@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -101,6 +102,13 @@ fun ProfileScreen(
             name = "Гордей",
             cntGames = 5,
             cntFriends = 17,
+        )
+
+        Button(
+            text = stringResource(id = R.string.logout),
+            onClick = {
+                viewModel.clearProfile()
+            }
         )
 
         if(!checkPermission.value){

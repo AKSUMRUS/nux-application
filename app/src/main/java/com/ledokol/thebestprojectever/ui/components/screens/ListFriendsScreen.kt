@@ -36,6 +36,8 @@ fun ListFriendsScreen(
     val state = userViewModel.state
     val isRefreshing = state.isRefreshing
 
+    userViewModel.getUsers()
+
     fun onClick(
         navController: NavController,
         nickname: String,
