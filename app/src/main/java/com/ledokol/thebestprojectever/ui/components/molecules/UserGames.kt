@@ -173,9 +173,9 @@ class GamesStatistic{
             try{
                 val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
 //                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
-//                if(application.category == ApplicationInfo.CATEGORY_SOCIAL){
+                if(application.category == ApplicationInfo.CATEGORY_SOCIAL){
                     games.add(value)
-//                }
+                }
             }catch (e: PackageManager.NameNotFoundException){
                 Log.d("APPLICATION_GAME", key + " Такой пакет не найден")
             }

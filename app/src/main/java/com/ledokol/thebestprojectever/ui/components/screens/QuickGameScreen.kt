@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -30,7 +31,6 @@ import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 fun QuickGameScreen(
     viewModel: GamesViewModel
 ){
-    val context = LocalContext.current
     val games = viewModel.state.games
 //    val games = GamesStatistic.getInstalledAppGamesList(context.packageManager)
 
