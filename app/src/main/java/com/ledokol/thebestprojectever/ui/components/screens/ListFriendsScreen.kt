@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,7 +37,7 @@ fun ListFriendsScreen(
     val state = userViewModel.state
     val isRefreshing = state.isRefreshing
 
-    userViewModel.getUsers()
+//    userViewModel.getUsers()
 
     fun onClick(
         navController: NavController,
@@ -50,6 +51,7 @@ fun ListFriendsScreen(
     }
 
     if(state.isRefreshing){
+        Log.e("STATE",state.toString())
         userViewModel.onEvent(UserEvent.Refresh)
     }
         Column(
@@ -100,10 +102,10 @@ fun ListFriendsScreen(
 @Preview
 fun ListFriendsScreen_preview(){
     val state = mutableListOf<User>(
-        User(nickname = "@Pashka"),
-        User(nickname = "@Gordeyka"),
-        User(nickname = "@Rita"),
-        User(nickname = "@Daniilka"),
+//        User(nickname = "@Pashka"),
+//        User(nickname = "@Gordeyka"),
+//        User(nickname = "@Rita"),
+//        User(nickname = "@Daniilka"),
     )
     LazyColumn(
         content = {

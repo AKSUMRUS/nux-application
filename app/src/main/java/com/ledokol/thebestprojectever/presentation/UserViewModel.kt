@@ -31,7 +31,7 @@ class UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
-                state = state.copy(isRefreshing = true)
+//                state = state.copy(isRefreshing = true)
                 getUsers(fetchRemote = true)
                 state = state.copy(isRefreshing = false)
             }
@@ -44,9 +44,7 @@ class UserViewModel @Inject constructor(
                 }
             }
             is UserEvent.GetFriendUser -> {
-                viewModelScope.launch {
-                    getUser(nickname = event.nickname)
-                }
+                getUser(nickname = event.nickname)
             }
         }
 
@@ -67,19 +65,17 @@ class UserViewModel @Inject constructor(
         fetchRemote: Boolean = false
     ) {
 
-        Log.e("ACCESS VIEW MODEL GET USERS",accessToken)
-
         viewModelScope.launch {
             repository.getUsers(fetchFromRemote = fetchRemote, accessToken = accessToken,query = query)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
-                            Log.e("USER VIEW MODEL  GET USERS","SUCCESS")
                             result.data.let { users ->
                                 state = state.copy(
                                     users = users
                                 )
                             }
+                            Log.e("USER VIEW MODEL  GET USERS",state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
@@ -108,6 +104,7 @@ class UserViewModel @Inject constructor(
                                     friendUser = user
                                 )
                             }
+                            Log.e("User View Model Friend",state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {

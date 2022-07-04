@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "297120773646",
+    "project_id": "ledokol-it",
+    "storage_bucket": "ledokol-it.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297120773646:android:013ce92a4539d9a7712e5f",
+        "android_client_info": {
+          "package_name": "com.ledokol.thebestprojectever"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297120773646-rbsri1an5a1069hjda71fpdpbr1oc837.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ledokol.thebestprojectever",
+            "certificate_hash": "8f99904e113aa87fb0e15769b61f54cd4d4593e4"
+          }
+        },
+        {
+          "client_id": "297120773646-mkga5dkhv80jcfeoqlom9npqml5hglj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6nXVC36xd557L0g7Ufejqh3wBFXCLU_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297120773646-mkga5dkhv80jcfeoqlom9npqml5hglj2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
