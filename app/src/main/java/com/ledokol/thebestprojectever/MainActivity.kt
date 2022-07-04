@@ -16,6 +16,7 @@ import com.google.android.gms.common.wrappers.InstantApps
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.services.MyService
+import com.ledokol.thebestprojectever.ui.components.screens.TestScreen
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             analytics = mFirebaseAnalytics
                         )
+//                        TestScreen()
                     }
 //                }
             }

@@ -32,7 +32,6 @@ fun QuickGameScreen(
     viewModel: GamesViewModel
 ){
     val games = viewModel.state.games
-//    val games = GamesStatistic.getInstalledAppGamesList(context.packageManager)
 
     Column(
         modifier = Modifier
@@ -40,7 +39,6 @@ fun QuickGameScreen(
             .background(
                 MaterialTheme.colors.background
             )
-//            .verticalScroll(remem berScrollState())
     ) {
         games?.let { GridGames(it) }
 //        LazyColumn(
