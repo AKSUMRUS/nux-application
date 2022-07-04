@@ -25,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
@@ -43,7 +44,8 @@ import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRe
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StartNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    analytics: FirebaseAnalytics
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
@@ -65,7 +67,7 @@ fun StartNavigation(
     context.startForegroundService(intentService)
 
     LaunchedEffect(true){
-        userViewModel.getUsers()
+//        userViewModel.getUsers()
         gamesViewModel.insertGames(
             convertListApplicationToListGame(context.packageManager, getInstalledAppGamesList(context.packageManager))
         )
@@ -105,7 +107,7 @@ fun StartNavigation(
         "splash_screen"
     }
     else{
-//        accessToken = profile.value[0].access_token
+        accessToken = profile.value[0].access_token
         BottomNavItemMain.QuickGame.screen_route
     }
 

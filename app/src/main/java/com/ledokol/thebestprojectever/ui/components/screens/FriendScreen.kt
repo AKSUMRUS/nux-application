@@ -1,9 +1,11 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 //import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -26,21 +28,23 @@ fun FriendScreen(
 
     val user = userViewModel.state.friendUser
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Icon(
-            bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
-            contentDescription = "Аноним",
-            modifier = Modifier
-                .heightIn(max = 50.dp)
-                .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
-            tint = Color.Unspecified,
-        )
-        HeadlineH3(
-            text = user!!.nickname,
+        Log.e("User!", user.toString())
 
-        )
-    }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            Icon(
+                bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                contentDescription = "Аноним",
+                modifier = Modifier
+                    .heightIn(max = 50.dp)
+                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
+                tint = Color.Unspecified,
+            )
+            HeadlineH3(
+                text = user!!.nickname,
+
+                )
+        }
 }
