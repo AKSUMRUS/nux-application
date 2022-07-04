@@ -12,13 +12,20 @@ import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.ViewModel
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
+class MyService: Service() {
 
-class MyService : Service() {
-
+    @Inject
+    lateinit var repository: StatusRepository
     private var notificationManager: NotificationManager? = null
     val NOTIFICATION_ID = 4389138
     val CHANNEL_ID = "LEDOKOL"
@@ -31,6 +38,7 @@ class MyService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.e("Service",repository.toString())
 
         notificationManager =
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager

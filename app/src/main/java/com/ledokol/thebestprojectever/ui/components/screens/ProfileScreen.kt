@@ -7,9 +7,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -71,6 +73,7 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
     viewModel: MainViewModel
