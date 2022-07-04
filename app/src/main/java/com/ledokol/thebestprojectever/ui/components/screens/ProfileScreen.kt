@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.provider.Settings
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -85,10 +86,13 @@ fun ProfileScreen(
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
+                    Log.e("PErmission","1")
                     gamesProfiles.clear()
+                    Log.e("PErmission","2")
                     gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
                 }
             }else if (event == Lifecycle.Event.ON_RESUME) {
+                Log.e("PErmission","3")
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
