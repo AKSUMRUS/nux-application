@@ -72,11 +72,11 @@ class MyService : Service() {
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
 
-                statusRepository!!.setStatus(
-                    activeAppInfo.packageName,
-                    getApplicationLabel(packageManager, activeAppInfo),
-                    getApplicationCategory(packageManager, activeAppInfo).toString()
-                )
+//                statusRepository!!.setStatus(
+//                    activeAppInfo.packageName,
+//                    getApplicationLabel(packageManager, activeAppInfo),
+//                    getApplicationCategory(packageManager, activeAppInfo).toString()
+//                )
 //                viewMo
                 logApps("Сейчас запущено приложение $activeAppPackage")
             }
