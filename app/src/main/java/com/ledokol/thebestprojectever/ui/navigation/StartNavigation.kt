@@ -106,10 +106,12 @@ fun StartNavigation(
 
     val start: String = if(profile.value.isEmpty()){
         "splash_screen"
+//        "test"
     }
     else{
         accessToken = profile.value[0].access_token
         BottomNavItemMain.QuickGame.screen_route
+//        "test"
     }
 
     Log.e("ACCESS",accessToken)
@@ -162,6 +164,10 @@ fun StartNavigation(
                                 navController = navController,
                                 userViewModel = userViewModel
                             )
+                        }
+
+                        composable("test"){
+                            TestScreen()
                         }
                     })
             }
