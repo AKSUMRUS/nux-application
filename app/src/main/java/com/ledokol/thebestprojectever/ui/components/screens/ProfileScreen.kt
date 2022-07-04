@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.provider.Settings
+import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -54,11 +55,6 @@ class GameProfile(private val packageName: String, val name: String = "Name", va
 }
 
 fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
-//    try{
-//
-//    }catch (e: Exception){
-//        return Bitmap.createBitmap(0,0,)
-//    }
     val icon: Drawable = (packageManager.getApplicationIcon(packageName))
 //    if (icon == null)
 //        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));

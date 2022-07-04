@@ -46,7 +46,7 @@ fun ListFriendsScreen(
         userViewModel.onEvent(UserEvent.GetFriendUser(nickname = nickname))
         navController.navigate("friend_screen") {
             popUpTo("friend_screen")
-            launchSingleTop = true
+//            launchSingleTop = true
         }
     }
 

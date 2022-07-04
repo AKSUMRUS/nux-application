@@ -13,25 +13,24 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
-import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationCategory
-import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
 import dagger.hilt.android.AndroidEntryPoint
-
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyService : Service() {
+class MyService: Service() {
 
+    @Inject
+    lateinit var repository: StatusRepository
     private var notificationManager: NotificationManager? = null
     val NOTIFICATION_ID = 4389138
     val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
-    val statusRepository: StatusRepository? = null
 
     @Nullable
     override fun onBind (intent: Intent?): IBinder? {
@@ -40,14 +39,13 @@ class MyService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        Log.e("Service",repository.toString())
 
-//        statusRepository = StatusRepository()
-//        notificationManager =
-//            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager =
+            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         val packageManager: PackageManager = context.packageManager
         createNotification()
 

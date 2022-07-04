@@ -6,6 +6,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 //import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -26,13 +28,15 @@ fun FriendScreen(
     userViewModel: UserViewModel
 ){
 
-    val user = userViewModel.state.friendUser
+    val state = userViewModel.state
 
-        Log.e("User!", user.toString())
-
-        Column(
+    Log.e("FRiend",state.toString())
+    if(state.friendUser != null) {
+        Row(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(start = 20.dp, end = 20.dp, top = 120.dp, bottom = 10.dp)
+                .padding(10.dp)
         ) {
             Icon(
                 bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
@@ -43,8 +47,9 @@ fun FriendScreen(
                 tint = Color.Unspecified,
             )
             HeadlineH3(
-                text = user!!.nickname,
+                text = state.friendUser.nickname,
 
                 )
         }
+    }
 }

@@ -58,6 +58,7 @@ class GamesViewModel @Inject constructor(
                                         games = games
                                     )
                                 }
+                                Log.e("GAMES",state.toString())
                             }
                             is Resource.Error -> Unit
                             is Resource.Loading -> {
