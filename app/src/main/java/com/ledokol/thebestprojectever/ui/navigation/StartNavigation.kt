@@ -61,13 +61,14 @@ fun StartNavigation(
 
 //    statusViewModel.setS
 //    statusViewModel.se
-    val intentService = Intent(context, MyService::class.java)
-    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-    context.startForegroundService(intentService)
+//    val intentService = Intent(context, MyService::class.java)
+//    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//    context.startForegroundService(intentService)
 
     LaunchedEffect(true){
 //        userViewModel.getUsers()
+        gamesViewModel.clearGames()
         gamesViewModel.insertGames(
             convertListApplicationToListGame(context.packageManager, getInstalledAppGamesList(context.packageManager))
         )

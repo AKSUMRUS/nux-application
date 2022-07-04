@@ -36,10 +36,10 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        startService(intentService)
+        startForegroundService(intentService)
 
         val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 

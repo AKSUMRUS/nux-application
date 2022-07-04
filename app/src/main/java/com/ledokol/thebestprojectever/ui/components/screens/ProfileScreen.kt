@@ -90,12 +90,14 @@ fun ProfileScreen(
 
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val checkPermission = remember{ mutableStateOf(false) }
-    DisposableEffect(lifecycleOwner) {
+
+    DisposableEffect(lifecycleOwner, checkPermission) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
+                    gamesViewModel.clearGames()
                     gamesViewModel.insertGames(
                         GamesStatistic.convertListApplicationToListGame(
                             context.packageManager,
@@ -107,6 +109,7 @@ fun ProfileScreen(
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
+                    gamesViewModel.clearGames()
                     gamesViewModel.insertGames(
                         GamesStatistic.convertListApplicationToListGame(
                             context.packageManager,

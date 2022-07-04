@@ -53,7 +53,7 @@ class RoomModule {
     @Provides
     @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-        val BASE_URL = "http://192.168.248.142:8080/"
+        val BASE_URL = "http://192.168.7.76:8080/"
 //        val BASE_URL = "http://10.0.2.2:8080/"
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
