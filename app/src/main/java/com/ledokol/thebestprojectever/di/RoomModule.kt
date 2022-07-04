@@ -48,8 +48,12 @@ class RoomModule {
 
     @Provides
     @Singleton
+    fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
+
+    @Provides
+    @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-        val BASE_URL = "http://192.168.118.142:8080/"
+        val BASE_URL = "http://192.168.248.142:8080/"
 //        val BASE_URL = "http://10.0.2.2:8080/"
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -82,9 +86,5 @@ class RoomModule {
     fun provideRetrofitServices2(retrofit: Retrofit): RetrofitServices {
         return retrofit.create(RetrofitServices::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
 
 }

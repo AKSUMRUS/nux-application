@@ -30,6 +30,7 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.convertListApplicationToListGame
@@ -46,12 +47,22 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
+//    val statusViewModel = hiltViewModel<StatusViewModel>()
+    val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
+//    val statusViewModel = StatusViewModel::class.java
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
+
+//    statusViewModel.setS
+//    statusViewModel.se
+    val intentService = Intent(context, MyService::class.java)
+    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+    context.startForegroundService(intentService)
 
     LaunchedEffect(true){
         userViewModel.getUsers()

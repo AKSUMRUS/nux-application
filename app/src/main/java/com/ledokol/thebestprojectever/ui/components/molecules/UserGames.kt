@@ -201,6 +201,11 @@ fun getApplicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String
 }
 
 
+@RequiresApi(VERSION_CODES.O)
+fun getApplicationCategory(p: PackageManager, packageInfo: ApplicationInfo): Int {
+    return p.getApplicationInfo(packageInfo.packageName,0).category
+}
+
 @SuppressLint("WrongConstant")
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

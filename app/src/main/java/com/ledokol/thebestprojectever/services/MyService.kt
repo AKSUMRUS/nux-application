@@ -10,19 +10,28 @@ import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.repository.StatusRepository
+import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationCategory
+import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MyService : Service() {
 
     private var notificationManager: NotificationManager? = null
     val NOTIFICATION_ID = 4389138
     val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
+    val statusRepository: StatusRepository? = null
 
     @Nullable
     override fun onBind (intent: Intent?): IBinder? {
@@ -32,15 +41,17 @@ class MyService : Service() {
     override fun onCreate() {
         super.onCreate()
 
+//        statusRepository = StatusRepository()
 //        notificationManager =
 //            this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
         val packageManager: PackageManager = context.packageManager
         createNotification()
 
-//        doTask(packageManager)
+        doTask(packageManager)
         return START_STICKY;
     }
 
@@ -54,12 +65,20 @@ class MyService : Service() {
         val handler = Handler()
         var runnable: Runnable? = null
         runnable = Runnable {
-            val activeApp = gamesStatistic.getActiveApp(context, packageManager)
+            val activeAppPackage = gamesStatistic.getActiveApp(context, packageManager)
 
-            if(activeApp==null){
+            if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
             }else{
-                logApps("Сейчас запущено приложение $activeApp")
+                val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
+
+                statusRepository!!.setStatus(
+                    activeAppInfo.packageName,
+                    getApplicationLabel(packageManager, activeAppInfo),
+                    getApplicationCategory(packageManager, activeAppInfo).toString()
+                )
+//                viewMo
+                logApps("Сейчас запущено приложение $activeAppPackage")
             }
             runnable?.let { handler.postDelayed(it, 3000) }
         }
