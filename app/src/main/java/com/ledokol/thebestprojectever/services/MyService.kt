@@ -18,7 +18,10 @@ import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
+import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationCategory
+import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,9 +31,10 @@ class MyService: Service() {
     @Inject
     lateinit var repository: StatusRepository
     private var notificationManager: NotificationManager? = null
-    val NOTIFICATION_ID = 4389138
+    val NOTIFICATION_ID = 101
     val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
+    val statusRepository: StatusRepository? = null
 
     @Nullable
     override fun onBind (intent: Intent?): IBinder? {
@@ -45,7 +49,9 @@ class MyService: Service() {
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+
         val packageManager: PackageManager = context.packageManager
         createNotification()
 
@@ -57,6 +63,7 @@ class MyService: Service() {
         Log.d("APP_ACTIVE", text)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
 
@@ -69,16 +76,21 @@ class MyService: Service() {
                 logApps("Сейчас нету запущенных приложений")
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
+                val packageApp = activeAppInfo.packageName
+                val labelApp = getApplicationLabel(packageManager, activeAppInfo)
+                val categoryApp = getApplicationCategory(packageManager, activeAppInfo).toString()
 
-//                statusRepository!!.setStatus(
-//                    activeAppInfo.packageName,
-//                    getApplicationLabel(packageManager, activeAppInfo),
-//                    getApplicationCategory(packageManager, activeAppInfo).toString()
-//                )
+                Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
+
+                repository.setStatus(
+                    packageApp,
+                    labelApp,
+                    categoryApp,
+                )
 //                viewMo
                 logApps("Сейчас запущено приложение $activeAppPackage")
             }
-            runnable?.let { handler.postDelayed(it, 3000) }
+            runnable?.let { handler.postDelayed(it, 5000) }
         }
 
         handler.postDelayed(runnable, 3000)
@@ -86,6 +98,8 @@ class MyService: Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         //create a intent that you want to start again..
+        super.onTaskRemoved(rootIntent)
+
         val intent = Intent(applicationContext, MyService::class.java)
         intent.action = Intent.ACTION_MAIN;
 
@@ -93,19 +107,18 @@ class MyService: Service() {
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent
-        super.onTaskRemoved(rootIntent)
     }
 
     private fun createNotification() {
         val context: Context = this
 
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+//        val intent = Intent(this, MainActivity::class.java).apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+//
+//        intent.setAction(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         var builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setOngoing(true)
@@ -131,7 +144,7 @@ class MyService: Service() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = CHANNEL_ID
+            val name = "Ledokol"
             val descriptionText = "Уведомление"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
@@ -145,7 +158,7 @@ class MyService: Service() {
         super.onDestroy()
 
         //Removing any notifications
-//        notificationManager!!.cancel(NOTIFICATION_ID)
+        notificationManager!!.cancel(NOTIFICATION_ID)
 
         //Disabling service
         stopSelf()
