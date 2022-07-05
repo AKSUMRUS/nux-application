@@ -39,10 +39,12 @@ RetrofitServices {
     @PUT("status/set/android")
     fun setStatus(
         @Body status: StatusJSON
-    ): Call<Void?>?
+    )
+            : Call<StatusJSON>
 
     @PUT("status/leave")
     fun leaveStatus(
 
     )
+            : Call<StatusJSON>
 }
