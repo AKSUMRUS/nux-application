@@ -39,6 +39,7 @@ class MyService: Service() {
     override fun onCreate() {
         super.onCreate()
         Log.e("Service",repository.toString())
+//        repository.setStatus("","","")
 
         notificationManager =
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager

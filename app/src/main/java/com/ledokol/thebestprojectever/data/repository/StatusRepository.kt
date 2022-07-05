@@ -1,8 +1,12 @@
 package com.ledokol.thebestprojectever.data.repository
 
+import android.util.Log
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.squareup.moshi.Json
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +21,16 @@ class StatusRepository @Inject constructor(
         name : String,
         androidCategory : String
     ){
-        api.setStatus(StatusJSON(androidPackageName = androidPackageName,name = name,androidCategory = androidCategory))
+        api.setStatus(StatusJSON(androidPackageName = androidPackageName,name = name,androidCategory = androidCategory)).enqueue(object : Callback<StatusJSON> {
+            override fun onResponse(call: Call<StatusJSON>, response: Response<StatusJSON>) {
+                Log.e("SetStatus","Status has set")
+            }
+
+            override fun onFailure(call: Call<StatusJSON>, t: Throwable) {
+                Log.e("SetStatus",t.toString())
+            }
+
+        })
     }
 
     fun leaveStatus(){
