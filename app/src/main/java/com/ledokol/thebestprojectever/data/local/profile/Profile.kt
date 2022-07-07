@@ -19,6 +19,8 @@ data class Profile(
     var email: String,
     @ColumnInfo(name = "name")
     var name: String,
+//    @ColumnInfo(name = "lastGame")
+//    var lastGame: String,
 
 //    var userGames: List<ApplicationInfo>,
 

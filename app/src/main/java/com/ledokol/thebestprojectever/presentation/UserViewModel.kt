@@ -21,7 +21,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @HiltViewModel
-class UserViewModel @Inject constructor(
+class
+UserViewModel @Inject constructor(
     private val repository: UsersRepository,
 ): ViewModel() {
 

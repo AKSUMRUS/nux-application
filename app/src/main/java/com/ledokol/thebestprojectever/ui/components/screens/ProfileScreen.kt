@@ -14,6 +14,8 @@ import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -26,16 +28,17 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
-import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
-import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
+import com.ledokol.thebestprojectever.ui.components.molecules.*
+import java.lang.Exception
 import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -76,31 +79,41 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
-    viewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    gamesViewModel: GamesViewModel,
 ){
     val context = LocalContext.current
-    val gamesProfiles = remember{ mutableStateListOf<GameProfile>() }
+    val games = gamesViewModel.state.games
+    val packageManager = context.packageManager
 
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val checkPermission = remember{ mutableStateOf(false) }
-    DisposableEffect(lifecycleOwner) {
+
+    DisposableEffect(lifecycleOwner, checkPermission) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
-                    Log.e("PErmission","1")
-                    gamesProfiles.clear()
-                    Log.e("PErmission","2")
-                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                    gamesViewModel.clearGames()
+                    gamesViewModel.insertGames(
+                        GamesStatistic.convertListApplicationToListGame(
+                            context.packageManager,
+                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
+                        )
+                    )
                 }
             }else if (event == Lifecycle.Event.ON_RESUME) {
-                Log.e("PErmission","3")
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
-                    gamesProfiles.clear()
-                    gamesProfiles.addAll(GamesStatistic.convertApplicationInfoToClassGame(GamesStatistic.getInstalledAppGamesList(context.packageManager)))
+                    gamesViewModel.clearGames()
+                    gamesViewModel.insertGames(
+                        GamesStatistic.convertListApplicationToListGame(
+                            context.packageManager,
+                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
+                        )
+                    )
                 }
             }
         }
@@ -110,41 +123,69 @@ fun ProfileScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                MaterialTheme.colors.background
+    LazyColumn(content = {
+        item {
+            ProfileTopBlock(
+                mainViewModel = mainViewModel,
             )
-//            .verticalScroll(rememberScrollState())
-    ) {
-        UserInformationProfile(
-            name = "Гордей",
-            cntGames = 5,
-            cntFriends = 17,
-        )
-
-        Button(
-            text = stringResource(id = R.string.logout),
-            onClick = {
-                viewModel.clearProfile()
-            }
-        )
+        }
 
         if(!checkPermission.value){
-            Text("Предоставьте, пожалуйста, доступ!")
-            androidx.compose.material.Button(
-                onClick = {
-                    context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+            item {
+                Text("Предоставьте, пожалуйста, доступ!")
+                androidx.compose.material.Button(
+                    onClick = {
+                        context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                    }
+                ) {
+                    Text("Получить разрешение")
                 }
-            ) {
-                Text("Получить разрешение")
             }
-        }else{
-            UserOverviewProfile(gameProfiles = gamesProfiles)
-//            UserGames()
+        }else if(games!=null){
+            items(games){ game ->
+                GameInList(
+                    name = game.name,
+                    icon = getIcon(context, packageManager, game.gamePackage)!!.asImageBitmap(),
+                    backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
+                )
+            }
         }
-    }
+    })
+
+//    Column(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .background(
+//                MaterialTheme.colors.background
+//            )
+////            .verticalScroll(rememberScrollState())
+//    ) {
+//        UserInformationProfile(
+//            name = "Гордей",
+//            profile = true,
+//        )
+//
+//        Button(
+//            text = stringResource(id = R.string.logout),
+//            onClick = {
+//                mainViewModel.clearProfile()
+//            }
+//        )
+//
+//        if(!checkPermission.value){
+//            Text("Предоставьте, пожалуйста, доступ!")
+//            androidx.compose.material.Button(
+//                onClick = {
+//                    context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+//                }
+//            ) {
+//                Text("Получить разрешение")
+//            }
+//        }else{
+//            UserOverviewProfile(games = games)
+////            UserGames()
+//        }
+//    }
 }
 
 fun Modifier.gradientBackground(colors: List<Color>, angle: Float) = this.then(

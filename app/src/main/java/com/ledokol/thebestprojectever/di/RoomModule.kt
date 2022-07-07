@@ -7,6 +7,7 @@ import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,9 +49,22 @@ class RoomModule {
 
     @Provides
     @Singleton
+    fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
+
+//    @Provides
+//    @Singleton
+//    fun provideGamesDao(myDatabase: MyDatabase) : StatusRepository = myDatabase.gamesDao()
+
+//    @Provides
+//    @Singleton
+//    fun provideStatus(statusRepository: )
+
+
+    @Provides
+    @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-//        val BASE_URL = "http://192.168.118.142:8080/"
-        val BASE_URL = "http://10.0.2.2:8080/"
+        val BASE_URL = "http://192.168.1.67:8080/"
+//        val BASE_URL = "http://10.0.2.2:8080/"
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -82,9 +96,5 @@ class RoomModule {
     fun provideRetrofitServices2(retrofit: Retrofit): RetrofitServices {
         return retrofit.create(RetrofitServices::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
 
 }

@@ -10,26 +10,30 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
 import com.ledokol.thebestprojectever.ui.components.screens.getIcon
 
 @Composable
-fun UserOverviewProfile(gameProfiles: List<GameProfile>){
+fun UserOverviewProfile(games: List<Game>?){
 
     val context: Context = LocalContext.current
     val packageManager = context.packageManager
 
 
-    LazyColumn(
-        content = {
-            items(gameProfiles){ game ->
-                GameInList(
-                    name = game.getName(context,packageManager),
-                    icon = getIcon(context, packageManager, game.name)!!.asImageBitmap(),
-                    backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
-                )
+    if(games!=null){
+        LazyColumn(
+            content = {
+                items(games){ game ->
+                    GameInList(
+                        name = game.name,
+                        icon = getIcon(context, packageManager, game.gamePackage)!!.asImageBitmap(),
+                        backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
+                    )
+                }
             }
-        }
-    )
+        )
+
+    }
 
 }

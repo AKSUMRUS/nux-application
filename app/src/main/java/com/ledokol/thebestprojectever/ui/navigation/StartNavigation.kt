@@ -31,6 +31,7 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.convertListApplicationToListGame
@@ -48,6 +49,9 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
+//    val statusViewModel = hiltViewModel<StatusViewModel>()
+    val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
+//    val statusViewModel = StatusViewModel::class.java
     val viewModel = hiltViewModel<MainViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
@@ -55,8 +59,16 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
 
+//    statusViewModel.setS
+//    statusViewModel.se
+//    val intentService = Intent(context, MyService::class.java)
+//    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//    context.startForegroundService(intentService)
+
     LaunchedEffect(true){
 //        userViewModel.getUsers()
+        gamesViewModel.clearGames()
         gamesViewModel.insertGames(
             convertListApplicationToListGame(context.packageManager, getInstalledAppGamesList(context.packageManager))
         )
@@ -133,7 +145,10 @@ fun StartNavigation(
                             )
                         }
                         composable("friend_screen") {
-                            FriendScreen(userViewModel = userViewModel)
+                            FriendScreen(
+                                navController = navController,
+                                userViewModel = userViewModel
+                            )
                         }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
                             QuickGameScreen(
@@ -142,7 +157,10 @@ fun StartNavigation(
                             )
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
-                            ProfileScreen(viewModel = viewModel)
+                            ProfileScreen(
+                                mainViewModel = viewModel,
+                                gamesViewModel = gamesViewModel,
+                            )
                         }
                         composable(BottomNavItemMain.Friends.screen_route) {
                             userViewModel.accessToken = accessToken

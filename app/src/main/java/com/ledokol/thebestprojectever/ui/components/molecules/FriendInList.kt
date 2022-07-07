@@ -27,7 +27,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 @Composable
 fun FriendInList(name: String, onClick: () -> Unit){
     Box(
-        modifier = Modifier.padding(bottom = 20.dp).height(80.dp).fillMaxWidth().padding(bottom= 0.dp)
+        modifier = Modifier.padding(bottom = 20.dp).height(80.dp).fillMaxWidth().padding(bottom= 0.dp),
     ){
         Image(
             bitmap = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
@@ -39,7 +39,7 @@ fun FriendInList(name: String, onClick: () -> Unit){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
+                .clip(RoundedCornerShape(0))
                 .clickable(onClick = onClick)
                 .padding(10.dp)
         ){

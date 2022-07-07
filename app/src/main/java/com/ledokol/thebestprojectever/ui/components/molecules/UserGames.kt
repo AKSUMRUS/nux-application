@@ -86,7 +86,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_SOCIAL){
+                if(info.category == ApplicationInfo.CATEGORY_GAME){
                     installedApps.add(info)
                 }
             }
@@ -200,6 +200,11 @@ fun getApplicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String
     return p.getApplicationLabel(packageInfo).toString()
 }
 
+
+@RequiresApi(VERSION_CODES.O)
+fun getApplicationCategory(p: PackageManager, packageInfo: ApplicationInfo): Int {
+    return p.getApplicationInfo(packageInfo.packageName,0).category
+}
 
 @SuppressLint("WrongConstant")
 @OptIn(ExperimentalPermissionsApi::class)

@@ -37,9 +37,10 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
+//        startForegroundService(intentService)
         startService(intentService)
 
         val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
@@ -51,21 +52,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TheBestProjectEverTheme {
-
-//                val owner = LocalViewModelStoreOwner.current
-
                 val navController = rememberNavController()
-//
-//                owner?.let {
-//                    val viewModel: MainViewModel = viewModel(
-//                        it,
-//                        "MainViewModel",
-//                        MainViewModelFactory(
-//                            LocalContext.current.applicationContext
-//                                    as Application
-//                        )
-//                    )
-                    // A surface container using the 'background' color from the theme
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                         StartNavigation(
                             navController = navController,
