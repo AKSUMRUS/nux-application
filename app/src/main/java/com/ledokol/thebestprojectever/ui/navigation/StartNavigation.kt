@@ -19,6 +19,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -33,8 +34,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.messaging.FirebaseMessaging
-import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
@@ -171,17 +170,11 @@ fun StartNavigation(
                                 userViewModel = userViewModel
                             )
                         }
-                        composable("choose_friends_quick_game") {
-                            userViewModel.accessToken = accessToken
-                            ChooseFriendsForGame(
-                                navController = navController,
-                                userViewModel = userViewModel,
-                            )
-                        }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
-                            QuickGame(
+                            QuickGameScreen(
+                                viewModel = gamesViewModel,
                                 navController = navController,
-                                viewModel = gamesViewModel
+                                userViewModel = userViewModel
                             )
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {

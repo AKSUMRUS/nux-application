@@ -4,6 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import android.provider.Settings.Global.getString
+import android.content.Context.CLIPBOARD_SERVICE
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -30,6 +32,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
@@ -37,15 +40,15 @@ import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 @Composable
-fun QuickGame(
+fun QuickGameScreen(
+    viewModel: GamesViewModel,
     navController: NavController,
-    viewModel: GamesViewModel
+    userViewModel: UserViewModel
 ){
     val TAG = "FIREBASE MESSAGING"
     val games = viewModel.state.games
     var token by remember{ mutableStateOf("")}
     val context: Context = LocalContext.current
-    var myClipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 
     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
         if (!task.isSuccessful) {
@@ -58,7 +61,7 @@ fun QuickGame(
 
         token = tokenGet
         Log.w(TAG, token)
-//        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
     })
 
     Column(
