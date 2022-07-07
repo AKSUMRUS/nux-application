@@ -41,6 +41,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
+            val data = remoteMessage.data
+//            sendNotification()
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
             if (/* Check if data needs to be processed by long running job */ false) {
