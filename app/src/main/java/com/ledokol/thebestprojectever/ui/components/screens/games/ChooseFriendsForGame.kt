@@ -34,16 +34,7 @@ fun ChooseFriendsForGame(
     navController: NavController,
     userViewModel: UserViewModel
 ){
-    var state = userViewModel.state
-
-    LaunchedEffect(true){
-        userViewModel.getUsers()
-    }
-
-    LaunchedEffect(userViewModel.state){
-        Log.d("SELECTEDUSER","UPDATE")
-        state = userViewModel.state
-    }
+    val state = userViewModel.state
 
     fun onClick(
         navController: NavController,
@@ -94,13 +85,7 @@ fun ChooseFriendsForGame(
                                     name = user.nickname,
                                     clicked = userViewModel.checkSelectedUser(user),
                                     onClick = {
-                                        userViewModel.apply {
-                                            if(checkSelectedUser(user)){
-                                                removeSelectedUser(user)
-                                            }else{
-                                                insertSelectedUser(user)
-                                            }
-                                        }
+                                        userViewModel.onEvent(UserEvent.SelectUser(user))
                                     })
 //                            }
                         }

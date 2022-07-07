@@ -13,18 +13,10 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.lifecycle.ViewModel
-import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
-import com.ledokol.thebestprojectever.presentation.StatusViewModel
-import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationCategory
-import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class MyService: Service() {

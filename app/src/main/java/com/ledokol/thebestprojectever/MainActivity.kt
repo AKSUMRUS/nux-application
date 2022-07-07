@@ -13,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.common.wrappers.InstantApps
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.services.MyService
@@ -34,7 +35,6 @@ class MainActivity : ComponentActivity() {
 
     var intentService: Intent? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,12 +43,14 @@ class MainActivity : ComponentActivity() {
 //        startForegroundService(intentService)
         startService(intentService)
 
+        FirebaseApp.initializeApp(this@MainActivity)
         val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-//        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-//            param(FirebaseAnalytics.Param.SCREEN_NAME, "Open app")
-//            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
-//        }
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "open_app")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
+        }
+
 
         setContent {
             TheBestProjectEverTheme {

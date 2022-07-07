@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ledokol.thebestprojectever.domain.StatusJSON
 
 @Entity(tableName = "users")
 data class User (
@@ -14,5 +15,7 @@ data class User (
     var id: String,
     @ColumnInfo(name = "nickname")
     var nickname: String,
+//    @ColumnInfo(name = "isSelected")
+//    var isSelected: Boolean = false,
 
 )

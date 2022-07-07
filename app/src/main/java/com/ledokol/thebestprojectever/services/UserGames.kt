@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.molecules
+package com.ledokol.thebestprojectever.services
 
 import android.annotation.SuppressLint
 import android.app.AppOpsManager
@@ -64,9 +64,6 @@ private const val flags = PackageManager.GET_META_DATA or
 
 class GamesStatistic{
 
-    init{
-
-    }
 
     companion object{
         fun checkForPermission(context: Context): Boolean {
@@ -90,7 +87,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_GAME){
+                if(info.category == ApplicationInfo.CATEGORY_SOCIAL){
                     installedApps.add(info)
                 }
             }
