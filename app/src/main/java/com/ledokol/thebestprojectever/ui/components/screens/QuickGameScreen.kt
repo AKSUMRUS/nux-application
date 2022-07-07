@@ -1,6 +1,9 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.provider.Settings.Global.getString
 import android.util.Log
 import android.widget.Toast
@@ -91,7 +94,7 @@ fun GridGames(games: List<Game>) {
                 com.ledokol.thebestprojectever.ui.components.atoms.Button(
                     text = "Копировать",
                     onClick = {
-                        myClipboard.setPrimaryClip(ClipData.newPlainText("simple text", text))
+                        myClipboard.setPrimaryClip(ClipData.newPlainText("simple text", "text"))
                     })
             }
         }
