@@ -24,6 +24,7 @@ import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationCate
 import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class MyService: Service() {
@@ -43,18 +44,19 @@ class MyService: Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.e("Service",repository.toString())
+        Log.e("Service onCreate",repository.toString())
 //        repository.setStatus("","","")
+
+        createNotification()
 
         notificationManager =
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(@Nullable intent: Intent?, flags: Int, startId: Int): Int {
 
         val packageManager: PackageManager = context.packageManager
-        createNotification()
 
         doTask(packageManager)
         return START_STICKY;
@@ -104,15 +106,13 @@ class MyService: Service() {
         val intent = Intent(applicationContext, MyService::class.java)
         intent.action = Intent.ACTION_MAIN;
 
-        val pendingIntent = PendingIntent.getService(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent
     }
 
     private fun createNotification() {
-        val context: Context = this
-
 //        val intent = Intent(this, MainActivity::class.java).apply {
 //            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 //        }
@@ -121,7 +121,7 @@ class MyService: Service() {
 //        intent.addCategory(Intent.CATEGORY_LAUNCHER);
 //        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
-        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setOngoing(true)
             .setSmallIcon(R.drawable.anonymous)
             .setContentTitle("TheBestProjectEver работает...")
@@ -136,7 +136,7 @@ class MyService: Service() {
             if (getNotificationChannel(CHANNEL_ID) == null) {
                 createNotificationChannel(context)
             }
-            startForeground(NOTIFICATION_ID, builder.build())
+//            startForeground(Random(2).nextInt(), builder.build())
 //            notify(NOTIFICATION_ID, builder.build())
         }
     }

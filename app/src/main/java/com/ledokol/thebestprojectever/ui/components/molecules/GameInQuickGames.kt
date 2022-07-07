@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,12 +13,21 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GameInQuickGames(packageName: String, icon: ImageBitmap, backgroundImage: ImageBitmap){
+fun GameInQuickGames(
+    packageName: String,
+    icon: ImageBitmap,
+    backgroundImage: ImageBitmap,
+    onClick: () -> Unit,
+){
 
-
-//    Text(text = "fdklfdklfd")
     Row (
-        modifier = Modifier.fillMaxWidth().size(100.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .size(100.dp)
+            .clickable() {
+                onClick()
+            }
+        ,
     ) {
         Image(
             bitmap = icon,

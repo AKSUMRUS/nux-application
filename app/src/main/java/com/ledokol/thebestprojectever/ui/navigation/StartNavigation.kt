@@ -7,25 +7,34 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.messaging.FirebaseMessaging
+import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
@@ -33,9 +42,13 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.services.MyService
+import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic.Companion.getInstalledAppGamesList
+import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.screens.*
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
@@ -93,6 +106,9 @@ fun StartNavigation(
         "friend_screen" -> {
             bottomBarState.value = false
         }
+        "choose_friends_quick_game" -> {
+            bottomBarState.value = true
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -124,7 +140,9 @@ fun StartNavigation(
     ) {
         innerPadding ->
             Box(modifier = Modifier.padding(innerPadding)) {
-                NavHost(navController = navController, startDestination = start,
+                NavHost(
+                    navController = navController,
+                    startDestination = start,
                     builder = {
                         composable("start_registration_screen") {
                             StartRegistrationScreen(navController = navController, viewModel = viewModel)
@@ -150,8 +168,18 @@ fun StartNavigation(
                                 userViewModel = userViewModel
                             )
                         }
+                        composable("choose_friends_quick_game") {
+                            userViewModel.accessToken = accessToken
+                            ChooseFriendsForGame(
+                                navController = navController,
+                                userViewModel = userViewModel,
+                            )
+                        }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
-                            QuickGameScreen(viewModel = gamesViewModel)
+                            QuickGame(
+                                navController = navController,
+                                viewModel = gamesViewModel
+                            )
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
                             ProfileScreen(
@@ -170,7 +198,8 @@ fun StartNavigation(
                         composable("test"){
                             TestScreen()
                         }
-                    })
+                    }
+                )
             }
     }
 }

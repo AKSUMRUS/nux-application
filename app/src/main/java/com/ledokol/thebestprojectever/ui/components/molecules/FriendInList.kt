@@ -25,9 +25,24 @@ import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 //import com.ledokol.thebestprojectever.ui.theme.Background
 
 @Composable
-fun FriendInList(name: String, onClick: () -> Unit){
+fun FriendInList(
+    name: String,
+    onClick: () -> Unit,
+    clicked: Boolean = false,
+){
+    val modifier: Modifier = if (clicked) Modifier
+        .padding(bottom = 20.dp)
+        .height(80.dp)
+        .fillMaxWidth()
+        .border(3.dp, MaterialTheme.colors.primary)
+    else Modifier
+        .padding(bottom = 20.dp)
+        .height(80.dp)
+        .fillMaxWidth()
+
     Box(
-        modifier = Modifier.padding(bottom = 20.dp).height(80.dp).fillMaxWidth().padding(bottom= 0.dp),
+        modifier = modifier
+        ,
     ){
         Image(
             bitmap = ImageBitmap.imageResource(id = R.drawable.sample_background_game),

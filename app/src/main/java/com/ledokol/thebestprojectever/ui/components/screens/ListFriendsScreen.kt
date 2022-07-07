@@ -64,19 +64,22 @@ fun ListFriendsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 100.dp, start = 20.dp, end = 20.dp)
+                    .padding(start = 20.dp, end = 20.dp)
             ) {
-                ScreenTitle(name = stringResource(id = R.string.nav_friends))
-                showSearch(userViewModel = userViewModel)
-//                SwipeRefresh(
-//                    state = rememberSwipeRefreshState(isRefreshing),
-//                    onRefresh = { userViewModel.onEvent(UserEvent.Refresh) },
-//                ) {
+
                     if (state.isLoading) {
                         LoadingView()
                     } else {
                         LazyColumn(
                             content = {
+                                item {
+                                    ScreenTitle(
+                                        name = stringResource(id = R.string.nav_friends),
+                                        modifier = Modifier.padding(top = 110.dp),
+                                    )
+                                    showSearch(userViewModel = userViewModel)
+                                }
+
                                 items(state.users!!.size) { friend ->
                                     val user = state.users[friend]
                                     FriendInList(
@@ -90,11 +93,9 @@ fun ListFriendsScreen(
                                 }
                             },
                         )
-//                    }
                 }
             }
         }
-//    }
 }
 
 
@@ -136,28 +137,5 @@ fun showSearch(
             textSearch = ""
         },
         modifier = Modifier
-//                    .padding(bottom = 20.dp)
-//                    .fillMaxWidth()
-//                    .background(
-//                        MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
-//                        RoundedCornerShape(16.dp)
-//                    )
     )
 }
-
-//@Composable
-//fun Search(
-//    state: UserState,
-//    viewModel: UserViewModel
-//){
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//    ) {
-//        var text by remember { mutableStateOf("") }
-//        TextField(label = "Enter @nickname", text = text, onValueChange = {
-//            text = it
-//            viewModel.onEvent(UserEvent.OnSearchQueryChange(query = text))
-//        })
-//    }
-//}

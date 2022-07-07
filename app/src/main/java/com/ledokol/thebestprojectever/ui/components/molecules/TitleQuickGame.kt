@@ -1,37 +1,40 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
 
 @Composable
-fun ScreenTitle(
-    name: String,
-    description: String? = null,
+fun TitleQuickGame(
+    step: Int,
+    title: String,
+    description: String,
     modifier: Modifier = Modifier,
-) {
+){
 
     Column(
-        modifier = Modifier.padding(bottom = 20.dp).then(modifier),
-    ) {
+        modifier = modifier,
+    ){
+        Body1(
+            text = stringResource(id = R.string.step)+" "+step.toString(),
+            color = MaterialTheme.colors.primary,
+            fontWeight = FontWeight.W500,
+        )
         HeadlineH4(
-            text = name,
+            text = title,
             fontWeight = FontWeight.W700,
         )
-        if(description != null) {
-            Body1(
-                text = description,
-                color = MaterialTheme.colors.onBackground,
-            )
-        }
+        HeadlineH6(
+            text = description,
+            color = MaterialTheme.colors.onBackground
+        )
     }
-
 }

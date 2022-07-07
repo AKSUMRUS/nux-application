@@ -95,6 +95,7 @@ fun ProfileScreen(
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
+                    Log.d("INSTALLEDAPPS", "UPDATE CHECK")
                     gamesViewModel.clearGames()
                     gamesViewModel.insertGames(
                         GamesStatistic.convertListApplicationToListGame(
@@ -107,6 +108,7 @@ fun ProfileScreen(
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
                 if(checkPermission.value){
+                    Log.d("UPDATEGAMES", "UPDATE CHECK")
                     gamesViewModel.clearGames()
                     gamesViewModel.insertGames(
                         GamesStatistic.convertListApplicationToListGame(

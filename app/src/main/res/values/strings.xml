@@ -34,9 +34,15 @@
     <string name="description_quick_game">Выберите игру, в которую вы пойдете играть</string>
     <string name="description_find_crew">Выберите своих тиммейтов</string>
 
+<!--    QuickGame-->
+    <string name="title_game">Игра</string>
+    <string name="description_game">Выбирети</string>
+    <string name="title_crew">Команда</string>
+    <string name="description_crew">Выбирайте своих товарищей по команде вручную</string>
 
 <!--Common-->
     <string name = "back">Назад</string>
+    <string name = "step">Шаг</string>
     <string name = "enter_nickname_search">Введи ник</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
