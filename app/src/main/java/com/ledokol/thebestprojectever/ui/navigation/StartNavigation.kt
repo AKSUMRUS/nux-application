@@ -72,8 +72,11 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
 
-//    statusViewModel.setS
-//    statusViewModel.se
+
+    LaunchedEffect(true){
+        gamesViewModel.getGames()
+    }
+
 //    val intentService = Intent(context, MyService::class.java)
 //    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //
@@ -83,7 +86,7 @@ fun StartNavigation(
 //        userViewModel.getUsers()
         gamesViewModel.clearGames()
         gamesViewModel.insertGames(
-            convertListApplicationToListGame(context.packageManager, getInstalledAppGamesList(context.packageManager))
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
         )
     }
 

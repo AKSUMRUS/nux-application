@@ -116,11 +116,8 @@ fun GridGames(
         items(games) { game ->
             GameInQuickGames(
                 packageName = "fdfdfd",
-                icon = getIcon(
-                    context = context,
-                    packageManager = context.packageManager,
-                    packageName = game.gamePackage,
-                )!!.asImageBitmap(),
+                icon = game.icon!!.asImageBitmap(),
+                imageWide = game.image_wide!!.asImageBitmap(),
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                 onClick = { onClick() },
             )

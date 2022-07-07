@@ -94,28 +94,17 @@ fun ProfileScreen(
             if (event == Lifecycle.Event.ON_START) {
                 checkPermission.value = GamesStatistic.checkForPermission(context)
 
-                if(checkPermission.value){
+                if(checkPermission.value && (gamesViewModel!=null && gamesViewModel.state.games!!.isEmpty())){
                     Log.d("INSTALLEDAPPS", "UPDATE CHECK")
                     gamesViewModel.clearGames()
                     gamesViewModel.insertGames(
                         GamesStatistic.convertListApplicationToListGame(
+                            context,
                             context.packageManager,
                             GamesStatistic.getInstalledAppGamesList(context.packageManager)
                         )
                     )
-                }
-            }else if (event == Lifecycle.Event.ON_RESUME) {
-                checkPermission.value = GamesStatistic.checkForPermission(context)
-
-                if(checkPermission.value){
-                    Log.d("UPDATEGAMES", "UPDATE CHECK")
-                    gamesViewModel.clearGames()
-                    gamesViewModel.insertGames(
-                        GamesStatistic.convertListApplicationToListGame(
-                            context.packageManager,
-                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
-                        )
-                    )
+                    gamesViewModel.getGames()
                 }
             }
         }

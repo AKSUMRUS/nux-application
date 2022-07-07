@@ -10,6 +10,7 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build.VERSION
@@ -38,10 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -50,6 +53,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
+import com.ledokol.thebestprojectever.ui.components.screens.getIcon
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -96,24 +100,31 @@ class GamesStatistic{
         }
 
         @RequiresApi(VERSION_CODES.O)
-        fun convertListApplicationToListGame(packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
+        fun convertListApplicationToListGame(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
             val newGames: MutableList<Game> = ArrayList()
+            val bitmapImageWide: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mario)
 
             for (game in games) {
                 val packageName = game.packageName
                 val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
-                var bitmapIcon: Bitmap
-                if(applicationIcon.getIntrinsicWidth() <= 0 || applicationIcon.getIntrinsicHeight() <= 0) {
-                    bitmapIcon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-                } else {
-                    bitmapIcon = Bitmap.createBitmap(applicationIcon.getIntrinsicWidth(), applicationIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-                }
+                var bitmapIcon: Bitmap? = getIcon(
+                    context = context,
+                    packageManager = context.packageManager,
+                    packageName = packageName,
+                )
+//                if(applicationIcon.getIntrinsicWidth() <= 0 || applicationIcon.getIntrinsicHeight() <= 0) {
+//                    bitmapIcon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+//                } else {
+//                    bitmapIcon = Bitmap.createBitmap(applicationIcon.getIntrinsicWidth(), applicationIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+//                }
+
                 newGames.add(
                     Game(
                         packageName,
                         getApplicationLabel(packageManager,game),
                         game.category,
                         bitmapIcon,
+                        bitmapImageWide
                     )
                 )
             }
@@ -223,24 +234,24 @@ fun UserGames() {
 //            view.onUsageStatsRetrieved(finalList)
     val gamesStatistic:GamesStatistic = GamesStatistic()
 
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                checkPermission.value = GamesStatistic.checkForPermission(context)
-            }else if (event == Lifecycle.Event.ON_RESUME) {
-                checkPermission.value = GamesStatistic.checkForPermission(context)
-
-                if(checkPermission.value){
-                    installedGames.value = GamesStatistic.getInstalledAppGamesList(packageManager)
-                    statisticGames.value = gamesStatistic.getStatisticGames(context, packageManager)
-                }
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
+//    DisposableEffect(lifecycleOwner) {
+//        val observer = LifecycleEventObserver { _, event ->
+//            if (event == Lifecycle.Event.ON_START) {
+//                checkPermission.value = GamesStatistic.checkForPermission(context)
+//            }else if (event == Lifecycle.Event.ON_RESUME) {
+//                checkPermission.value = GamesStatistic.checkForPermission(context)
+//
+//                if(checkPermission.value){
+//                    installedGames.value = GamesStatistic.getInstalledAppGamesList(packageManager)
+//                    statisticGames.value = gamesStatistic.getStatisticGames(context, packageManager)
+//                }
+//            }
+//        }
+//        lifecycleOwner.lifecycle.addObserver(observer)
+//        onDispose {
+//            lifecycleOwner.lifecycle.removeObserver(observer)
+//        }
+//    }
 
     Log.d("INIT_REQUEST_PERMISSION", "REQUEST_PERMISSION")
 

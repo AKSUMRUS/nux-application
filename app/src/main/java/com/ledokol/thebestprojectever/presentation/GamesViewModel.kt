@@ -41,7 +41,7 @@ class GamesViewModel @Inject constructor(
     var state by mutableStateOf(GameState())
 
     init {
-        getGames()
+//        getGames()
     }
 
     fun clearGames(){
@@ -106,32 +106,6 @@ class GamesViewModel @Inject constructor(
 
         Log.d("INSTALLEDAPPS", installedApps.toString())
         return installedApps
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun convertListApplicationToListGame(packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
-        val newGames: MutableList<Game> = ArrayList()
-
-        for (game in games) {
-            val packageName = game.packageName
-            val applicationIcon: Drawable = packageManager.getApplicationIcon(packageName)
-            var bitmapIcon: Bitmap
-            if(applicationIcon.getIntrinsicWidth() <= 0 || applicationIcon.getIntrinsicHeight() <= 0) {
-                bitmapIcon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-            } else {
-                bitmapIcon = Bitmap.createBitmap(applicationIcon.getIntrinsicWidth(), applicationIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-            }
-            newGames.add(
-                Game(
-                    packageName,
-                    getApplicationLabel(packageManager,game),
-                    game.category,
-                    bitmapIcon,
-                )
-            )
-        }
-
-        return newGames
     }
 
 

@@ -18,5 +18,7 @@ data class Game(
     @ColumnInfo(name = "category")
     val category: Int,
     @ColumnInfo(name = "icon")
-    val icon: Bitmap?
+    val icon: Bitmap?,
+    @ColumnInfo(name = "image_preview")
+    val image_wide: Bitmap?
 )
