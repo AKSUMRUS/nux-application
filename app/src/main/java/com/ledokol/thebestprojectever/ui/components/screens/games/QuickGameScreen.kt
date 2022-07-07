@@ -4,10 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.provider.Settings.Global.getString
-import android.content.Context.CLIPBOARD_SERVICE
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -36,8 +34,8 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
-import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
+
 
 @Composable
 fun QuickGameScreen(
@@ -49,6 +47,7 @@ fun QuickGameScreen(
     val games = viewModel.state.games
     var token by remember{ mutableStateOf("")}
     val context: Context = LocalContext.current
+    val myClipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
 
     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
         if (!task.isSuccessful) {
@@ -71,13 +70,13 @@ fun QuickGameScreen(
                 MaterialTheme.colors.background
             )
     ) {
-//        Body1(text = token)
-//
-//        Button(
-//            text = "Копировать",
-//            onClick = {
-//                myClipboard.setPrimaryClip(ClipData.newPlainText("simple text", token))
-//            })
+        Body1(text = token)
+
+        Button(
+            text = "Копировать",
+            onClick = {
+                myClipboard!!.setPrimaryClip(ClipData.newPlainText("simple text", token))
+            })
 
         games?.let { GridGames(it, navController) }
     }
@@ -104,7 +103,8 @@ fun GridGames(
         contentPadding = PaddingValues(top = 120.dp, start = 20.dp, end = 20.dp),
         modifier = Modifier,
     ) {
-        item (span = { GridItemSpan(2) },
+        item(
+            span = { GridItemSpan(2) },
         ){
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -112,7 +112,8 @@ fun GridGames(
                 TitleQuickGame(
                     step = 1,
                     title = stringResource(id = R.string.title_game),
-                    description = stringResource(id = R.string.description_quick_game),)
+                    description = stringResource(id = R.string.description_quick_game),
+                )
             }
         }
 
