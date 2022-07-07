@@ -2,16 +2,15 @@ package com.ledokol.thebestprojectever.ui.components.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,7 +19,10 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.atoms.textfield.Search
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
@@ -32,7 +34,16 @@ fun ChooseFriendsForGame(
     navController: NavController,
     userViewModel: UserViewModel
 ){
-    val state = userViewModel.state
+    var state = userViewModel.state
+
+    LaunchedEffect(true){
+        userViewModel.getUsers()
+    }
+
+    LaunchedEffect(userViewModel.state){
+        Log.d("SELECTEDUSER","UPDATE")
+        state = userViewModel.state
+    }
 
     fun onClick(
         navController: NavController,
@@ -76,21 +87,46 @@ fun ChooseFriendsForGame(
                         }
 
                         items(state.users!!.size) { friend ->
-                            val user = state.users[friend]
-                            var clicked by remember{ mutableStateOf(false)}
+                            val user = state.users!![friend]
 
-                            FriendInList(
-                                name = user.nickname,
-                                clicked = clicked,
-                                onClick = {
-                                    clicked = !clicked
-                                })
+//                            LaunchedEffect(state.clickedUsers){
+                                FriendInList(
+                                    name = user.nickname,
+                                    clicked = userViewModel.checkSelectedUser(user),
+                                    onClick = {
+                                        userViewModel.apply {
+                                            if(checkSelectedUser(user)){
+                                                removeSelectedUser(user)
+                                            }else{
+                                                insertSelectedUser(user)
+                                            }
+                                        }
+                                    })
+//                            }
+                        }
+                        item{
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+//                                contentAlignment = Alignment.End,
+                            ){
+                                ButtonPrimaryFull(
+                                    text = stringResource(id = R.string.button_invite_friends),
+                                    onClick = {
+                                        navController.navigate("quick_game"){
+                                            popUpTo("quick_game")
+                                            launchSingleTop = true
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .padding(bottom = 20.dp)
+                                    ,
+                                )
+                            }
                         }
                     },
                 )
-//                    }
             }
         }
     }
-//    }
 }

@@ -39,6 +39,7 @@
     <string name="description_game">Выбирети</string>
     <string name="title_crew">Команда</string>
     <string name="description_crew">Выбирайте своих товарищей по команде вручную</string>
+    <string name="button_invite_friends">Пригласить!</string>
 
 <!--Common-->
     <string name = "back">Назад</string>

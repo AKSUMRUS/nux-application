@@ -61,7 +61,7 @@ fun QuickGameScreen(
 
         token = tokenGet
         Log.w(TAG, token)
-        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
     })
 
     Column(

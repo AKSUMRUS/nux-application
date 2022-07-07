@@ -81,7 +81,7 @@ fun ListFriendsScreen(
                                 }
 
                                 items(state.users!!.size) { friend ->
-                                    val user = state.users[friend]
+                                    val user = state.users!![friend]
                                     FriendInList(
                                         name = user.nickname,
                                         onClick = {

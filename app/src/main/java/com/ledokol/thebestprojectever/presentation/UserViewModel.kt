@@ -120,4 +120,39 @@ UserViewModel @Inject constructor(
         }
     }
 
+    val TAG = "SELECTEDUSER"
+
+    fun removeSelectedUser(selectedUser: User){
+        Log.d(TAG, "REMOVE")
+        state.clickedUsers = state.clickedUsers.toMutableList().filter { user ->
+            user.userId!=selectedUser.userId
+        }.toList()
+
+        state.users = state.users!!.toMutableList().filter { user ->
+            user.userId!=selectedUser.userId
+        }.toList()
+
+        Log.d(TAG, "REMOVE "+state.users!!.size.toString())
+    }
+
+    fun insertSelectedUser(selectedUser: User){
+        state.clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList()
+
+        state.users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
+        Log.d(TAG, "INSERT "+state.users!!.size.toString())
+    }
+
+    fun checkSelectedUser(selectedUser: User): Boolean{
+        Log.d(TAG, "CHECK")
+        var inList: Boolean = false
+        for(user in state.clickedUsers){
+            if (user.userId == selectedUser.userId){
+                inList = true
+                break
+            }
+        }
+
+        return inList
+    }
+
 }

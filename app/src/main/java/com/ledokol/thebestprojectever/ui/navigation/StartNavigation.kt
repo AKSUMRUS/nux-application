@@ -170,6 +170,12 @@ fun StartNavigation(
                                 userViewModel = userViewModel
                             )
                         }
+                        composable("choose_friends_quick_game") {
+                            ChooseFriendsForGame(
+                                navController = navController,
+                                userViewModel = userViewModel
+                            )
+                        }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
                             QuickGameScreen(
                                 viewModel = gamesViewModel,
