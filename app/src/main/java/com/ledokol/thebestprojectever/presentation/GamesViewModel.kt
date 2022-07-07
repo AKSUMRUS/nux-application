@@ -141,6 +141,12 @@ class GamesViewModel @Inject constructor(
         return null
     }
 
+    fun shareGames(){
+        viewModelScope.launch {
+            repository.shareGames()
+        }
+    }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -38,4 +38,9 @@ class GamesRepository @Inject constructor(
         }
     }
 
+    fun shareGames() {
+        val localGames = dao.getGames("")
+        api.shareGames(localGames).execute()
+    }
+
 }
