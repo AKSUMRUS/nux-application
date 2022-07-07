@@ -85,13 +85,7 @@ fun ChooseFriendsForGame(
                                     name = user.nickname,
                                     clicked = userViewModel.checkSelectedUser(user),
                                     onClick = {
-//                                        userViewModel.apply {
-                                            if(userViewModel.checkSelectedUser(user)){
-                                                userViewModel.removeSelectedUser(user)
-                                            }else{
-                                                userViewModel.insertSelectedUser(user)
-                                            }
-//                                        }
+                                        userViewModel.onEvent(UserEvent.SelectUser(user))
                                     })
 //                            }
                         }

@@ -4,8 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -18,7 +16,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class
@@ -48,6 +45,16 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.GetFriendUser -> {
                 getUser(nickname = event.nickname)
+            }
+            is UserEvent.SelectUser -> {
+                viewModelScope.launch {
+                    val shoulRemove = checkSelectedUser(event.user)
+                    if (shoulRemove) {
+                        removeSelectedUser(event.user)
+                    } else {
+                        insertSelectedUser(event.user)
+                    }
+                }
             }
         }
 
@@ -124,21 +131,19 @@ UserViewModel @Inject constructor(
 
     fun removeSelectedUser(selectedUser: User){
         Log.d(TAG, "REMOVE")
-        state.clickedUsers = state.clickedUsers.toMutableList().filter { user ->
-            user.userId!=selectedUser.userId
-        }.toList()
-
-        state.users = state.users!!.toMutableList().filter { user ->
-            user.userId!=selectedUser.userId
-        }.toList()
+        state = state.copy(
+            clickedUsers = state.clickedUsers.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList(),
+//            users = state.users!!.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList()
+        )
 
         Log.d(TAG, "REMOVE "+state.users!!.size.toString())
     }
 
     fun insertSelectedUser(selectedUser: User){
-        state.clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList()
-
-        state.users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
+        state = state.copy(
+            clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
+//            users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
+        )
         Log.d(TAG, "INSERT "+state.users!!.size.toString())
     }
 

@@ -20,7 +20,6 @@ import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
-import com.ledokol.thebestprojectever.ui.components.molecules.getApplicationLabel
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
