@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
@@ -29,8 +30,10 @@ import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuickGameScreen(
-    viewModel: GamesViewModel
+    viewModel: GamesViewModel,
+    userViewModel: UserViewModel
 ){
+    val selectedUsers = userViewModel.state.clickedUsers
     val games = viewModel.state.games
 
     Column(

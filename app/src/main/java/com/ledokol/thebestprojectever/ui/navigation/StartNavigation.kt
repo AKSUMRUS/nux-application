@@ -136,7 +136,10 @@ fun StartNavigation(
                             FriendScreen(userViewModel = userViewModel)
                         }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
-                            QuickGameScreen(viewModel = gamesViewModel)
+                            QuickGameScreen(
+                                viewModel = gamesViewModel,
+                                userViewModel = userViewModel
+                            )
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
                             ProfileScreen(viewModel = viewModel)
