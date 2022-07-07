@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import com.ledokol.thebestprojectever.domain.StatusJSON
 
 @Entity(tableName = "users")
-data class User (
+data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "userId")
     var userId: Int = 0,
@@ -15,7 +15,7 @@ data class User (
     var id: String,
     @ColumnInfo(name = "nickname")
     var nickname: String,
-//    @ColumnInfo(name = "isSelected")
-//    var isSelected: Boolean = false,
+    @ColumnInfo(name = "status")
+    var status: Status = Status()
 
 )

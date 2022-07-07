@@ -3,7 +3,12 @@ package com.ledokol.thebestprojectever.data.local
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
+import com.ledokol.thebestprojectever.data.local.user.Status
 import java.io.ByteArrayOutputStream
+import java.lang.reflect.Type
+import java.util.*
 
 class Converters {
     @TypeConverter
@@ -17,5 +22,21 @@ class Converters {
     @TypeConverter
     fun toBitmap(byteArray: ByteArray):Bitmap{
         return BitmapFactory.decodeByteArray(byteArray,0, byteArray.size)
+    }
+
+    @TypeConverter
+    fun storedStringToMyObjects(data: String?): Status? {
+        val gson = Gson()
+        if (data == null) {
+            return null
+        }
+        val listType: Type = object : TypeToken<Status?>() {}.type
+        return gson.fromJson<Status?>(data, listType)
+    }
+
+    @TypeConverter
+    fun myObjectsToStoredString(myObjects: Status?): String? {
+        val gson = Gson()
+        return gson.toJson(myObjects)
     }
 }

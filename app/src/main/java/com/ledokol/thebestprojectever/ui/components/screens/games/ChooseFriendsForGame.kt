@@ -82,7 +82,7 @@ fun ChooseFriendsForGame(
 
 //                            LaunchedEffect(state.clickedUsers){
                                 FriendInList(
-                                    name = user.nickname,
+                                    user = user,
                                     clicked = userViewModel.checkSelectedUser(user),
                                     onClick = {
                                         userViewModel.onEvent(UserEvent.SelectUser(user))

@@ -41,9 +41,9 @@ fun ListFriendsScreen(
 
     fun onClick(
         navController: NavController,
-        nickname: String,
+        id: String,
     ){
-        userViewModel.onEvent(UserEvent.GetFriendUser(nickname = nickname))
+        userViewModel.onEvent(UserEvent.GetFriendUser(id = id))
         navController.navigate("friend_screen") {
             popUpTo("friend_screen")
 //            launchSingleTop = true
@@ -83,11 +83,11 @@ fun ListFriendsScreen(
                                 items(state.users!!.size) { friend ->
                                     val user = state.users!![friend]
                                     FriendInList(
-                                        name = user.nickname,
+                                        user = user,
                                         onClick = {
                                             onClick(
                                                 navController = navController,
-                                                nickname = user.nickname
+                                                id = user.id
                                             )
                                         })
                                 }
@@ -112,7 +112,7 @@ fun ListFriendsScreen_preview(){
         content = {
             items(state.size) { friend ->
                 val user = state[friend]
-                FriendInList(name = user.nickname, onClick = {
+                FriendInList(user = user, onClick = {
 
                 })
             }

@@ -44,7 +44,7 @@ UserViewModel @Inject constructor(
                 }
             }
             is UserEvent.GetFriendUser -> {
-                getUser(nickname = event.nickname)
+                getUser(id = event.id)
             }
             is UserEvent.SelectUser -> {
                 viewModelScope.launch {
@@ -101,10 +101,10 @@ UserViewModel @Inject constructor(
     }
 
     private fun getUser(
-        nickname: String
+        id: String
     ){
         viewModelScope.launch {
-            repository.getUser(nickname = nickname)
+            repository.getUser(id = id)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {

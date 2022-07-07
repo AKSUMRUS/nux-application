@@ -1,15 +1,13 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -18,15 +16,17 @@ import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 
 //import com.ledokol.thebestprojectever.ui.theme.Background
 
 @Composable
 fun FriendInList(
-    name: String,
+    user: User,
     onClick: () -> Unit,
     clicked: Boolean = false,
 ){
@@ -58,15 +58,38 @@ fun FriendInList(
                 .clickable(onClick = onClick)
                 .padding(10.dp)
         ){
-            Icon(
-                bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                contentDescription = "Аноним",
-                modifier = Modifier.fillMaxHeight()
-                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
-                tint = Color.Unspecified,
-            )
-            Body1(text = name,
+            Box(
+            ){
+                Icon(
+                    bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                    contentDescription = "Аноним",
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
+                    tint = Color.Unspecified,
+                )
+                Canvas(modifier = Modifier
+                    .size(15.dp)
+                    .align(Alignment.TopEnd)
+                    , onDraw = {
+                        if(user.status.finished) {
+                            drawCircle(color = Color.Gray)
+                        }
+                        else {
+                            drawCircle(color = Color.Green)
+                        }
+                })
+            }
+            Body1(text = user.nickname,
                 modifier = Modifier.padding(start = 10.dp))
         }
     }
 }
+
+//@Preview
+//@Composable
+//fun FriendInList_preview(
+//
+//){
+//    FriendInList(name = "aboba", onClick = { /*TODO*/ })
+//}

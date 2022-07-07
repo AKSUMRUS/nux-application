@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "55e0ff607a833c5b2576098ba5925d89",
+    "identityHash": "304e1edd913167c77df8537bd33ddffd",
     "entities": [
       {
         "tableName": "profile",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "users",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` TEXT NOT NULL, `nickname` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `id` TEXT NOT NULL, `nickname` TEXT NOT NULL, `status` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "userId",
@@ -67,6 +67,12 @@
           {
             "fieldPath": "nickname",
             "columnName": "nickname",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -128,7 +134,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '55e0ff607a833c5b2576098ba5925d89')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '304e1edd913167c77df8537bd33ddffd')"
     ]
   }
 }

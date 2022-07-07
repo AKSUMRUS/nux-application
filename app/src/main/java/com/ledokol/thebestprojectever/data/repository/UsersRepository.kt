@@ -100,11 +100,11 @@ class UsersRepository @Inject constructor(
         }
     }
 
-    fun getUser(nickname: String): Flow<Resource<User>> {
+    fun getUser(id: String): Flow<Resource<User>> {
         return flow {
             emit(Resource.Loading(true))
             val friend = try {
-                val friendCall = api.getUser(nickname)
+                val friendCall = api.getUser(id)
                 val myResponse: User? = friendCall.awaitResponse().body()
 //                friendCall.enqueue(object : Callback<User> {
 //                    override fun onResponse(call: Call<User>, response: Response<User>) {

@@ -30,9 +30,9 @@ RetrofitServices {
             : Call<List<User>>
 
     @Headers("Content-Type: application/json")
-    @GET("user/{nickname}")
+    @GET("user/{id}")
     fun getUser(
-        @Path("nickname") nickname: String
+        @Path("id") id: String
     )
             : Call<User>
 
