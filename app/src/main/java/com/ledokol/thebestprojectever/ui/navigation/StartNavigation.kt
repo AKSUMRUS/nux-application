@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
@@ -41,7 +41,7 @@ fun StartNavigation(
 //    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
 //    val statusViewModel = StatusViewModel::class.java
-    val viewModel = hiltViewModel<MainViewModel>()
+    val viewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val profile = viewModel.profile.observeAsState(listOf())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -87,6 +87,9 @@ fun StartNavigation(
         }
         "choose_friends_quick_game" -> {
             bottomBarState.value = true
+        }
+        "finish_inviting_friends" -> {
+            bottomBarState.value = false
         }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
@@ -148,6 +151,12 @@ fun StartNavigation(
                                 userViewModel = userViewModel
                             )
                         }
+                        composable("finish_inviting_friends") {
+                            FinishInvitingFriends(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
+                            )
+                        }
                         composable("choose_friends_quick_game") {
                             val userViewModel2 = hiltViewModel<UserViewModel>()
                             userViewModel2.accessToken = accessToken
@@ -165,7 +174,7 @@ fun StartNavigation(
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
                             ProfileScreen(
-                                mainViewModel = viewModel,
+                                profileViewModel = viewModel,
                                 gamesViewModel = gamesViewModel,
                             )
                         }

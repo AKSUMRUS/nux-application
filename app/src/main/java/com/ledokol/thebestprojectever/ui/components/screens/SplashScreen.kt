@@ -1,8 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,23 +8,18 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.navigation.NavController
-import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: ProfileViewModel
 ) {
     LaunchedEffect(key1 = true){
         delay(1500)

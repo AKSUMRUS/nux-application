@@ -37,4 +37,10 @@ class ProfileRepository @Inject constructor(
 //        }
 //    }
 
+    fun sendInvite(){
+        coroutineScope.launch {
+//            profileDao.sendInvite()
+        }
+    }
+
 }

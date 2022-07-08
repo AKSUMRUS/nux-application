@@ -36,16 +36,6 @@ fun ChooseFriendsForGame(
 ){
     val state = userViewModel.state
 
-    fun onClick(
-        navController: NavController,
-        nickname: String,
-    ){
-//        userViewModel.onEvent(UserEvent.GetFriendUser(nickname = nickname))
-        navController.navigate("friend_screen") {
-            popUpTo("friend_screen")
-        }
-    }
-
     if(state.isRefreshing){
         Log.e("STATE",state.toString())
         userViewModel.onEvent(UserEvent.Refresh)
@@ -97,8 +87,8 @@ fun ChooseFriendsForGame(
                                 ButtonPrimaryFull(
                                     text = stringResource(id = R.string.button_invite_friends),
                                     onClick = {
-                                        navController.navigate("quick_game"){
-                                            popUpTo("quick_game")
+                                        navController.navigate("finish_inviting_friends"){
+                                            popUpTo("finish_inviting_friends")
                                             launchSingleTop = true
                                         }
                                     },

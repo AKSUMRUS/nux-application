@@ -1,23 +1,19 @@
 package com.ledokol.thebestprojectever
 
-import android.app.ActivityManager
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.google.android.gms.common.wrappers.InstantApps
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.services.MyService
-import com.ledokol.thebestprojectever.ui.components.screens.TestScreen
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,6 +33,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.extras
+
+        if(bundle!=null){
+            val gamePackageName:String = bundle.getString("gamePackageName").toString()
+            val launchIntent = packageManager.getLaunchIntentForPackage(gamePackageName)
+            Log.d("SAVEDINSTANCESTATE", gamePackageName)
+            launchIntent?.let { startActivity(it) }
+        }
 
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

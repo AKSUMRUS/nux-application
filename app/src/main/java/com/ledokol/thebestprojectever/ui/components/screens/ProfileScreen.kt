@@ -12,11 +12,8 @@ import android.provider.Settings
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -29,17 +26,14 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.services.GamesStatistic
-import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.*
-import java.lang.Exception
 import java.lang.Math.*
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -80,7 +74,7 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
-    mainViewModel: MainViewModel,
+    profileViewModel: ProfileViewModel,
     gamesViewModel: GamesViewModel,
 ){
     val context = LocalContext.current
@@ -118,7 +112,7 @@ fun ProfileScreen(
     LazyColumn(content = {
         item {
             ProfileTopBlock(
-                mainViewModel = mainViewModel,
+                profileViewModel = profileViewModel,
             )
         }
 

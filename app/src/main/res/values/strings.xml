@@ -40,6 +40,7 @@
     <string name="title_crew">Команда</string>
     <string name="description_crew">Выбирайте своих товарищей по команде вручную</string>
     <string name="button_invite_friends">Пригласить!</string>
+    <string name="finish_invite_friends">Вы пригласили друзей</string>
 
 <!--Common-->
     <string name = "back">Назад</string>

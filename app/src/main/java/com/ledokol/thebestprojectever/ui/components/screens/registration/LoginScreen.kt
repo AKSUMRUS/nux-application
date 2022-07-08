@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
@@ -23,7 +23,7 @@ import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: MainViewModel,
+    viewModel: ProfileViewModel,
 ) {
     val (nickname,setNickname) = remember{ mutableStateOf("") }
     val (password,setPassword) = remember{ mutableStateOf("") }

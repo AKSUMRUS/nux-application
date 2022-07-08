@@ -14,7 +14,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     private val api: RetrofitServices
 ): ViewModel() {

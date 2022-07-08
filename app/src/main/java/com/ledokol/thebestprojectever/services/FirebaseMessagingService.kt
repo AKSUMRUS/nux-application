@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.media.RingtoneManager
 import android.os.Build
 import android.util.Log
@@ -39,11 +40,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
 
+//        sendNotification("User", "Приглашение в игру", "yio.tro.onliyoy")
         // Check if message contains a data payload.
         if (remoteMessage.data.isNotEmpty()) {
             val data = remoteMessage.data
-//            sendNotification()
+//            sendNotification(data["user_nickname"].toString(), "Приглашение в игру")
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
+
+            if(data["type"] == "friend_entered_app"){
+                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру",data["app_android_package_name"].toString())
+            }else{
+                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашение в игру",data["app_android_package_name"].toString())
+            }
 
             if (/* Check if data needs to be processed by long running job */ false) {
                 // For long-running tasks (10 seconds or more) use WorkManager.
@@ -115,20 +123,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      *
      * @param messageBody FCM message body received.
      */
-    private fun sendNotification(messageBody: String) {
+    private fun sendNotificationFriendEnteredApp(
+        messageTitle: String,
+        messageBody: String,
+        packageGame: String,
+    ) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("gamePackageName", packageGame)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_ONE_SHOT)
 
         val channelId = "ChannelId"
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_delete)
-            .setContentTitle("Hello World!")
+            .setContentTitle(messageTitle)
             .setContentText(messageBody)
             .setAutoCancel(true)
-            .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -141,7 +152,41 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(144334 /* ID of notification */, notificationBuilder.build())
+    }
+
+
+    private fun sendNotificationInviteToApp(
+        messageTitle: String,
+        messageBody: String,
+        packageGame: String,
+//        messageIcon: Bitmap,
+    ) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("gamePackageName", packageGame)
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_ONE_SHOT)
+
+        val channelId = "ChannelId"
+        val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_delete)
+            .setContentTitle(messageTitle)
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId,
+                "Channel human readable title",
+                NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(43242 /* ID of notification */, notificationBuilder.build())
     }
 
     companion object {

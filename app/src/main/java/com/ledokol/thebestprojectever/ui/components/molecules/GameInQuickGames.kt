@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
