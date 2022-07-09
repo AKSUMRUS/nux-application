@@ -45,6 +45,7 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.GetFriendUser -> {
                 getUser(id = event.id)
+//                getUserGames(id = event.id)
             }
             is UserEvent.SelectUser -> {
                 viewModelScope.launch {
@@ -68,7 +69,31 @@ UserViewModel @Inject constructor(
         }
     }
 
-
+//    fun getUserGames(id: String){
+//        viewModelScope.launch {
+//            repository.getUserGames(id)
+//                .collect{ result ->
+//                when(result){
+//                    is Resource.Success -> {
+//                        result.data.let { games ->
+//                            state = state.copy(
+//                                games = games
+//                            )
+//                        }
+//                        Log.e("USER VIEW MODEL  GET USERS GAME",state.toString())
+//                    }
+//                    is Resource.Error -> Unit
+//                    is Resource.Loading -> {
+//                        state =state.copy(
+//                            isLoading = result.isLoading
+//                        )
+//                    }
+//
+//                }
+//            }
+//
+//        }
+//    }
 
     fun getUsers(
         query: String = state.searchQuery.lowercase(),

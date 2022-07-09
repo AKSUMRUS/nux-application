@@ -25,7 +25,6 @@ import com.ledokol.thebestprojectever.data.local.profile.Profile
 //import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.ProfileJSON
-import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar

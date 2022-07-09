@@ -35,7 +35,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.services.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.*
@@ -80,7 +80,7 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
-    mainViewModel: MainViewModel,
+    profileViewModel: ProfileViewModel,
     gamesViewModel: GamesViewModel,
 ){
     val context = LocalContext.current
@@ -106,6 +106,7 @@ fun ProfileScreen(
                         )
                     )
                     gamesViewModel.getGames()
+                    gamesViewModel.shareGames()
                 }
             }
         }
@@ -118,22 +119,23 @@ fun ProfileScreen(
     LazyColumn(content = {
         item {
             ProfileTopBlock(
-                mainViewModel = mainViewModel,
+                profileViewModel = profileViewModel,
             )
         }
 
-        if(!checkPermission.value){
-            item {
-                Text("Предоставьте, пожалуйста, доступ!")
-                androidx.compose.material.Button(
-                    onClick = {
-                        context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-                    }
-                ) {
-                    Text("Получить разрешение")
-                }
-            }
-        }else if(games!=null){
+//        if(!checkPermission.value){
+//            item {
+//                Text("Предоставьте, пожалуйста, доступ!")
+//                androidx.compose.material.Button(
+//                    onClick = {
+//                        context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+//                    }
+//                ) {
+//                    Text("Получить разрешение")
+//                }
+//            }
+//        }else
+            if(games!=null){
             items(games){ game ->
                 GameInList(
                     name = game.name,

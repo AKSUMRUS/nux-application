@@ -17,9 +17,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.navigation.NavController
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import kotlinx.coroutines.delay
@@ -27,7 +25,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: ProfileViewModel
 ) {
     LaunchedEffect(key1 = true){
         delay(1500)

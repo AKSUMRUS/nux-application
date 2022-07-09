@@ -19,7 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
@@ -41,9 +41,9 @@ fun StartNavigation(
 //    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
 //    val statusViewModel = StatusViewModel::class.java
-    val viewModel = hiltViewModel<MainViewModel>()
+    val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
-    val profile = viewModel.profile.observeAsState(listOf())
+    val profile = profileViewModel.profile.observeAsState(listOf())
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
@@ -88,6 +88,9 @@ fun StartNavigation(
         "choose_friends_quick_game" -> {
             bottomBarState.value = true
         }
+        "finish_inviting_friends" -> {
+            bottomBarState.value = false
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -105,6 +108,7 @@ fun StartNavigation(
     }
     else{
         accessToken = profile.value[0].access_token
+//        "request_permission"
         BottomNavItemMain.QuickGame.screen_route
 //        "test"
     }
@@ -125,27 +129,35 @@ fun StartNavigation(
                     startDestination = start,
                     builder = {
                         composable("start_registration_screen") {
-                            StartRegistrationScreen(navController = navController, viewModel = viewModel)
+                            StartRegistrationScreen(
+                                navController = navController,
+                            )
                         }
                         composable("login_screen") {
-                            LoginScreen(navController = navController, viewModel = viewModel)
+                            LoginScreen(navController = navController, viewModel = profileViewModel)
                         }
                         composable("signup_screen") {
                             SignUpScreen(
                                 navController = navController,
-                                viewModel = viewModel
+                                viewModel = profileViewModel
                             )
                         }
                         composable("splash_screen") {
                             SplashScreen(
                                 navController = navController,
-                                viewModel = viewModel
+                                viewModel = profileViewModel
                             )
                         }
                         composable("friend_screen") {
                             FriendScreen(
                                 navController = navController,
                                 userViewModel = userViewModel
+                            )
+                        }
+                        composable("finish_inviting_friends") {
+                            FinishInvitingFriends(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
                             )
                         }
                         composable("choose_friends_quick_game") {
@@ -156,16 +168,23 @@ fun StartNavigation(
                                 userViewModel = userViewModel2
                             )
                         }
+
+                        composable("request_permission") {
+                            RequestPermission(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
+                            )
+                        }
                         composable(BottomNavItemMain.QuickGame.screen_route) {
                             QuickGameScreen(
-                                viewModel = gamesViewModel,
                                 navController = navController,
-                                userViewModel = userViewModel
+                                gamesViewModel = gamesViewModel,
+                                profileViewModel = profileViewModel,
                             )
                         }
                         composable(BottomNavItemMain.Profile.screen_route) {
                             ProfileScreen(
-                                mainViewModel = viewModel,
+                                profileViewModel = profileViewModel,
                                 gamesViewModel = gamesViewModel,
                             )
                         }

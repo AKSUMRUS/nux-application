@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -37,6 +38,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val bundle = intent.extras
+
+        if(bundle!=null){
+            val gamePackageName:String = bundle.getString("gamePackageName").toString()
+            val launchIntent = packageManager.getLaunchIntentForPackage(gamePackageName)
+            Log.d("SAVEDINSTANCESTATE", gamePackageName)
+            launchIntent?.let { startActivity(it) }
+        }
 
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

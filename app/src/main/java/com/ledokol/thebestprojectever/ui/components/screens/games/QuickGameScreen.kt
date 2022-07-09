@@ -30,6 +30,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
@@ -39,12 +40,12 @@ import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 @Composable
 fun QuickGameScreen(
-    viewModel: GamesViewModel,
     navController: NavController,
-    userViewModel: UserViewModel
+    gamesViewModel: GamesViewModel,
+    profileViewModel: ProfileViewModel,
 ){
     val TAG = "FIREBASE MESSAGING"
-    val games = viewModel.state.games
+    val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
     val context: Context = LocalContext.current
     val myClipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
@@ -59,6 +60,7 @@ fun QuickGameScreen(
         val tokenGet = task.result
 
         token = tokenGet
+        profileViewModel.setCurrentFirebaseToken(token)
         Log.w(TAG, token)
 //        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
     })
@@ -70,15 +72,19 @@ fun QuickGameScreen(
                 MaterialTheme.colors.background
             )
     ) {
-        Body1(text = token)
+//        Body1(text = token)
+//
+//        Button(
+//            text = "Копировать",
+//            onClick = {
+//                myClipboard!!.setPrimaryClip(ClipData.newPlainText("simple text", token))
+//            })
 
-        Button(
-            text = "Копировать",
-            onClick = {
-                myClipboard!!.setPrimaryClip(ClipData.newPlainText("simple text", token))
-            })
-
-        games?.let { GridGames(it, navController) }
+        games?.let { GridGames(
+            it,
+            navController,
+            gamesViewModel = gamesViewModel
+        ) }
     }
 }
 
@@ -86,10 +92,12 @@ fun QuickGameScreen(
 fun GridGames(
     games: List<Game>,
     navController: NavController,
+    gamesViewModel: GamesViewModel,
 ) {
     val context = LocalContext.current
 
-    fun onClick(){
+    fun onClick(packageName: String){
+        gamesViewModel.getGame(packageName)
         navController.navigate("choose_friends_quick_game"){
             popUpTo("choose_friends_quick_game"){
                 inclusive = true
@@ -123,7 +131,7 @@ fun GridGames(
                 icon = game.icon!!.asImageBitmap(),
                 imageWide = game.image_wide!!.asImageBitmap(),
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                onClick = { onClick() },
+                onClick = { onClick(game.gamePackage) },
             )
         }
     }

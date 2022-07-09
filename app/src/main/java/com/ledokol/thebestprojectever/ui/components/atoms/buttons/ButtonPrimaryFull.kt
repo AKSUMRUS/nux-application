@@ -17,7 +17,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
 @Composable
 fun ButtonPrimaryFull(
     text: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ){
 

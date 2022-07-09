@@ -12,22 +12,29 @@ import javax.inject.Singleton
 
 @Singleton
 class ProfileRepository @Inject constructor(
-    private val profileDao: ProfileDao
+    private val api : RetrofitServices,
+    private val dao: ProfileDao
     ) {
-    val profile: LiveData<List<Profile>> = profileDao.getProfile()
+    val profile: LiveData<List<Profile>> = dao.getProfile()
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
+
+    fun setCurrentFirebaseToken(token: String){
+        coroutineScope.launch {
+            api.setCurrentFirebaseToken(token)
+        }
+    }
 
     fun insertProfile(newProfile: Profile){
         coroutineScope.launch {
             Log.e("Insert Profile",newProfile.toString())
-            profileDao.insertProfile(newProfile)
+            dao.insertProfile(newProfile)
         }
     }
 
     fun clearProfile(){
         coroutineScope.launch {
-            profileDao.clearProfile()
+            dao.clearProfile()
         }
     }
 

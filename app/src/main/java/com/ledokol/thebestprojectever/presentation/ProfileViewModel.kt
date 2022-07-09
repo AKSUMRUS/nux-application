@@ -14,7 +14,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     private val api: RetrofitServices
 ): ViewModel() {
@@ -22,6 +22,10 @@ class MainViewModel @Inject constructor(
 
     fun insertProfile(profile: Profile) {
         repository.insertProfile(profile)
+    }
+
+    fun setCurrentFirebaseToken(token: String){
+        repository.setCurrentFirebaseToken(token)
     }
 
     fun login(nickname: String, password: String){

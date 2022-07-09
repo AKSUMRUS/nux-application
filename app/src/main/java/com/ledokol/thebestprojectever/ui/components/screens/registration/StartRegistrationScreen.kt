@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.presentation.MainViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonSecondary
@@ -17,7 +17,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonSecondar
 @Composable
 fun StartRegistrationScreen(
     navController: NavController,
-    viewModel: MainViewModel
 ){
 
     fun onClickSignUp(): Unit{

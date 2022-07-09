@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.user.Status
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import java.io.ByteArrayOutputStream
 import java.lang.reflect.Type
 import java.util.*
@@ -38,5 +40,14 @@ class Converters {
     fun myObjectsToStoredString(myObjects: Status?): String? {
         val gson = Gson()
         return gson.toJson(myObjects)
+    }
+
+    @TypeConverter
+    fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON>? {
+        val res: MutableList<StatusJSON> = mutableListOf()
+        for (game in games){
+            res.add(StatusJSON(game.gamePackage,game.name,game.category.toString()))
+        }
+        return res.toList()
     }
 }

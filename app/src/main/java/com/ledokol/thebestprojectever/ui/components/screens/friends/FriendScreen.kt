@@ -5,6 +5,8 @@ import android.provider.Settings
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -26,10 +28,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
-import com.ledokol.thebestprojectever.presentation.MainViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
@@ -59,12 +62,23 @@ fun FriendScreen(
                 }
             )
 
+            LazyColumn(content = {
+                item {
+                    Column(){
+                        UserInformationProfile(
+                            name = state.friendUser.nickname,
+                            profile = false,
+                        )
 
-
-            UserInformationProfile(
-                name = state.friendUser.nickname,
-                profile = false,
-            )
+                        HeadlineH4(
+                            text = "Список скачанных игр",
+                        )
+                    }
+                }
+                items(state.games!!){ game ->
+                    Text(game.name)
+                }
+            })
         }
 
 

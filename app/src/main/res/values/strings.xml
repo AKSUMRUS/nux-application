@@ -40,6 +40,7 @@
     <string name="title_crew">Команда</string>
     <string name="description_crew">Выбирайте своих товарищей по команде вручную</string>
     <string name="button_invite_friends">Пригласить!</string>
+    <string name="finish_invite_friends">Вы пригласили друзей</string>
 
 <!--Common-->
     <string name = "back">Назад</string>
@@ -48,4 +49,11 @@
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
     <string name = "hello_splash_screen">Добро пожаловать!</string>
+
+<!--    Permissions-->
+    <string name="hello_permission">Привет ✌️</string>
+    <string name="need_permission">Предоставь, пожалуйста, разрешение</string>
+    <string name="reason_permission">Для полноценной работы приложения</string>
+    <string name="explain_permission">Позвольте нам отслеживать вашу активность в фоновом режиме и получать доступ к приложениям, в которые вы играете</string>
+    <string name="allow_permission">Разрешить!</string>
 </resources>
