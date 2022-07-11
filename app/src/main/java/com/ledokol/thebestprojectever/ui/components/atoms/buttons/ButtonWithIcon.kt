@@ -1,9 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.atoms.buttons
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -13,7 +9,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale.Companion.FillBounds
 import androidx.compose.ui.unit.dp
 
 @Composable

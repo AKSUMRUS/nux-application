@@ -96,24 +96,48 @@ class GamesStatistic{
             return installedApps
         }
 
+
+//        fun getIconLargeGameOld(packageName: String, context: Context): Bitmap{
+//            val bitmapImage = when(packageName) {
+//                "com.nintendo.zara" -> BitmapFactory.decodeResource(context.resources, R.drawable.mario)
+//                "com.innersloth.spacemafia" -> BitmapFactory.decodeResource(context.resources, R.drawable.among_us)
+////                "com.tencent.ig" -> BitmapFactory.decodeResource(context.resources, R.drawable.pubg)
+//                else -> BitmapFactory.decodeResource(context.resources, R.drawable.mario)
+//            }
+//
+//            return bitmapImage
+//        }
+
+
+        fun getIconLargeGame(packageName: String, context: Context): String{
+            val bitmapImage = when(packageName) {
+                "com.nintendo.zara" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/mario.jpg?alt=media&token=a942e502-422a-4585-b228-317676c82a63"
+                "com.innersloth.spacemafia" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/among_us.jpg?alt=media&token=d6fd2866-ed02-4b71-97f9-125c7b2f5fbf"
+                "com.tencent.ig" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/pubg.jpg?alt=media&token=ceae9a20-3305-44b1-904b-0ac35425d286"
+                "com.blizzard.wtcg.hearthstone" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/hearthstone.png?alt=media&token=012f9fea-573a-491b-b84f-49678ef76fa6"
+                "com.miHoYo.GenshinImpact" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/genshin.jpg?alt=media&token=9c1c17d7-85a3-40e1-9a4e-90c49b759a78"
+                "com.supercell.clashroyale" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/clash_roayle.jpg?alt=media&token=1a363460-2b89-413d-a2ba-8454941973e7"
+                "com.axlebolt.standoff2" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/standoff.jpg?alt=media&token=e093c6f0-571e-4c0c-ada5-033ccb64e255"
+                "com.mobile.legends" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/mobile_legends.jpg?alt=media&token=5a43efbb-1935-45c6-b0ee-fefede82a5fe"
+                else -> "https://drive.google.com/drive/u/0/folders/1A6LbsdBDNtLmvBludK7u47wX1vDjmtf0"
+            }
+
+            return bitmapImage
+        }
+
         @RequiresApi(VERSION_CODES.O)
         fun convertListApplicationToListGame(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
             val newGames: MutableList<Game> = ArrayList()
-            val bitmapImageWide: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.mario)
 
             for (game in games) {
                 val packageName = game.packageName
+                val bitmapImagePreview: String = getIconLargeGame(packageName, context)
                 val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
                 var bitmapIcon: Bitmap? = getIcon(
                     context = context,
                     packageManager = context.packageManager,
                     packageName = packageName,
                 )
-//                if(applicationIcon.getIntrinsicWidth() <= 0 || applicationIcon.getIntrinsicHeight() <= 0) {
-//                    bitmapIcon = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-//                } else {
-//                    bitmapIcon = Bitmap.createBitmap(applicationIcon.getIntrinsicWidth(), applicationIcon.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-//                }
 
                 newGames.add(
                     Game(
@@ -121,15 +145,16 @@ class GamesStatistic{
                         getApplicationLabel(packageManager,game),
                         game.category,
                         bitmapIcon,
-                        bitmapImageWide
+                        bitmapImagePreview,
+                        bitmapImagePreview,
                     )
                 )
             }
 
             return newGames
         }
-
     }
+
 
     public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
         val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager

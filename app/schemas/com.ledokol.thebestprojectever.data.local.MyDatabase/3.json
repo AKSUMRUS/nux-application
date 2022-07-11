@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "304e1edd913167c77df8537bd33ddffd",
+    "identityHash": "0bfa5859262b6fe95a79b1a90d6c4ddd",
     "entities": [
       {
         "tableName": "profile",
@@ -88,10 +88,10 @@
       },
       {
         "tableName": "games",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`package` TEXT NOT NULL, `name` TEXT NOT NULL, `category` INTEGER NOT NULL, `icon` BLOB, `image_preview` BLOB, PRIMARY KEY(`package`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`package` TEXT NOT NULL, `name` TEXT NOT NULL, `category` INTEGER NOT NULL, `icon_preview` BLOB, `image_wide` TEXT, `icon_large` TEXT, PRIMARY KEY(`package`))",
         "fields": [
           {
-            "fieldPath": "gamePackage",
+            "fieldPath": "android_package_name",
             "columnName": "package",
             "affinity": "TEXT",
             "notNull": true
@@ -109,15 +109,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "icon",
-            "columnName": "icon",
+            "fieldPath": "icon_preview",
+            "columnName": "icon_preview",
             "affinity": "BLOB",
             "notNull": false
           },
           {
             "fieldPath": "image_wide",
-            "columnName": "image_preview",
-            "affinity": "BLOB",
+            "columnName": "image_wide",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "icon_large",
+            "columnName": "icon_large",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -134,7 +140,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '304e1edd913167c77df8537bd33ddffd')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0bfa5859262b6fe95a79b1a90d6c4ddd')"
     ]
   }
 }

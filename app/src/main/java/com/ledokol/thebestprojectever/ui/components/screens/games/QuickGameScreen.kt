@@ -6,10 +6,7 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -109,7 +106,9 @@ fun GridGames(
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(top = 120.dp, start = 20.dp, end = 20.dp),
-        modifier = Modifier,
+        modifier = Modifier
+//            .padding(start = 20.dp, end = 20.dp)
+        ,
     ) {
         item(
             span = { GridItemSpan(2) },
@@ -128,10 +127,10 @@ fun GridGames(
         items(games) { game ->
             GameInQuickGames(
                 packageName = "fdfdfd",
-                icon = game.icon!!.asImageBitmap(),
-                imageWide = game.image_wide!!.asImageBitmap(),
+                icon = game.icon_preview!!.asImageBitmap(),
+                iconLarge = game.icon_large!!,
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                onClick = { onClick(game.gamePackage) },
+                onClick = { onClick(game.android_package_name) },
             )
         }
     }

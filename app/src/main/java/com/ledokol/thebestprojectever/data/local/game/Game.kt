@@ -12,13 +12,15 @@ import org.jetbrains.annotations.NotNull
 data class Game(
     @PrimaryKey
     @ColumnInfo(name = "package")
-    val gamePackage: String,
+    val android_package_name: String,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "category")
     val category: Int,
-    @ColumnInfo(name = "icon")
-    val icon: Bitmap?,
-    @ColumnInfo(name = "image_preview")
-    val image_wide: Bitmap?
+    @ColumnInfo(name = "icon_preview")
+    val icon_preview: Bitmap?,
+    @ColumnInfo(name = "image_wide")
+    val image_wide: String?,
+    @ColumnInfo(name = "icon_large")
+    val icon_large: String?
 )

@@ -15,7 +15,7 @@ class ProfileRepository @Inject constructor(
     private val api : RetrofitServices,
     private val dao: ProfileDao
     ) {
-    val profile: LiveData<List<Profile>> = dao.getProfile()
+    val profile: LiveData<Profile> = dao.getProfile()
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 

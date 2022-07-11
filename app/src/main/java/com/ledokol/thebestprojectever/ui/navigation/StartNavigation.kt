@@ -43,7 +43,7 @@ fun StartNavigation(
 //    val statusViewModel = StatusViewModel::class.java
     val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
-    val profile = profileViewModel.profile.observeAsState(listOf())
+    val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
@@ -102,15 +102,13 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(profile.value.isEmpty()){
+    val start: String = if(profile.value==null){
         "splash_screen"
-//        "test"
-    }
-    else{
-        accessToken = profile.value[0].access_token
-//        "request_permission"
-        BottomNavItemMain.QuickGame.screen_route
-//        "test"
+    } else{
+        Log.e("profile",profile.value.toString())
+        accessToken = profile.value!!.access_token
+        "request_permission"
+//        BottomNavItemMain.QuickGame.screen_route
     }
 
 
@@ -151,7 +149,8 @@ fun StartNavigation(
                         composable("friend_screen") {
                             FriendScreen(
                                 navController = navController,
-                                userViewModel = userViewModel
+                                userViewModel = userViewModel,
+                                gamesViewModel = gamesViewModel,
                             )
                         }
                         composable("finish_inviting_friends") {
@@ -166,6 +165,12 @@ fun StartNavigation(
                             ChooseFriendsForGame(
                                 navController = navController,
                                 userViewModel = userViewModel2
+                            )
+                        }
+                        composable("request_permission") {
+                            RequestPermission(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
                             )
                         }
 

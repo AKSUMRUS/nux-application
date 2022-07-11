@@ -10,32 +10,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 
 @Composable
 fun GameInQuickGames(
     packageName: String,
     icon: ImageBitmap,
-    imageWide: ImageBitmap,
+    iconLarge: String,
     backgroundImage: ImageBitmap,
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
 ){
 
     Box (
         modifier = Modifier
             .fillMaxWidth()
+            .height(180.dp)
             .clickable() {
                 onClick()
             }
         ,
     ) {
-        Image(
-            bitmap = imageWide,
+        AsyncImage(
+            model = iconLarge,
             contentDescription = "GameImage",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
             ,
+            contentScale = ContentScale.FillBounds,
         )
         Image(
             bitmap = icon,

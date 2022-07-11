@@ -9,6 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -16,6 +18,7 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Password
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 
@@ -30,10 +33,6 @@ fun LoginScreen(
 
     val buttonClick = {
         viewModel.login(nickname = nickname,password = password)
-//        navController.navigate("quick_game") {
-//            popUpTo("quick_game")
-//            launchSingleTop = true
-//        }
     }
 
     fun buttonBackClick(){
@@ -57,24 +56,20 @@ fun LoginScreen(
                 description = stringResource(R.string.description_login),
             )
 
-            TextFieldTrailingIcon(
+            TextFieldTrailingImage(
                 text = nickname,
-                placeholder = stringResource(id = R.string.email),
+                placeholder = stringResource(id = R.string.nickname),
                 onValueChange = setNickname,
                 buttonClick = {
                     setNickname("")
                 },
-                icon = Icons.Default.Close,
+                image = ImageBitmap.imageResource(id = R.drawable.cross),
             )
 
-            TextFieldTrailingIcon(
-                text = password,
+            Password(
+                password = password,
                 placeholder = stringResource(id = R.string.password),
                 onValueChange = setPassword,
-                buttonClick = {
-                    setPassword("")
-                },
-                icon = Icons.Default.Close,
             )
 
             Row(

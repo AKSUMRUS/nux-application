@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.molecules
+package com.ledokol.thebestprojectever.ui .components.molecules
 
 import android.content.Intent
 import android.provider.Settings
@@ -29,10 +29,14 @@ fun ProfileTopBlock(
             )
 //            .verticalScroll(rememberScrollState())
     ) {
-        UserInformationProfile(
-            name = profileViewModel.profile.value!![0].nickname,
-            profile = true,
-        )
+        if(profileViewModel.profile.value!= null){
+            profileViewModel.profile.value?.let {
+                UserInformationProfile(
+                    name = it.nickname,
+                    profile = true,
+                )
+            }
+        }
 
         Button(
             text = stringResource(id = R.string.logout),

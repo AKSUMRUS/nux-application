@@ -6,6 +6,10 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -21,19 +25,20 @@ import androidx.compose.ui.draw.clip
 //import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
 
@@ -41,6 +46,7 @@ import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfil
 fun FriendScreen(
     navController: NavController,
     userViewModel: UserViewModel,
+    gamesViewModel: GamesViewModel,
 ){
 
     val state = userViewModel.state
@@ -62,23 +68,39 @@ fun FriendScreen(
                 }
             )
 
-            LazyColumn(content = {
-                item {
-                    Column(){
-                        UserInformationProfile(
-                            name = state.friendUser.nickname,
-                            profile = false,
-                        )
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+//                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
+                modifier = Modifier,
+            ){
+                item(
+                    span = { GridItemSpan(2) },
+                    ) {
+                        Column(){
+                            UserInformationProfile(
+                                name = state.friendUser.nickname,
+                                profile = false,
+                            )
 
-                        HeadlineH4(
-                            text = "Список скачанных игр",
-                        )
-                    }
+                            HeadlineH5(
+                                text = "Игры",
+                                modifier = Modifier
+                                    .padding(start = 20.dp)
+                                ,
+                                fontWeight = W700
+                            )
+                        }
                 }
-                items(state.games!!){ game ->
-                    Text(game.name)
+
+                items(gamesViewModel.state.games!!) { game ->
+                    GameInQuickGames(
+                        packageName = "fdfdfd",
+                        icon = game.icon_preview!!.asImageBitmap(),
+                        iconLarge = game.icon_large!!,
+                        backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                    )
                 }
-            })
+            }
         }
 
 

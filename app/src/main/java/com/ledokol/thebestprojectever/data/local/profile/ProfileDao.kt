@@ -12,8 +12,8 @@ interface ProfileDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertProfile(profile: Profile)
 
-    @Query("SELECT * FROM profile")
-    fun getProfile(): LiveData<List<Profile>>
+    @Query("SELECT * FROM profile LIMIT 1")
+    fun getProfile(): LiveData<Profile>
 
     @Query("DELETE FROM profile")
     fun clearProfile()

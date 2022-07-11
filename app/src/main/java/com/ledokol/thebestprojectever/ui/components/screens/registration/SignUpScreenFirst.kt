@@ -1,33 +1,24 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.InspectableModifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.profile.Profile
 //import com.ledokol.thebestprojectever.data.remote.Common
-import com.ledokol.thebestprojectever.data.remote.RetrofitServices
-import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Password
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 @Composable
@@ -58,24 +49,20 @@ fun SignUpScreenFirst(
                 description = stringResource(R.string.description_signup_first),
             )
 
-            TextFieldTrailingIcon(
+            TextFieldTrailingImage(
                 text = email,
                 placeholder = stringResource(id = R.string.email),
                 buttonClick = {
                       setEmail("")
                 },
-                icon = Icons.Default.Close,
+                image = ImageBitmap.imageResource(id = R.drawable.cross),
                 onValueChange = setEmail,
             )
 
-            TextFieldTrailingIcon(
-                text = password,
+            Password(
+                password = password,
                 placeholder = stringResource(id = R.string.password),
                 onValueChange = setPassword,
-                buttonClick = {
-                    setPassword("")
-                },
-                icon = Icons.Default.Close,
             )
 
             Row(
