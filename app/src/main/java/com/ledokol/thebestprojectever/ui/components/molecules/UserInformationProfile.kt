@@ -33,7 +33,6 @@ fun UserInformationProfile(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, top = top, bottom = 10.dp)
-            .padding(10.dp)
     ){
         Column(
             modifier = Modifier

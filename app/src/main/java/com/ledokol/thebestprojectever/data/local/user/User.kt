@@ -16,6 +16,8 @@ data class User(
     @ColumnInfo(name = "nickname")
     var nickname: String,
     @ColumnInfo(name = "status")
-    var status: Status = Status()
+    var status: Status = Status(),
+//    @ColumnInfo(name = "games")
+//    var games: List<CurrentApp>,
 
 )

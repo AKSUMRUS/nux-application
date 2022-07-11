@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.atoms.textfield
+package com.ledokol.thebestprojectever.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,8 +17,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ledokol.thebestprojectever.data.local.user.UserState
-import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 
 @Composable

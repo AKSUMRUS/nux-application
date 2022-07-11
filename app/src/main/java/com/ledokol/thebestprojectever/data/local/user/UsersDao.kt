@@ -17,6 +17,9 @@ interface UsersDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUser(user: User)
 
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    fun insertGames(games: List<CurrentApp>?)
+
     @Query(
         """
             SELECT * 

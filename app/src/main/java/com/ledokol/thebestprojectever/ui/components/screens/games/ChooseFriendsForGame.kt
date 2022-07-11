@@ -5,27 +5,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.InspectableModifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
-import com.ledokol.thebestprojectever.ui.components.atoms.textfield.Search
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
-import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 

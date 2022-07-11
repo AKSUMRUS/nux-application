@@ -27,7 +27,7 @@ fun UserOverviewProfile(games: List<Game>?){
                 items(games){ game ->
                     GameInList(
                         name = game.name,
-                        icon = getIcon(context, packageManager, game.gamePackage)!!.asImageBitmap(),
+                        icon = getIcon(context, packageManager, game.android_package_name)!!.asImageBitmap(),
                         backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                     )
                 }

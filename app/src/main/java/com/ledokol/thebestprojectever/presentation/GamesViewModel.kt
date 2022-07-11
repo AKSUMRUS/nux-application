@@ -89,6 +89,34 @@ class GamesViewModel @Inject constructor(
         }
     }
 
+    fun getGame(
+        query: String = state.searchQuery.lowercase()
+    ){
+        viewModelScope.launch {
+            repository.getGame(query)
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let { game ->
+                                state = state.copy(
+                                    game = game
+                                )
+                            }
+                            Log.e("GAME",state.toString())
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                    }
+
+                }
+        }
+    }
+
+
 
     //New Function
 

@@ -27,4 +27,7 @@ interface GamesDao {
     )
     fun getGames(query: String) : List<Game>
 
+    @Query("SELECT * FROM games WHERE package = :packageName")
+    fun getGame(packageName: String) : Game
+
 }

@@ -81,33 +81,34 @@ fun ProfileScreen(
     val games = gamesViewModel.state.games
     val packageManager = context.packageManager
 
-    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    val checkPermission = remember{ mutableStateOf(false) }
+//    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
+//    val checkPermission = remember{ mutableStateOf(false) }
 
-    DisposableEffect(lifecycleOwner, checkPermission) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                checkPermission.value = GamesStatistic.checkForPermission(context)
-
-                if(checkPermission.value && (gamesViewModel!=null && gamesViewModel.state.games!!.isEmpty())){
-                    Log.d("INSTALLEDAPPS", "UPDATE CHECK")
-                    gamesViewModel.clearGames()
-                    gamesViewModel.insertGames(
-                        GamesStatistic.convertListApplicationToListGame(
-                            context,
-                            context.packageManager,
-                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
-                        )
-                    )
-                    gamesViewModel.getGames()
-                }
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
+//    DisposableEffect(lifecycleOwner, checkPermission) {
+//        val observer = LifecycleEventObserver { _, event ->
+//            if (event == Lifecycle.Event.ON_START) {
+//                checkPermission.value = GamesStatistic.checkForPermission(context)
+//
+//                if(checkPermission.value && (gamesViewModel!=null && gamesViewModel.state.games!!.isEmpty())){
+//                    Log.d("INSTALLEDAPPS", "UPDATE CHECK")
+//                    gamesViewModel.clearGames()
+//                    gamesViewModel.insertGames(
+//                        GamesStatistic.convertListApplicationToListGame(
+//                            context,
+//                            context.packageManager,
+//                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
+//                        )
+//                    )
+//                    gamesViewModel.getGames()
+//                    gamesViewModel.shareGames()
+//                }
+//            }
+//        }
+//        lifecycleOwner.lifecycle.addObserver(observer)
+//        onDispose {
+//            lifecycleOwner.lifecycle.removeObserver(observer)
+//        }
+//    }
 
     LazyColumn(content = {
         item {
@@ -116,86 +117,15 @@ fun ProfileScreen(
             )
         }
 
-        if(!checkPermission.value){
-            item {
-                Text("Предоставьте, пожалуйста, доступ!")
-                androidx.compose.material.Button(
-                    onClick = {
-                        context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-                    }
-                ) {
-                    Text("Получить разрешение")
-                }
-            }
-        }else if(games!=null){
+        if(games!=null){
             items(games){ game ->
                 GameInList(
                     name = game.name,
-                    icon = getIcon(context, packageManager, game.gamePackage)!!.asImageBitmap(),
+                    icon = getIcon(context, packageManager, game.android_package_name)!!.asImageBitmap(),
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                 )
             }
         }
     })
 
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(
-//                MaterialTheme.colors.background
-//            )
-////            .verticalScroll(rememberScrollState())
-//    ) {
-//        UserInformationProfile(
-//            name = "Гордей",
-//            profile = true,
-//        )
-//
-//        Button(
-//            text = stringResource(id = R.string.logout),
-//            onClick = {
-//                mainViewModel.clearProfile()
-//            }
-//        )
-//
-//        if(!checkPermission.value){
-//            Text("Предоставьте, пожалуйста, доступ!")
-//            androidx.compose.material.Button(
-//                onClick = {
-//                    context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-//                }
-//            ) {
-//                Text("Получить разрешение")
-//            }
-//        }else{
-//            UserOverviewProfile(games = games)
-////            UserGames()
-//        }
-//    }
 }
-
-fun Modifier.gradientBackground(colors: List<Color>, angle: Float) = this.then(
-    Modifier.drawBehind {
-        val angleRad = angle / 180f * PI
-        val x = cos(angleRad).toFloat() //Fractional x
-        val y = sin(angleRad).toFloat() //Fractional y
-
-        val radius = sqrt(size.width.pow(2) + size.height.pow(2)) / 2f
-        val offset = center + Offset(x * radius, y * radius)
-
-        val exactOffset = Offset(
-            x = min(offset.x.coerceAtLeast(0f), size.width),
-            y = size.height - min(offset.y.coerceAtLeast(0f), size.height)
-        )
-
-        drawRect(
-            brush = Brush.linearGradient(
-                colors = colors,
-                start = Offset(size.width, size.height) - exactOffset,
-                end = exactOffset
-            ),
-            size = size
-        )
-    }
-)
-

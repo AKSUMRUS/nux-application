@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun HeadlineH6(
@@ -13,6 +14,7 @@ fun HeadlineH6(
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.onSurface,
     fontWeight: FontWeight? = MaterialTheme.typography.h6.fontWeight,
+    textAlign: TextAlign = TextAlign.Left,
 ) {
 
     Text(
@@ -21,6 +23,7 @@ fun HeadlineH6(
         style = MaterialTheme.typography.h6,
         modifier = modifier,
         fontWeight = fontWeight,
+        textAlign = textAlign,
         )
 }
 

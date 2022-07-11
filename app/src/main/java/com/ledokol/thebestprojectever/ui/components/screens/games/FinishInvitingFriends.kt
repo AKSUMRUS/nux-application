@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
@@ -24,7 +25,7 @@ fun FinishInvitingFriends(
     gamesViewModel: GamesViewModel
 ) {
     LaunchedEffect(key1 = true){
-        delay(5000)
+        delay(4000)
         navController.navigate("quick_game"){
             popUpTo("quick_game"){
                 inclusive = true
@@ -38,9 +39,9 @@ fun FinishInvitingFriends(
             .fillMaxSize()
             .background(MaterialTheme.colors.primary)
             .padding(20.dp)
-    ,
+        ,
 
-    ){
+        ){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -53,9 +54,10 @@ fun FinishInvitingFriends(
                     .fillMaxWidth()
                     .wrapContentSize(Alignment.Center)
                 ,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W500,
             )
-            HeadlineH4(text = "В ${gamesViewModel.state.game}",
+            HeadlineH4(text = "В ${gamesViewModel.state.game!!.name}",
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.molecules
+package com.ledokol.thebestprojectever.ui .components.molecules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -25,10 +25,14 @@ fun ProfileTopBlock(
             )
 //            .verticalScroll(rememberScrollState())
     ) {
-        UserInformationProfile(
-            name = "Гордей",
-            profile = true,
-        )
+        if(profileViewModel.profile.value!= null){
+            profileViewModel.profile.value?.let {
+                UserInformationProfile(
+                    name = it.nickname,
+                    profile = true,
+                )
+            }
+        }
 
         Button(
             text = stringResource(id = R.string.logout),

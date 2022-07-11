@@ -2,7 +2,9 @@ package com.ledokol.thebestprojectever.data.remote
 
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
+import com.ledokol.thebestprojectever.domain.GameJSON
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import retrofit2.Call
@@ -52,7 +54,19 @@ RetrofitServices {
 
     @PUT("sync_installed_apps/android")
     fun shareGames(
-        @Body games: List<Game>
+        @Body games: List<StatusJSON>
     )
-            : Call<List<Game>>
+            : Call<List<GameJSON>>
+
+    @PUT("current_user/firebase_messaging_token")
+    fun setCurrentFirebaseToken(
+        @Body firebase_messaging_token: String
+    )
+            :Call<String>
+
+    @GET("user/{id}/apps")
+    fun getUserGames(
+        @Path("id") id: String
+    )
+            :Call<List<CurrentApp>>
 }

@@ -18,10 +18,14 @@ class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
     private val api: RetrofitServices
 ): ViewModel() {
-    val profile: LiveData<List<Profile>> = repository.profile
+    val profile: LiveData<Profile> = repository.profile
 
     fun insertProfile(profile: Profile) {
         repository.insertProfile(profile)
+    }
+
+    fun setCurrentFirebaseToken(token: String){
+        repository.setCurrentFirebaseToken(token)
     }
 
     fun login(nickname: String, password: String){

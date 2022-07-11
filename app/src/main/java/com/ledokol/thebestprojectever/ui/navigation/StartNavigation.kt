@@ -41,9 +41,9 @@ fun StartNavigation(
 //    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
 //    val statusViewModel = StatusViewModel::class.java
-    val viewModel = hiltViewModel<ProfileViewModel>()
+    val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
-    val profile = viewModel.profile.observeAsState(listOf())
+    val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
@@ -102,14 +102,13 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(profile.value.isEmpty()){
+    val start: String = if(profile.value==null){
         "splash_screen"
-//        "test"
-    }
-    else{
-        accessToken = profile.value[0].access_token
-        BottomNavItemMain.QuickGame.screen_route
-//        "test"
+    } else{
+        Log.e("profile",profile.value.toString())
+        accessToken = profile.value!!.access_token
+        "request_permission"
+//        BottomNavItemMain.QuickGame.screen_route
     }
 
 
@@ -121,76 +120,92 @@ fun StartNavigation(
             BottomNavigation(navController = navController, bottomBarState = bottomBarState)
         },
     ) {
-        innerPadding ->
-            Box(modifier = Modifier.padding(innerPadding)) {
-                NavHost(
-                    navController = navController,
-                    startDestination = start,
-                    builder = {
-                        composable("start_registration_screen") {
-                            StartRegistrationScreen(navController = navController, viewModel = viewModel)
-                        }
-                        composable("login_screen") {
-                            LoginScreen(navController = navController, viewModel = viewModel)
-                        }
-                        composable("signup_screen") {
-                            SignUpScreen(
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
-                        composable("splash_screen") {
-                            SplashScreen(
-                                navController = navController,
-                                viewModel = viewModel
-                            )
-                        }
-                        composable("friend_screen") {
-                            FriendScreen(
-                                navController = navController,
-                                userViewModel = userViewModel
-                            )
-                        }
-                        composable("finish_inviting_friends") {
-                            FinishInvitingFriends(
-                                navController = navController,
-                                gamesViewModel = gamesViewModel,
-                            )
-                        }
-                        composable("choose_friends_quick_game") {
-                            val userViewModel2 = hiltViewModel<UserViewModel>()
-                            userViewModel2.accessToken = accessToken
-                            ChooseFriendsForGame(
-                                navController = navController,
-                                userViewModel = userViewModel2
-                            )
-                        }
-                        composable(BottomNavItemMain.QuickGame.screen_route) {
-                            QuickGameScreen(
-                                viewModel = gamesViewModel,
-                                navController = navController,
-                                userViewModel = userViewModel
-                            )
-                        }
-                        composable(BottomNavItemMain.Profile.screen_route) {
-                            ProfileScreen(
-                                profileViewModel = viewModel,
-                                gamesViewModel = gamesViewModel,
-                            )
-                        }
-                        composable(BottomNavItemMain.Friends.screen_route) {
-                            userViewModel.accessToken = accessToken
-                            ListFriendsScreen(
-                                navController = navController,
-                                userViewModel = userViewModel
-                            )
-                        }
-
-                        composable("test"){
-                            TestScreen()
-                        }
+            innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            NavHost(
+                navController = navController,
+                startDestination = start,
+                builder = {
+                    composable("start_registration_screen") {
+                        StartRegistrationScreen(
+                            navController = navController,
+                        )
                     }
-                )
-            }
+                    composable("login_screen") {
+                        LoginScreen(navController = navController, viewModel = profileViewModel)
+                    }
+                    composable("signup_screen") {
+                        SignUpScreen(
+                            navController = navController,
+                            viewModel = profileViewModel
+                        )
+                    }
+                    composable("splash_screen") {
+                        SplashScreen(
+                            navController = navController,
+                            viewModel = profileViewModel
+                        )
+                    }
+                    composable("friend_screen") {
+                        FriendScreen(
+                            navController = navController,
+                            userViewModel = userViewModel,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+                    composable("finish_inviting_friends") {
+                        FinishInvitingFriends(
+                            navController = navController,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+                    composable("choose_friends_quick_game") {
+                        val userViewModel2 = hiltViewModel<UserViewModel>()
+                        userViewModel2.accessToken = accessToken
+                        ChooseFriendsForGame(
+                            navController = navController,
+                            userViewModel = userViewModel2
+                        )
+                    }
+                    composable("request_permission") {
+                        RequestPermission(
+                            navController = navController,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+
+                    composable("request_permission") {
+                        RequestPermission(
+                            navController = navController,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+                    composable(BottomNavItemMain.QuickGame.screen_route) {
+                        QuickGameScreen(
+                            navController = navController,
+                            gamesViewModel = gamesViewModel,
+                            profileViewModel = profileViewModel,
+                        )
+                    }
+                    composable(BottomNavItemMain.Profile.screen_route) {
+                        ProfileScreen(
+                            profileViewModel = profileViewModel,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+                    composable(BottomNavItemMain.Friends.screen_route) {
+                        userViewModel.accessToken = accessToken
+                        ListFriendsScreen(
+                            navController = navController,
+                            userViewModel = userViewModel
+                        )
+                    }
+
+                    composable("test"){
+                        TestScreen()
+                    }
+                }
+            )
+        }
     }
 }

@@ -8,7 +8,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonSecondary
@@ -16,7 +15,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonSecondar
 @Composable
 fun StartRegistrationScreen(
     navController: NavController,
-    viewModel: ProfileViewModel
 ){
 
     fun onClickSignUp(): Unit{
@@ -48,7 +46,7 @@ fun StartRegistrationScreen(
             text = stringResource(id = R.string.sign_up),
             modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp)
 //                .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
-        ,
+            ,
             onClick = {onClickSignUp()},
         )
         ButtonSecondary(
