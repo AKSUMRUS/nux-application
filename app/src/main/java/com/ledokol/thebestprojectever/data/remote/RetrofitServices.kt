@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.data.remote
 
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.GameJSON
@@ -42,6 +43,7 @@ RetrofitServices {
 
     @PUT("status/set/android")
     fun setStatus(
+        @Header("Authorization") authHeader: String,
         @Body status: StatusJSON
     )
             : Call<StatusJSON>
@@ -68,7 +70,7 @@ RetrofitServices {
     fun getUserGames(
         @Path("id") id: String
     )
-            :Call<List<CurrentApp>>
+            :Call<Apps>
 
 
     @POST("friends/invite")

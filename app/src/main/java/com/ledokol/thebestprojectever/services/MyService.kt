@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -81,7 +82,7 @@ class MyService: Service() {
                 repository.setStatus(
                     packageApp,
                     labelApp,
-                    categoryApp,
+                    categoryApp
                 )
 //                viewMo
                 logApps("Сейчас запущено приложение $activeAppPackage")

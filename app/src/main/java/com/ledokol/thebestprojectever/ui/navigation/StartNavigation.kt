@@ -23,6 +23,9 @@ import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertL
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.friends.FriendScreen
+import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsScreen
+import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
@@ -35,7 +38,9 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
+//    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
+//    val statusViewModel = StatusViewModel::class.java
     val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
@@ -116,7 +121,7 @@ fun StartNavigation(
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
 
-        "request_permission_data"
+        "contacts_list"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 

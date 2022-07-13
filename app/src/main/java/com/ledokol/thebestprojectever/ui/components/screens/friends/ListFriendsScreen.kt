@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.friends
 
 import android.util.Log
 import androidx.compose.foundation.background

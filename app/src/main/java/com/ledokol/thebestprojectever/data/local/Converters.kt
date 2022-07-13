@@ -10,7 +10,6 @@ import com.ledokol.thebestprojectever.data.local.user.Status
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import java.io.ByteArrayOutputStream
 import java.lang.reflect.Type
-import java.util.*
 
 class Converters {
     @TypeConverter
@@ -49,5 +48,17 @@ class Converters {
             res.add(StatusJSON(game.android_package_name,game.name,game.category.toString()))
         }
         return res.toList()
+    }
+
+    @TypeConverter
+    fun fromString(value: String?): List<String?>? {
+        val listType = object : TypeToken<List<String?>?>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromArrayList(list: List<String?>?): String? {
+        val gson = Gson()
+        return gson.toJson(list)
     }
 }

@@ -18,6 +18,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
+import com.ledokol.thebestprojectever.ui.components.screens.friends.showSearch
 
 
 @Composable

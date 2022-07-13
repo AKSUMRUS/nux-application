@@ -6,6 +6,7 @@ import androidx.hilt.navigation.HiltViewModelFactory
 import androidx.room.Insert
 import com.ledokol.thebestprojectever.data.local.MyDatabase
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
@@ -31,35 +32,6 @@ class UsersRepository @Inject constructor(
     fun clearUsers(){
         dao.clearUsers()
     }
-
-    fun getUserGames(id: String): Flow<Resource<List<CurrentApp>>> {
-        return flow {
-            emit(Resource.Loading(true))
-            val games = try {
-                val gamesCall = api.getUserGames(id)
-                val myResponse: List<CurrentApp>? = gamesCall.awaitResponse().body()
-
-                myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            }
-
-//            dao.insertGames(games)
-            Log.e("FRIEND",games.toString())
-            emit(Resource.Success(
-                data = games
-            ))
-
-            emit(Resource.Loading(false))
-        }
-    }
-
 
     fun getUsers(
         fetchFromRemote: Boolean,
@@ -135,6 +107,30 @@ class UsersRepository @Inject constructor(
             ))
 
             emit(Resource.Loading(false))
+        }
+    }
+
+    fun getUserGames(id: String): Flow<Resource<List<CurrentApp>>> {
+        return flow {
+            emit(Resource.Loading(true))
+            val games = try {
+                val gamesCall = api.getUserGames(id)
+                val myResponse: List<CurrentApp> = gamesCall.awaitResponse().body()!!.apps
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+            Log.e("FRIEND",games.toString())
+            emit(Resource.Success(
+                data = games
+            ))
+            emit(Resource.Loading(true))
         }
     }
 

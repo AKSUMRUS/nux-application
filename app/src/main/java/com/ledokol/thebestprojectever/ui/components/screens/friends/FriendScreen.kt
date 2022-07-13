@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.friends
 
 import android.content.Intent
 import android.provider.Settings
@@ -40,6 +40,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
+import com.ledokol.thebestprojectever.ui.components.molecules.*
 
 @Composable
 fun FriendScreen(
@@ -91,11 +92,11 @@ fun FriendScreen(
                     }
                 }
 
-                items(gamesViewModel.state.games!!) { game ->
-                    GameInList(
+                items(userViewModel.state.games!!) { game ->
+                    GameInQuickGamesFriend(
                         packageName = "fdfdfd",
-                        icon = game.icon_preview!!.asImageBitmap(),
-                        iconLarge = game.icon_large!!,
+                        icon = game.icon_preview,
+                        iconLarge = game.icon_large,
                         backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                     )
                 }
