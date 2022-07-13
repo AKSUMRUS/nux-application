@@ -57,6 +57,9 @@ UserViewModel @Inject constructor(
                     }
                 }
             }
+            is UserEvent.GetFriendGames -> {
+                getUsersGames(event.user)
+            }
         }
 
     }
@@ -138,6 +141,7 @@ UserViewModel @Inject constructor(
                                 state = state.copy(
                                     friendUser = user
                                 )
+                                onEvent(UserEvent.GetFriendGames(user!!))
                             }
                             Log.e("User View Model Friend",state.toString())
                         }
@@ -183,6 +187,30 @@ UserViewModel @Inject constructor(
         }
 
         return inList
+    }
+
+    fun getUsersGames(user: User){
+        viewModelScope.launch {
+            repository.getUserGamse(id = user.id)
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let {
+                                games ->
+                                state = state.copy(
+                                    games = games
+                                )
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                    }
+                }
+        }
     }
 
 }

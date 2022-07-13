@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

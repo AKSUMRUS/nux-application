@@ -5,7 +5,6 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.screens.SignUpScreenFirst
-import com.ledokol.thebestprojectever.ui.components.screens.SignUpScreenSecond
 
 @Composable
 fun SignUpScreen(

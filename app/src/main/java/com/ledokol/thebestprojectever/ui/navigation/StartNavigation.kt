@@ -26,6 +26,9 @@ import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertL
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
+import com.ledokol.thebestprojectever.ui.components.screens.friends.FriendScreen
+import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsScreen
+import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen

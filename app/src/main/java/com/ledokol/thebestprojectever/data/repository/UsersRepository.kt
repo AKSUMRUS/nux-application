@@ -138,4 +138,29 @@ class UsersRepository @Inject constructor(
         }
     }
 
+    fun getUserGamse(id: String): Flow<Resource<List<CurrentApp>>> {
+        return flow {
+            emit(Resource.Loading(true))
+            val games = try {
+                val gamesCall = api.getUserGames(id)
+                val myResponse: List<CurrentApp>? = gamesCall.awaitResponse().body()
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+            Log.e("FRIEND",games.toString())
+            emit(Resource.Success(
+                data = games
+            ))
+            emit(Resource.Loading(true))
+        }
+    }
+
 }

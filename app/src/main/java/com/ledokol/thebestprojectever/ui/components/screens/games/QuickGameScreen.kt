@@ -1,6 +1,5 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.games
 
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
@@ -20,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,9 +26,6 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
