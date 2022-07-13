@@ -14,7 +14,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 
 @Composable
-fun Contact(
+fun ContactInList(
     name: String,
     navController: NavController,
 ){

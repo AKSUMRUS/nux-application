@@ -18,10 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.StatusViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
@@ -38,11 +35,10 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
-//    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
-//    val statusViewModel = StatusViewModel::class.java
     val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
+    val contactsViewModel = hiltViewModel<ContactViewModel>()
     val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
@@ -120,7 +116,7 @@ fun StartNavigation(
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
 
-        "contacts_list"
+        "request_permission_data"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 
@@ -145,7 +141,10 @@ fun StartNavigation(
                         )
                     }
                     composable("login_screen") {
-                        LoginScreen(navController = navController, viewModel = profileViewModel)
+                        LoginScreen(
+                            navController = navController,
+                            viewModel = profileViewModel
+                        )
                     }
                     composable("signup_screen") {
                         SignUpScreen(
@@ -202,6 +201,7 @@ fun StartNavigation(
                     composable("contacts_list") {
                         ContactsList(
                             navController = navController,
+                            contactsViewModel = contactsViewModel,
                         )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {

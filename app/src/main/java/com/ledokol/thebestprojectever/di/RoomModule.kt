@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.di
 import android.content.Context
 import androidx.room.Room
 import com.ledokol.thebestprojectever.data.local.MyDatabase
+import com.ledokol.thebestprojectever.data.local.contact.ContactsDao
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
@@ -51,6 +52,10 @@ class RoomModule {
     @Singleton
     fun provideGamesDao(myDatabase: MyDatabase) : GamesDao = myDatabase.gamesDao()
 
+    @Provides
+    @Singleton
+    fun provideContactsDao(myDatabase: MyDatabase) : ContactsDao = myDatabase.contactsDao()
+
 //    @Provides
 //    @Singleton
 //    fun provideGamesDao(myDatabase: MyDatabase) : StatusRepository = myDatabase.gamesDao()
@@ -63,7 +68,7 @@ class RoomModule {
     @Provides
     @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-        val BASE_URL = "http://192.168.1.67:8080/"
+        val BASE_URL = "http://192.168.180.142:8080/"
 //        val BASE_URL = "http://10.0.2.2:8080/"
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
