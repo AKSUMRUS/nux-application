@@ -191,7 +191,7 @@ UserViewModel @Inject constructor(
 
     fun getUsersGames(user: User){
         viewModelScope.launch {
-            repository.getUserGamse(id = user.id)
+            repository.getUserGames(id = user.id)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {

@@ -41,6 +41,7 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
+    val userViewModel2 = hiltViewModel<UserViewModel>()
 //    val statusViewModel = hiltViewModel<StatusViewModel>()
     val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
 //    val statusViewModel = StatusViewModel::class.java
@@ -51,10 +52,18 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     var accessToken = ""
 
+    Log.e("Profile",profile.toString())
 
     LaunchedEffect(true){
         gamesViewModel.getGames()
     }
+
+//    LaunchedEffect(profile){
+//        if(profile.value != null) {
+//            userViewModel.accessToken = profile.value!!.access_token
+//            userViewModel2.accessToken = profile.value!!.access_token
+//        }
+//    }
 
 //    val intentService = Intent(context, MyService::class.java)
 //    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -163,7 +172,6 @@ fun StartNavigation(
                         )
                     }
                     composable("choose_friends_quick_game") {
-                        val userViewModel2 = hiltViewModel<UserViewModel>()
                         userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,
