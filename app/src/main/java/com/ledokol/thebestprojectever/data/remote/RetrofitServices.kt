@@ -69,4 +69,12 @@ RetrofitServices {
         @Path("id") id: String
     )
             :Call<List<CurrentApp>>
+
+
+    @POST("friends/invite")
+    fun friendsInvite(
+        @Header("Authorization") authHeader: String,
+        @Field("friends_ids") friends_ids: List<String>,
+        @Field("app_id") app_id: String,
+    )
 }

@@ -13,7 +13,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
 @Composable
 fun ButtonPrimary(
     text: String,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ){
 
@@ -30,7 +30,7 @@ fun ButtonPrimary(
         HeadlineH6(
             text = text,
             color = MaterialTheme.colors.primary,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(2.dp)
         )
     }
 }

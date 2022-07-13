@@ -1,60 +1,57 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
-import android.graphics.Bitmap
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 
 @Composable
-fun GameInList(name: String, icon: ImageBitmap, backgroundImage: ImageBitmap){
+fun GameInList(
+    packageName: String,
+    icon: ImageBitmap,
+    iconLarge: String,
+    backgroundImage: ImageBitmap,
+    onClick: () -> Unit = {},
+){
 
-    Box(
+    Box (
         modifier = Modifier
-            .padding(top = 20.dp, start = 20.dp, end = 20.dp)
-            .height(80.dp)
-    ){
-        Image(
-            bitmap = backgroundImage,
-            contentDescription = "fdfd",
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = ContentScale.FillWidth,
-//            tint = Color.Unspecified,
-        )
-
-        Row(
+            .fillMaxWidth()
+            .height(180.dp)
+            .clickable() {
+                onClick()
+            }
+        ,
+    ) {
+        AsyncImage(
+            model = iconLarge,
+            contentDescription = "GameImage",
             modifier = Modifier
-                .padding(start = 10.dp)
-        ){
-            Icon(
-                bitmap = icon,
-                contentDescription = "fdfd",
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
-                tint = Color.Unspecified,
-            )
-
-            HeadlineH6(
-                text = name,
-                modifier = Modifier.padding(10.dp)
-            )
-        }
+                .fillMaxWidth()
+                .padding(20.dp)
+            ,
+            contentScale = ContentScale.FillBounds,
+        )
+        Image(
+            bitmap = icon,
+            contentDescription = "GameImage",
+            modifier = Modifier
+//                .border(5.dp, MaterialTheme.colors.background)
+                .size(70.dp)
+                .align(Alignment.BottomCenter)
+            ,
+        )
     }
 
 }

@@ -31,16 +31,16 @@
     <string name="nav_quick_game">Быстрая игра</string>
     <string name="nav_friends">Друзья</string>
     <string name="nav_profile">Профиль</string>
-    <string name="description_quick_game">Выберите игру, в которую вы пойдете играть</string>
-    <string name="description_find_crew">Выберите своих тиммейтов</string>
+    <string name="description_quick_game">Выберай игру, в которую вы пойдете играть</string>
+    <string name="description_find_crew">Выбери своих тиммейтов</string>
 
 <!--    QuickGame-->
     <string name="title_game">Игра</string>
     <string name="description_game">Выбирети</string>
     <string name="title_crew">Команда</string>
-    <string name="description_crew">Выбирайте своих товарищей по команде вручную</string>
+    <string name="description_crew">Выбирай своих товарищей по команде вручную</string>
     <string name="button_invite_friends">Пригласить!</string>
-    <string name="finish_invite_friends">Вы пригласили друзей</string>
+    <string name="finish_invite_friends">Nы пригласил друзей</string>
 
 <!--Common-->
     <string name = "back">Назад</string>
@@ -51,9 +51,21 @@
     <string name = "hello_splash_screen">Добро пожаловать!</string>
 
 <!--    Permissions-->
-    <string name="hello_permission">Привет ✌️</string>
-    <string name="need_permission">Предоставь, пожалуйста, разрешение</string>
-    <string name="reason_permission">Для полноценной работы приложения</string>
-    <string name="explain_permission">Позвольте нам отслеживать вашу активность в фоновом режиме и получать доступ к приложениям, в которые вы играете</string>
-    <string name="allow_permission">Разрешить!</string>
+    <string name="hello_permission_data">Привет ✌️</string>
+    <string name="need_permission_data">Предоставь, пожалуйста, разрешение</string>
+    <string name="reason_permission_data">Для полноценной работы приложения</string>
+    <string name="explain_permission_data">Позволь нам отслеживать вашу активность в фоновом режиме и получать доступ к приложениям, в которые вы играете</string>
+    <string name="allow_permission_data">Разрешить!</string>
+
+    <string name="hello_permission_contacts">Куда же без друзей? 🙈️</string>
+    <string name="need_permission_contacts">Предоставь, пожалуйста, разрешение</string>
+    <string name="reason_permission_contacts">Чтобы следить за активностью друзей</string>
+    <string name="explain_permission_contacts">Позволь нам увидеть список твоих контактов, чтобы ты сразу мог добавить твоих друзей в приложении</string>
+    <string name="allow_permission_contacts">Разрешить!</string>
+
+    <!--    Repost-->
+    <string name="repost_text_preview">Поделиться</string>
+    <string name = "invite_contact">Пригласить</string>
+    <string name="repost_text_in_app">Скачай это приложение — &#010;https://vk.com</string>
+    <string name="repost_another_app">Использовать другое приложение</string>
 </resources>

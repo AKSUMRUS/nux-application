@@ -38,9 +38,8 @@ import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
-import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
-import com.ledokol.thebestprojectever.ui.components.molecules.UserOverviewProfile
 
 @Composable
 fun FriendScreen(
@@ -93,7 +92,7 @@ fun FriendScreen(
                 }
 
                 items(gamesViewModel.state.games!!) { game ->
-                    GameInQuickGames(
+                    GameInList(
                         packageName = "fdfdfd",
                         icon = game.icon_preview!!.asImageBitmap(),
                         iconLarge = game.icon_large!!,

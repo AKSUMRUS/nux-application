@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.ui.components.atoms
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,10 +27,10 @@ import androidx.compose.ui.unit.sp
 import com.ledokol.thebestprojectever.R
 
 @Composable
-fun TextFieldTrailingIcon(
+fun TextFieldTrailingImage(
     placeholder: String,
     text: String,
-    icon: ImageVector,
+    image: ImageBitmap,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
     buttonClick: () -> Unit,
@@ -57,7 +59,12 @@ fun TextFieldTrailingIcon(
         singleLine = true,
         trailingIcon = {
             IconButton(onClick =  buttonClick) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
+                Icon(
+                    image,
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSecondary,
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.small_icon)),
+                )
             }
         },
         modifier = Modifier

@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 
 
 @Composable
@@ -23,7 +23,7 @@ fun LoadingView() {
         ) {
             Body1(
                 text = stringResource(R.string.loading),
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier.padding(bottom = 20.dp)
             )
             CircularProgressIndicator()
         }

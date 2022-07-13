@@ -24,6 +24,14 @@ class ProfileViewModel @Inject constructor(
         repository.insertProfile(profile)
     }
 
+    fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
+        api.friendsInvite(
+            authHeader = "Bearer $accessToken",
+            friends_ids = friends_ids,
+            app_id = app_id,
+        )
+    }
+
     fun setCurrentFirebaseToken(token: String){
         repository.setCurrentFirebaseToken(token)
     }
@@ -36,11 +44,10 @@ class ProfileViewModel @Inject constructor(
         profileCall.enqueue(object : Callback<Profile> {
             override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
                 if (response.isSuccessful) {
-//                    Log.e()
                     insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password, email = "", name = ""))
                 }
                 else{
-                    Log.e("pshel nahui",response.code().toString())
+                    Log.e("Login failed",response.code().toString())
                 }
             }
 

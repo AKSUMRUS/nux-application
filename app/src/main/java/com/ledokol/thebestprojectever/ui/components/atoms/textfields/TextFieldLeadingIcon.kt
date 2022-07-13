@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.ledokol.thebestprojectever.R
 
 @Composable
-fun TextFieldTrailingIcon(
+fun TextFieldLeadingIcon(
     placeholder: String,
     text: String,
     icon: ImageVector,
@@ -55,7 +55,7 @@ fun TextFieldTrailingIcon(
         ).copy(imeAction = imeAction),
         keyboardActions = keyboardActions,
         singleLine = true,
-        trailingIcon = {
+        leadingIcon = {
             IconButton(onClick =  buttonClick) {
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
             }

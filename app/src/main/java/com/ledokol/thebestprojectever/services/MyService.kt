@@ -13,6 +13,7 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -105,13 +106,13 @@ class MyService: Service() {
     }
 
     private fun createNotification() {
-//        val intent = Intent(this, MainActivity::class.java).apply {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//        }
-//
-//        intent.setAction(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setOngoing(true)
@@ -119,7 +120,7 @@ class MyService: Service() {
             .setContentTitle("TheBestProjectEver работает...")
             .setContentText("Ваши данные в безопасности")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-//            .setContentIntent(pendingIntent)
+            .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setWhen(System.currentTimeMillis());
 
@@ -128,7 +129,7 @@ class MyService: Service() {
             if (getNotificationChannel(CHANNEL_ID) == null) {
                 createNotificationChannel(context)
             }
-//            startForeground(Random(2).nextInt(), builder.build())
+            startForeground(5775, builder.build())
 //            notify(NOTIFICATION_ID, builder.build())
         }
     }

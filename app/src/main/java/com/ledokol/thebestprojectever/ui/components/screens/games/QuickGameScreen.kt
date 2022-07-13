@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
@@ -20,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -28,10 +26,7 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Body1
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
-import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 
@@ -105,7 +100,7 @@ fun GridGames(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = 120.dp, start = 20.dp, end = 20.dp),
+        contentPadding = PaddingValues(top = 120.dp, start = 0.dp, end = 0.dp),
         modifier = Modifier
 //            .padding(start = 20.dp, end = 20.dp)
         ,
@@ -114,7 +109,10 @@ fun GridGames(
             span = { GridItemSpan(2) },
         ){
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+                ,
             ){
                 TitleQuickGame(
                     step = 1,
@@ -125,7 +123,7 @@ fun GridGames(
         }
 
         items(games) { game ->
-            GameInQuickGames(
+            GameInList(
                 packageName = "fdfdfd",
                 icon = game.icon_preview!!.asImageBitmap(),
                 iconLarge = game.icon_large!!,

@@ -1,38 +1,31 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Build
-import android.provider.Settings
-import android.util.Log
 import androidx.annotation.NonNull
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Button
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.imageResource
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.services.GamesStatistic
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.molecules.*
 import java.lang.Math.*
 import kotlin.math.pow
@@ -71,9 +64,9 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
 }
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
+    navController: NavController,
     profileViewModel: ProfileViewModel,
     gamesViewModel: GamesViewModel,
 ){
@@ -81,51 +74,46 @@ fun ProfileScreen(
     val games = gamesViewModel.state.games
     val packageManager = context.packageManager
 
-//    val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-//    val checkPermission = remember{ mutableStateOf(false) }
+    fun onClick(app: String?){
+        navController.navigate("share_screen"){
+            popUpTo("share_screen")
+            launchSingleTop = true
+        }
+    }
 
-//    DisposableEffect(lifecycleOwner, checkPermission) {
-//        val observer = LifecycleEventObserver { _, event ->
-//            if (event == Lifecycle.Event.ON_START) {
-//                checkPermission.value = GamesStatistic.checkForPermission(context)
-//
-//                if(checkPermission.value && (gamesViewModel!=null && gamesViewModel.state.games!!.isEmpty())){
-//                    Log.d("INSTALLEDAPPS", "UPDATE CHECK")
-//                    gamesViewModel.clearGames()
-//                    gamesViewModel.insertGames(
-//                        GamesStatistic.convertListApplicationToListGame(
-//                            context,
-//                            context.packageManager,
-//                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
-//                        )
-//                    )
-//                    gamesViewModel.getGames()
-//                    gamesViewModel.shareGames()
-//                }
-//            }
-//        }
-//        lifecycleOwner.lifecycle.addObserver(observer)
-//        onDispose {
-//            lifecycleOwner.lifecycle.removeObserver(observer)
-//        }
-//    }
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(top = 0.dp, start = 0.dp, end = 0.dp),
+        modifier = Modifier
+//            .padding(start = 20.dp, end = 20.dp)
+        ,
+    ) {
+        item (
+            span = {GridItemSpan(2)}
+        ){
+            Column(){
+                ProfileTopBlock(
+                    profileViewModel = profileViewModel,
+                )
 
-    LazyColumn(content = {
-        item {
-            ProfileTopBlock(
-                profileViewModel = profileViewModel,
-            )
+                ButtonPrimary(
+//                    onClick = {onClick(null)},
+                    onClick = {onClick("com.vkontakte.android")},
+                    text = "Поделиться",
+                )
+            }
         }
 
         if(games!=null){
             items(games){ game ->
                 GameInList(
-                    name = game.name,
-                    icon = getIcon(context, packageManager, game.android_package_name)!!.asImageBitmap(),
+                    packageName = game.android_package_name,
+                    icon = game.icon_preview!!.asImageBitmap(),
+                    iconLarge = game.icon_large!!,
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                 )
             }
         }
-    })
+    }
 
 }
