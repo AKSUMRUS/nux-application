@@ -103,6 +103,18 @@ fun StartNavigation(
         "finish_inviting_friends" -> {
             bottomBarState.value = false
         }
+        "share_screen" -> {
+            bottomBarState.value = false
+        }
+        "request_permission_data" -> {
+            bottomBarState.value = false
+        }
+        "request_permission_contacts" -> {
+            bottomBarState.value = false
+        }
+        "contacts_list" -> {
+            bottomBarState.value = false
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -119,7 +131,8 @@ fun StartNavigation(
     } else{
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
-        "request_permission"
+
+        "contacts_list"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 
@@ -178,17 +191,28 @@ fun StartNavigation(
                             userViewModel = userViewModel2
                         )
                     }
-                    composable("request_permission") {
-                        RequestPermission(
+                    composable("request_permission_data") {
+                        RequestReadData(
+                            navController = navController,
+                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+                    composable("request_permission_contacts") {
+                        RequestReadContacts(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                         )
                     }
 
-                    composable("request_permission") {
-                        RequestPermission(
+                    composable("share_screen") {
+                        ShareScreen(
                             navController = navController,
-                            gamesViewModel = gamesViewModel,
+                        )
+                    }
+
+                    composable("contacts_list") {
+                        ContactsList(
+                            navController = navController,
                         )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
@@ -200,6 +224,7 @@ fun StartNavigation(
                     }
                     composable(BottomNavItemMain.Profile.screen_route) {
                         ProfileScreen(
+                            navController = navController,
                             profileViewModel = profileViewModel,
                             gamesViewModel = gamesViewModel,
                         )
@@ -210,10 +235,6 @@ fun StartNavigation(
                             navController = navController,
                             userViewModel = userViewModel
                         )
-                    }
-
-                    composable("test"){
-                        TestScreen()
                     }
                 }
             )

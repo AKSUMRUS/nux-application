@@ -16,6 +16,7 @@ import com.ledokol.thebestprojectever.R
 //import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 

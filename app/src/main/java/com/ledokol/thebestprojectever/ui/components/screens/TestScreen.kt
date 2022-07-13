@@ -6,13 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 
 @Composable
 fun TestScreen(
 
 ) {
     Column(modifier = Modifier.fillMaxSize().padding(30.dp)) {
-        Button(text = "Test Crash", onClick = { throw RuntimeException("Test Crash") })
+        ButtonPrimary(text = "Test Crash", onClick = { throw RuntimeException("Test Crash") })
     }
 }

@@ -28,6 +28,10 @@ fun ChooseFriendsForGame(
 ){
     val state = userViewModel.state
 
+    fun inviteFriends(){
+
+    }
+
     if(state.isRefreshing){
         Log.e("STATE",state.toString())
         userViewModel.onEvent(UserEvent.Refresh)

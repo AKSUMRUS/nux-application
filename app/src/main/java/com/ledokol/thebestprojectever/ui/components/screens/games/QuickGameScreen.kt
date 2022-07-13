@@ -26,6 +26,7 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
@@ -100,7 +101,7 @@ fun GridGames(
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = 120.dp, start = 20.dp, end = 20.dp),
+        contentPadding = PaddingValues(top = 120.dp, start = 0.dp, end = 0.dp),
         modifier = Modifier
 //            .padding(start = 20.dp, end = 20.dp)
         ,
@@ -109,7 +110,10 @@ fun GridGames(
             span = { GridItemSpan(2) },
         ){
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp)
+                ,
             ){
                 TitleQuickGame(
                     step = 1,

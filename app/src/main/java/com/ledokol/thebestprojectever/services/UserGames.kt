@@ -111,14 +111,14 @@ class GamesStatistic{
 
         fun getIconLargeGame(packageName: String, context: Context): String{
             val bitmapImage = when(packageName) {
-                "com.nintendo.zara" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/mario.jpg?alt=media&token=a942e502-422a-4585-b228-317676c82a63"
-                "com.innersloth.spacemafia" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/among_us.jpg?alt=media&token=d6fd2866-ed02-4b71-97f9-125c7b2f5fbf"
-                "com.tencent.ig" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/pubg.jpg?alt=media&token=ceae9a20-3305-44b1-904b-0ac35425d286"
-                "com.blizzard.wtcg.hearthstone" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/hearthstone.png?alt=media&token=012f9fea-573a-491b-b84f-49678ef76fa6"
-                "com.miHoYo.GenshinImpact" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/genshin.jpg?alt=media&token=9c1c17d7-85a3-40e1-9a4e-90c49b759a78"
-                "com.supercell.clashroyale" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/clash_roayle.jpg?alt=media&token=1a363460-2b89-413d-a2ba-8454941973e7"
-                "com.axlebolt.standoff2" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/standoff.jpg?alt=media&token=e093c6f0-571e-4c0c-ada5-033ccb64e255"
-                "com.mobile.legends" -> "https://firebasestorage.googleapis.com/v0/b/ledokol-it.appspot.com/o/mobile_legends.jpg?alt=media&token=5a43efbb-1935-45c6-b0ee-fefede82a5fe"
+                "com.nintendo.zara" -> "https://storage.yandexcloud.net/nux/games_icon_large/mario.jpg"
+                "com.innersloth.spacemafia" -> "https://storage.yandexcloud.net/nux/games_icon_large/among_us.jpg"
+                "com.tencent.ig" -> "https://storage.yandexcloud.net/nux/games_icon_large/pubg.jpg"
+                "com.blizzard.wtcg.hearthstone" -> "https://storage.yandexcloud.net/nux/games_icon_large/hearthstone.png"
+                "com.miHoYo.GenshinImpact" -> "https://storage.yandexcloud.net/nux/games_icon_large/genshin.jpg"
+                "com.supercell.clashroyale" -> "https://storage.yandexcloud.net/nux/games_icon_large/clash_roayle.jpg"
+                "com.axlebolt.standoff2" -> "https://storage.yandexcloud.net/nux/games_icon_large/standoff.jpg"
+                "com.mobile.legends" -> "https://storage.yandexcloud.net/nux/games_icon_large/mobile_legends.jpg"
                 else -> "https://drive.google.com/drive/u/0/folders/1A6LbsdBDNtLmvBludK7u47wX1vDjmtf0"
             }
 

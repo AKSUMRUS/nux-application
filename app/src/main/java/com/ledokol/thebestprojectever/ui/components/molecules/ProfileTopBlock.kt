@@ -11,7 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Button
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
+import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 
 @Composable
 fun ProfileTopBlock(
@@ -34,7 +35,7 @@ fun ProfileTopBlock(
             }
         }
 
-        Button(
+        ButtonPrimary(
             text = stringResource(id = R.string.logout),
             onClick = {
                 profileViewModel.clearProfile()

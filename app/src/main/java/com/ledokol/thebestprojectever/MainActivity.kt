@@ -44,8 +44,8 @@ class MainActivity : ComponentActivity() {
 
         val intentService = Intent(this, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        startForegroundService(intentService)
-        startService(intentService)
+        startForegroundService(intentService)
+//        startService(intentService)
 
         FirebaseApp.initializeApp(this@MainActivity)
         val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
