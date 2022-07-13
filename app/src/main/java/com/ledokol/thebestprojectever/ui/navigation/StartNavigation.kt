@@ -132,7 +132,7 @@ fun StartNavigation(
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
 
-        "contacts_list"
+        "request_permission_data"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 

@@ -27,7 +27,6 @@ import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
-import com.ledokol.thebestprojectever.ui.components.molecules.GameInQuickGames
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 
@@ -124,7 +123,7 @@ fun GridGames(
         }
 
         items(games) { game ->
-            GameInQuickGames(
+            GameInList(
                 packageName = "fdfdfd",
                 icon = game.icon_preview!!.asImageBitmap(),
                 iconLarge = game.icon_large!!,

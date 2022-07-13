@@ -11,6 +11,6 @@ data class Contact(
     var contactId: Int = 0,
     @ColumnInfo(name = "name")
     var name: String,
-    @ColumnInfo(name = "phones")
-    var phones: List<String>,
+//    @ColumnInfo(name = "phones")
+//    var phones: List<String>,
 )
