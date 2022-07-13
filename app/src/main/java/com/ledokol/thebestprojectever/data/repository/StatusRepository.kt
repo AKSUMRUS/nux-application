@@ -20,7 +20,7 @@ class StatusRepository @Inject constructor(
         androidPackageName : String,
         name : String,
         androidCategory : String,
-        accessToken: String = ""
+        accessToken: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjAzMTM4MjcsInN1YiI6IjNkZDBjMTJhLTlkNDItNGEzZC1hNWU5LThlMWU4ZDVmZDdkZSJ9._vCr4-ROTHiZGO7QkNm64j81Ge4B26rv70SKAuLW228"
     ){
         api.setStatus(authHeader = "Bearer $accessToken",StatusJSON(androidPackageName = androidPackageName,name = name,androidCategory = androidCategory)).enqueue(object : Callback<StatusJSON> {
             override fun onResponse(call: Call<StatusJSON>, response: Response<StatusJSON>) {
