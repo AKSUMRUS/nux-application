@@ -16,6 +16,8 @@ import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -25,6 +27,7 @@ class MyService: Service() {
 
     @Inject
     lateinit var repository: StatusRepository
+
     private var notificationManager: NotificationManager? = null
     val NOTIFICATION_ID = 101
     val CHANNEL_ID = "LEDOKOL"
@@ -71,6 +74,7 @@ class MyService: Service() {
 
             if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
+                repository.leaveStatus()
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
                 val packageApp = activeAppInfo.packageName
