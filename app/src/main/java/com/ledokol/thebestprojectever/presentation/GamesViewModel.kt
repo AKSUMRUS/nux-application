@@ -62,7 +62,7 @@ class GamesViewModel @Inject constructor(
     }
 
     fun getGames(
-        query: String
+        query: String = state.searchQuery
     ){
         viewModelScope.launch {
             repository.getGames(query)
@@ -71,7 +71,7 @@ class GamesViewModel @Inject constructor(
                             is Resource.Success -> {
                                 result.data.let { games ->
                                     clearGames()
-                                    val listGames = fromAppsToListGames(games!!)
+                                    val listGames = games!!
                                     insertGames(listGames)
                                     state = state.copy(
                                         games = listGames

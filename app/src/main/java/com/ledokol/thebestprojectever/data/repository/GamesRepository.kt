@@ -34,25 +34,26 @@ class GamesRepository @Inject constructor(
 
     fun getGames(
         accessToken: String
-    ): Flow<Resource<Apps> > {
+    ): Flow<Resource<List<Game>> > {
         return flow{
             emit(Resource.Loading(true))
 
-            val remoteGames = try{
-                val gamesCall = api.getUserGames(accessToken)
-                val myResponse: Apps? = gamesCall.awaitResponse().body()
-
-                myResponse
-
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            }
+            val remoteGames = dao.getGames("")
+//            val remoteGames = try{
+//                val gamesCall = api.getUserGames(accessToken)
+//                val myResponse: Apps? = gamesCall.awaitResponse().body()
+//
+//                myResponse
+//
+//            } catch(e: IOException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            } catch (e: HttpException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            }
 
             emit(Resource.Success(
                 data = remoteGames

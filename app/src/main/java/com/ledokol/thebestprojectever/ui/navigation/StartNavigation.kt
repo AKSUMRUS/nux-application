@@ -24,6 +24,7 @@ import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic
+import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
