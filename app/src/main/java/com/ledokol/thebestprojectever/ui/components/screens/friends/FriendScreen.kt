@@ -59,6 +59,7 @@ fun FriendScreen(
 ){
 
     val user = userViewModel.state.friendUser
+    val state = userViewModel.state
 
     if(user != null) {
 
@@ -78,10 +79,11 @@ fun FriendScreen(
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
+//                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
                 modifier = Modifier,
             ){
                 item(
-                    span = { GridItemSpan(2) },
+                    span = { GridItemSpan(1) },
                 ) {
                     Column(){
                         Row(
@@ -136,9 +138,40 @@ fun FriendScreen(
                                 )
                             }
                         }
+                    }
+                }
 
+                if(state.friendUser!!.status.current_app != null) {
+                    item(
+                        span = { GridItemSpan(2) },
+                    ) {
                         HeadlineH5(
-                            text = "Игры",
+                            text = stringResource(id = R.string.latest_activity),
+                            modifier = Modifier
+                                .padding(start = 20.dp),
+                            fontWeight = W700
+                        )
+
+                        state.friendUser.status.current_app.let { game ->
+                            GameActivity(
+                                packageName = game!!.android_package_name,
+                                icon = game.icon_preview,
+                                iconLarge = game.icon_large,
+                                backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                                startTime = state.friendUser.status.started_at,
+                                finishTime = state.friendUser.status.last_update
+                            )
+                        }
+                    }
+                }
+
+
+                item(
+                    span = { GridItemSpan(1) },
+                ) {
+                    Column(){
+                        HeadlineH5(
+                            text = stringResource(id = R.string.games),
                             modifier = Modifier
                                 .padding(start = 20.dp)
                             ,
@@ -147,9 +180,9 @@ fun FriendScreen(
                     }
                 }
 
-                items(userViewModel.state.games!!) { game ->
+                items(state.games!!) { game ->
                     GameInQuickGamesFriend(
-                        packageName = "fdfdfd",
+                        packageName = game.android_package_name,
                         icon = game.icon_preview,
                         iconLarge = game.icon_large,
                         backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
