@@ -4,6 +4,7 @@ import android.util.Log
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.domain.AppsStatus
 import com.ledokol.thebestprojectever.domain.GameJSON
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
@@ -46,19 +47,22 @@ class GamesRepository @Inject constructor(
         }
     }
 
-    fun shareGames() {
+    fun shareGames(
+        accessToken: String
+    ) {
         val localGames = dao.getGames("")
         val localGamesJson: List<StatusJSON> = fromGameToStatusJSON(localGames)
-        Log.e("ShareGames Repository",localGames.toString())
-        api.shareGames(localGamesJson).enqueue(object : Callback<List<GameJSON> > {
+        Log.e("ShareGames Repository",AppsStatus(localGamesJson).toString())
+        api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(localGamesJson)).enqueue(object : Callback<AppsStatus> {
             override fun onResponse(
-                call: Call<List<GameJSON>>,
-                response: Response<List<GameJSON>>
+                call: Call<AppsStatus>,
+                response: Response<AppsStatus>
             ) {
+                Log.e("Share Games ans", response.toString())
                 Log.e("SetStatus","Status has set")
             }
 
-            override fun onFailure(call: Call<List<GameJSON>>, t: Throwable) {
+            override fun onFailure(call: Call<AppsStatus>, t: Throwable) {
                 Log.e("SetStatus",t.toString())
             }
 

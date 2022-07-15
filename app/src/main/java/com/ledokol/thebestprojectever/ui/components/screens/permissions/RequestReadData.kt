@@ -23,6 +23,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.services.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
@@ -33,6 +34,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryF
 fun RequestReadData(
     navController: NavController,
     gamesViewModel: GamesViewModel,
+    userViewModel: UserViewModel
 ) {
     val context: Context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
@@ -54,7 +56,7 @@ fun RequestReadData(
                         )
                     )
                     gamesViewModel.getGames()
-                    gamesViewModel.shareGames()
+                    gamesViewModel.shareGames(accessToken = userViewModel.accessToken)
 
                     navController.navigate("request_permission_contacts"){
                         popUpTo("request_permission_contacts")

@@ -87,7 +87,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_GAME){
+                if(info.category == ApplicationInfo.CATEGORY_SOCIAL){
                     installedApps.add(info)
                 }
             }

@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 
 data class StatusJSON(
     @field:Json(name = "android_package_name")
-    val androidPackageName : String,
+    val android_package_name : String,
     @field:Json(name = "name")
     val name : String,
     @field:Json(name = "android_category")
-    val androidCategory : String,
+    val android_category : String,
 )

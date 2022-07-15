@@ -96,9 +96,11 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun shareGames(){
+    fun shareGames(
+        accessToken: String
+        ){
         viewModelScope.launch {
-            repository.shareGames()
+            repository.shareGames(accessToken)
         }
     }
 }

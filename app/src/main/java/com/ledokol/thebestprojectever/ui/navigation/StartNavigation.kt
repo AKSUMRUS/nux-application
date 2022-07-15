@@ -192,9 +192,11 @@ fun StartNavigation(
                         )
                     }
                     composable("request_permission_data") {
+                        userViewModel.accessToken = accessToken
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
+                            userViewModel = userViewModel
                         )
                     }
                     composable("request_permission_contacts") {
