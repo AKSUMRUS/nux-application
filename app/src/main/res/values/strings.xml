@@ -68,4 +68,8 @@
     <string name = "invite_contact">Пригласить</string>
     <string name="repost_text_in_app">Скачай это приложение — &#010;https://vk.com</string>
     <string name="repost_another_app">Использовать другое приложение</string>
+
+    <!--  Profile  -->
+    <string name="games">Игры</string>
+    <string name="latest_activity">Активность</string>
 </resources>
