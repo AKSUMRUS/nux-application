@@ -31,7 +31,6 @@ UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
-//                state = state.copy(isRefreshing = true)
                 getUsers(fetchRemote = true)
                 state = state.copy(isRefreshing = false)
             }
@@ -45,6 +44,7 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.GetFriendUser -> {
                 getUser(id = event.id)
+//                state = state.copy(isRefreshing = false)
 //                getUserGames(id = event.id)
             }
             is UserEvent.SelectUser -> {
@@ -74,7 +74,7 @@ UserViewModel @Inject constructor(
 
 //    fun getUserGames(id: String){
 //        viewModelScope.launch {
-//            repository.getUserGames(id)
+//            statusRepository.getUserGames(id)
 //                .collect{ result ->
 //                when(result){
 //                    is Resource.Success -> {
@@ -98,19 +98,30 @@ UserViewModel @Inject constructor(
 //        }
 //    }
 
+    fun uploadImage(){
+        viewModelScope.launch {
+            repository.uploadImage()
+        }
+    }
+
     fun getUsers(
         query: String = state.searchQuery.lowercase(),
         fetchRemote: Boolean = false
     ) {
 
         viewModelScope.launch {
-            repository.getUsers(fetchFromRemote = fetchRemote, accessToken = accessToken,query = query)
+            repository.getUsers(
+                fetchFromRemote = fetchRemote,
+                accessToken = accessToken,
+                query = query
+            )
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             result.data.let { users ->
                                 state = state.copy(
-                                    users = users
+                                    users = users,
+//                                    isLoading = false,
                                 )
                             }
                             Log.e("USER VIEW MODEL  GET USERS",state.toString())

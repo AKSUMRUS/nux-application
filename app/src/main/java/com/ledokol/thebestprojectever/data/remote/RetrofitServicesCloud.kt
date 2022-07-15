@@ -13,7 +13,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 
-interface RetrofitServices {
+interface RetrofitServicesCloud {
 
     @FormUrlEncoded
     @POST("token")
@@ -23,12 +23,12 @@ interface RetrofitServices {
     : Call<Profile>
 
 //    @PUT("{bucket}/{key}")
-//    fun uploadImage(
+//    fun uploadAvatar(
 //        @Path("bucket") bucket: String,
-//        @Path("key") key: String
-//        @
+//        @Path("key") key: String,
+//
+//        @Body()
 //    )
-//            : Call<Profile>
 
     @Headers("Content-Type: application/json")
     @POST("register")
@@ -63,10 +63,9 @@ interface RetrofitServices {
 
     @PUT("sync_installed_apps/android")
     fun shareGames(
-        @Header("Authorization") authHeader: String,
-        @Body apps: List<StatusJSON>
+        @Body games: List<StatusJSON>
     )
-            : Call<Apps>
+            : Call<List<GameJSON>>
 
     @PUT("current_user/firebase_messaging_token")
     fun setCurrentFirebaseToken(

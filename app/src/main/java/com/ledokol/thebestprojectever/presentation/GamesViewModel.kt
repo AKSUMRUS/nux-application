@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
+import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -41,18 +43,38 @@ class GamesViewModel @Inject constructor(
         }
     }
 
+    fun fromAppsToListGames(apps: Apps): List<Game>{
+        val res:MutableList<Game> = mutableListOf()
+        for (app in apps.apps){
+            res.add(
+                Game(
+                    android_package_name = app.android_package_name,
+                    name = app.name,
+                    category = app.category,
+                    icon_preview = app.icon_preview,
+                    icon_large = app.icon_large,
+                    image_wide = app.image_wide,
+                )
+            )
+        }
+
+        return res
+    }
 
     fun getGames(
-        query: String = state.searchQuery.lowercase()
+        query: String
     ){
         viewModelScope.launch {
-            repository.getGames(false,query)
+            repository.getGames(query)
                 .collect{ result ->
                         when(result){
                             is Resource.Success -> {
                                 result.data.let { games ->
+                                    clearGames()
+                                    val listGames = fromAppsToListGames(games!!)
+                                    insertGames(listGames)
                                     state = state.copy(
-                                        games = games
+                                        games = listGames
                                     )
                                 }
                                 Log.e("GAMES",state.toString())
@@ -96,9 +118,12 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun shareGames(){
+    fun shareGames(
+        games: List<StatusJSON>,
+        accessToken: String,
+    ){
         viewModelScope.launch {
-            repository.shareGames()
+            repository.shareGames(games,accessToken)
         }
     }
 }

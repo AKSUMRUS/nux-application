@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,8 +16,10 @@ import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
+import com.ledokol.thebestprojectever.ui.components.atoms.Status
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 
 //import com.ledokol.thebestprojectever.ui.theme.Background
@@ -27,6 +30,7 @@ fun FriendInList(
     onClick: () -> Unit,
     clicked: Boolean = false,
 ){
+
     val modifier: Modifier = if (clicked) Modifier
         .padding(bottom = 20.dp)
         .height(80.dp)
@@ -41,12 +45,15 @@ fun FriendInList(
         modifier = modifier
         ,
     ){
-        Image(
-            bitmap = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
-            contentDescription = "user back",
-            modifier = Modifier.fillMaxWidth(),
-            contentScale = FillWidth
-        )
+
+        if(!user.status.finished){
+            AsyncImage(
+                user.status.current_app!!.image_wide,
+                contentDescription = "user back",
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = FillWidth
+            )
+        }
 
         Row(
             modifier = Modifier
@@ -62,24 +69,22 @@ fun FriendInList(
                     contentDescription = "Аноним",
                     modifier = Modifier
                         .fillMaxHeight()
-                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round))),
+//                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
+                    ,
                     tint = Color.Unspecified,
                 )
-                Canvas(modifier = Modifier
-                    .size(15.dp)
-                    .align(Alignment.TopEnd)
-                    , onDraw = {
-                        if(user.status.finished) {
-                            drawCircle(color = Color.Gray)
-                        }
-                        else {
-                            drawCircle(color = Color.Green)
-                        }
-                })
             }
             Body1(text = user.nickname,
                 modifier = Modifier.padding(start = 10.dp))
         }
+
+        Status(
+            status = if(user.status.finished)"offline" else "online",
+            modifier = Modifier
+                .padding(top = 15.dp, end = 20.dp)
+                .align(Alignment.TopEnd)
+            ,
+        )
     }
 }
 

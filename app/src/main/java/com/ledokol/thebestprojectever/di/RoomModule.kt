@@ -8,7 +8,7 @@ import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
-import com.ledokol.thebestprojectever.data.repository.StatusRepository
+import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,8 +68,11 @@ class RoomModule {
     @Provides
     @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-        val BASE_URL = "http://192.168.180.142:8080/"
+        val BASE_URL = "https://storage.yandexcloud.net/"
+//        val BASE_URL = "http://192.168.180.142:8080/"
+//        val BASE_URL = "http://51.250.100.21/"
 //        val BASE_URL = "http://10.0.2.2:8080/"
+
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -101,5 +104,26 @@ class RoomModule {
     fun provideRetrofitServices2(retrofit: Retrofit): RetrofitServices {
         return retrofit.create(RetrofitServices::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideRetrofitServicesStorage(
+        retrofit: Retrofit,
+        client: OkHttpClient
+    ): RetrofitServicesCloud {
+        val BASE_URL = "https://storage.yandexcloud.net/"
+
+//        val DateKey = sign("AWS4" + "SecretKey", "yyyymmdd")
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create())
+            .client(client)
+            .build()
+        return retrofit.create(RetrofitServicesCloud::class.java)
+    }
+
 
 }

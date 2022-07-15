@@ -17,13 +17,15 @@ class StatusViewModel @Inject constructor(
     fun setStatus(
     androidPackageName : String,
     name : String,
-    androidCategory : String
+    androidCategory : String,
+    accessToken: String,
     ){
         viewModelScope.launch {
             repository.setStatus(
                 androidPackageName = androidPackageName,
                 name = name,
-                androidCategory = androidCategory
+                androidCategory = androidCategory,
+                accessToken = accessToken,
             )
         }
     }

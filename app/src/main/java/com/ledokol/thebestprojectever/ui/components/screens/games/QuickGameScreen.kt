@@ -125,7 +125,7 @@ fun GridGames(
         items(games) { game ->
             GameInList(
                 packageName = "fdfdfd",
-                icon = game.icon_preview!!.asImageBitmap(),
+                icon = game.icon_preview!!,
                 iconLarge = game.icon_large!!,
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                 onClick = { onClick(game.android_package_name) },

@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.ui.components.screens
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,6 +13,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,15 +33,37 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryL
 @Composable
 fun ShareScreen(
     navController: NavController,
+    fromContacts: Boolean = false,
 ){
 
     val context: Context = LocalContext.current
-    val socialApps = listOf("com.vkontakte.android","com.whatsapp","com.instagram.android", "org.telegram.messenger","com.snapchat.android")
+    val packageManager: PackageManager = context.packageManager
+
+    val socialAppsBase = mutableListOf<String>(
+        "com.vkontakte.android",
+        "org.telegram.messenger",
+        "com.whatsapp",
+        "com.instagram.android",
+        "com.snapchat.android",
+        "com.facebook.katana"
+    )
+    val socialApps = remember{ mutableStateListOf<String>()}
+
+    LaunchedEffect(key1 = true, block = {
+        socialApps.clear()
+        for (app in socialAppsBase){
+            if(appInstalledOrNot(context,app)){
+                socialApps.add(app)
+//                socialApps.remove(app)
+            }
+        }
+    })
 
     fun onClick(app: String?){
         val intent= Intent()
         intent.action= Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT,"Hey Check out this Great app:")
+        intent.putExtra(Intent.EXTRA_TEXT, "Скачай это приложение — &#010;https://vk.com")
+//        intent.putExtra(Intent.EXTRA_TEXT, stringResource(id = R.string.repost_text_in_app).toString())
         intent.type="text/plain"
 
         if(app==null){
@@ -45,6 +71,9 @@ fun ShareScreen(
         }else{
             intent.setPackage(app)
             context.startActivity(intent)
+        }
+        if(fromContacts){
+            navController.popBackStack()
         }
     }
 
@@ -62,44 +91,52 @@ fun ShareScreen(
                         text = "Поделиться",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 20.dp)
-                        ,
+                            .padding(bottom = 20.dp),
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.W700,
                     )
                 }
                 items(socialApps) { app ->
-                    Icon(
-                        getIcon(context, context.packageManager, app)!!.asImageBitmap(),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier
+                    if (appInstalledOrNot(context,app)) {
+                        Icon(
+                            getIcon(context, context.packageManager, app)!!.asImageBitmap(),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier
 //                            .size(50.dp)
-                            .clickable { onClick(app) }
-                            .padding(15.dp)
-                    )
+                                .clickable { onClick(app) }
+                                .padding(15.dp)
+                        )
+                    }
                 }
 
                 item(
-                    span = {GridItemSpan(3)}
-                ){
+                    span = { GridItemSpan(3) }
+                ) {
                     ButtonPrimaryLeadingIcon(
                         text = stringResource(id = R.string.repost_another_app),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp)
-                        ,
-                        onClick = {onClick(null)},
+                            .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp),
+                        onClick = { onClick(null) },
                         icon = Icons.Default.Share,
                     )
                 }
             },
             modifier = Modifier
-                .fillMaxSize()
-            ,
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
         )
     }
 
+}
+
+fun appInstalledOrNot(context: Context, str: String?): Boolean {
+    return try {
+        context.packageManager.getPackageInfo(str!!, PackageManager.GET_ACTIVITIES)
+        true
+    } catch (unused: PackageManager.NameNotFoundException) {
+        false
+    }
 }

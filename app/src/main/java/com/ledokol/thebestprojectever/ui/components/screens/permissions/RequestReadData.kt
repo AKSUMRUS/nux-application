@@ -23,7 +23,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.services.GamesStatistic
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
@@ -33,6 +32,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryF
 fun RequestReadData(
     navController: NavController,
     gamesViewModel: GamesViewModel,
+    accessToken: String,
 ) {
     val context: Context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
@@ -45,16 +45,6 @@ fun RequestReadData(
                 if(checkPermissionReadData(context)){
 
                     Log.d("INSTALLEDAPPS", "UPDATE CHECK")
-                    gamesViewModel.clearGames()
-                    gamesViewModel.insertGames(
-                        GamesStatistic.convertListApplicationToListGame(
-                            context,
-                            context.packageManager,
-                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
-                        )
-                    )
-                    gamesViewModel.getGames()
-                    gamesViewModel.shareGames()
 
                     navController.navigate("request_permission_contacts"){
                         popUpTo("request_permission_contacts")

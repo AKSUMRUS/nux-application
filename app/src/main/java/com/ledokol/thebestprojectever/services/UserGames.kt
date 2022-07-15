@@ -52,6 +52,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
 import com.ledokol.thebestprojectever.ui.components.screens.getIcon
 import java.text.SimpleDateFormat
@@ -76,6 +77,23 @@ class GamesStatistic{
             var newGames: MutableList<GameProfile> = mutableListOf()
             for (game in games){
                 newGames.add(GameProfile(game.packageName))
+            }
+
+            return newGames
+        }
+
+
+        fun convertApplicationInfoToApps(
+            packageManager: PackageManager,
+            games: List<ApplicationInfo>
+        ): List<StatusJSON>{
+            var newGames: MutableList<StatusJSON> = mutableListOf()
+            for (game in games){
+                newGames.add(StatusJSON(
+                    game.packageName,
+                    getApplicationLabel(packageManager, game),
+                    getApplicationCategory(packageManager, game).toString(),
+                ))
             }
 
             return newGames
@@ -143,8 +161,8 @@ class GamesStatistic{
                     Game(
                         packageName,
                         getApplicationLabel(packageManager,game),
-                        game.category,
-                        bitmapIcon,
+                        game.category.toString(),
+                        bitmapImagePreview,
                         bitmapImagePreview,
                         bitmapImagePreview,
                     )

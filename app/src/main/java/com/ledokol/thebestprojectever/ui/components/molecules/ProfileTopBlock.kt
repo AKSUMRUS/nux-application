@@ -18,6 +18,8 @@ import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationPro
 fun ProfileTopBlock(
     profileViewModel: ProfileViewModel,
 ){
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()

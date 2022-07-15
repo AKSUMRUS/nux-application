@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.ui.navigation
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -12,15 +13,19 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat.startForegroundService
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.ledokol.thebestprojectever.data.local.user.Apps
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
-import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
+import com.ledokol.thebestprojectever.services.GamesStatistic
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
+import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
 import com.ledokol.thebestprojectever.ui.components.screens.friends.FriendScreen
@@ -47,24 +52,22 @@ fun StartNavigation(
     val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
-    var accessToken = ""
-
-
-    LaunchedEffect(true){
-        gamesViewModel.getGames()
+    var accessToken by remember {
+        mutableStateOf("")
     }
 
-//    val intentService = Intent(context, MyService::class.java)
-//    intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//    context.startForegroundService(intentService)
 
-    LaunchedEffect(true){
-//        userViewModel.getUsers()
-        gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-        )
+
+    LaunchedEffect(accessToken){
+        if(accessToken!=""){
+            gamesViewModel.clearGames()
+            val games: List<StatusJSON> = GamesStatistic.convertApplicationInfoToApps(
+                context.packageManager,
+                getInstalledAppGamesList(packageManager = context.packageManager)
+            )
+            Log.e("shareGames","Start "+games.toString())
+            gamesViewModel.shareGames(games, accessToken)
+        }
     }
 
     when (navBackStackEntry?.destination?.route) {
@@ -104,6 +107,9 @@ fun StartNavigation(
         "contacts_list" -> {
             bottomBarState.value = false
         }
+        "RequestContentPermission" -> {
+            bottomBarState.value = false
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -117,11 +123,19 @@ fun StartNavigation(
 
     val start: String = if(profile.value==null){
         "splash_screen"
-    } else{
+    }else if(profile.value!!.finish_register){
+        accessToken = profile.value!!.access_token
+
+        val intentService = Intent(context, MyService::class.java)
+        intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startForegroundService(intentService)
+//        "RequestContentPermission"
+        "quick_game"
+    } else {
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
 
-        "contacts_list"
+        "request_permission_data"
 //        BottomNavItemMain.QuickGame.screen_route
     }
 
@@ -188,6 +202,7 @@ fun StartNavigation(
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
+                            accessToken = accessToken,
                         )
                     }
                     composable("request_permission_contacts") {
@@ -207,8 +222,10 @@ fun StartNavigation(
                         ContactsList(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
+                            profileViewModel = profileViewModel,
                         )
                     }
+
                     composable(BottomNavItemMain.QuickGame.screen_route) {
                         QuickGameScreen(
                             navController = navController,

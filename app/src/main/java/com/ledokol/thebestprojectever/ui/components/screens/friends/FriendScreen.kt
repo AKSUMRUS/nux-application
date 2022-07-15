@@ -3,7 +3,10 @@ package com.ledokol.thebestprojectever.ui.components.screens.friends
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -19,6 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Bottom
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 //import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -26,9 +32,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,6 +45,7 @@ import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
@@ -49,10 +58,9 @@ fun FriendScreen(
     gamesViewModel: GamesViewModel,
 ){
 
-    val state = userViewModel.state
+    val user = userViewModel.state.friendUser
 
-    Log.e("FRiend",state.toString())
-    if(state.friendUser != null) {
+    if(user != null) {
 
         Column(
             modifier = Modifier
@@ -70,17 +78,64 @@ fun FriendScreen(
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-//                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
                 modifier = Modifier,
             ){
                 item(
                     span = { GridItemSpan(2) },
                 ) {
                     Column(){
-                        UserInformationProfile(
-                            name = state.friendUser.nickname,
-                            profile = false,
-                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 20.dp, end = 20.dp, top = 120.dp, bottom = 10.dp)
+                        ){
+                            Column(
+                                modifier = Modifier
+                                    .weight(2f),
+                            ){
+                                HeadlineH4(
+                                    text = user.nickname,
+                                    fontWeight = FontWeight.W700,
+                                )
+
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ){
+                                    Body1(
+                                        text = if (user.status.finished) "Offline" else "Online"
+                                    )
+
+                                    Status(
+                                        status = if(user.status.finished)"offline" else "online",
+                                        modifier = Modifier
+                                            .align(CenterVertically)
+                                            .fillMaxHeight()
+                                            .padding(start = 10.dp)
+                                            .align(Bottom)
+                                        ,
+                                    )
+                                }
+                            }
+
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 0.dp)
+                                    .weight(1f)
+                                ,
+                            ){
+
+                                Image(
+                                    bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                                    contentDescription = "Аноним",
+                                    modifier = Modifier
+                                        .size(height = 120.dp, width = 120.dp)
+                                        .align(CenterVertically),
+                                    contentScale = ContentScale.Crop,
+                                )
+                            }
+                        }
 
                         HeadlineH5(
                             text = "Игры",
