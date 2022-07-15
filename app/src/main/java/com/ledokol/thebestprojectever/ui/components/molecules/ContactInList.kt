@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -14,24 +15,23 @@ import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 
 @Composable
-fun Contact(
+fun ContactInList(
     name: String,
     navController: NavController,
+    onClick: () -> Unit,
 ){
     Column(
         modifier = Modifier
-            .padding(20.dp)
+            .fillMaxWidth()
+            .padding(top = 20.dp,bottom = 20.dp)
             .background(MaterialTheme.colors.secondary)
-            .padding(10.dp)
+            .padding( 20.dp)
     ){
         HeadlineH5(text = name)
         ButtonPrimaryFull(
             text = stringResource(id = R.string.invite_contact),
             onClick = {
-                navController.navigate("share_screen"){
-                    popUpTo("share_screen")
-                    launchSingleTop = true
-                }
+                onClick()
             }
         )
     }

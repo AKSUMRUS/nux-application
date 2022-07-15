@@ -28,9 +28,6 @@ fun ListFriendsScreen(
     userViewModel: UserViewModel
 ){
     val state = userViewModel.state
-    val isRefreshing = state.isRefreshing
-
-//    userViewModel.getUsers()
 
     fun onClick(
         navController: NavController,
@@ -39,12 +36,12 @@ fun ListFriendsScreen(
         userViewModel.onEvent(UserEvent.GetFriendUser(id = id))
         navController.navigate("friend_screen") {
             popUpTo("friend_screen")
-//            launchSingleTop = true
+            launchSingleTop = true
         }
     }
 
     if(state.isRefreshing){
-        Log.e("STATE",state.toString())
+        Log.e("USERS START",state.toString())
         userViewModel.onEvent(UserEvent.Refresh)
     }
         Column(

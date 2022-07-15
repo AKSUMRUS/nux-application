@@ -14,9 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,13 +24,14 @@ import javax.inject.Inject
 class MyService: Service() {
 
     @Inject
-    lateinit var repository: StatusRepository
+    lateinit var statusRepository: StatusRepository
+    @Inject
+    lateinit var profileRepository: ProfileRepository
 
     private var notificationManager: NotificationManager? = null
     val NOTIFICATION_ID = 101
     val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
-    val statusRepository: StatusRepository? = null
 
     @Nullable
     override fun onBind (intent: Intent?): IBinder? {
@@ -41,21 +40,20 @@ class MyService: Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.e("Service onCreate",repository.toString())
-//        repository.setStatus("","","")
+        Log.e("Service onCreate",statusRepository.toString())
+//        statusRepository.setStatus("","","")
 
         createNotification()
+        doTask(packageManager)
 
         notificationManager =
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStartCommand(@Nullable intent: Intent?, flags: Int, startId: Int): Int {
 
         val packageManager: PackageManager = context.packageManager
 
-        doTask(packageManager)
         return START_STICKY;
     }
 
@@ -63,7 +61,6 @@ class MyService: Service() {
         Log.d("APP_ACTIVE", text)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
 
@@ -74,7 +71,7 @@ class MyService: Service() {
 
             if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
-                repository.leaveStatus()
+                statusRepository.leaveStatus()
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
                 val packageApp = activeAppInfo.packageName
@@ -83,11 +80,14 @@ class MyService: Service() {
 
                 Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                repository.setStatus(
-                    packageApp,
-                    labelApp,
-                    categoryApp
-                )
+                profileRepository.profile.value?.let{
+                    statusRepository.setStatus(
+                        packageApp,
+                        labelApp,
+                        categoryApp,
+                        accessToken = profileRepository.profile.value!!.access_token
+                    )
+                }
 //                viewMo
                 logApps("Сейчас запущено приложение $activeAppPackage")
             }
@@ -121,9 +121,9 @@ class MyService: Service() {
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setOngoing(true)
-            .setSmallIcon(R.drawable.anonymous)
-            .setContentTitle("TheBestProjectEver работает...")
-            .setContentText("Ваши данные в безопасности")
+            .setSmallIcon(R.drawable.star)
+            .setContentTitle("Следим за активностью друзей...")
+//            .setContentText("Ваши данные в безопасности")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)

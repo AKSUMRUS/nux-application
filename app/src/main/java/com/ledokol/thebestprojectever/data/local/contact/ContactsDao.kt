@@ -14,6 +14,15 @@ interface ContactsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertContacts(contacts: List<Contact>)
 
+    @Query(
+        """
+            SELECT *
+            FROM contacts
+            WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'
+        """
+    )
+    fun getContacts(query: String): List<Contact>
+
     @Query("DELETE FROM contacts")
     fun clearContacts()
 

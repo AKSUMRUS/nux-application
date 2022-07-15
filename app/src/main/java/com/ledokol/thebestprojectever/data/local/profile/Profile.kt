@@ -19,6 +19,8 @@ data class Profile(
     var email: String,
     @ColumnInfo(name = "name")
     var name: String,
+    @ColumnInfo(name = "finish_register")
+    var finish_register: Boolean = false,
 //    @ColumnInfo(name = "lastGame")
 //    var lastGame: String,
 

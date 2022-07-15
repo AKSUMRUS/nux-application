@@ -8,6 +8,7 @@ import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: ProfileRepository,
-    private val api: RetrofitServices
+    private val api: RetrofitServices,
+
 ): ViewModel() {
     val profile: LiveData<Profile> = repository.profile
 
@@ -34,6 +36,10 @@ class ProfileViewModel @Inject constructor(
 
     fun setCurrentFirebaseToken(token: String){
         repository.setCurrentFirebaseToken(token)
+    }
+
+    fun setFinishRegister(){
+        repository.setFinishRegister()
     }
 
     fun login(nickname: String, password: String){

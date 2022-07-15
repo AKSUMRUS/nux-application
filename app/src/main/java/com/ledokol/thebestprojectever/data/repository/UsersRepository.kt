@@ -33,6 +33,10 @@ class UsersRepository @Inject constructor(
         dao.clearUsers()
     }
 
+    fun uploadImage(){
+//        api.uploadImage()
+    }
+
     fun getUsers(
         fetchFromRemote: Boolean,
         query: String,
@@ -74,7 +78,7 @@ class UsersRepository @Inject constructor(
                 dao.insertUsers(
                     users
                 )
-                Log.e("DAO USers",dao.getUsers("").toString())
+                Log.e("DAO Users",dao.getUsers("").toString())
                 emit(Resource.Success(
                     data = dao.getUsers("")
                 ))
@@ -130,7 +134,7 @@ class UsersRepository @Inject constructor(
             emit(Resource.Success(
                 data = games
             ))
-            emit(Resource.Loading(true))
+            emit(Resource.Loading(false))
         }
     }
 

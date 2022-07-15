@@ -70,6 +70,7 @@ fun ProfileScreen(
     profileViewModel: ProfileViewModel,
     gamesViewModel: GamesViewModel,
 ){
+
     val context = LocalContext.current
     val games = gamesViewModel.state.games
     val packageManager = context.packageManager
@@ -108,7 +109,7 @@ fun ProfileScreen(
             items(games){ game ->
                 GameInList(
                     packageName = game.android_package_name,
-                    icon = game.icon_preview!!.asImageBitmap(),
+                    icon = game.icon_preview!!,
                     iconLarge = game.icon_large!!,
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                 )

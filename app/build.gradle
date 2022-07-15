@@ -73,9 +73,16 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 dependencies {
-
+//    implementation("aws.sdk.kotlin:s3:0.15.2-beta")
+//    implementation 'com.amazonaws:aws-java-sdk:'
+//    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true }
+//    implementation 'com.amazonaws:aws-android-sdk-s3:2.23.0'
+//    implementation 'com.amazonaws:aws-android-sdk-cognito:2.18.0'
+//    implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.23.0'
+////    compile group:"com.amazonaws", name:"aws-java-sdk-s3", version:"1.12.261"
+//    implementation ("com.amazonaws", "aws-java-sdk-s3", "1.11.7")
 //    LyfeCycle
-//    implementation(Dependencies.Lifecycle.lifecycleKtx)
+//    implementation(Dependencies.Lifeccompile 'com.amazonaws:aws-java-sdk:+'ycle.lifecycleKtx)
 //    implementation(Dependencies.Lifecycle.viewModelCompose)
 //    implementation(Dependencies.Lifecycle.activityCompose)
 

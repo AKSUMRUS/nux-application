@@ -19,7 +19,7 @@ import coil.compose.rememberImagePainter
 @Composable
 fun GameInList(
     packageName: String,
-    icon: ImageBitmap,
+    icon: String,
     iconLarge: String,
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
@@ -43,8 +43,8 @@ fun GameInList(
             ,
             contentScale = ContentScale.FillBounds,
         )
-        Image(
-            bitmap = icon,
+        AsyncImage(
+            model = icon,
             contentDescription = "GameImage",
             modifier = Modifier
 //                .border(5.dp, MaterialTheme.colors.background)

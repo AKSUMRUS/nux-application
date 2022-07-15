@@ -5,13 +5,15 @@ import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
-import com.ledokol.thebestprojectever.domain.*
+import com.ledokol.thebestprojectever.domain.GameJSON
+import com.ledokol.thebestprojectever.domain.ProfileJSON
+import com.ledokol.thebestprojectever.domain.StatusJSON
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
 
-interface RetrofitServices {
+interface RetrofitServicesCloud {
 
     @FormUrlEncoded
     @POST("token")
@@ -19,6 +21,14 @@ interface RetrofitServices {
         @Field("username") nickname: String,
         @Field("password") password: String )
     : Call<Profile>
+
+//    @PUT("{bucket}/{key}")
+//    fun uploadAvatar(
+//        @Path("bucket") bucket: String,
+//        @Path("key") key: String,
+//
+//        @Body()
+//    )
 
     @Headers("Content-Type: application/json")
     @POST("register")
@@ -41,7 +51,7 @@ interface RetrofitServices {
     @PUT("status/set/android")
     fun setStatus(
         @Header("Authorization") authHeader: String,
-        @Body status: App
+        @Body status: StatusJSON
     )
             : Call<StatusJSON>
 
@@ -53,10 +63,9 @@ interface RetrofitServices {
 
     @PUT("sync_installed_apps/android")
     fun shareGames(
-        @Header("Authorization") authHeader: String,
-        @Body games: AppsStatus
+        @Body games: List<StatusJSON>
     )
-            : Call<AppsStatus>
+            : Call<List<GameJSON>>
 
     @PUT("current_user/firebase_messaging_token")
     fun setCurrentFirebaseToken(

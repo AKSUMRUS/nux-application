@@ -47,8 +47,8 @@ fun RequestReadContacts(
     }
 
     if(permissionState.status.isGranted){
-        navController.navigate("quick_game"){
-            popUpTo("quick_game")
+        navController.navigate("contacts_list"){
+            popUpTo("contacts_list")
             launchSingleTop = true
         }
     }else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {

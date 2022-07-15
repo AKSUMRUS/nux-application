@@ -21,5 +21,5 @@ abstract class MyDatabase: RoomDatabase() {
     abstract fun profileDao(): ProfileDao
     abstract fun usersDao(): UsersDao
     abstract fun gamesDao(): GamesDao
-    abstract fun contactsDao() : ContactsDao
+    abstract fun contactsDao(): ContactsDao
 }
