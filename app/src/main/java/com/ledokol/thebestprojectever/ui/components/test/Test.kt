@@ -1,12 +1,20 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
-import android.app.ProgressDialog
+//import aws.sdk.kotlin.services.s3.S3Client
+//import aws.sdk.kotlin.services.s3.model.GetObjectRequest
+//import aws.smithy.kotlin.runtime.content.writeToFile
+//import com.amazonaws.auth.AWSCredentials
+//import com.amazonaws.auth.AWSStaticCredentialsProvider
+//import com.amazonaws.auth.BasicAWSCredentials
+//import com.amazonaws.client.builder.AwsClientBuilder
+//import com.amazonaws.regions.Regions
+//import com.amazonaws.services.s3.AmazonS3
+//import com.amazonaws.services.s3.model.PutObjectRequest
+//import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,12 +32,11 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-//import com.amazonaws.auth.AWSCredentials
-//import com.amazonaws.auth.AWSStaticCredentialsProvider
-//import com.amazonaws.auth.BasicAWSCredentials
-//import com.amazonaws.regions.Regions
-//import com.amazonaws.services.s3.AmazonS3
-//import com.amazonaws.services.s3.AmazonS3ClientBuilder
+import com.amazonaws.auth.AWSStaticCredentialsProvider
+import com.amazonaws.auth.BasicAWSCredentials
+import com.amazonaws.client.builder.AwsClientBuilder
+import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
@@ -51,17 +58,24 @@ fun Test() {
 //        "YCAJEnZZQb1-KJ2JE08VcqNTN",
 //        "YCOPaczys9w2aTgKndaXJugev28uR-kvhPtSiTBN"
 //    )
-//
-//
-//    val s3client: AmazonS3 = AmazonS3ClientBuilder
-//        .standard()
-//        .withCredentials(AWSStaticCredentialsProvider(credentials))
-//        .withRegion(Regions.EU_CENTRAL_1)
-//        .build()
 
+    val credential = BasicAWSCredentials(
+        "YCAJEnZZQb1-KJ2JE08VcqNTN",
+        "YCOPaczys9w2aTgKndaXJugev28uR-kvhPtSiTBN"
+    )
 
+// building s3client
+// I set Region to `Regions.AP_SOUTH_1`
+// because when I used other region, error rose.
 
-
+    val s3: AmazonS3 = AmazonS3ClientBuilder.standard()
+        .withCredentials(AWSStaticCredentialsProvider(credential))
+        .withEndpointConfiguration(
+            AwsClientBuilder.EndpointConfiguration(
+                "storage.yandexcloud.net", "ru-central1"
+            )
+        )
+        .build()
 
 
     var imageUri by remember {
@@ -141,47 +155,18 @@ fun Test() {
     }
 }
 
+//suspend fun getObjectBytes(bucketName: String, keyName: String, path: String) {
 //
-//fun initAmazonS3Client(
-//    endpoint: String,
-//    accessKey: String,
-//    secretKey: String
-//) =
-//    AmazonS3Client(
-//        BasicAWSCredentials(accessKey, secretKey)
-//    ).apply {
-//        setEndpoint(endpoint).apply {
-//            println("S3 endpoint is ${endpoint}")
-//        }
-//        setS3ClientOptions(
-//            S3ClientOptions.builder()
-//                .setPathStyleAccess(true).build()
-//        )
+//    val request = GetObjectRequest {
+//        key = keyName
+//        bucket = bucketName
 //    }
 //
-//private fun uploadImageTos3(
-//    context: Context,
-//    imageUri: Uri,
-//) {
-////    val path = getFilePathfromURI(imageUri)
-//    val path = imageUri.toString()
-//    if (path != null) {
-//        s3uploaderObj!!.initUpload(path)
-//        s3uploaderObj!!.setOns3UploadDone(object : S3Uploader.S3UploadInterface {
-//            override fun onUploadSuccess(response: String?) {
-//                if (response.equals("Success", ignoreCase = true)) {
-//                    urlFromS3 = generates3ShareUrl(context, path)
-//                    if (!TextUtils.isEmpty(urlFromS3)) {
-//                        Log.e(TAG2, "Uploaded : $urlFromS3")
-//                    }
-//                }
-//            }
-//
-//            override fun onUploadError(response: String?) {
-//                tvStatus!!.text = "Error : $response"
-//                Log.e(TAG2, "Error Uploading")
-//            }
-//        })
+//    S3Client { region = "us-east-1" }.use { s3 ->
+//        s3.getObject(request) { resp ->
+//            val myFile = File(path)
+//            resp.body?.writeToFile(myFile)
+//            println("Successfully read $keyName from $bucketName")
+//        }
 //    }
 //}
-
