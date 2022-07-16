@@ -33,7 +33,7 @@ fun TitleQuickGame(
         )
         HeadlineH6(
             text = description,
-            color = MaterialTheme.colors.onBackground
+            color = MaterialTheme.colors.onBackground,
         )
     }
 }

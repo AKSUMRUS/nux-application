@@ -21,6 +21,6 @@ val GrayHelper = Color(0xFF646464)
 
 
 val Black2 = Color(0xFF000000)
-val Gray2 = Color(0xFF1E1F28)
+val GrayLow = Color(0xFF1E1F28)
 val Gray3 = Color(0xFF4D4F71)
 val Gray4 = Color(0xFF191820)

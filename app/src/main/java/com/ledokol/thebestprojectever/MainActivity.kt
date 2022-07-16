@@ -52,14 +52,13 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            val navController = rememberNavController()
             TheBestProjectEverTheme {
-                val navController = rememberNavController()
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                         StartNavigation(
                             navController = navController,
                             analytics = mFirebaseAnalytics
                         )
-//                        TestScreen()
                     }
 //                }
             }

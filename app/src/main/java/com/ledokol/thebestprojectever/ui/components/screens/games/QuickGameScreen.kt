@@ -40,7 +40,6 @@ fun QuickGameScreen(
     val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
     val context: Context = LocalContext.current
-    val myClipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
 
     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
         if (!task.isSuccessful) {

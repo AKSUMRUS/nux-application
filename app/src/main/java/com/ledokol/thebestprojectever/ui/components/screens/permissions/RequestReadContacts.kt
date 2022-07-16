@@ -20,10 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.*
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
+import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 
 
@@ -32,10 +34,15 @@ import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryF
 fun RequestReadContacts(
     navController: NavController,
     gamesViewModel: GamesViewModel,
+    contactsViewModel: ContactViewModel,
 ) {
     val context: Context = LocalContext.current
     var onClick by remember {
         mutableStateOf({})
+    }
+
+    var showContent by remember {
+        mutableStateOf(false)
     }
 
     var permissionAlreadyRequested by remember {
@@ -47,75 +54,87 @@ fun RequestReadContacts(
     }
 
     if(permissionState.status.isGranted){
+        getContactArray(
+            context,
+            contactsViewModel
+        )
+        contactsViewModel.getContacts("")
+
         navController.navigate("contacts_list"){
             popUpTo("contacts_list")
             launchSingleTop = true
         }
     }else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {
         onClick = { permissionState.launchPermissionRequest() }
+        showContent = true
     } else if (permissionState.status.shouldShowRationale) {
         onClick = { permissionState.launchPermissionRequest() }
+        showContent = true
     } else {
         onClick = { context.openSettings() }
+        showContent = true
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-            .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = CenterHorizontally,
-
-        ){
-
+    if(showContent){
         Column(
-            modifier = Modifier.weight(3f)
-        ){
-            HeadlineH4(
-                text = stringResource(id = R.string.hello_permission_contacts),
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.W500,
-            )
-            HeadlineH5(
-                text = stringResource(id = R.string.need_permission_contacts),
-                color = MaterialTheme.colors.onPrimary,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.W500,
-            )
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = CenterHorizontally,
 
-            HeadlineH4(
-                text = stringResource(id = R.string.reason_permission_contacts),
-                color = MaterialTheme.colors.onBackground,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.W500,
-            )
+            ){
+
+            Column(
+                modifier = Modifier.weight(3f)
+            ){
+                HeadlineH4(
+                    text = stringResource(id = R.string.hello_permission_contacts),
+                    color = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontWeight = FontWeight.W500,
+                )
+                HeadlineH5(
+                    text = stringResource(id = R.string.need_permission_contacts),
+                    color = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontWeight = FontWeight.W500,
+                )
+
+                HeadlineH4(
+                    text = stringResource(id = R.string.reason_permission_contacts),
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontWeight = FontWeight.W500,
+                )
+            }
+
+            Column(
+                modifier = Modifier.weight(3f),
+                verticalArrangement = Arrangement.Bottom
+
+            ){
+                Body1(
+                    text = stringResource(id = R.string.explain_permission_contacts),
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 20.dp),
+                    fontWeight = FontWeight.W500,
+                )
+
+                ButtonPrimaryFull(
+                    text = stringResource(id = R.string.allow_permission_contacts),
+                    onClick = onClick,
+                )
+            }
         }
-
-        Column(
-            modifier = Modifier.weight(3f),
-            verticalArrangement = Arrangement.Bottom
-
-        ){
-            Body1(
-                text = stringResource(id = R.string.explain_permission_contacts),
-                color = MaterialTheme.colors.primary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 20.dp),
-                fontWeight = FontWeight.W500,
-            )
-
-            ButtonPrimaryFull(
-                text = stringResource(id = R.string.allow_permission_contacts),
-                onClick = onClick,
-            )
-        }
-
+    }else{
+        LoadingView()
     }
 }
 

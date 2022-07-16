@@ -1,29 +1,31 @@
 package com.ledokol.thebestprojectever.ui.components.atoms
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextField(
 //    label: String,
     text: String,
-    placeholder: String,
+    placeholder: String = "",
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
-
+    enabled: Boolean = true,
+    textStyle: TextStyle = LocalTextStyle.current
     ) {
     OutlinedTextField(
         value = text,
@@ -32,8 +34,9 @@ fun TextField(
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType
         ).copy(imeAction = imeAction),
+        textStyle = textStyle,
         keyboardActions = keyboardActions,
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
@@ -42,7 +45,8 @@ fun TextField(
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,
             cursorColor = Color.DarkGray
-        )
+        ),
+        enabled = enabled,
     )
 }
 

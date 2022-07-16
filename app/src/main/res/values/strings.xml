@@ -26,6 +26,7 @@
     <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
     <string name = "logout">Выйти</string>
+    <string name = "verify_code">Подтвердить код</string>
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
@@ -49,6 +50,7 @@
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
     <string name = "hello_splash_screen">Добро пожаловать!</string>
+    <string name = "confirm">Подтвердить</string>
 
 <!--    Permissions-->
     <string name="hello_permission_data">Привет ✌️</string>

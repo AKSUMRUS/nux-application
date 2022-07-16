@@ -18,7 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ledokol.thebestprojectever.presentation.*
-import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
+import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
@@ -29,6 +29,8 @@ import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScree
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
+import com.ledokol.thebestprojectever.ui.components.screens.registration.VerifyPhone
+import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 
 @Composable
 fun StartNavigation(
@@ -52,27 +54,6 @@ fun StartNavigation(
     }
 
     Log.e("Profile",profile.toString())
-
-    LaunchedEffect(true){
-//        gamesViewModel.shareGames(acc)
-        if(profile.profile != null) {
-            gamesViewModel.getGames(id = profile.profile.id)
-        }
-    }
-
-
-
-    LaunchedEffect(true){
-//        profileViewModel.getProfile()
-        if(accessToken!=""){
-            Log.e("ShareGames","Start "+accessToken)
-            gamesViewModel.clearGames()
-            gamesViewModel.insertGames(
-                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-            )
-            gamesViewModel.shareGames(accessToken)
-        }
-    }
 
     when (navBackStackEntry?.destination?.route) {
         "signup_screen" -> {
@@ -114,7 +95,7 @@ fun StartNavigation(
         "RequestContentPermission" -> {
             bottomBarState.value = false
         }
-        "test" -> {
+        "verify_phone" -> {
             bottomBarState.value = false
         }
         BottomNavItemMain.QuickGame.screen_route -> {
@@ -130,7 +111,6 @@ fun StartNavigation(
 
     val start: String = if(profile.profile==null){
         "splash_screen"
-//        "test"
     }else if(profile.finish_register){
         accessToken = profile.profile.access_token
 
@@ -140,33 +120,23 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        gamesViewModel.shareGames(
+            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+            accessToken
         )
-        gamesViewModel.shareGames(accessToken)
 
-//        "RequestContentPermission"
         "quick_game"
-//        "test"
     } else {
         Log.e("profile",profile.toString())
         accessToken = profile.profile.access_token
 
-
-        val intentService = Intent(context, MyService::class.java)
-        intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startForegroundService(intentService)
-
-        Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        gamesViewModel.shareGames(
+            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+            accessToken
         )
-        gamesViewModel.shareGames(accessToken)
 
-//        "test"
         "request_permission_data"
-//        BottomNavItemMain.QuickGame.screen_route
     }
 
 
@@ -239,6 +209,7 @@ fun StartNavigation(
                         RequestReadContacts(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
+                            contactsViewModel = contactsViewModel,
                         )
                     }
 
@@ -255,17 +226,21 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                         )
                     }
-                    composable("test") {
-                        Test(
+                    composable("verify_phone") {
+                        VerifyPhone(
+//                            navController = navController,
+//                            contactsViewModel = contactsViewModel,
+//                            profileViewModel = profileViewModel,
                         )
                     }
-
                     composable(BottomNavItemMain.QuickGame.screen_route) {
-                        QuickGameScreen(
-                            navController = navController,
-                            gamesViewModel = gamesViewModel,
-                            profileViewModel = profileViewModel,
-                        )
+                        TheBestProjectEverTheme {
+                            QuickGameScreen(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
+                                profileViewModel = profileViewModel,
+                            )
+                        }
                     }
                     composable(BottomNavItemMain.Profile.screen_route) {
                         ProfileScreen(

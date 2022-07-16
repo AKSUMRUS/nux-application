@@ -69,13 +69,12 @@ class GamesRepository @Inject constructor(
     }
 
     fun shareGames(
+        games: List<StatusJSON>,
         accessToken: String
     ): Flow<Resource<List<Game>?>> {
         return flow {
-            val localGames = dao.getGames("")
-            val localGamesJson: List<StatusJSON> = fromGameToStatusJSON(localGames)
-            Log.e("ShareGames Repository", AppsStatus(localGamesJson).toString())
-            val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(localGamesJson))
+            Log.e("ShareGames Repository", AppsStatus(games).toString())
+            val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(games))
                 .awaitResponse().body()
             Log.e("Share Games ans ", fromGameJSONToGame(ans?.apps).toString())
             emit(Resource.Success(

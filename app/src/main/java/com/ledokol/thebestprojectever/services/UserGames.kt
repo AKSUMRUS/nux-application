@@ -53,6 +53,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.domain.StatusJSON
+import com.ledokol.thebestprojectever.ui.components.atoms.Status
 import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
 import com.ledokol.thebestprojectever.ui.components.screens.getIcon
 import java.text.SimpleDateFormat
@@ -151,11 +152,11 @@ class GamesStatistic{
                 val packageName = game.packageName
                 val bitmapImagePreview: String = getIconLargeGame(packageName, context)
                 val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
-//                var bitmapIcon: Bitmap? = getIcon(
-//                    context = context,
-//                    packageManager = context.packageManager,
-//                    packageName = packageName,
-//                )
+                var bitmapIcon: Bitmap? = getIcon(
+                    context = context,
+                    packageManager = context.packageManager,
+                    packageName = packageName,
+                )
 
                 newGames.add(
                     StatusJSON(

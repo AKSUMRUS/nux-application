@@ -72,6 +72,7 @@ fun ShareScreen(
             intent.setPackage(app)
             context.startActivity(intent)
         }
+
         if(fromContacts){
             navController.popBackStack()
         }

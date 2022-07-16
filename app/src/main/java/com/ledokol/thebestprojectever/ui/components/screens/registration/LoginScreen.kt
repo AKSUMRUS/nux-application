@@ -19,6 +19,7 @@ import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Password
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.PhoneNumber
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 
@@ -33,6 +34,10 @@ fun LoginScreen(
 
     val buttonClick = {
         viewModel.login(nickname = nickname,password = password)
+        navController.navigate("verify_phone"){
+            popUpTo("verify_phone")
+            launchSingleTop = true
+        }
     }
 
     fun buttonBackClick(){
@@ -56,21 +61,23 @@ fun LoginScreen(
                 description = stringResource(R.string.description_login),
             )
 
-            TextFieldTrailingImage(
-                text = nickname,
-                placeholder = stringResource(id = R.string.nickname),
-                onValueChange = setNickname,
-                buttonClick = {
-                    setNickname("")
-                },
-                image = ImageBitmap.imageResource(id = R.drawable.cross),
-            )
 
-            Password(
-                password = password,
-                placeholder = stringResource(id = R.string.password),
-                onValueChange = setPassword,
-            )
+            PhoneNumber()
+//            TextFieldTrailingImage(
+//                text = nickname,
+//                placeholder = stringResource(id = R.string.nickname),
+//                onValueChange = setNickname,
+//                buttonClick = {
+//                    setNickname("")
+//                },
+//                image = ImageBitmap.imageResource(id = R.drawable.cross),
+//            )
+//
+//            Password(
+//                password = password,
+//                placeholder = stringResource(id = R.string.password),
+//                onValueChange = setPassword,
+//            )
 
             Row(
                 modifier = Modifier

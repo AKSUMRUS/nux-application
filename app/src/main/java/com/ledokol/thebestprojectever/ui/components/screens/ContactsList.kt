@@ -45,21 +45,13 @@ fun ContactsList(
     var textSearch by remember{ mutableStateOf("")}
     var showShareScreen by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = true, block = {
-        getContactArray(
-            context,
-            contactsViewModel
-        )
-        contactsViewModel.getContacts("")
-    })
-
     fun onClick(){
         showShareScreen = true
     }
 
     fun onValueChange(text: String){
         textSearch = text
-        contactsViewModel.getContacts(text)
+//        contactsViewModel.getContacts(text)
     }
 
     if(!showShareScreen){
@@ -104,10 +96,10 @@ fun ContactsList(
             )
         }
     }else{
-        ShareScreen(
-            navController = navController,
-            fromContacts = true,
-        )
+        navController.navigate("share_screen"){
+            popUpTo("share_screen")
+            launchSingleTop = true
+        }
     }
 
 }

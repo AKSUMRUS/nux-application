@@ -119,11 +119,11 @@ class GamesViewModel @Inject constructor(
     }
 
     fun shareGames(
-
+        games: List<StatusJSON>,
         accessToken: String
         ){
         viewModelScope.launch {
-            repository.shareGames(accessToken)
+            repository.shareGames(games, accessToken)
                 .collect(){result ->
                     when(result){
                         is Resource.Success -> {
