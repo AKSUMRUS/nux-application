@@ -3,23 +3,26 @@ package com.ledokol.thebestprojectever.ui.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat.startForegroundService
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.ledokol.thebestprojectever.presentation.ContactViewModel
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
@@ -36,7 +39,6 @@ import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginSc
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StartNavigation(
     navController: NavHostController,
@@ -44,15 +46,15 @@ fun StartNavigation(
 ) {
     val context: Context = LocalContext.current
     val userViewModel = hiltViewModel<UserViewModel>()
-//    val statusViewModel = hiltViewModel<StatusViewModel>()
-    val statusViewModel: StatusViewModel = hiltViewModel<StatusViewModel>()
-//    val statusViewModel = StatusViewModel::class.java
     val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
+    val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
-    val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
+    profileViewModel.getProfile()
+    val profile = profileViewModel.state
+
     var accessToken by remember {
         mutableStateOf("")
     }
@@ -61,7 +63,9 @@ fun StartNavigation(
 
     LaunchedEffect(true){
 //        gamesViewModel.shareGames(acc)
-        gamesViewModel.getGames()
+        if(profile.profile != null) {
+            gamesViewModel.getGames(id = profile.profile.id)
+        }
     }
 
 
@@ -69,11 +73,11 @@ fun StartNavigation(
     LaunchedEffect(true){
         if(accessToken!=""){
             Log.e("ShareGames","Start "+accessToken)
-//            gamesViewModel.clearGames()
-//            gamesViewModel.insertGames(
-//                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-//            )
-//            gamesViewModel.shareGames(accessToken)
+            gamesViewModel.clearGames()
+            gamesViewModel.insertGames(
+                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+            )
+            gamesViewModel.shareGames(accessToken)
         }
     }
 
@@ -131,27 +135,41 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(profile.value==null){
+    val start: String = if(profile.profile==null){
         "splash_screen"
 //        "test"
-    }else if(profile.value!!.finish_register){
-        accessToken = profile.value!!.access_token
+    }else if(profile.finish_register){
+        accessToken = profile.profile.access_token
 
         val intentService = Intent(context, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startForegroundService(intentService)
 
         Log.e("ShareGames","Start "+accessToken)
-        gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
-            accessToken
+        gamesViewModel.clearGames()
+        gamesViewModel.insertGames(
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
         )
+        gamesViewModel.shareGames(accessToken)
 
+//        "RequestContentPermission"
         "quick_game"
 //        "test"
     } else {
-        Log.e("profile",profile.value.toString())
-        accessToken = profile.value!!.access_token
+        Log.e("profile",profile.toString())
+        accessToken = profile.profile.access_token
+
+
+        val intentService = Intent(context, MyService::class.java)
+        intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startForegroundService(intentService)
+
+        Log.e("ShareGames","Start "+accessToken)
+        gamesViewModel.clearGames()
+        gamesViewModel.insertGames(
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        )
+        gamesViewModel.shareGames(accessToken)
 
 //        "test"
         "request_permission_data"
@@ -210,7 +228,6 @@ fun StartNavigation(
                         )
                     }
                     composable("choose_friends_quick_game") {
-                        val userViewModel2 = hiltViewModel<UserViewModel>()
                         userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,

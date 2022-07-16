@@ -96,7 +96,7 @@ fun ContactsList(
             ButtonPrimaryFull(
                 text = "Дальше",
                 onClick = {
-                    profileViewModel.setFinishRegister()
+                    profileViewModel.setFinishRegister(accessToken = profileViewModel.state.profile!!.access_token)
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)

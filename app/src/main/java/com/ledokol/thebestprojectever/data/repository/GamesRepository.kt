@@ -3,6 +3,9 @@ package com.ledokol.thebestprojectever.data.repository
 import android.util.Log
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
+import com.ledokol.thebestprojectever.data.local.user.Apps
+import com.ledokol.thebestprojectever.data.local.user.Status
+import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.AppsGame
 import com.ledokol.thebestprojectever.domain.AppsStatus
@@ -26,81 +29,84 @@ class GamesRepository @Inject constructor(
         dao.insertGame(game)
     }
 
-    fun insertGames(games: List<GameJSON>){
-        for (game in games){
-            dao.insertGame(Game(
-                android_package_name = game.android_package_name,
-                name = game.name,
-                category =  game.category,
-                icon_preview = game.icon_preview,
-                image_wide = game.image_wide,
-                icon_large = game.icon_large,
-            ))
-        }
-    }
-
     fun clearGames(){
         dao.clearGames()
     }
 
     fun getGames(
-        accessToken: String
-    ): Flow<Resource<List<Game>> > {
+        id: String
+    ): Flow<Resource<Apps> > {
         return flow{
             emit(Resource.Loading(true))
 
-            val remoteGames = dao.getGames("")
-//            val remoteGames = try{
-//                val gamesCall = api.getUserGames(accessToken)
-//                val myResponse: Apps? = gamesCall.awaitResponse().body()
-//
-//                myResponse
-//
-//            } catch(e: IOException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            } catch (e: HttpException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            }
+//            val remoteGames = dao.getGames("")
+            val remoteGames = try{
+                val gamesCall = api.getUserGames(id)
+                val myResponse: Apps? = gamesCall.awaitResponse().body()
 
-            emit(Resource.Success(
-                data = remoteGames
-            ))
+                myResponse
 
-            emit(Resource.Loading(false))
-            return@flow
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            remoteGames?.let { games ->
+                dao.clearGames()
+
+                emit(Resource.Success(
+                    data = games
+                ))
+
+                emit(Resource.Loading(false))
+            }
         }
     }
 
     fun shareGames(
-        localGamesJson: List<StatusJSON>,
         accessToken: String
-    ) {
-        Log.e("ShareGames Repository",AppsStatus(localGamesJson).toString())
-        api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(localGamesJson)).enqueue(object : Callback<AppsGame> {
-            override fun onResponse(
-                call: Call<AppsGame>,
-                response: Response<AppsGame>
-            ) {
-
-                clearGames()
-                insertGames(response.body()!!.apps)
-                Log.e("ShareGames ans", response.body()!!.toString())
-                Log.e("SetStatusShareGames","Status has set")
-            }
-            override fun onFailure(call: Call<AppsGame>, t: Throwable) {
-                Log.e("SetStatusShareGames","Error "+t.toString())
-            }
-        })
+    ): Flow<Resource<List<Game>?>> {
+        return flow {
+            val localGames = dao.getGames("")
+            val localGamesJson: List<StatusJSON> = fromGameToStatusJSON(localGames)
+            Log.e("ShareGames Repository", AppsStatus(localGamesJson).toString())
+            val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(localGamesJson))
+                .awaitResponse().body()
+            Log.e("Share Games ans ", fromGameJSONToGame(ans?.apps).toString())
+            emit(Resource.Success(
+                data = fromGameJSONToGame(ans?.apps)
+            ))
+        }
     }
 
-    fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON> {
+    private fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON> {
         val res: MutableList<StatusJSON> = mutableListOf()
         for (game in games){
             res.add(StatusJSON(game.android_package_name,game.name,game.category.toString()))
+        }
+        return res.toList()
+    }
+
+    private fun fromGameJSONToGame(games: List<GameJSON>?): List<Game> {
+        val res: MutableList<Game> = mutableListOf()
+        if(games != null) {
+            for (game in games) {
+                res.add(
+                    Game(
+                        android_package_name = game.android_package_name,
+                        name = game.name,
+                        category = game.category,
+                        icon_preview = game.icon_preview,
+                        image_wide = game.image_wide,
+                        icon_large = game.icon_large
+                    )
+                )
+            }
         }
         return res.toList()
     }

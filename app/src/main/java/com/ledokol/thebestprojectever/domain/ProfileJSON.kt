@@ -4,12 +4,10 @@ import com.squareup.moshi.Json
 
 
 data class ProfileJSON(
-    @field:Json(name = "username")
+    @field:Json(name = "nickname")
     var nickname: String?,
     @field:Json(name = "password")
     var password: String?,
-    @field:Json(name = "email")
-    var email: String?,
     @field:Json(name = "name")
     var name: String?,
 )

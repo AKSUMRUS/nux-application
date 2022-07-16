@@ -20,9 +20,8 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 @Composable
 fun GameInList(
     packageName: String,
-    name: String,
-    icon: String,
-    iconLarge: String,
+    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
 ){

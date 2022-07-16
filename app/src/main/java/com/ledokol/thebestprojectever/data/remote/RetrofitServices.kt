@@ -2,6 +2,7 @@ package com.ledokol.thebestprojectever.data.remote
 
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -18,12 +19,12 @@ interface RetrofitServices {
     fun login(
         @Field("username") nickname: String,
         @Field("password") password: String )
-    : Call<Profile>
+    : Call<ProfileToken>
 
     @Headers("Content-Type: application/json")
     @POST("register")
     fun createProfile(@Body profile: ProfileJSON)
-            : Call<Profile>
+            : Call<ProfileToken>
 
     @GET("friends")
     fun getFriends(
@@ -77,4 +78,9 @@ interface RetrofitServices {
         @Field("friends_ids") friends_ids: List<String>,
         @Field("app_id") app_id: String,
     )
+
+    @GET("/get_me")
+    fun getMe(
+        @Header("Authorization") authHeader: String
+    ) : Call<Profile>
 }

@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -35,24 +36,24 @@ fun GameInQuickGamesFriend(
             }
         ,
     ) {
-        AsyncImage(
-            model = iconLarge,
-            contentDescription = "GameImage",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-            ,
-            contentScale = ContentScale.FillBounds,
-        )
-        AsyncImage(
-            model = icon,
-            contentDescription = "GameImage",
-            modifier = Modifier
+            AsyncImage(
+                model = iconLarge,
+                contentDescription = "GameImage",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+                contentScale = ContentScale.FillBounds,
+            )
+        if(icon != null){
+            AsyncImage(
+                model = icon,
+                contentDescription = "GameImage",
+                modifier = Modifier
 //                .border(5.dp, MaterialTheme.colors.background)
-                .size(70.dp)
-                .align(Alignment.BottomCenter)
-            ,
-        )
+                    .size(70.dp)
+                    .align(Alignment.BottomCenter),
+            )
+        }
     }
 
 }
