@@ -21,8 +21,8 @@ import coil.compose.rememberImagePainter
 @Composable
 fun GameInQuickGamesFriend(
     packageName: String,
-    icon: String,
-    iconLarge: String,
+    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
 ){
@@ -44,7 +44,6 @@ fun GameInQuickGamesFriend(
                     .padding(20.dp),
                 contentScale = ContentScale.FillBounds,
             )
-        if(icon != null){
             AsyncImage(
                 model = icon,
                 contentDescription = "GameImage",
@@ -53,7 +52,6 @@ fun GameInQuickGamesFriend(
                     .size(70.dp)
                     .align(Alignment.BottomCenter),
             )
-        }
     }
 
 }

@@ -45,7 +45,7 @@ class ProfileRepository @Inject constructor(
         dao.clearProfile()
     }
 
-    fun getProfile() : Profile
+    fun getProfile() : Profile?
     {
         return dao.getProfile()
     }

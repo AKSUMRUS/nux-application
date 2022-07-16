@@ -19,7 +19,7 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
-import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
+import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 
 @Composable
@@ -38,6 +38,10 @@ fun ListFriendsScreen(
             popUpTo("friend_screen")
             launchSingleTop = true
         }
+    }
+
+    LaunchedEffect(true){
+        userViewModel.onEvent(UserEvent.Refresh)
     }
 
     if(state.isRefreshing){

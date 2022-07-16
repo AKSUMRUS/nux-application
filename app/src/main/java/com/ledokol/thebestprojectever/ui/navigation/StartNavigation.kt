@@ -17,10 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.ledokol.thebestprojectever.presentation.ContactViewModel
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.services.MyService
@@ -44,6 +41,7 @@ fun StartNavigation(
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
+    val statusViewModel = hiltViewModel<StatusViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     profileViewModel.getProfile()
@@ -274,6 +272,7 @@ fun StartNavigation(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             gamesViewModel = gamesViewModel,
+                            statusViewModel = statusViewModel
                         )
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {

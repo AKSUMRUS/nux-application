@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.molecules
+package com.ledokol.thebestprojectever.ui.components.molecules.friend
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.*

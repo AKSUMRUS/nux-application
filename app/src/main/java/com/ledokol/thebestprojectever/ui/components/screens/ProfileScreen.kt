@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import com.ledokol.thebestprojectever.ui.components.molecules.ProfileTopBlock
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,23 +14,21 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Button
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
-import com.ledokol.thebestprojectever.ui.components.molecules.*
-import java.lang.Math.*
-import kotlin.math.pow
-import kotlin.math.sqrt
+import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 
 
 class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
@@ -69,6 +68,7 @@ fun ProfileScreen(
     navController: NavController,
     profileViewModel: ProfileViewModel,
     gamesViewModel: GamesViewModel,
+    statusViewModel: StatusViewModel
 ){
 
     val context = LocalContext.current
@@ -95,12 +95,13 @@ fun ProfileScreen(
             Column(){
                 ProfileTopBlock(
                     profileViewModel = profileViewModel,
+                    statusViewModel = statusViewModel,
+                    navController = navController
                 )
-
                 ButtonPrimary(
 //                    onClick = {onClick(null)},
                     onClick = {onClick("com.vkontakte.android")},
-                    text = "Поделиться",
+                    text = stringResource(id = R.string.share),
                 )
             }
         }
@@ -109,8 +110,9 @@ fun ProfileScreen(
             items(games){ game ->
                 GameInList(
                     packageName = game.android_package_name,
-                    icon = game.icon_preview!!,
-                    iconLarge = game.icon_large!!,
+//                    Временно!
+//                    icon = game.icon_preview!!,
+//                    iconLarge = game.icon_large!!,
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                 )
             }
