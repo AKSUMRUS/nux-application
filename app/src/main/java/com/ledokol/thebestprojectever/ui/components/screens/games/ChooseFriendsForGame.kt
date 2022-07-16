@@ -16,7 +16,7 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
-import com.ledokol.thebestprojectever.ui.components.molecules.FriendInList
+import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 import com.ledokol.thebestprojectever.ui.components.screens.friends.showSearch
 

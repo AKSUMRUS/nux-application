@@ -72,4 +72,5 @@
     <!--  Profile  -->
     <string name="games">Игры</string>
     <string name="latest_activity">Активность</string>
+    <string name="share">Поделиться</string>
 </resources>

@@ -4,7 +4,6 @@ package com.ledokol.thebestprojectever.ui.navigation
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -18,16 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.ledokol.thebestprojectever.presentation.ContactViewModel
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
-import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
-//import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
-import com.ledokol.thebestprojectever.data.local.user.Apps
-import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
-import com.ledokol.thebestprojectever.services.GamesStatistic
-import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
+import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
@@ -50,6 +41,7 @@ fun StartNavigation(
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
+    val statusViewModel = hiltViewModel<StatusViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     profileViewModel.getProfile()
@@ -71,13 +63,14 @@ fun StartNavigation(
 
 
     LaunchedEffect(true){
+//        profileViewModel.getProfile()
         if(accessToken!=""){
             Log.e("ShareGames","Start "+accessToken)
             gamesViewModel.clearGames()
-//            gamesViewModel.shareGames(
-//                convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
-//                accessToken
-//            )
+            gamesViewModel.insertGames(
+                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+            )
+            gamesViewModel.shareGames(accessToken)
         }
     }
 
@@ -147,10 +140,10 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-//        gamesViewModel.insertGames(
-//            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-//        )
-//        gamesViewModel.shareGames(accessToken)
+        gamesViewModel.insertGames(
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        )
+        gamesViewModel.shareGames(accessToken)
 
 //        "RequestContentPermission"
         "quick_game"
@@ -166,10 +159,10 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-//        gamesViewModel.insertGames(
-//            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-//        )
-//        gamesViewModel.shareGames(accessToken)
+        gamesViewModel.insertGames(
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        )
+        gamesViewModel.shareGames(accessToken)
 
 //        "test"
         "request_permission_data"
@@ -279,6 +272,7 @@ fun StartNavigation(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             gamesViewModel = gamesViewModel,
+                            statusViewModel = statusViewModel
                         )
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {

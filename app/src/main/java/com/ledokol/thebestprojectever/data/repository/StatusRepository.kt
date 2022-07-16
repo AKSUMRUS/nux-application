@@ -36,8 +36,12 @@ class StatusRepository @Inject constructor(
         })
     }
 
-    fun leaveStatus(){
-        api.leaveStatus().enqueue(object : Callback<StatusJSON> {
+    fun leaveStatus(
+        accessToken: String
+    ){
+        api.leaveStatus(
+            authHeader = "Bearer $accessToken"
+        ).enqueue(object : Callback<StatusJSON> {
             override fun onResponse(call: Call<StatusJSON>, response: Response<StatusJSON>) {
                 Log.e("Leave Status","Status has left")
             }

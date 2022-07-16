@@ -104,7 +104,7 @@ UserViewModel @Inject constructor(
         }
     }
 
-    fun getUsers(
+    private fun getUsers(
         query: String = state.searchQuery.lowercase(),
         fetchRemote: Boolean = false
     ) {

@@ -22,8 +22,8 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 @Composable
 fun GameActivity(
     packageName: String,
-    icon: String,
-    iconLarge: String,
+    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     startTime: String,
     finishTime: String,
@@ -37,6 +37,7 @@ fun GameActivity(
             .clickable() {
                 onClick()
             }
+            .padding(top = 20.dp)
         ,
     ) {
         AsyncImage(
@@ -44,25 +45,16 @@ fun GameActivity(
             contentDescription = "GameImage",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
-            ,
+                .padding(20.dp),
             contentScale = ContentScale.FillBounds,
         )
-
-        HeadlineH4(
-            text = "from $startTime to $finishTime",
-            modifier = Modifier
-                .align(Alignment.Center)
-        )
-
         AsyncImage(
             model = icon,
             contentDescription = "GameImage",
             modifier = Modifier
 //                .border(5.dp, MaterialTheme.colors.background)
                 .size(70.dp)
-                .align(Alignment.BottomCenter)
-            ,
+                .align(Alignment.BottomCenter),
         )
     }
 

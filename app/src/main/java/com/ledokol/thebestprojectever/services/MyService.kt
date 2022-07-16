@@ -71,7 +71,7 @@ class MyService: Service() {
 
             if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
-                statusRepository.leaveStatus()
+                statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
                 val packageApp = activeAppInfo.packageName

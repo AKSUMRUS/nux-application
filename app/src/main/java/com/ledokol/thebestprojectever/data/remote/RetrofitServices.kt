@@ -48,7 +48,7 @@ interface RetrofitServices {
 
     @PUT("status/leave")
     fun leaveStatus(
-
+        @Header("Authorization") authHeader: String
     )
             : Call<StatusJSON>
 

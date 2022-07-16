@@ -30,9 +30,11 @@ class StatusViewModel @Inject constructor(
         }
     }
 
-    fun leaveStatus(){
+    fun leaveStatus(
+        accessToken: String
+    ){
         viewModelScope.launch {
-            repository.leaveStatus()
+            repository.leaveStatus(accessToken = accessToken)
         }
     }
 

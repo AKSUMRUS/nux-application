@@ -24,14 +24,17 @@ class ProfileViewModel @Inject constructor(
 
     fun getProfile(){
         val response = repository.getProfile()
-        state = state.copy(
-            profile = response,
-            finish_register = response.finishRegister
-        )
-    }
-
-    fun insertProfile(profile: Profile) {
-        repository.insertProfile(profile)
+        if(response != null) {
+            state = state.copy(
+                profile = response,
+                finish_register = response.finishRegister
+            )
+        }
+        else{
+            state = state.copy(
+                profile = response
+            )
+        }
     }
 
     fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
@@ -95,9 +98,11 @@ class ProfileViewModel @Inject constructor(
                 }
         }
     }
-
-    fun clearProfile(){
+    fun logOut(){
         repository.clearProfile()
+        state = state.copy(
+            profile = null
+        )
     }
 
     private fun getMe(
