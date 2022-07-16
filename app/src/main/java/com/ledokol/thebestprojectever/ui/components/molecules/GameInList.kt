@@ -15,10 +15,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 
 @Composable
 fun GameInList(
     packageName: String,
+    name: String,
     icon: String,
     iconLarge: String,
     backgroundImage: ImageBitmap,
@@ -51,6 +53,11 @@ fun GameInList(
                 .size(70.dp)
                 .align(Alignment.BottomCenter)
             ,
+        )
+
+        Body1(
+            text = name,
+            modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 

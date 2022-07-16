@@ -109,6 +109,7 @@ fun ProfileScreen(
             items(games){ game ->
                 GameInList(
                     packageName = game.android_package_name,
+                    name = game.name,
                     icon = game.icon_preview!!,
                     iconLarge = game.icon_large!!,
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),

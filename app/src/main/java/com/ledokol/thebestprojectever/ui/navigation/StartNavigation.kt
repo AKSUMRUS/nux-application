@@ -24,7 +24,7 @@ import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic
-import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
+import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
@@ -142,13 +142,11 @@ fun StartNavigation(
         context.startForegroundService(intentService)
 
         Log.e("ShareGames","Start "+accessToken)
-        gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        gamesViewModel.shareGames(
+            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+            accessToken
         )
-        gamesViewModel.shareGames(accessToken)
 
-//        "RequestContentPermission"
         "quick_game"
 //        "test"
     } else {

@@ -3,9 +3,6 @@ package com.ledokol.thebestprojectever.data.repository
 import android.util.Log
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
-import com.ledokol.thebestprojectever.data.local.user.Apps
-import com.ledokol.thebestprojectever.data.local.user.Status
-import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.AppsGame
 import com.ledokol.thebestprojectever.domain.AppsStatus
@@ -27,6 +24,19 @@ class GamesRepository @Inject constructor(
 
     fun insertGame(game: Game){
         dao.insertGame(game)
+    }
+
+    fun insertGames(games: List<GameJSON>){
+        for (game in games){
+            dao.insertGame(Game(
+                android_package_name = game.android_package_name,
+                name = game.name,
+                category =  game.category,
+                icon_preview = game.icon_preview,
+                image_wide = game.image_wide,
+                icon_large = game.icon_large,
+            ))
+        }
     }
 
     fun clearGames(){
@@ -66,16 +76,18 @@ class GamesRepository @Inject constructor(
     }
 
     fun shareGames(
+        localGamesJson: List<StatusJSON>,
         accessToken: String
     ) {
-        val localGames = dao.getGames("")
-        val localGamesJson: List<StatusJSON> = fromGameToStatusJSON(localGames)
         Log.e("ShareGames Repository",AppsStatus(localGamesJson).toString())
         api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(localGamesJson)).enqueue(object : Callback<AppsGame> {
             override fun onResponse(
                 call: Call<AppsGame>,
                 response: Response<AppsGame>
             ) {
+
+                clearGames()
+                insertGames(response.body()!!.apps)
                 Log.e("ShareGames ans", response.body()!!.toString())
                 Log.e("SetStatusShareGames","Status has set")
             }

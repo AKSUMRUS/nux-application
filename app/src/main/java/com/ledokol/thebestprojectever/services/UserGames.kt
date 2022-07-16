@@ -105,7 +105,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_SOCIAL){
+                if(info.category == ApplicationInfo.CATEGORY_GAME){
                     installedApps.add(info)
                 }
             }
@@ -144,27 +144,27 @@ class GamesStatistic{
         }
 
         @RequiresApi(VERSION_CODES.O)
-        fun convertListApplicationToListGame(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<Game> {
-            val newGames: MutableList<Game> = ArrayList()
+        fun convertListApplicationToListStatusJSON(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<StatusJSON> {
+            val newGames: MutableList<StatusJSON> = ArrayList()
 
             for (game in games) {
                 val packageName = game.packageName
                 val bitmapImagePreview: String = getIconLargeGame(packageName, context)
                 val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
-                var bitmapIcon: Bitmap? = getIcon(
-                    context = context,
-                    packageManager = context.packageManager,
-                    packageName = packageName,
-                )
+//                var bitmapIcon: Bitmap? = getIcon(
+//                    context = context,
+//                    packageManager = context.packageManager,
+//                    packageName = packageName,
+//                )
 
                 newGames.add(
-                    Game(
+                    StatusJSON(
                         packageName,
                         getApplicationLabel(packageManager,game),
                         game.category.toString(),
-                        bitmapImagePreview,
-                        bitmapImagePreview,
-                        bitmapImagePreview,
+//                        bitmapImagePreview,
+//                        bitmapImagePreview,
+//                        bitmapImagePreview,
                     )
                 )
             }
