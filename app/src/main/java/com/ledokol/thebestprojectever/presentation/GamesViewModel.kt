@@ -43,7 +43,7 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun fromAppsToListGames(apps: Apps): List<Game>{
+    private fun fromAppsToListGames(apps: Apps): List<Game>{
         val res:MutableList<Game> = mutableListOf()
         for (app in apps.apps){
             res.add(
@@ -62,16 +62,16 @@ class GamesViewModel @Inject constructor(
     }
 
     fun getGames(
-        query: String = state.searchQuery
+        query: String = state.searchQuery,
+        id: String
     ){
         viewModelScope.launch {
-            repository.getGames(query)
+            repository.getGames(id)
                 .collect{ result ->
                         when(result){
                             is Resource.Success -> {
                                 result.data.let { games ->
-                                    clearGames()
-                                    val listGames = games!!
+                                    val listGames = fromAppsToListGames(games!!)
                                     insertGames(listGames)
                                     state = state.copy(
                                         games = listGames
@@ -123,6 +123,17 @@ class GamesViewModel @Inject constructor(
         ){
         viewModelScope.launch {
             repository.shareGames(accessToken)
+                .collect(){result ->
+                    when(result){
+                        is Resource.Success -> {
+                            state = state.copy(
+                                games = result.data
+                            )
+                        }
+                        is Resource.Loading -> Unit
+                        is Resource.Error -> Unit
+                    }
+                }
         }
     }
 }

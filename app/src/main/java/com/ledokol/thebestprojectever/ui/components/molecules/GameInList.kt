@@ -19,8 +19,8 @@ import coil.compose.rememberImagePainter
 @Composable
 fun GameInList(
     packageName: String,
-    icon: String,
-    iconLarge: String,
+    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
 ){
@@ -39,8 +39,7 @@ fun GameInList(
             contentDescription = "GameImage",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp)
-            ,
+                .padding(20.dp),
             contentScale = ContentScale.FillBounds,
         )
         AsyncImage(
@@ -49,8 +48,7 @@ fun GameInList(
             modifier = Modifier
 //                .border(5.dp, MaterialTheme.colors.background)
                 .size(70.dp)
-                .align(Alignment.BottomCenter)
-            ,
+                .align(Alignment.BottomCenter),
         )
     }
 

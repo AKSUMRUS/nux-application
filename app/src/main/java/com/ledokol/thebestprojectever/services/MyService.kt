@@ -80,12 +80,12 @@ class MyService: Service() {
 
                 Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                profileRepository.profile.value?.let{
+                profileRepository.data.let{
                     statusRepository.setStatus(
                         packageApp,
                         labelApp,
                         categoryApp,
-                        accessToken = profileRepository.profile.value!!.access_token
+                        accessToken = profileRepository.data.access_token
                     )
                 }
 //                viewMo

@@ -1,17 +1,17 @@
 package com.ledokol.thebestprojectever.presentation
 
-import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.profile.ProfileState
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
-import com.ledokol.thebestprojectever.domain.ProfileJSON
+import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,7 +20,15 @@ class ProfileViewModel @Inject constructor(
     private val api: RetrofitServices,
 
 ): ViewModel() {
-    val profile: LiveData<Profile> = repository.profile
+    var state by mutableStateOf(ProfileState())
+
+    fun getProfile(){
+        val response = repository.getProfile()
+        state = state.copy(
+            profile = response,
+            finish_register = response.finishRegister
+        )
+    }
 
     fun insertProfile(profile: Profile) {
         repository.insertProfile(profile)
@@ -35,32 +43,35 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun setCurrentFirebaseToken(token: String){
-        repository.setCurrentFirebaseToken(token)
+        viewModelScope.launch {
+            repository.setCurrentFirebaseToken(token)
+        }
     }
 
-    fun setFinishRegister(){
-        repository.setFinishRegister()
+    fun setFinishRegister(
+        accessToken: String
+    ){
+        viewModelScope.launch {
+            repository.setFinishRegister(accessToken)
+            state = state.copy(finish_register = true)
+        }
     }
 
     fun login(nickname: String, password: String){
-        val profileCall : Call<Profile> = api.login(
-            nickname = nickname,
-            password = password
-        )
-        profileCall.enqueue(object : Callback<Profile> {
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                if (response.isSuccessful) {
-                    insertProfile(Profile(access_token = response.body()!!.access_token,nickname = nickname,password = password, email = "", name = ""))
+        viewModelScope.launch {
+            repository.login(nickname = nickname,password = password)
+                .collect(){ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            if(result.data != null) {
+                                getMe(accessToken = result.data.access_token)
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> Unit
+                    }
                 }
-                else{
-                    Log.e("Login failed",response.code().toString())
-                }
-            }
-
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.e("ERRR",t.toString())
-            }
-        })
+        }
     }
 
     fun signUp(
@@ -69,32 +80,43 @@ class ProfileViewModel @Inject constructor(
         email: String,
         name: String,
     ){
-        val query = ProfileJSON(nickname = nickname,password = password,email = email,name = name)
-        Log.e("Tock",query.toString())
-        val profileCall : Call<Profile> = api.createProfile(
-            query
-        )
-        profileCall.enqueue(object : Callback<Profile> {
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                if (response.isSuccessful) {
-                    Log.e("ERRtR",response.body().toString())
-                    Log.e("PASS",password)
-                    insertProfile(Profile(access_token = response.body()?.access_token.toString(),nickname = nickname,password = password,email = email, name = name))
+        viewModelScope.launch {
+            repository.signUp(nickname = nickname,password = password, name = name)
+                .collect(){ resilt ->
+                    when(resilt){
+                        is Resource.Success -> {
+                            if(resilt.data != null){
+                                getMe(accessToken = resilt.data.access_token)
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> Unit
+                    }
                 }
-                else{
-
-                    Log.e("Err",response.code().toString())
-                }
-            }
-
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.e("ERRR",t.toString())
-            }
-        })
+        }
     }
 
     fun clearProfile(){
         repository.clearProfile()
+    }
+
+    private fun getMe(
+        accessToken: String
+    ){
+        viewModelScope.launch {
+            repository.getMe(accessToken)
+                .collect(){ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            state = state.copy(
+                                profile = result.data
+                            )
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> Unit
+                    }
+                }
+        }
     }
 
 }

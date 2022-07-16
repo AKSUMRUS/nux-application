@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
-import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 
 @Composable
 fun ProfileTopBlock(
@@ -28,8 +27,8 @@ fun ProfileTopBlock(
             )
 //            .verticalScroll(rememberScrollState())
     ) {
-        if(profileViewModel.profile.value!= null){
-            profileViewModel.profile.value?.let {
+        if(profileViewModel.state.profile != null){
+            profileViewModel.state.profile?.let {
                 UserInformationProfile(
                     name = it.nickname,
                     profile = true,

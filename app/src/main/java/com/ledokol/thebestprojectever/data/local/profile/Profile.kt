@@ -4,6 +4,7 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ledokol.thebestprojectever.data.local.user.Status
 
 @Entity(tableName = "profile")
 data class Profile(
@@ -11,16 +12,14 @@ data class Profile(
     @NonNull
     @ColumnInfo(name = "access_token")
     var access_token: String,
+    @ColumnInfo(name = "id")
+    var id: String = "",
     @ColumnInfo(name = "nickname")
-    var nickname: String,
-    @ColumnInfo(name = "password")
-    var password: String,
-    @ColumnInfo(name = "email")
-    var email: String,
-    @ColumnInfo(name = "name")
-    var name: String,
+    var nickname: String = "",
+    @ColumnInfo(name = "status")
+    var status: Status = Status(),
     @ColumnInfo(name = "finish_register")
-    var finish_register: Boolean = false,
+    var finishRegister: Boolean = false
 //    @ColumnInfo(name = "lastGame")
 //    var lastGame: String,
 
