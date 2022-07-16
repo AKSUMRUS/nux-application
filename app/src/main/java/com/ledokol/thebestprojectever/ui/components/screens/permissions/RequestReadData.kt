@@ -46,18 +46,6 @@ fun RequestReadData(
 
                 if(checkPermissionReadData(context)){
 
-                    Log.d("INSTALLEDAPPS", "UPDATE CHECK")
-                    gamesViewModel.clearGames()
-                    gamesViewModel.insertGames(
-                        GamesStatistic.convertListApplicationToListGame(
-                            context,
-                            context.packageManager,
-                            GamesStatistic.getInstalledAppGamesList(context.packageManager)
-                        )
-                    )
-                    gamesViewModel.getGames()
-                    gamesViewModel.shareGames(accessToken = userViewModel.accessToken)
-
                     navController.navigate("request_permission_contacts"){
                         popUpTo("request_permission_contacts")
                         launchSingleTop = true

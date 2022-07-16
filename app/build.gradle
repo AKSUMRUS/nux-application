@@ -73,14 +73,6 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 dependencies {
-//    implementation("aws.sdk.kotlin:s3:0.15.2-beta")
-//    implementation 'com.amazonaws:aws-java-sdk:'
-//    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.7@aar') { transitive = true }
-//    implementation 'com.amazonaws:aws-android-sdk-s3:2.23.0'
-//    implementation 'com.amazonaws:aws-android-sdk-cognito:2.18.0'
-//    implementation 'com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.23.0'
-////    compile group:"com.amazonaws", name:"aws-java-sdk-s3", version:"1.12.261"
-//    implementation ("com.amazonaws", "aws-java-sdk-s3", "1.11.7")
 //    LyfeCycle
 //    implementation(Dependencies.Lifeccompile 'com.amazonaws:aws-java-sdk:+'ycle.lifecycleKtx)
 //    implementation(Dependencies.Lifecycle.viewModelCompose)
@@ -142,4 +134,25 @@ dependencies {
 
 //    Канарейка
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
+
+//    Amazon S3
+//    implementation("aws.sdk.kotlin:s3:0.15.2-beta")
+//    implementation("aws.sdk.kotlin:dynamodb:0.9.4-beta")
+//    implementation("aws.sdk.kotlin:iam:0.9.4-beta")
+//    implementation("aws.sdk.kotlin:cloudwatch:0.9.4-beta")
+//    implementation("aws.sdk.kotlin:cognito:0.9.4-beta")
+//    implementation("aws.sdk.kotlin:sns:0.9.4-beta")
+//    implementation("aws.sdk.kotlin:pinpoint:0.9.4-beta")
+
+//    implementation ('com.amazonaws:aws-android-sdk-s3:2.6.+') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-rekognition:2.6.+') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-cognitoauth:2.6.+@aar') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-cognitoidentityprovider:2.6.+') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-cognitoauth:2.6.+@aar') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-auth-userpools:2.6.+@aar') { transitive = true }
+//    implementation ('com.amazonaws:aws-android-sdk-auth-ui:2.6.+@aar') { transitive = true }
+//    implementation("software.amazon.awssdk:aws-sdk-java:2.10.1")
+//    implementation 'com.amazonaws:aws-java-sdk:1.12.261'
+
 }

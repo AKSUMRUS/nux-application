@@ -27,7 +27,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.Search
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.molecules.ContactInList
 
-val TAG = "getContacts"
+private const val TAG = "getContacts"
 
 class ContactClass(val name: String, val phone: String){
 

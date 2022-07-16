@@ -56,7 +56,7 @@ interface RetrofitServices {
         @Header("Authorization") authHeader: String,
         @Body games: AppsStatus
     )
-            : Call<AppsStatus>
+            : Call<AppsGame>
 
     @PUT("current_user/firebase_messaging_token")
     fun setCurrentFirebaseToken(

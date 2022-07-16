@@ -69,9 +69,9 @@ class RoomModule {
     @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
 //        val BASE_URL = "https://storage.yandexcloud.net/"
-//        val BASE_URL = "http://192.168.180.142:8080/"
+        val BASE_URL = "http://192.168.180.142:8080/"
 //        val BASE_URL = "http://51.250.100.21/"
-        val BASE_URL = "http://10.0.2.2:8080/"
+//        val BASE_URL = "http://10.0.2.2:8080/"
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

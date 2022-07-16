@@ -53,22 +53,28 @@ fun StartNavigation(
     val profile = profileViewModel.profile.observeAsState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
-    var accessToken = ""
+    var accessToken by remember {
+        mutableStateOf("")
+    }
 
     Log.e("Profile",profile.toString())
 
     LaunchedEffect(true){
+//        gamesViewModel.shareGames(acc)
         gamesViewModel.getGames()
     }
 
 
 
     LaunchedEffect(true){
-//        userViewModel.getUsers()
-        gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-        )
+        if(accessToken!=""){
+            Log.e("ShareGames","Start "+accessToken)
+//            gamesViewModel.clearGames()
+//            gamesViewModel.insertGames(
+//                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+//            )
+//            gamesViewModel.shareGames(accessToken)
+        }
     }
 
     when (navBackStackEntry?.destination?.route) {
@@ -111,6 +117,9 @@ fun StartNavigation(
         "RequestContentPermission" -> {
             bottomBarState.value = false
         }
+        "test" -> {
+            bottomBarState.value = false
+        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -124,18 +133,29 @@ fun StartNavigation(
 
     val start: String = if(profile.value==null){
         "splash_screen"
+//        "test"
     }else if(profile.value!!.finish_register){
         accessToken = profile.value!!.access_token
 
         val intentService = Intent(context, MyService::class.java)
         intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startForegroundService(intentService)
+
+        Log.e("ShareGames","Start "+accessToken)
+        gamesViewModel.clearGames()
+        gamesViewModel.insertGames(
+            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+        )
+        gamesViewModel.shareGames(accessToken)
+
 //        "RequestContentPermission"
         "quick_game"
+//        "test"
     } else {
         Log.e("profile",profile.value.toString())
         accessToken = profile.value!!.access_token
 
+//        "test"
         "request_permission_data"
 //        BottomNavItemMain.QuickGame.screen_route
     }
@@ -225,6 +245,10 @@ fun StartNavigation(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,
+                        )
+                    }
+                    composable("test") {
+                        Test(
                         )
                     }
 
