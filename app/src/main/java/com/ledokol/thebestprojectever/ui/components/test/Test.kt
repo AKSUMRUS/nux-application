@@ -64,10 +64,6 @@ fun Test() {
         "YCOPaczys9w2aTgKndaXJugev28uR-kvhPtSiTBN"
     )
 
-// building s3client
-// I set Region to `Regions.AP_SOUTH_1`
-// because when I used other region, error rose.
-
     val s3: AmazonS3 = AmazonS3ClientBuilder.standard()
         .withCredentials(AWSStaticCredentialsProvider(credential))
         .withEndpointConfiguration(

@@ -22,7 +22,7 @@ import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
+//import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListGame
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.presentation.*
@@ -74,10 +74,10 @@ fun StartNavigation(
         if(accessToken!=""){
             Log.e("ShareGames","Start "+accessToken)
             gamesViewModel.clearGames()
-            gamesViewModel.insertGames(
-                convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-            )
-            gamesViewModel.shareGames(accessToken)
+//            gamesViewModel.shareGames(
+//                convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+//                accessToken
+//            )
         }
     }
 
@@ -147,10 +147,10 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-        )
-        gamesViewModel.shareGames(accessToken)
+//        gamesViewModel.insertGames(
+//            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+//        )
+//        gamesViewModel.shareGames(accessToken)
 
 //        "RequestContentPermission"
         "quick_game"
@@ -166,10 +166,10 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
-        gamesViewModel.insertGames(
-            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
-        )
-        gamesViewModel.shareGames(accessToken)
+//        gamesViewModel.insertGames(
+//            convertListApplicationToListGame(context, context.packageManager, getInstalledAppGamesList(context.packageManager))
+//        )
+//        gamesViewModel.shareGames(accessToken)
 
 //        "test"
         "request_permission_data"

@@ -55,7 +55,7 @@ fun GameInList(
         )
 
         Body1(
-            text = name,
+            text = "fd",
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
