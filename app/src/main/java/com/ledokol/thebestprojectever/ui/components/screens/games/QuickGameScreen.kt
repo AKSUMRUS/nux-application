@@ -51,6 +51,7 @@ fun QuickGameScreen(
         val tokenGet = task.result
 
         token = tokenGet
+        Log.d("MyFirebaseMsgService", "getNewToken $token")
         profileViewModel.setCurrentFirebaseToken(token)
         Log.w(TAG, token)
 //        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()

@@ -13,6 +13,7 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
+import com.ledokol.thebestprojectever.domain.FirebaseToken
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.*
@@ -33,7 +34,7 @@ class ProfileRepository @Inject constructor(
     var data by mutableStateOf(Profile(access_token = ""))
 
     fun setCurrentFirebaseToken(token: String){
-        api.setCurrentFirebaseToken(token)
+        api.setCurrentFirebaseToken(FirebaseToken(firebase_messaging_token = token))
     }
 
     fun insertProfile(newProfile: Profile){

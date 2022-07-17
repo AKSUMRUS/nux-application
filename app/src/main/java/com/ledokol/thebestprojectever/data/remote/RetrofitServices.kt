@@ -58,7 +58,7 @@ interface RetrofitServices {
 
     @PUT("current_user/firebase_messaging_token")
     fun setCurrentFirebaseToken(
-        @Body firebase_messaging_token: String
+        @Body firebase_messaging_token: FirebaseToken
     )
             :Call<String>
 
