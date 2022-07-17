@@ -92,7 +92,9 @@ fun ProfileScreen(
         item (
             span = {GridItemSpan(2)}
         ){
-            Column(){
+            Column(
+
+            ){
                 ProfileTopBlock(
                     profileViewModel = profileViewModel,
                     statusViewModel = statusViewModel,

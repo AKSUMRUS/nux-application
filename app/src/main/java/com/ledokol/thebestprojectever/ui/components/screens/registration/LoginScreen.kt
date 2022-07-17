@@ -29,15 +29,15 @@ fun LoginScreen(
     navController: NavController,
     viewModel: ProfileViewModel,
 ) {
-    val (nickname,setNickname) = remember{ mutableStateOf("") }
-    val (password,setPassword) = remember{ mutableStateOf("") }
+    val (nickname,setNickname) = remember{ mutableStateOf("a") }
+    val (password,setPassword) = remember{ mutableStateOf("a") }
 
     val buttonClick = {
         viewModel.login(nickname = nickname,password = password)
-        navController.navigate("verify_phone"){
-            popUpTo("verify_phone")
-            launchSingleTop = true
-        }
+//        navController.navigate("verify_phone"){
+//            popUpTo("verify_phone")
+//            launchSingleTop = true
+//        }
     }
 
     fun buttonBackClick(){

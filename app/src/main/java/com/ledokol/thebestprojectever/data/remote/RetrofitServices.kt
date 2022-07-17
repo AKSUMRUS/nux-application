@@ -1,14 +1,11 @@
 package com.ledokol.thebestprojectever.data.remote
 
-import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
-import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.*
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 
@@ -75,9 +72,8 @@ interface RetrofitServices {
     @POST("friends/invite")
     fun friendsInvite(
         @Header("Authorization") authHeader: String,
-        @Field("friends_ids") friends_ids: List<String>,
-        @Field("app_id") app_id: String,
-    )
+        @Body friends: FriendsInviteToGame
+    ) : Call<FriendsInviteToGame>
 
     @GET("/get_me")
     fun getMe(

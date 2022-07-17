@@ -120,7 +120,7 @@ class GamesViewModel @Inject constructor(
 
     fun shareGames(
         games: List<StatusJSON>,
-        accessToken: String
+        accessToken: String,
         ){
         viewModelScope.launch {
             repository.shareGames(games, accessToken)

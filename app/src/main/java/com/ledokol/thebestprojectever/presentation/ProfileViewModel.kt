@@ -9,6 +9,8 @@ import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileState
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
+import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
+import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,8 +42,10 @@ class ProfileViewModel @Inject constructor(
     fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
         api.friendsInvite(
             authHeader = "Bearer $accessToken",
-            friends_ids = friends_ids,
-            app_id = app_id,
+            friends = FriendsInviteToGame(
+                friends_ids = friends_ids,
+                app_id = app_id
+            )
         )
     }
 
