@@ -25,7 +25,7 @@ fun FinishInvitingFriends(
     gamesViewModel: GamesViewModel
 ) {
     LaunchedEffect(key1 = true){
-        delay(2500)
+        delay(2000)
         navController.navigate("quick_game"){
             popUpTo("quick_game"){
                 inclusive = true

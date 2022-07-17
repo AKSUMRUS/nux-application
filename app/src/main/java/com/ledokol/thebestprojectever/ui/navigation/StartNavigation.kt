@@ -230,7 +230,7 @@ fun StartNavigation(
                         VerifyPhone(
 //                            navController = navController,
 //                            contactsViewModel = contactsViewModel,
-//                            profileViewModel = profileViewModel,
+                            profileViewModel = profileViewModel,
                         )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
