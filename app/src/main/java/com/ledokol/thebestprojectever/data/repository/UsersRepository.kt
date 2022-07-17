@@ -40,10 +40,13 @@ class UsersRepository @Inject constructor(
     fun getUsers(
         fetchFromRemote: Boolean,
         query: String,
-        accessToken: String
+        accessToken: String,
+        shouldReload: Boolean
     ): Flow<Resource<List<User>>> {
         return flow{
-            emit(Resource.Loading(true))
+            if(shouldReload) {
+                emit(Resource.Loading(true))
+            }
             val localUsers = dao.getUsers(query)
             emit(Resource.Success(
                 data = localUsers

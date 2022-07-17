@@ -54,6 +54,7 @@ class GamesViewModel @Inject constructor(
                     icon_preview = app.icon_preview,
                     icon_large = app.icon_large,
                     image_wide = app.image_wide,
+                    id = app.id
                 )
             )
         }

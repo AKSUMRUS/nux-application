@@ -81,6 +81,7 @@ class MyService: Service() {
                 Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
                 profileRepository.data.let{
+                    Log.e("STATUS!!!!",profileRepository.data.toString())
                     statusRepository.setStatus(
                         packageApp,
                         labelApp,

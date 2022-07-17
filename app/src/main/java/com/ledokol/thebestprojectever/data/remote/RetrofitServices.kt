@@ -73,7 +73,7 @@ interface RetrofitServices {
     fun friendsInvite(
         @Header("Authorization") authHeader: String,
         @Body friends: FriendsInviteToGame
-    ) : Call<FriendsInviteToGame>
+    ) : Call<Any>
 
     @GET("/get_me")
     fun getMe(

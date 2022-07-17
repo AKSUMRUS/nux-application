@@ -34,7 +34,7 @@ fun ChooseFriendsForGame(
 
     if(state.isRefreshing){
         Log.e("STATE",state.toString())
-        userViewModel.onEvent(UserEvent.Refresh)
+        userViewModel.onEvent(UserEvent.Refresh())
     }
     Column(
         modifier = Modifier
@@ -90,7 +90,7 @@ fun ChooseFriendsForGame(
                                         Log.e("F",profileViewModel.state.profile!!.access_token.toString())
                                         Log.e("F",users.toString())
                                         Log.e("F",gamesViewModel.state.toString())
-                                        profileViewModel.inviteFriends(accessToken = profileViewModel.state.profile!!.access_token, friends_ids = users.toList(), app_id = gamesViewModel.state.game!!.android_package_name)
+                                        profileViewModel.inviteFriends(accessToken = profileViewModel.state.profile!!.access_token, friends_ids = users.toList(), app_id = gamesViewModel.state.game!!.id)
                                         navController.navigate("finish_inviting_friends"){
                                             popUpTo("finish_inviting_friends")
                                             launchSingleTop = true
