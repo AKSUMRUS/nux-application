@@ -31,7 +31,10 @@ UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
-                getUsers(fetchRemote = true)
+                getUsers(
+                    fetchRemote = true,
+                    shouldReload = event.shouldReload
+                )
                 state = state.copy(isRefreshing = false)
             }
             is UserEvent.OnSearchQueryChange -> {
@@ -106,14 +109,16 @@ UserViewModel @Inject constructor(
 
     private fun getUsers(
         query: String = state.searchQuery.lowercase(),
-        fetchRemote: Boolean = false
+        fetchRemote: Boolean = false,
+        shouldReload: Boolean = true,
     ) {
 
         viewModelScope.launch {
             repository.getUsers(
                 fetchFromRemote = fetchRemote,
                 accessToken = accessToken,
-                query = query
+                query = query,
+                shouldReload = shouldReload
             )
                 .collect{ result ->
                     when(result){

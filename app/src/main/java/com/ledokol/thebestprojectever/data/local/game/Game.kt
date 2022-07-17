@@ -15,6 +15,8 @@ data class Game(
     val android_package_name: String,
     @ColumnInfo(name = "name")
     val name: String,
+    @ColumnInfo(name = "id")
+    val id: String,
     @ColumnInfo(name = "category")
     val category: String,
     @ColumnInfo(name = "icon_preview")

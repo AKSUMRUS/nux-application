@@ -103,7 +103,8 @@ class GamesRepository @Inject constructor(
                         category = game.category,
                         icon_preview = game.icon_preview,
                         image_wide = game.image_wide,
-                        icon_large = game.icon_large
+                        icon_large = game.icon_large,
+                        id = game.id
                     )
                 )
             }

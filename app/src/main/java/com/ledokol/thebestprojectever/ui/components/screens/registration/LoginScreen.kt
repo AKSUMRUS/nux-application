@@ -29,8 +29,8 @@ fun LoginScreen(
     navController: NavController,
     viewModel: ProfileViewModel,
 ) {
-    val (nickname,setNickname) = remember{ mutableStateOf("a") }
-    val (password,setPassword) = remember{ mutableStateOf("a") }
+    val (nickname,setNickname) = remember{ mutableStateOf("AKSUM") }
+    val (password,setPassword) = remember{ mutableStateOf("aksum2019") }
 
     val buttonClick = {
         viewModel.login(nickname = nickname,password = password)

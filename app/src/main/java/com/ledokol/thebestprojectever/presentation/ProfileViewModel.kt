@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -40,13 +41,14 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
-        api.friendsInvite(
-            authHeader = "Bearer $accessToken",
-            friends = FriendsInviteToGame(
+        viewModelScope.launch {
+            Log.e("INVITE","SENT")
+            repository.inviteFriends(
+                accessToken = accessToken,
                 friends_ids = friends_ids,
                 app_id = app_id
             )
-        )
+        }
     }
 
     fun setCurrentFirebaseToken(token: String){
@@ -89,11 +91,11 @@ class ProfileViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.signUp(nickname = nickname,password = password, name = name)
-                .collect(){ resilt ->
-                    when(resilt){
+                .collect(){ result ->
+                    when(result){
                         is Resource.Success -> {
-                            if(resilt.data != null){
-                                getMe(accessToken = resilt.data.access_token)
+                            if(result.data != null){
+                                getMe(accessToken = result.data.access_token)
                             }
                         }
                         is Resource.Error -> Unit

@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.screens.friends
 
+import android.content.pm.PackageManager
+import android.os.Handler
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,7 +18,11 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
+import com.ledokol.thebestprojectever.services.GamesStatistic
+import com.ledokol.thebestprojectever.services.getApplicationCategory
+import com.ledokol.thebestprojectever.services.getApplicationLabel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
@@ -41,12 +47,7 @@ fun ListFriendsScreen(
     }
 
     LaunchedEffect(true){
-        userViewModel.onEvent(UserEvent.Refresh)
-    }
-
-    if(state.isRefreshing){
-        Log.e("USERS START",state.toString())
-        userViewModel.onEvent(UserEvent.Refresh)
+        updateFriends(userViewModel = userViewModel)
     }
         Column(
             modifier = Modifier
@@ -132,4 +133,18 @@ fun showSearch(
         },
         modifier = Modifier
     )
+}
+
+fun updateFriends(
+    userViewModel: UserViewModel
+){
+
+    val handler = Handler()
+    var runnable: Runnable? = null
+    runnable = Runnable {
+        userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
+        runnable?.let { handler.postDelayed(it, 5000) }
+    }
+
+    handler.postDelayed(runnable, 3000)
 }
