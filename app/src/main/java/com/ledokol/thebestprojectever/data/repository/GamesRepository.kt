@@ -77,6 +77,7 @@ class GamesRepository @Inject constructor(
             val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(games))
                 .awaitResponse().body()
             Log.e("Share Games ans ", fromGameJSONToGame(ans?.apps).toString())
+            dao.insertGames(fromGameJSONToGame(ans?.apps))
             emit(Resource.Success(
                 data = fromGameJSONToGame(ans?.apps)
             ))
@@ -114,6 +115,8 @@ class GamesRepository @Inject constructor(
         return flow {
             emit(Resource.Loading(true))
             val game = try {
+                Log.e("PACKAGE GAME",packageName)
+                Log.e("PACKAGE GAME1",dao.getGames("").toString())
                 dao.getGame(packageName)
             } catch(e: IOException) {
                 e.printStackTrace()

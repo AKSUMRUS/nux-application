@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.games
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
+import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
@@ -24,13 +26,11 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.showSearch
 @Composable
 fun ChooseFriendsForGame(
     navController: NavController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel,
+    profileViewModel: ProfileViewModel,
+    gamesViewModel: GamesViewModel
 ){
     val state = userViewModel.state
-
-    fun inviteFriends(){
-
-    }
 
     if(state.isRefreshing){
         Log.e("STATE",state.toString())
@@ -83,6 +83,14 @@ fun ChooseFriendsForGame(
                                 ButtonPrimaryFull(
                                     text = stringResource(id = R.string.button_invite_friends),
                                     onClick = {
+                                        val users: MutableList<String> = mutableListOf()
+                                        for(x in state.clickedUsers){
+                                            users.add(x.id)
+                                        }
+                                        Log.e("F",profileViewModel.state.profile!!.access_token.toString())
+                                        Log.e("F",users.toString())
+                                        Log.e("F",gamesViewModel.state.toString())
+                                        profileViewModel.inviteFriends(accessToken = profileViewModel.state.profile!!.access_token, friends_ids = users.toList(), app_id = gamesViewModel.state.game!!.android_package_name)
                                         navController.navigate("finish_inviting_friends"){
                                             popUpTo("finish_inviting_friends")
                                             launchSingleTop = true

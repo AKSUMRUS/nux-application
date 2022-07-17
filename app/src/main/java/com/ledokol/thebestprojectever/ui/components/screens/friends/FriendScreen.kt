@@ -91,19 +91,22 @@ fun FriendScreen(
 
                 if(state.games != null) {
                     item(
-                        span = { GridItemSpan(1) },
+                        span = { GridItemSpan(2) },
                     ) {
                         Column() {
                             HeadlineH5(
                                 text = stringResource(id = R.string.games),
                                 modifier = Modifier
-                                    .padding(start = 20.dp),
+                                    .padding(start = 20.dp)
+                                    .fillMaxWidth(),
                                 fontWeight = W700
                             )
                         }
                     }
 
-                    items(state.games!!) { game ->
+                    items(
+                        state.games!!,
+                    ) { game ->
                         GameInQuickGamesFriend(
                             packageName = game.android_package_name,
 //                            icon = game.icon_preview,

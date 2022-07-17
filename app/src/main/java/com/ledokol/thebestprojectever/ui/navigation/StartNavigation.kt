@@ -25,6 +25,8 @@ import com.ledokol.thebestprojectever.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestprojectever.ui.components.screens.*
 import com.ledokol.thebestprojectever.ui.components.screens.friends.FriendScreen
 import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsScreen
+import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
+import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
@@ -194,7 +196,9 @@ fun StartNavigation(
                         userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,
-                            userViewModel = userViewModel2
+                            userViewModel = userViewModel2,
+                            profileViewModel = profileViewModel,
+                            gamesViewModel = gamesViewModel
                         )
                     }
                     composable("request_permission_data") {

@@ -41,7 +41,7 @@
     <string name="title_crew">Команда</string>
     <string name="description_crew">Выбирай своих товарищей по команде вручную</string>
     <string name="button_invite_friends">Пригласить!</string>
-    <string name="finish_invite_friends">Nы пригласил друзей</string>
+    <string name="finish_invite_friends">Ты пригласил друзей</string>
 
 <!--Common-->
     <string name = "back">Назад</string>
@@ -75,4 +75,5 @@
     <string name="games">Игры</string>
     <string name="latest_activity">Активность</string>
     <string name="share">Поделиться</string>
+    <string name="dontdisturb">Не беспокоить</string>
 </resources>
