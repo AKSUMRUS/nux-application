@@ -85,7 +85,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
+    fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
         viewModelScope.launch {
             Log.e("INVITE","SENT")
             repository.inviteFriends(

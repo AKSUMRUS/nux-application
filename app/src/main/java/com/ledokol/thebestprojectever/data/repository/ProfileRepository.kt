@@ -35,7 +35,18 @@ class ProfileRepository @Inject constructor(
     var data by mutableStateOf(Profile(access_token = ""))
 
     fun setCurrentFirebaseToken(token: String){
-        api.setCurrentFirebaseToken(FirebaseToken(firebase_messaging_token = token))
+        Log.e("setCurrentFirebaseToken",token)
+        val callSetCurrentToken = api.setCurrentFirebaseToken(FirebaseToken(firebase_messaging_token = token))
+
+        callSetCurrentToken.enqueue(object : Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                Log.e("setCurrentFirebaseToken","Success")
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+            }
+
+        })
     }
 
     fun clearProfile(){

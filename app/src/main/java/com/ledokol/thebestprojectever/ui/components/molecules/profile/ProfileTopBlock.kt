@@ -61,7 +61,7 @@ fun ProfileTopBlock(
                 text = stringResource(id = R.string.edit_profile),
                 onClick = {
                           navController.navigate("edit_profile"){
-                              popUpTo("")
+                              popUpTo("edit_profile")
                               launchSingleTop = true
                           }
                 },

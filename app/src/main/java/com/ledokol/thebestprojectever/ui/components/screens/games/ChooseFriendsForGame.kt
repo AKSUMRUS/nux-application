@@ -103,7 +103,6 @@ fun ChooseFriendsForGame(
                         item{
                             Box(
                                 modifier = Modifier.fillMaxWidth(),
-//                                contentAlignment = Alignment.End,
                             ){
                                 ButtonPrimaryFull(
                                     text = stringResource(id = R.string.button_invite_friends),

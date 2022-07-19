@@ -159,7 +159,7 @@ UserViewModel @Inject constructor(
         Log.d(TAG, "REMOVE "+state.users!!.size.toString())
     }
 
-    private fun insertSelectedUser(selectedUser: User){
+    fun insertSelectedUser(selectedUser: User){
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
 //            users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()

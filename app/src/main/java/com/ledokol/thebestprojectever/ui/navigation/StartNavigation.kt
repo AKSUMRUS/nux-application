@@ -250,7 +250,10 @@ fun StartNavigation(
                     }
 
                     composable("edit_profile") {
-                        EditProfileScreen(profileViewModel = profileViewModel)
+                        EditProfileScreen(
+                            profileViewModel = profileViewModel,
+                            navController = navController,
+                        )
                     }
 
                     composable("verify_phone") {

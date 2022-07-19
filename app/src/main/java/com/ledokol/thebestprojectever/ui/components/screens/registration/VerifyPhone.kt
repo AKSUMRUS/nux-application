@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
@@ -49,8 +50,12 @@ fun VerifyPhone(
     }
 
     fun onClick(){
-        profileViewModel.login("goracio","1")
-    }
+        profileViewModel.onEvent(
+            ProfileEvent.Login(
+                nickname = "goracio",
+                password = "1"
+            )
+        )    }
 
 
     Box(

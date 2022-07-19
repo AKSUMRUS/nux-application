@@ -52,6 +52,7 @@ fun QuickGameScreen(
         val tokenGet = task.result
 
         token = tokenGet
+        Log.e("myFirebaseToken", token)
         profileViewModel.onEvent(
             ProfileEvent.SetCurrentFirebaseToken(token)
         )
@@ -129,7 +130,7 @@ fun GridGames(
                 packageName = game.android_package_name,
                 name = game.name,
 //                Временно!
-                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
+                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png", ///КОСТЫЛЬ!
                 iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                 onClick = { onClick(game.android_package_name) },

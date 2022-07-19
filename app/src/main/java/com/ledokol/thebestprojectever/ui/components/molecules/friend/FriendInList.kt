@@ -48,7 +48,7 @@ fun FriendInList(
 
         if(!user.status.finished){
             AsyncImage(
-                user.status.current_app!!.image_wide,
+                "https://storage.yandexcloud.net/nux/icons/icon_wide/"+user.status.current_app!!.android_package_name+".png",
                 contentDescription = "user back",
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = FillWidth
