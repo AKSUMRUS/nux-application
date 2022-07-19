@@ -47,7 +47,7 @@ private val LightColorPalette = lightColors(
     background = Black2,
     onBackground = GrayLow,
     surface = Gray,
-    onSurface = White,
+    onSurface = GrayHelper,
     error = Purple,
     onError = White,
 

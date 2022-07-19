@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.profile.Profile
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.profile.ProfileState
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
@@ -25,7 +26,51 @@ class ProfileViewModel @Inject constructor(
 ): ViewModel() {
     var state by mutableStateOf(ProfileState())
 
-    fun getProfile(){
+    fun onEvent(event: ProfileEvent){
+        when(event){
+            is ProfileEvent.UpdateProfileData -> {
+                updateProfileData(event.newProfile)
+            }
+            is ProfileEvent.Login -> {
+                login(nickname = event.nickname, password = event.password)
+            }
+            is ProfileEvent.GetProfile -> {
+                getProfile()
+            }
+            is ProfileEvent.LogOut -> {
+                logOut()
+            }
+            is ProfileEvent.InviteFriends -> {
+                inviteFriends(
+                    accessToken = event.accessToken,
+                    friends_ids = event.friends_ids,
+                    app_id = event.app_id
+                )
+            }
+            is ProfileEvent.SignUp -> {
+                signUp(
+                    nickname = event.nickname,
+                    password = event.password,
+                    email = event.email,
+                    name = event.name
+                )
+            }
+            is ProfileEvent.SetCurrentFirebaseToken -> {
+                setCurrentFirebaseToken(token = event.token)
+            }
+            is ProfileEvent.SetFinishRegister -> {
+                setFinishRegister(event.accessToken)
+            }
+        }
+    }
+
+    private fun updateProfileData(newProfile: Profile){
+        viewModelScope.launch {
+            repository.updateProfileData(newProfile = newProfile)
+        }
+    }
+
+    private fun getProfile(){
         val response = repository.getProfile()
         if(response != null) {
             state = state.copy(
@@ -40,7 +85,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
+    private fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
         viewModelScope.launch {
             Log.e("INVITE","SENT")
             repository.inviteFriends(
@@ -51,13 +96,13 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun setCurrentFirebaseToken(token: String){
+    private fun setCurrentFirebaseToken(token: String){
         viewModelScope.launch {
             repository.setCurrentFirebaseToken(token)
         }
     }
 
-    fun setFinishRegister(
+    private fun setFinishRegister(
         accessToken: String
     ){
         viewModelScope.launch {
@@ -66,7 +111,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun login(nickname: String, password: String){
+    private fun login(nickname: String, password: String){
         viewModelScope.launch {
             repository.login(nickname = nickname,password = password)
                 .collect(){ result ->
@@ -83,7 +128,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun signUp(
+    private fun signUp(
         nickname: String,
         password: String,
         email: String,
@@ -104,7 +149,7 @@ class ProfileViewModel @Inject constructor(
                 }
         }
     }
-    fun logOut(){
+    private fun logOut(){
         repository.clearProfile()
         state = state.copy(
             profile = null

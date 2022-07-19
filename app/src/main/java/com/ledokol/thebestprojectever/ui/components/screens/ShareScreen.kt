@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryLeadingIcon
+import com.ledokol.thebestprojectever.ui.components.screens.profile.getIcon
 
 @Composable
 fun ShareScreen(

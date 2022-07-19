@@ -16,6 +16,10 @@ data class Profile(
     var id: String = "",
     @ColumnInfo(name = "nickname")
     var nickname: String = "",
+    @ColumnInfo(name = "name")
+    var name: String = "",
+//    @ColumnInfo(name = "phone")
+//    var phone: String = "",
     @ColumnInfo(name = "status")
     var status: Status = Status(),
     @ColumnInfo(name = "finish_register")

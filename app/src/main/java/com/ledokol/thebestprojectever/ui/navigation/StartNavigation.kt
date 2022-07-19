@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
@@ -28,6 +29,8 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsS
 import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
+import com.ledokol.thebestprojectever.ui.components.screens.profile.EditProfileScreen
+import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
@@ -48,7 +51,7 @@ fun StartNavigation(
     val statusViewModel = hiltViewModel<StatusViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
-    profileViewModel.getProfile()
+    profileViewModel.onEvent(ProfileEvent.GetProfile)
     val profile = profileViewModel.state
 
     var accessToken by remember {
@@ -128,6 +131,7 @@ fun StartNavigation(
         )
 
         "quick_game"
+//        "edit_profile"
     } else {
         Log.e("profile",profile.toString())
         accessToken = profile.profile.access_token
@@ -230,6 +234,11 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                         )
                     }
+
+                    composable("edit_profile") {
+                        EditProfileScreen(profileViewModel = profileViewModel)
+                    }
+
                     composable("verify_phone") {
                         VerifyPhone(
 //                            navController = navController,

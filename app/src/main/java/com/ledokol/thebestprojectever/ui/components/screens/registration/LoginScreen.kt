@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
@@ -33,7 +34,12 @@ fun LoginScreen(
     val (password,setPassword) = remember{ mutableStateOf("aksum2019") }
 
     val buttonClick = {
-        viewModel.login(nickname = nickname,password = password)
+        viewModel.onEvent(
+            ProfileEvent.Login(
+                nickname = nickname,
+                password = password
+            )
+        )
 //        navController.navigate("verify_phone"){
 //            popUpTo("verify_phone")
 //            launchSingleTop = true

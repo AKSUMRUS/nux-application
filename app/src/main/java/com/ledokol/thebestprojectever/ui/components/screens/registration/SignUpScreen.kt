@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.ui.components.screens.registration
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.screens.SignUpScreenFirst
 
@@ -20,7 +21,14 @@ fun SignUpScreen(
 
     val buttonNextClickSecond = {
         Log.e("REGISTER","REGISTERED")
-        viewModel.signUp(nickname, password,email,name)
+        viewModel.onEvent(
+            ProfileEvent.SignUp(
+                nickname = nickname,
+                password = password,
+                email = email,
+                name = name
+            )
+        )
     }
 
     val buttonNextClickFirst = {

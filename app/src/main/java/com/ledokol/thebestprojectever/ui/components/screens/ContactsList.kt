@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.contact.Contact
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
@@ -88,7 +89,9 @@ fun ContactsList(
             ButtonPrimaryFull(
                 text = "Дальше",
                 onClick = {
-                    profileViewModel.setFinishRegister(accessToken = profileViewModel.state.profile!!.access_token)
+                    profileViewModel.onEvent(
+                        ProfileEvent.SetFinishRegister(accessToken = profileViewModel.state.profile!!.access_token)
+                    )
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
