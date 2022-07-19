@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -20,11 +21,14 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 @Composable
 fun GameInList(
     packageName: String,
+    name: String,
     icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
     iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
 ){
+
+    Log.e("iconLink", icon)
 
     Box (
         modifier = Modifier
@@ -54,10 +58,10 @@ fun GameInList(
             ,
         )
 
-        Body1(
-            text = "fd",
-            modifier = Modifier.align(Alignment.BottomCenter)
-        )
+//        Body1(
+//            text = name,
+//            modifier = Modifier.align(Alignment.BottomCenter)
+//        )
     }
 
 }

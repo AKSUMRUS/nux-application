@@ -70,7 +70,7 @@ class GamesRepository @Inject constructor(
 
     fun shareGames(
         games: List<StatusJSON>,
-        accessToken: String
+        accessToken: String,
     ): Flow<Resource<List<Game>?>> {
         return flow {
             Log.e("ShareGames Repository", AppsStatus(games).toString())
@@ -112,12 +112,15 @@ class GamesRepository @Inject constructor(
         return res.toList()
     }
 
-    fun getGame(packageName: String): Flow<Resource<Game>> {
+    fun getGame(
+        packageName: String,
+        fetchRemote: Boolean = false,
+        ): Flow<Resource<Game>> {
         return flow {
             emit(Resource.Loading(true))
             val game = try {
                 Log.e("PACKAGE GAME",packageName)
-                Log.e("PACKAGE GAME1",dao.getGames("").toString())
+//                Log.e("PACKAGE GAME1",dao.getGames("").toString())
                 dao.getGame(packageName)
             } catch(e: IOException) {
                 e.printStackTrace()

@@ -31,6 +31,7 @@ UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
+
                 getUsers(
                     fetchRemote = true,
                     shouldReload = event.shouldReload
@@ -75,32 +76,6 @@ UserViewModel @Inject constructor(
         }
     }
 
-//    fun getUserGames(id: String){
-//        viewModelScope.launch {
-//            statusRepository.getUserGames(id)
-//                .collect{ result ->
-//                when(result){
-//                    is Resource.Success -> {
-//                        result.data.let { games ->
-//                            state = state.copy(
-//                                games = games
-//                            )
-//                        }
-//                        Log.e("USER VIEW MODEL  GET USERS GAME",state.toString())
-//                    }
-//                    is Resource.Error -> Unit
-//                    is Resource.Loading -> {
-//                        state =state.copy(
-//                            isLoading = result.isLoading
-//                        )
-//                    }
-//
-//                }
-//            }
-//
-//        }
-//    }
-
     fun uploadImage(){
         viewModelScope.launch {
             repository.uploadImage()
@@ -112,7 +87,7 @@ UserViewModel @Inject constructor(
         fetchRemote: Boolean = false,
         shouldReload: Boolean = true,
     ) {
-
+        Log.e("getUsers_ViewModel", query)
         viewModelScope.launch {
             repository.getUsers(
                 fetchFromRemote = fetchRemote,
@@ -203,6 +178,12 @@ UserViewModel @Inject constructor(
         }
 
         return inList
+    }
+
+    fun clearSelectedUser(){
+        state = state.copy(
+            clickedUsers = listOf(),
+        )
     }
 
     fun getUsersGames(user: User){

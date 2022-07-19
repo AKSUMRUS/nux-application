@@ -42,17 +42,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 //        sendNotification("User", "Приглашение в игру", "yio.tro.onliyoy")
         // Check if message contains a data payload.
-        sendNotificationFriendEnteredApp("ffdfd", "Друг зашел в игру","ffdklfdjkl")
+//        sendNotificationFriendEnteredApp("ffdfd", "Друг зашел в игру","ffdklfdjkl")
         if (remoteMessage.data.isNotEmpty()) {
             val data = remoteMessage.data
 //            sendNotification(data["user_nickname"].toString(), "Приглашение в игру")
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
-//            if(data["type"] == "friend_entered_app"){
-//                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру",data["app_android_package_name"].toString())
-//            }else{
-//                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашение в игру",data["app_android_package_name"].toString())
-//            }
+            if(data["type"] == "friend_entered_app"){
+                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру",data["app_android_package_name"].toString())
+            }else{
+                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашение в игру",data["app_android_package_name"].toString())
+            }
 
             if (/* Check if data needs to be processed by long running job */ false) {
                 // For long-running tasks (10 seconds or more) use WorkManager.

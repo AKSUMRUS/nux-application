@@ -16,6 +16,9 @@ fun FriendStatus(
     user: User
 ) {
     Row(
+    modifier = Modifier
+            .fillMaxHeight()
+        ,
         verticalAlignment = Alignment.CenterVertically
     ){
         Body1(
@@ -25,7 +28,6 @@ fun FriendStatus(
         Status(
             status = if(user.status.finished)"offline" else "online",
             modifier = Modifier
-                .align(Alignment.Top)
                 .fillMaxHeight()
                 .padding(start = 10.dp)
                 .align(Alignment.CenterVertically)

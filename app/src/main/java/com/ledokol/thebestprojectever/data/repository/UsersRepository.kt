@@ -63,7 +63,6 @@ class UsersRepository @Inject constructor(
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
-
             } catch(e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
@@ -81,9 +80,9 @@ class UsersRepository @Inject constructor(
                 dao.insertUsers(
                     users
                 )
-                Log.e("DAO Users",dao.getUsers("").toString())
+                Log.e("DAO Users",dao.getUsers(query).toString())
                 emit(Resource.Success(
-                    data = dao.getUsers("")
+                    data = dao.getUsers(query)
                 ))
                 emit(Resource.Loading(false))
             }

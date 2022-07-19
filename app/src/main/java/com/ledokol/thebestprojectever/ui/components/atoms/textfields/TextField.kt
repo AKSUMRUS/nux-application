@@ -1,12 +1,15 @@
 package com.ledokol.thebestprojectever.ui.components.atoms
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.TextStyle
@@ -36,7 +39,12 @@ fun TextField(
         ).copy(imeAction = imeAction),
         textStyle = textStyle,
         keyboardActions = keyboardActions,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colors.secondary
+            )
+        ,
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
@@ -44,7 +52,8 @@ fun TextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,
-            cursorColor = Color.DarkGray
+            cursorColor = Color.DarkGray,
+            disabledTextColor = MaterialTheme.colors.onPrimary,
         ),
         enabled = enabled,
     )

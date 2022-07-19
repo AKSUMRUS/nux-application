@@ -75,8 +75,14 @@ interface RetrofitServices {
         @Body friends: FriendsInviteToGame
     ) : Call<Any>
 
-    @GET("/get_me")
+    @GET("get_me")
     fun getMe(
         @Header("Authorization") authHeader: String
+    ) : Call<Profile>
+
+    @GET("app/{app_id}")
+    fun getGame(
+        @Path("app_id") app_id: String,
+
     ) : Call<Profile>
 }

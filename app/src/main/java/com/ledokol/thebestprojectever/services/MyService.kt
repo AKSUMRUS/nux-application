@@ -53,6 +53,7 @@ class MyService: Service() {
     override fun onStartCommand(@Nullable intent: Intent?, flags: Int, startId: Int): Int {
 
         val packageManager: PackageManager = context.packageManager
+        createNotification()
 
         return START_STICKY;
     }

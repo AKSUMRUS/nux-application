@@ -19,7 +19,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: ProfileViewModel
+    profileViewModel: ProfileViewModel
 ) {
     LaunchedEffect(key1 = true){
         delay(1500)
@@ -30,11 +30,18 @@ fun SplashScreen(
             launchSingleTop = true
         }
     }
+
+    var text: String = stringResource(id = R.string.hello_splash_screen," ");
+    if(profileViewModel.state.profile!=null){
+        text = stringResource(id = R.string.hello_splash_screen,", ${profileViewModel.state.profile!!.nickname}")
+    }
+
     Column(
-        modifier = Modifier.background(MaterialTheme.colors.background)
+        modifier = Modifier.background(MaterialTheme.colors.primary)
     ) {
-        HeadlineH4(text = stringResource(id = R.string.hello_splash_screen),
-            color = MaterialTheme.colors.primary,
+        HeadlineH4(
+            text = text,
+            color = MaterialTheme.colors.onPrimary,
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)

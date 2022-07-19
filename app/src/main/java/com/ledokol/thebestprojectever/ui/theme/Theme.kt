@@ -33,7 +33,7 @@ private val DarkColorPalette = darkColors(
     onBackground = GrayLow,
     surface = Gray,
     onSurface = White,
-    error = Purple,
+    error = Red,
     onError = White,
 )
 
@@ -48,7 +48,7 @@ private val LightColorPalette = lightColors(
     onBackground = GrayLow,
     surface = Gray,
     onSurface = White,
-    error = Purple,
+    error = Red,
     onError = White,
 
 
@@ -70,6 +70,7 @@ fun TheBestProjectEverTheme(darkTheme: Boolean = isSystemInDarkTheme(), content:
     } else {
         LightColorPalette
     }
+
 
     MaterialTheme(
             colors = colors,

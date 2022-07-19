@@ -45,6 +45,7 @@ fun FriendTopBar(
                     .padding(top = 0.dp)
                     .weight(1f)
                 ,
+                verticalAlignment = Alignment.CenterVertically,
             ){
 
                 Image(
@@ -52,7 +53,7 @@ fun FriendTopBar(
                     contentDescription = "Аноним",
                     modifier = Modifier
                         .size(height = 120.dp, width = 120.dp)
-                        .align(Alignment.CenterVertically),
+                    ,
                     contentScale = ContentScale.Crop,
                 )
             }

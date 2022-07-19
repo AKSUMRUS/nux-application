@@ -29,6 +29,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryLeadingIcon
+import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 
 @Composable
 fun ShareScreen(
@@ -78,10 +79,19 @@ fun ShareScreen(
         }
     }
 
+    fun buttonBackClick(){
+        navController.popBackStack()
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
     ){
+        BackToolbar (
+            buttonBackClick = {
+                buttonBackClick()
+            }
+        )
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             content = {
@@ -125,7 +135,9 @@ fun ShareScreen(
                 }
             },
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(top = 100.dp,bottom = 100.dp)
+            ,
             verticalArrangement = Arrangement.Center,
             horizontalArrangement = Arrangement.Center,
         )

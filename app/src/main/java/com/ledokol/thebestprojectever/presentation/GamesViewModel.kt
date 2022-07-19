@@ -101,11 +101,9 @@ class GamesViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             result.data.let { game ->
-                                state = state.copy(
-                                    game = game
-                                )
+                                game?.let { setSelectedGame(it) }
                             }
-                            Log.e("GAME",state.toString())
+                            Log.e("getGame_ViewModel",state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
@@ -117,6 +115,12 @@ class GamesViewModel @Inject constructor(
 
                 }
         }
+    }
+
+    fun setSelectedGame(game: Game){
+        state = state.copy(
+            game = game
+        )
     }
 
     fun shareGames(

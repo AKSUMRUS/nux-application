@@ -13,6 +13,8 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
+import com.ledokol.thebestprojectever.domain.FirebaseToken
+import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.*
@@ -45,7 +47,7 @@ class ProfileRepository @Inject constructor(
         friends_ids: List<String>,
         app_id: String
     ){
-        Log.e("INVITE!!",FriendsInviteToGame(friends_ids = friends_ids, app_id = app_id).toString())
+        Log.e("INVITE!!", FriendsInviteToGame(friends_ids = friends_ids, app_id = app_id).toString())
         val callInvite = api.friendsInvite(
             authHeader = "Bearer $accessToken",
             friends = FriendsInviteToGame(

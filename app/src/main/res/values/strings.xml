@@ -26,7 +26,8 @@
     <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
     <string name = "logout">Выйти</string>
-    <string name = "verify_code">Подтвердить код</string>
+    <string name = "verify_code">Подтверди код</string>
+    <string name = "verify_code_description">Он был выслан на твой телефон</string>
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
@@ -41,7 +42,12 @@
     <string name="title_crew">Команда</string>
     <string name="description_crew">Выбирай своих товарищей по команде вручную</string>
     <string name="button_invite_friends">Пригласить!</string>
-    <string name="finish_invite_friends">Ты пригласил друзей</string>
+    <plurals name="finish_invite_friends">
+        <item quantity="one">Ты пригласил %d друга</item>
+        <item quantity="two">Ты пригласил %d друзей</item>
+        <item quantity="few">Ты пригласил %d друзей</item>
+        <item quantity="many">Ты пригласил %d друзей</item>
+    </plurals>
 
 <!--Common-->
     <string name = "back">Назад</string>
@@ -49,8 +55,10 @@
     <string name = "enter_nickname_search">Введи ник</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
-    <string name = "hello_splash_screen">Добро пожаловать!</string>
+<!--    <string name = "hello_splash_screen">Добро пожаловать!</string>-->
     <string name = "confirm">Подтвердить</string>
+    <string name = "not_internet">Подключите интернет :)</string>
+    <string name="hello_splash_screen">Привет%1$s✌️</string>
 
 <!--    Permissions-->
     <string name="hello_permission_data">Привет ✌️</string>
@@ -75,5 +83,9 @@
     <string name="games">Игры</string>
     <string name="latest_activity">Активность</string>
     <string name="share">Поделиться</string>
+    <string name="share_with_friends">Поделиться с друзьями</string>
     <string name="dontdisturb">Не беспокоить</string>
+
+<!--    Error-->
+    <string name = "wrong_phone_number">Неправильный номер телефон</string>
 </resources>

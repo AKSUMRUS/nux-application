@@ -75,13 +75,6 @@ fun ProfileScreen(
     val games = gamesViewModel.state.games
     val packageManager = context.packageManager
 
-    fun onClick(app: String?){
-        navController.navigate("share_screen"){
-            popUpTo("share_screen")
-            launchSingleTop = true
-        }
-    }
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(top = 0.dp, start = 0.dp, end = 0.dp),
@@ -100,11 +93,6 @@ fun ProfileScreen(
                     statusViewModel = statusViewModel,
                     navController = navController
                 )
-                ButtonPrimary(
-//                    onClick = {onClick(null)},
-                    onClick = {onClick("com.vkontakte.android")},
-                    text = stringResource(id = R.string.share),
-                )
             }
         }
 
@@ -112,9 +100,10 @@ fun ProfileScreen(
             items(games){ game ->
                 GameInList(
                     packageName = game.android_package_name,
+                    name = game.name,
 //                    Временно!
-//                    icon = game.icon_preview!!,
-//                    iconLarge = game.icon_large!!,
+                    icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
+                    iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
                     backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                 )
             }

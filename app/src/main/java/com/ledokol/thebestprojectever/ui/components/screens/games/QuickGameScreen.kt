@@ -124,10 +124,11 @@ fun GridGames(
 
         items(games) { game ->
             GameInList(
-                packageName = "fdfdfd",
+                packageName = game.android_package_name,
+                name = game.name,
 //                Временно!
-//                icon = game.icon_preview,
-//                iconLarge = game.icon_large,
+                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
+                iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                 onClick = { onClick(game.android_package_name) },
             )

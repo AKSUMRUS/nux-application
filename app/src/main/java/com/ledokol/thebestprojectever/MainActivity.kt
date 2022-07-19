@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.ledokol.thebestprojectever.services.MyReceiver
 import com.ledokol.thebestprojectever.services.MyService
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
@@ -63,5 +65,12 @@ class MainActivity : ComponentActivity() {
 //                }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Intent.ACTION_BOOT_COMPLETED)
+        registerReceiver(MyReceiver(), intentFilter)
     }
 }

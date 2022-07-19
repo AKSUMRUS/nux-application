@@ -43,12 +43,13 @@ fun TextFieldWithCaption(
             keyboardActions = keyboardActions,
             singleLine = true,
             modifier = Modifier
+                .then(modifier)
                 .fillMaxWidth()
                 .background(
                     MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
                     RoundedCornerShape(16.dp)
                 )
-                .then(modifier),
+            ,
             placeholder = { Text(text = "Bun") },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = Color.White,

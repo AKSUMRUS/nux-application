@@ -17,6 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.ledokol.thebestprojectever.internet.ConnectionState
+import com.ledokol.thebestprojectever.internet.connectivityState
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
@@ -33,7 +35,9 @@ import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpS
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.VerifyPhone
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun StartNavigation(
     navController: NavHostController,
@@ -50,9 +54,19 @@ fun StartNavigation(
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     profileViewModel.getProfile()
     val profile = profileViewModel.state
+    val connection by connectivityState()
+    val isConnected = connection === ConnectionState.Available
 
     var accessToken by remember {
         mutableStateOf("")
+    }
+
+    LaunchedEffect(profile.profile){
+        if(profile.profile!=null){
+            val intentService = Intent(context, MyService::class.java)
+            intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startForegroundService(intentService)
+        }
     }
 
     Log.e("Profile",profile.toString())
@@ -85,6 +99,9 @@ fun StartNavigation(
         "share_screen" -> {
             bottomBarState.value = false
         }
+        "not_internet" -> {
+            bottomBarState.value = false
+        }
         "request_permission_data" -> {
             bottomBarState.value = false
         }
@@ -111,14 +128,12 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(profile.profile==null){
+    val start: String = if(!isConnected){
+        "not_internet"
+    }else if(profile.profile==null){
         "splash_screen"
-    }else if(profile.finish_register){
+    } else if(profile.finish_register){
         accessToken = profile.profile.access_token
-
-        val intentService = Intent(context, MyService::class.java)
-        intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startForegroundService(intentService)
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
@@ -176,7 +191,7 @@ fun StartNavigation(
                     composable("splash_screen") {
                         SplashScreen(
                             navController = navController,
-                            viewModel = profileViewModel
+                            profileViewModel = profileViewModel
                         )
                     }
                     composable("friend_screen") {
@@ -184,12 +199,14 @@ fun StartNavigation(
                             navController = navController,
                             userViewModel = userViewModel,
                             gamesViewModel = gamesViewModel,
+                            profileViewModel = profileViewModel,
                         )
                     }
                     composable("finish_inviting_friends") {
                         FinishInvitingFriends(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
+                            userViewModel = userViewModel,
                         )
                     }
                     composable("choose_friends_quick_game") {
@@ -232,9 +249,12 @@ fun StartNavigation(
                     }
                     composable("verify_phone") {
                         VerifyPhone(
-//                            navController = navController,
-//                            contactsViewModel = contactsViewModel,
+                            navController = navController,
                             profileViewModel = profileViewModel,
+                        )
+                    }
+                    composable("not_internet") {
+                        NotInternet(
                         )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
