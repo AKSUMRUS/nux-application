@@ -1,6 +1,6 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.profile
 
-import com.ledokol.thebestprojectever.ui.components.molecules.ProfileTopBlock
+import com.ledokol.thebestprojectever.ui.components.molecules.profile.ProfileTopBlock
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap

@@ -87,7 +87,7 @@ UserViewModel @Inject constructor(
         fetchRemote: Boolean = false,
         shouldReload: Boolean = true,
     ) {
-        Log.e("getUsers_ViewModel", query)
+
         viewModelScope.launch {
             repository.getUsers(
                 fetchFromRemote = fetchRemote,
@@ -149,7 +149,7 @@ UserViewModel @Inject constructor(
 
     val TAG = "SELECTEDUSER"
 
-    fun removeSelectedUser(selectedUser: User){
+    private fun removeSelectedUser(selectedUser: User){
         Log.d(TAG, "REMOVE")
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList(),
@@ -159,7 +159,7 @@ UserViewModel @Inject constructor(
         Log.d(TAG, "REMOVE "+state.users!!.size.toString())
     }
 
-    fun insertSelectedUser(selectedUser: User){
+    private fun insertSelectedUser(selectedUser: User){
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
 //            users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
@@ -186,7 +186,7 @@ UserViewModel @Inject constructor(
         )
     }
 
-    fun getUsersGames(user: User){
+    private fun getUsersGames(user: User){
         viewModelScope.launch {
             repository.getUserGames(id = user.id)
                 .collect{ result ->

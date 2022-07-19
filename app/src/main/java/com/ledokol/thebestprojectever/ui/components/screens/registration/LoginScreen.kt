@@ -12,8 +12,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Password
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.PhoneNumber
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.PhoneNumberOld
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar

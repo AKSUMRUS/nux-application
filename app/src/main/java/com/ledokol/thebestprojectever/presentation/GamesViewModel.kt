@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
+import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
 import com.ledokol.thebestprojectever.domain.StatusJSON
@@ -25,6 +26,10 @@ class GamesViewModel @Inject constructor(
 
     var state by mutableStateOf(GameState())
 
+    fun onEvent(event: GamesEvent){
+
+    }
+
     fun clearGames(){
         viewModelScope.launch {
             repository.clearGames()
@@ -37,7 +42,7 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun insertGames(games: List<Game>){
+    private fun insertGames(games: List<Game>){
         for (game in games){
             insertGame(game)
         }

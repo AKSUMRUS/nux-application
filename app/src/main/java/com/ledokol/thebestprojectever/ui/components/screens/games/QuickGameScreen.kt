@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
@@ -51,8 +52,9 @@ fun QuickGameScreen(
         val tokenGet = task.result
 
         token = tokenGet
-        Log.d("MyFirebaseMsgService", "getNewToken $token")
-        profileViewModel.setCurrentFirebaseToken(token)
+        profileViewModel.onEvent(
+            ProfileEvent.SetCurrentFirebaseToken(token)
+        )
         Log.w(TAG, token)
 //        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
     })

@@ -19,6 +19,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.ledokol.thebestprojectever.internet.ConnectionState
 import com.ledokol.thebestprojectever.internet.connectivityState
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
@@ -30,14 +31,14 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsS
 import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
+import com.ledokol.thebestprojectever.ui.components.screens.profile.EditProfileScreen
+import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.VerifyPhone
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun StartNavigation(
     navController: NavHostController,
@@ -52,7 +53,7 @@ fun StartNavigation(
     val statusViewModel = hiltViewModel<StatusViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
-    profileViewModel.getProfile()
+    profileViewModel.onEvent(ProfileEvent.GetProfile)
     val profile = profileViewModel.state
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
@@ -247,6 +248,11 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                         )
                     }
+
+                    composable("edit_profile") {
+                        EditProfileScreen(profileViewModel = profileViewModel)
+                    }
+
                     composable("verify_phone") {
                         VerifyPhone(
                             navController = navController,

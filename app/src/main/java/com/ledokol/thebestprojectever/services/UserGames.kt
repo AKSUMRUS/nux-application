@@ -54,8 +54,8 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.ui.components.atoms.Status
-import com.ledokol.thebestprojectever.ui.components.screens.GameProfile
-import com.ledokol.thebestprojectever.ui.components.screens.getIcon
+import com.ledokol.thebestprojectever.ui.components.screens.profile.GameProfile
+import com.ledokol.thebestprojectever.ui.components.screens.profile.getIcon
 import java.text.SimpleDateFormat
 import java.util.*
 

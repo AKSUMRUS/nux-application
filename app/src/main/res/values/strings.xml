@@ -85,6 +85,11 @@
     <string name="share">Поделиться</string>
     <string name="share_with_friends">Поделиться с друзьями</string>
     <string name="dontdisturb">Не беспокоить</string>
+    <string name="name">Имя</string>
+    <string name="for_notifications">Для уведомлений</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="changes_saved">Сохранено</string>
+    <string name="edit_profile">Редактировать</string>
 
 <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>

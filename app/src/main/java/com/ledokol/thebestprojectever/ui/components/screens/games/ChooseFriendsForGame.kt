@@ -17,6 +17,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
@@ -114,7 +115,13 @@ fun ChooseFriendsForGame(
                                         Log.e("F",profileViewModel.state.profile!!.access_token.toString())
                                         Log.e("F",users.toString())
                                         Log.e("F",gamesViewModel.state.toString())
-                                        profileViewModel.inviteFriends(accessToken = profileViewModel.state.profile!!.access_token, friends_ids = users.toList(), app_id = gamesViewModel.state.game!!.id)
+                                        profileViewModel.onEvent(
+                                            ProfileEvent.InviteFriends(
+                                                accessToken = profileViewModel.state.profile!!.access_token,
+                                                friends_ids = users.toList(),
+                                                app_id = gamesViewModel.state.game!!.id
+                                            )
+                                        )
                                         navController.navigate("finish_inviting_friends"){
                                             popUpTo("finish_inviting_friends")
                                             launchSingleTop = true

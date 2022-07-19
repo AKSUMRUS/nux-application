@@ -67,6 +67,11 @@ class ProfileRepository @Inject constructor(
         })
     }
 
+    fun updateProfileData(newProfile: Profile){
+        // Обращение к серваку
+        Log.e("Update Profile Data","updated")
+    }
+
     fun getProfile() : Profile?
     {
 
