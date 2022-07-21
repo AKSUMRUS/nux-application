@@ -33,6 +33,7 @@ class MainActivity : ComponentActivity() {
 
     var intentService: Intent? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = intent.extras
@@ -45,13 +46,13 @@ class MainActivity : ComponentActivity() {
         }
 
         FirebaseApp.initializeApp(this@MainActivity)
+
         val mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+        mFirebaseAnalytics.logEvent("start_app") {
             param(FirebaseAnalytics.Param.SCREEN_NAME, "open_app")
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
         }
-
 
         setContent {
             val navController = rememberNavController()

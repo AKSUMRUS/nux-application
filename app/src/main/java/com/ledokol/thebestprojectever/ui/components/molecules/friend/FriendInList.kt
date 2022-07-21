@@ -1,7 +1,8 @@
 package com.ledokol.thebestprojectever.ui.components.molecules.friend
 
-import android.graphics.Bitmap
-import androidx.compose.foundation.*
+import android.util.Log
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -9,11 +10,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -21,8 +22,6 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.ui.components.atoms.Status
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
-
-//import com.ledokol.thebestprojectever.ui.theme.Background
 
 @Composable
 fun FriendInList(
@@ -47,10 +46,14 @@ fun FriendInList(
     ){
 
         if(!user.status.finished){
+            Log.e("IMAGES","https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png")
             AsyncImage(
-                "https://storage.yandexcloud.net/nux/icons/icon_wide/"+user.status.current_app!!.android_package_name+".png",
+                "https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png",
                 contentDescription = "user back",
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                ,
+                alpha = 0.3f,
                 contentScale = FillWidth
             )
         }
@@ -75,7 +78,9 @@ fun FriendInList(
                 )
             }
             Body1(text = user.nickname,
-                modifier = Modifier.padding(start = 10.dp))
+                modifier = Modifier.padding(start = 10.dp),
+                color = MaterialTheme.colors.onPrimary
+            )
         }
 
         Status(
@@ -87,11 +92,3 @@ fun FriendInList(
         )
     }
 }
-
-//@Preview
-//@Composable
-//fun FriendInList_preview(
-//
-//){
-//    FriendInList(name = "aboba", onClick = { /*TODO*/ })
-//}

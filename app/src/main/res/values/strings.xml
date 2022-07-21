@@ -47,6 +47,7 @@
         <item quantity="two">Ты пригласил %d друзей</item>
         <item quantity="few">Ты пригласил %d друзей</item>
         <item quantity="many">Ты пригласил %d друзей</item>
+        <item quantity="other">Ты пригласил %d друзей</item>
     </plurals>
 
 <!--Common-->

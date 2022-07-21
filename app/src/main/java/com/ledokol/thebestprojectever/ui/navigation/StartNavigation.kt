@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.internet.ConnectionState
 import com.ledokol.thebestprojectever.internet.connectivityState
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
@@ -157,6 +158,12 @@ fun StartNavigation(
         "request_permission_data"
     }
 
+    fun logOpenScreenEvent(name: String){
+        analytics.logEvent("open_screen") {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, name)
+        }
+    }
+
 
     Log.e("ACCESS",accessToken)
 
@@ -173,29 +180,34 @@ fun StartNavigation(
                 startDestination = start,
                 builder = {
                     composable("start_registration_screen") {
+                        logOpenScreenEvent("start_registration_screen")
                         StartRegistrationScreen(
                             navController = navController,
                         )
                     }
                     composable("login_screen") {
+                        logOpenScreenEvent("login_screen")
                         LoginScreen(
                             navController = navController,
                             viewModel = profileViewModel
                         )
                     }
                     composable("signup_screen") {
+                        logOpenScreenEvent("signup_screen")
                         SignUpScreen(
                             navController = navController,
                             viewModel = profileViewModel
                         )
                     }
                     composable("splash_screen") {
+                        logOpenScreenEvent("splash_screen")
                         SplashScreen(
                             navController = navController,
                             profileViewModel = profileViewModel
                         )
                     }
                     composable("friend_screen") {
+                        logOpenScreenEvent("friend_screen")
                         FriendScreen(
                             navController = navController,
                             userViewModel = userViewModel,
@@ -204,6 +216,7 @@ fun StartNavigation(
                         )
                     }
                     composable("finish_inviting_friends") {
+                        logOpenScreenEvent("finish_inviting_friends")
                         FinishInvitingFriends(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
@@ -211,6 +224,7 @@ fun StartNavigation(
                         )
                     }
                     composable("choose_friends_quick_game") {
+                        logOpenScreenEvent("choose_friends_quick_game")
                         userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,
@@ -220,6 +234,7 @@ fun StartNavigation(
                         )
                     }
                     composable("request_permission_data") {
+                        logOpenScreenEvent("request_permission_data")
                         userViewModel.accessToken = accessToken
                         RequestReadData(
                             navController = navController,
@@ -228,6 +243,7 @@ fun StartNavigation(
                         )
                     }
                     composable("request_permission_contacts") {
+                        logOpenScreenEvent("request_permission_contacts")
                         RequestReadContacts(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
@@ -236,12 +252,14 @@ fun StartNavigation(
                     }
 
                     composable("share_screen") {
+                        logOpenScreenEvent("share_screen")
                         ShareScreen(
                             navController = navController,
                         )
                     }
 
                     composable("contacts_list") {
+                        logOpenScreenEvent("contacts_list")
                         ContactsList(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
@@ -250,6 +268,7 @@ fun StartNavigation(
                     }
 
                     composable("edit_profile") {
+                        logOpenScreenEvent("edit_profile")
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
@@ -257,16 +276,19 @@ fun StartNavigation(
                     }
 
                     composable("verify_phone") {
+                        logOpenScreenEvent("verify_phone")
                         VerifyPhone(
                             navController = navController,
                             profileViewModel = profileViewModel,
                         )
                     }
                     composable("not_internet") {
+                        logOpenScreenEvent("not_internet")
                         NotInternet(
                         )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
+                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
                         TheBestProjectEverTheme {
                             QuickGameScreen(
                                 navController = navController,
@@ -276,6 +298,7 @@ fun StartNavigation(
                         }
                     }
                     composable(BottomNavItemMain.Profile.screen_route) {
+                        logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
                         ProfileScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
@@ -284,6 +307,7 @@ fun StartNavigation(
                         )
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {
+                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                         userViewModel.accessToken = accessToken
                         ListFriendsScreen(
                             navController = navController,

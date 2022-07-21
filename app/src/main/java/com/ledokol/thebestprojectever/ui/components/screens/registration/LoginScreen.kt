@@ -30,8 +30,8 @@ fun LoginScreen(
 ) {
     val context: Context = LocalContext.current
 
-    val (nickname,setNickname) = remember{ mutableStateOf("goracio") }
-    val (password,setPassword) = remember{ mutableStateOf("1") }
+    val (nickname,setNickname) = remember{ mutableStateOf("AKSUM") }
+    val (password,setPassword) = remember{ mutableStateOf("aksum2019") }
 
     var phone by remember {
         mutableStateOf("")

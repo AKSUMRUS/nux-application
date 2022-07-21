@@ -25,6 +25,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.TextFieldWithCaption
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -52,8 +53,8 @@ fun VerifyPhone(
     fun onClick(){
         profileViewModel.onEvent(
             ProfileEvent.Login(
-                nickname = "goracio",
-                password = "1"
+                nickname = "AKSUM",
+                password = "aksum2019"
             )
         )    }
 

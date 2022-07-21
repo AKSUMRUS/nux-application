@@ -52,9 +52,9 @@ fun GameActivity(
             model = icon,
             contentDescription = "GameImage",
             modifier = Modifier
-//                .border(5.dp, MaterialTheme.colors.background)
                 .size(70.dp)
-                .align(Alignment.BottomCenter),
+                .padding(15.dp)
+                .align(Alignment.CenterStart),
         )
     }
 

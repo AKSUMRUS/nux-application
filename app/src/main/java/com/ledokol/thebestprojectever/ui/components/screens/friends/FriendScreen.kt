@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
@@ -132,12 +134,13 @@ fun FriendScreen(
 
                                 userViewModel.clearSelectedUser()
                                 userViewModel.insertSelectedUser(state.friendUser)
-                                Log.e("getGame_ViewModel","inviteFriends "+game.android_package_name+ " "+gamesViewModel.state.game.toString())
-                                profileViewModel.inviteFriends(
+                                Log.e("getGame_ViewModel","inviteFriends: "+game.android_package_name+ " "+gamesViewModel.state.game.toString())
+                                profileViewModel.onEvent(ProfileEvent.
+                                InviteFriends(
                                     accessToken = profileViewModel.state.profile!!.access_token,
                                     friends_ids = listOf(state.friendUser.id),
-                                    app_id = game.id
-                                )
+                                    app_id = game.id,
+                                ))
                                 navController.navigate("finish_inviting_friends"){
                                     popUpTo("finish_inviting_friends")
                                     launchSingleTop = true
