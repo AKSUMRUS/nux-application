@@ -31,7 +31,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
-import com.ledokol.thebestprojectever.ui.components.atoms.textfields.showSearch
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.screens.checkPermissionReadData
@@ -121,7 +121,7 @@ fun ListFriendsScreen(
                                         name = stringResource(id = R.string.nav_friends),
                                         modifier = Modifier.padding(top = 110.dp),
                                     )
-                                    showSearch(userViewModel = userViewModel)
+                                    ShowSearch(userViewModel = userViewModel)
                                     ButtonPrimary(
                                         onClick = {onClickShare()},
                                         text = stringResource(id = R.string.share_with_friends),

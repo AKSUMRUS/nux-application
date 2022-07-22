@@ -203,7 +203,7 @@ fun StartNavigation(
                         logOpenScreenEvent("splash_screen")
                         SplashScreen(
                             navController = navController,
-                            profileViewModel = profileViewModel
+                            profileViewModel = profileViewModel,
                         )
                     }
                     composable("friend_screen") {
@@ -230,7 +230,7 @@ fun StartNavigation(
                             navController = navController,
                             userViewModel = userViewModel2,
                             profileViewModel = profileViewModel,
-                            gamesViewModel = gamesViewModel
+                            gamesViewModel = gamesViewModel,
                         )
                     }
                     composable("request_permission_data") {
@@ -239,7 +239,7 @@ fun StartNavigation(
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
-                            userViewModel = userViewModel
+                            userViewModel = userViewModel,
                         )
                     }
                     composable("request_permission_contacts") {

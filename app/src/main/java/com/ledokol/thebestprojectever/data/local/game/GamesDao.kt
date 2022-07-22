@@ -4,8 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ledokol.thebestprojectever.data.local.user.User
-import com.ledokol.thebestprojectever.domain.GameJSON
 
 @Dao
 interface GamesDao {

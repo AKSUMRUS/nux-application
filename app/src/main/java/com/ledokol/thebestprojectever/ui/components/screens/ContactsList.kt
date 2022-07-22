@@ -23,7 +23,6 @@ import com.ledokol.thebestprojectever.data.local.contact.Contact
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH1
 import com.ledokol.thebestprojectever.ui.components.atoms.Search
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.molecules.ContactInList

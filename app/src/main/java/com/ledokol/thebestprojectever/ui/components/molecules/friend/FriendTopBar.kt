@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.Status
 import com.ledokol.thebestprojectever.data.local.user.User
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 
 @Composable
 fun FriendTopBar(

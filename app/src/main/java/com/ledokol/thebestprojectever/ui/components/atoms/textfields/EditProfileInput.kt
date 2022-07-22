@@ -1,19 +1,14 @@
 package com.ledokol.thebestprojectever.ui.components.atoms.textfields
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
-import com.ledokol.thebestprojectever.ui.components.atoms.Body2
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
-import com.ledokol.thebestprojectever.ui.components.atoms.TextField
-import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body2
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

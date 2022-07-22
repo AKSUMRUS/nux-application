@@ -10,7 +10,6 @@ import android.os.IBinder
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.Nullable
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.ledokol.thebestprojectever.MainActivity
@@ -29,8 +28,8 @@ class MyService: Service() {
     lateinit var profileRepository: ProfileRepository
 
     private var notificationManager: NotificationManager? = null
-    val NOTIFICATION_ID = 101
-    val CHANNEL_ID = "LEDOKOL"
+    private val NOTIFICATION_ID = 101
+    private val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
 
     @Nullable
@@ -52,17 +51,17 @@ class MyService: Service() {
 
     override fun onStartCommand(@Nullable intent: Intent?, flags: Int, startId: Int): Int {
 
-        val packageManager: PackageManager = context.packageManager
+//        val packageManager: PackageManager = context.packageManager
         createNotification()
 
         return START_STICKY;
     }
 
-    fun logApps(text: String){
+    private fun logApps(text: String){
         Log.d("APP_ACTIVE", text)
     }
 
-    fun doTask(packageManager: PackageManager){
+    private fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
 
         val handler = Handler()
@@ -117,7 +116,7 @@ class MyService: Service() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        intent.setAction(Intent.ACTION_MAIN);
+        intent.action = Intent.ACTION_MAIN;
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
@@ -125,7 +124,6 @@ class MyService: Service() {
             .setOngoing(true)
             .setSmallIcon(R.drawable.star)
             .setContentTitle("Следим за активностью друзей...")
-//            .setContentText("Ваши данные в безопасности")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
@@ -141,18 +139,16 @@ class MyService: Service() {
         }
     }
 
-    fun createNotificationChannel(context: Context) {
+    private fun createNotificationChannel(context: Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Ledokol"
-            val descriptionText = "Уведомление"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            NotificationManagerCompat.from(context).createNotificationChannel(channel)
+        val name = "Ledokol"
+        val descriptionText = "Уведомление"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
         }
+        NotificationManagerCompat.from(context).createNotificationChannel(channel)
     }
 
     override fun onDestroy() {

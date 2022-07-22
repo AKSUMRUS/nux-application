@@ -7,9 +7,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -23,8 +21,8 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 

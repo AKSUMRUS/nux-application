@@ -11,8 +11,6 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.profile.ProfileState
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
-import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
-import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -114,7 +112,7 @@ class ProfileViewModel @Inject constructor(
     private fun login(nickname: String, password: String){
         viewModelScope.launch {
             repository.login(nickname = nickname,password = password)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null) {
@@ -136,7 +134,7 @@ class ProfileViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.signUp(nickname = nickname,password = password, name = name)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null){
@@ -161,7 +159,7 @@ class ProfileViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.getMe(accessToken)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             state = state.copy(

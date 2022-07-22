@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
-import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -11,27 +10,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 
 @Composable
 fun UserInformationProfile(
@@ -54,18 +47,18 @@ fun UserInformationProfile(
 
     val top: Dp = if (!profile) 70.dp else 120.dp
 
-    if(imageUri!=null){
+    bitmap = if(imageUri!=null){
         if (Build.VERSION.SDK_INT < 28) {
-            bitmap = MediaStore.Images
+            MediaStore.Images
                 .Media.getBitmap(context.contentResolver,imageUri).asImageBitmap()
 
         } else {
             val source = ImageDecoder
                 .createSource(context.contentResolver, imageUri!!)
-            bitmap = ImageDecoder.decodeBitmap(source).asImageBitmap()
+            ImageDecoder.decodeBitmap(source).asImageBitmap()
         }
     }else{
-        bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous)
+        ImageBitmap.imageResource(id = R.drawable.anonymous)
     }
 
     Row(

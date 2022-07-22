@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.material.TextButton
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Subtitle1
 
 @Composable
 // Кликабельный текст

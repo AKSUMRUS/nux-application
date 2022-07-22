@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.atoms
+package com.ledokol.thebestprojectever.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,16 +8,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -25,16 +20,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 
 @Composable
 fun TextFieldTrailingImage(
     placeholder: String,
     text: String,
     image: ImageBitmap,
+    modifier: Modifier = Modifier,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
     buttonClick: () -> Unit,
-    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
@@ -48,7 +44,7 @@ fun TextFieldTrailingImage(
         )
     }
 
-    androidx.compose.material.TextField(
+    TextField(
         value = text,
         onValueChange = { onValueChange(it) },
         textStyle = TextStyle(fontSize = 17.sp),

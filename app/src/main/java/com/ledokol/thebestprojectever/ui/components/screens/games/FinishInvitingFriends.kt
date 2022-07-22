@@ -1,7 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens.games
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -18,7 +17,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import kotlinx.coroutines.delay
 
 @Composable

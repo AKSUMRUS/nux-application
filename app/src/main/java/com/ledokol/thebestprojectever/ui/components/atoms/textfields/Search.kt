@@ -17,17 +17,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 
 @Composable
 fun Search(
     placeholder: String,
     text: String,
     icon: ImageVector,
+    modifier: Modifier = Modifier,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
     trailingButtonClick: () -> Unit,
-    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
@@ -40,7 +40,7 @@ fun Search(
         )
     }
 
-    androidx.compose.material.TextField(
+    TextField(
         value = text,
         onValueChange = { onValueChange(it) },
         textStyle = TextStyle(fontSize = 17.sp),

@@ -19,7 +19,7 @@ fun ButtonWithIcon(
 ){
     Button(
         onClick = onClick,
-        modifier = Modifier
+        modifier = modifier
 //            .then(modifier)
 //            .height(30.dp)
         ,

@@ -38,7 +38,7 @@
 //import com.amazonaws.services.s3.AmazonS3
 //import com.amazonaws.services.s3.AmazonS3ClientBuilder
 //import com.ledokol.thebestprojectever.R
-//import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+//import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 //import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 //
 //

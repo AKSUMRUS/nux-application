@@ -1,10 +1,8 @@
 package com.ledokol.thebestprojectever.data.local.user
 
-import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ledokol.thebestprojectever.domain.StatusJSON
 
 @Entity(tableName = "users")
 data class User(
