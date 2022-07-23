@@ -2,21 +2,15 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "4b9230822101cdf196131171e96bacab",
+    "identityHash": "4b24edf3184ad4ab7fa7db31fb983708",
     "entities": [
       {
         "tableName": "profile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`access_token` TEXT NOT NULL, `id` TEXT NOT NULL, `nickname` TEXT NOT NULL, `name` TEXT NOT NULL, `status` TEXT NOT NULL, `finish_register` INTEGER NOT NULL, PRIMARY KEY(`access_token`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`access_token` TEXT NOT NULL, `nickname` TEXT NOT NULL, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `status` TEXT, `finish_register` INTEGER NOT NULL, `profile_pic` TEXT, `do_not_disturbe_mode` INTEGER NOT NULL, `phone` TEXT, PRIMARY KEY(`access_token`))",
         "fields": [
           {
             "fieldPath": "access_token",
             "columnName": "access_token",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "id",
-            "columnName": "id",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -33,16 +27,40 @@
             "notNull": true
           },
           {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "status",
             "columnName": "status",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "finishRegister",
             "columnName": "finish_register",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "profile_pic",
+            "columnName": "profile_pic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "do_not_disturbe_mode",
+            "columnName": "do_not_disturbe_mode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -184,7 +202,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4b9230822101cdf196131171e96bacab')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4b24edf3184ad4ab7fa7db31fb983708')"
     ]
   }
 }

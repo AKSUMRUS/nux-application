@@ -13,6 +13,7 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
+import com.ledokol.thebestprojectever.domain.AvatarJSON
 import com.ledokol.thebestprojectever.domain.FirebaseToken
 import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
 import com.ledokol.thebestprojectever.domain.ProfileJSON
@@ -20,6 +21,7 @@ import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 import retrofit2.*
 import java.io.IOException
 import javax.inject.Inject
@@ -34,16 +36,44 @@ class ProfileRepository @Inject constructor(
 
     var data by mutableStateOf(Profile(access_token = ""))
 
-    fun setCurrentFirebaseToken(token: String){
-        Log.e("setCurrentFirebaseToken",token)
-        val callSetCurrentToken = api.setCurrentFirebaseToken(FirebaseToken(firebase_messaging_token = token))
+    fun setCurrentFirebaseToken(token: String, accessToken: String){
+        Log.e("setCurrentFirebaseToken","$token $accessToken")
+        val callSetCurrentToken = api.setCurrentFirebaseToken(
+            authHeader = "Bearer $accessToken",
+            FirebaseToken(firebase_messaging_token = token)
+        )
 
         callSetCurrentToken.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.e("setCurrentFirebaseToken","Success")
+                Log.e("setCurrentFirebaseToken",response.body().toString())
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("setCurrentFirebaseToken","Errrr")
+            }
+
+        })
+    }
+
+    fun uploadAvatar(
+        accessToken: String,
+        profile_pic: MultipartBody.Part,
+    ){
+        val TAG = "uploadAvatar"
+
+        Log.e(TAG, "$accessToken")
+        val callUpdateAvatar = api.uploadAvatar(
+            authHeader = "Bearer $accessToken",
+            profile_pic = profile_pic
+        )
+
+        callUpdateAvatar.enqueue(object : Callback<Profile>{
+            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+                Log.e(TAG, "onResponse ${response.body()!!.toString()}")
+            }
+
+            override fun onFailure(call: Call<Profile>, t: Throwable) {
+                Log.e(TAG, "Error")
             }
 
         })

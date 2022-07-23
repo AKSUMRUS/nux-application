@@ -85,11 +85,11 @@ fun FriendScreen(
                             GameActivity(
                                 packageName = game!!.android_package_name,
 //                                ВРЕМЕННО
-                                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
-                                iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
+                                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/com.tencent.ig.png",
+                                iconLarge = "https://storage.yandexcloud.net/nux/icons/image_wide/com.tencent.ig.png",
                                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                                startTime = state.friendUser.status.started_at,
-                                finishTime = state.friendUser.status.last_update
+                                startTime = state.friendUser.status.dt_entered_app,
+                                finishTime = state.friendUser.status.dt_last_update
                             )
                         }
                     }
@@ -116,8 +116,10 @@ fun FriendScreen(
                     ) { game ->
                         GameInQuickGamesFriend(
                             packageName = game.android_package_name,
-                            icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
-                            iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
+//                            icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
+//                            iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
+                            icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/com.tencent.ig.png",
+                            iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/com.tencent.ig.png",
                             backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                             onClick = {
                                 gamesViewModel.setSelectedGame(

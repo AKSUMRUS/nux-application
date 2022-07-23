@@ -83,7 +83,10 @@ fun EditProfileScreen(
         }
 
         ButtonWithChangeableColor(
-            modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 20.dp)
+            ,
             text1 = stringResource (id = R.string.save_changes),
             text2 = stringResource(id = R.string.changes_saved),
             color1 = MaterialTheme.colors.primary,

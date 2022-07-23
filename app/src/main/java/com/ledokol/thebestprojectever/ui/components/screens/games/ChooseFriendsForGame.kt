@@ -61,7 +61,7 @@ fun ChooseFriendsForGame(
         Log.e("STATE",state.toString())
         userViewModel.onEvent(UserEvent.Refresh())
     }
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
@@ -100,42 +100,44 @@ fun ChooseFriendsForGame(
                                     })
 //                            }
                         }
-                        item{
-                            Box(
-                                modifier = Modifier.fillMaxWidth(),
-                            ){
-                                ButtonPrimaryFull(
-                                    text = stringResource(id = R.string.button_invite_friends),
-                                    onClick = {
-                                        val users: MutableList<String> = mutableListOf()
-                                        for(x in state.clickedUsers){
-                                            users.add(x.id)
-                                        }
-                                        Log.e("F",profileViewModel.state.profile!!.access_token.toString())
-                                        Log.e("F",users.toString())
-                                        Log.e("F",gamesViewModel.state.toString())
-                                        profileViewModel.onEvent(
-                                            ProfileEvent.InviteFriends(
-                                                accessToken = profileViewModel.state.profile!!.access_token,
-                                                friends_ids = users.toList(),
-                                                app_id = gamesViewModel.state.game!!.id
-                                            )
-                                        )
-                                        navController.navigate("finish_inviting_friends"){
-                                            popUpTo("finish_inviting_friends")
-                                            launchSingleTop = true
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .padding(bottom = 20.dp)
-                                    ,
-                                )
-                            }
-                        }
                     },
                 )
             }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomEnd)
+        ,
+        ){
+            ButtonPrimaryFull(
+                text = stringResource(id = R.string.button_invite_friends),
+                onClick = {
+                    val users: MutableList<String> = mutableListOf()
+                    for(x in state.clickedUsers){
+                        users.add(x.id)
+                    }
+                    Log.e("F",profileViewModel.state.profile!!.access_token.toString())
+                    Log.e("F",users.toString())
+                    Log.e("F",gamesViewModel.state.toString())
+                    profileViewModel.onEvent(
+                        ProfileEvent.InviteFriends(
+                            accessToken = profileViewModel.state.profile!!.access_token,
+                            friends_ids = users.toList(),
+                            app_id = gamesViewModel.state.game!!.id
+                        )
+                    )
+                    navController.navigate("finish_inviting_friends"){
+                        popUpTo("finish_inviting_friends")
+                        launchSingleTop = true
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(bottom = 20.dp, end = 20.dp)
+                ,
+            )
         }
     }
 }

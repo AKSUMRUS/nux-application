@@ -5,6 +5,7 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -58,6 +59,7 @@ interface RetrofitServices {
 
     @PUT("current_user/firebase_messaging_token")
     fun setCurrentFirebaseToken(
+        @Header("Authorization") authHeader: String,
         @Body firebase_messaging_token: FirebaseToken
     )
             :Call<String>
@@ -79,6 +81,13 @@ interface RetrofitServices {
     fun getMe(
         @Header("Authorization") authHeader: String
     ) : Call<Profile>
+
+    @Multipart
+    @PUT("current_user/profile_pic")
+    fun uploadAvatar(
+        @Header("Authorization") authHeader: String,
+        @Part("profile_pic") profile_pic: MultipartBody.Part
+    ): Call<Profile>
 
     @GET("app/{app_id}")
     fun getGame(

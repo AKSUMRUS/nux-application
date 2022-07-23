@@ -11,11 +11,10 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.profile.ProfileState
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
-import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
-import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +32,9 @@ class ProfileViewModel @Inject constructor(
             }
             is ProfileEvent.Login -> {
                 login(nickname = event.nickname, password = event.password)
+            }
+            is ProfileEvent.UpdateAvatar -> {
+                updateAvatar(accessToken = event.accessToken, profile_pic = event.profile_pic)
             }
             is ProfileEvent.GetProfile -> {
                 getProfile()
@@ -56,7 +58,7 @@ class ProfileViewModel @Inject constructor(
                 )
             }
             is ProfileEvent.SetCurrentFirebaseToken -> {
-                setCurrentFirebaseToken(token = event.token)
+                setCurrentFirebaseToken(token = event.token, accessToken = event.accessToken)
             }
             is ProfileEvent.SetFinishRegister -> {
                 setFinishRegister(event.accessToken)
@@ -85,6 +87,18 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    private fun updateAvatar(
+        accessToken: String,
+        profile_pic: MultipartBody.Part
+    ){
+        viewModelScope.launch {
+            repository.uploadAvatar(
+                accessToken = accessToken,
+                profile_pic = profile_pic,
+            )
+        }
+    }
+
     fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
         viewModelScope.launch {
             Log.e("INVITE","SENT")
@@ -96,9 +110,12 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun setCurrentFirebaseToken(token: String){
+    private fun setCurrentFirebaseToken(
+        token: String,
+        accessToken: String,
+    ){
         viewModelScope.launch {
-            repository.setCurrentFirebaseToken(token)
+            repository.setCurrentFirebaseToken(token,accessToken)
         }
     }
 

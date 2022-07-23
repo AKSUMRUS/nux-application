@@ -8,5 +8,5 @@ data class StatusJSON(
     @field:Json(name = "name")
     val name : String,
     @field:Json(name = "android_category")
-    val android_category : String,
+    val android_category : Int,
 )

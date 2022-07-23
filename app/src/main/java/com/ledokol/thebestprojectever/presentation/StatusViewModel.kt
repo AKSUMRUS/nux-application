@@ -17,7 +17,7 @@ class StatusViewModel @Inject constructor(
     fun setStatus(
     androidPackageName : String,
     name : String,
-    androidCategory : String,
+    androidCategory : Int,
     accessToken: String,
     ){
         viewModelScope.launch {

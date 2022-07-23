@@ -54,7 +54,7 @@ fun QuickGameScreen(
         token = tokenGet
         Log.e("myFirebaseToken", token)
         profileViewModel.onEvent(
-            ProfileEvent.SetCurrentFirebaseToken(token)
+            ProfileEvent.SetCurrentFirebaseToken(token, profileViewModel.state.profile!!.access_token)
         )
         Log.w(TAG, token)
 //        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()

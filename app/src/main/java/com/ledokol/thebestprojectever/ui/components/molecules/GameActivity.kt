@@ -25,8 +25,8 @@ fun GameActivity(
     icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
     iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
-    startTime: String,
-    finishTime: String,
+    startTime: String = "",
+    finishTime: String = "",
     onClick: () -> Unit = {},
 ){
 

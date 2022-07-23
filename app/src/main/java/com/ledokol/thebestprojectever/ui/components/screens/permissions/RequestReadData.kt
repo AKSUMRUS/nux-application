@@ -46,8 +46,8 @@ fun RequestReadData(
 
                 if(checkPermissionReadData(context)){
 
-                    navController.navigate("request_permission_contacts"){
-                        popUpTo("request_permission_contacts")
+                    navController.navigate("quick_game"){
+                        popUpTo("quick_game")
                         launchSingleTop = true
                     }
                 }else{

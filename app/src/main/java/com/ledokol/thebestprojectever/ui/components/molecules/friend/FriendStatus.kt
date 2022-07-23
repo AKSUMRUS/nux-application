@@ -22,11 +22,11 @@ fun FriendStatus(
         verticalAlignment = Alignment.CenterVertically
     ){
         Body1(
-            text = if (user.status.finished) "Offline" else "Online"
+            text = if (!user.status.online) "Offline" else "Online"
         )
 
         Status(
-            status = if(user.status.finished)"offline" else "online",
+            status = if(!user.status.online)"offline" else "online",
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(start = 10.dp)

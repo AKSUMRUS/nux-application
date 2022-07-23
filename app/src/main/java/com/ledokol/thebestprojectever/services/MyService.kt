@@ -77,7 +77,7 @@ class MyService: Service() {
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
                 val packageApp = activeAppInfo.packageName
                 val labelApp = getApplicationLabel(packageManager, activeAppInfo)
-                val categoryApp = getApplicationCategory(packageManager, activeAppInfo).toString()
+                val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
 
                 Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
@@ -126,7 +126,7 @@ class MyService: Service() {
             .setSmallIcon(R.drawable.star)
             .setContentTitle("Следим за активностью друзей...")
 //            .setContentText("Ваши данные в безопасности")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
             .setWhen(System.currentTimeMillis());
@@ -147,7 +147,7 @@ class MyService: Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Ledokol"
             val descriptionText = "Уведомление"
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_LOW
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }

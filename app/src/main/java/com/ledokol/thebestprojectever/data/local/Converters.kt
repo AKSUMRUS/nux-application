@@ -41,14 +41,14 @@ class Converters {
         return gson.toJson(myObjects)
     }
 
-    @TypeConverter
-    fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON>? {
-        val res: MutableList<StatusJSON> = mutableListOf()
-        for (game in games){
-            res.add(StatusJSON(game.android_package_name,game.name,game.category.toString()))
-        }
-        return res.toList()
-    }
+//    @TypeConverter
+//    fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON>? {
+//        val res: MutableList<StatusJSON> = mutableListOf()
+//        for (game in games){
+//            res.add(StatusJSON(game.android_package_name,game.name,game.category))
+//        }
+//        return res.toList()
+//    }
 
     @TypeConverter
     fun fromString(value: String?): List<String?>? {

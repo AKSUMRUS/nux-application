@@ -93,7 +93,7 @@ class GamesStatistic{
                 newGames.add(StatusJSON(
                     game.packageName,
                     getApplicationLabel(packageManager, game),
-                    getApplicationCategory(packageManager, game).toString(),
+                    getApplicationCategory(packageManager, game),
                 ))
             }
 
@@ -106,7 +106,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_SOCIAL){
+                if(info.category == ApplicationInfo.CATEGORY_GAME){
                     installedApps.add(info)
                 }
             }
@@ -162,7 +162,7 @@ class GamesStatistic{
                     StatusJSON(
                         packageName,
                         getApplicationLabel(packageManager,game),
-                        game.category.toString(),
+                        game.category,
 //                        bitmapImagePreview,
 //                        bitmapImagePreview,
 //                        bitmapImagePreview,
@@ -225,7 +225,7 @@ class GamesStatistic{
             try{
                 val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
 //                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
-                if(application.category == ApplicationInfo.CATEGORY_SOCIAL){
+                if(application.category == ApplicationInfo.CATEGORY_GAME){
                     games.add(value)
                 }
             }catch (e: PackageManager.NameNotFoundException){

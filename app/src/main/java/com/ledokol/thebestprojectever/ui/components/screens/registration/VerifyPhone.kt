@@ -53,8 +53,8 @@ fun VerifyPhone(
     fun onClick(){
         profileViewModel.onEvent(
             ProfileEvent.Login(
-                nickname = "AKSUM",
-                password = "aksum2019"
+                nickname = "goracio",
+                password = "1"
             )
         )    }
 

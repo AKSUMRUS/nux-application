@@ -8,7 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -26,6 +26,7 @@ fun GameInList(
     iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
+    openGame: Boolean = false,
 ){
 
     Log.e("iconLink", icon)
@@ -57,11 +58,8 @@ fun GameInList(
                 .align(Alignment.BottomCenter)
             ,
         )
-
-//        Body1(
-//            text = name,
-//            modifier = Modifier.align(Alignment.BottomCenter)
-//        )
     }
+
+
 
 }

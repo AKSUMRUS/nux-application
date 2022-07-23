@@ -2,17 +2,18 @@ package com.ledokol.thebestprojectever.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import com.ledokol.thebestprojectever.ui.components.atoms.Body2
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
-import com.ledokol.thebestprojectever.ui.components.atoms.TextField
+import androidx.compose.ui.unit.dp
+import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -29,17 +30,24 @@ fun EditProfileInput(
     Column(
         modifier = modifier
     ) {
-        HeadlineH4(text = mainText)
+        HeadlineH5(
+            text = mainText,
+            fontWeight = FontWeight.W700,
+        )
 
         if(description != null) {
-            Body2(text = description)
+            Body2(
+                text = description,
+                modifier = Modifier.padding(bottom = 10.dp),
+                color = MaterialTheme.colors.onSecondary,
+            )
         }
 
         TextField(
             text = text,
             onValueChange = onValueChange,
             imeAction = ImeAction.Done,
-            keyboardActions = KeyboardActions ( onNext = {
+            keyboardActions = KeyboardActions ( onDone = {
                 keyboard!!.hide()
             } )
         )

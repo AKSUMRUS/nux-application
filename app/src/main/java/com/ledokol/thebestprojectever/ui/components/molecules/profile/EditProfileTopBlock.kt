@@ -5,6 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -12,10 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH2
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
+import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import org.intellij.lang.annotations.JdkConstants
 
 @Composable
@@ -34,10 +40,19 @@ fun EditProfileTopBlock(
     ) {
         Image(
             bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
-            contentDescription = "Avatar"
+            contentDescription = "Avatar",
+            modifier = Modifier.size(130.dp)
         )
 
-        HeadlineH2(text = state!!.nickname)
+        HeadlineH3(
+            text = state!!.nickname,
+            fontWeight = W700
+        )
+        Body1(
+            text = "89618498101",
+            fontWeight = W700,
+            color = MaterialTheme.colors.onSecondary
+        )
 
     }
 

@@ -45,7 +45,7 @@ fun FriendInList(
         ,
     ){
 
-        if(!user.status.finished){
+        if(user.status.online){
             Log.e("IMAGES","https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png")
             AsyncImage(
                 "https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png",
@@ -84,7 +84,7 @@ fun FriendInList(
         }
 
         Status(
-            status = if(user.status.finished)"offline" else "online",
+            status = if(user.status.online)"online" else "offline",
             modifier = Modifier
                 .padding(top = 15.dp, end = 20.dp)
                 .align(Alignment.TopEnd)

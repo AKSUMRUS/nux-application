@@ -66,5 +66,5 @@ fun FriendTopBar(
 fun FriendTopBar_preview(
     
 ) {
-    FriendTopBar(user = User(nickname = "test", status = Status(finished = false),id = ""))
+    FriendTopBar(user = User(nickname = "test", status = Status(online = false),id = ""))
 }

@@ -49,9 +49,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
             if(data["type"] == "friend_entered_app"){
-                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру",data["app_android_package_name"].toString())
+                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру $data[\"app_name\"]",data["app_android_package_name"].toString())
             }else{
-                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашение в игру",data["app_android_package_name"].toString())
+                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашает в игру $data[\"app_name\"]",data["app_android_package_name"].toString())
             }
 
             if (/* Check if data needs to be processed by long running job */ false) {

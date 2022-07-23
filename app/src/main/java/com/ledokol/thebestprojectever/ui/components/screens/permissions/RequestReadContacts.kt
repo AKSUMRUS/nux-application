@@ -60,8 +60,8 @@ fun RequestReadContacts(
         )
         contactsViewModel.getContacts("")
 
-        navController.navigate("contacts_list"){
-            popUpTo("contacts_list")
+        navController.navigate("quick_game"){
+            popUpTo("quick_game")
             launchSingleTop = true
         }
     }else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {
