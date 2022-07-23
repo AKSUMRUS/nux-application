@@ -15,6 +15,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body2
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

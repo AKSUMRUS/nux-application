@@ -1,21 +1,15 @@
 package com.ledokol.thebestprojectever.data.repository
 
-import android.provider.ContactsContract
 import android.util.Log
-import androidx.hilt.navigation.HiltViewModelFactory
-import androidx.room.Insert
-import com.ledokol.thebestprojectever.data.local.MyDatabase
-import com.ledokol.thebestprojectever.data.local.profile.Profile
-import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.util.Resource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.*
+import retrofit2.HttpException
+import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -27,10 +21,6 @@ class UsersRepository @Inject constructor(
 ){
     fun insertUser(user: User) {
         dao.insertUser(user)
-    }
-
-    fun clearUsers(){
-        dao.clearUsers()
     }
 
     fun uploadImage(){

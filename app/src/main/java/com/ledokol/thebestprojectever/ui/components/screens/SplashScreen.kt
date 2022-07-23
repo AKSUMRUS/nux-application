@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import kotlinx.coroutines.delay
 
 @Composable

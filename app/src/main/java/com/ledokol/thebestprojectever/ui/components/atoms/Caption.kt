@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.atoms
 
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

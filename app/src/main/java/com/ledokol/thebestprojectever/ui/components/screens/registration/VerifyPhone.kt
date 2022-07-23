@@ -18,15 +18,11 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.TextField
-import com.ledokol.thebestprojectever.ui.components.atoms.TextFieldWithCaption
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.TextField
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
-import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

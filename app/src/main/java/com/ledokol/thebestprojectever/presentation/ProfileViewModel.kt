@@ -131,7 +131,7 @@ class ProfileViewModel @Inject constructor(
     private fun login(nickname: String, password: String){
         viewModelScope.launch {
             repository.login(nickname = nickname,password = password)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null) {
@@ -153,7 +153,7 @@ class ProfileViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.signUp(nickname = nickname,password = password, name = name)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null){
@@ -178,7 +178,7 @@ class ProfileViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.getMe(accessToken)
-                .collect(){ result ->
+                .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             state = state.copy(

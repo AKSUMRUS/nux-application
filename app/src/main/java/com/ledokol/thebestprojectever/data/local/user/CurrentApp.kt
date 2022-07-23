@@ -1,7 +1,5 @@
 package com.ledokol.thebestprojectever.data.local.user
 
-import android.graphics.Bitmap
-
 data class CurrentApp(
     val android_package_name: String = "",
     val name: String = "",

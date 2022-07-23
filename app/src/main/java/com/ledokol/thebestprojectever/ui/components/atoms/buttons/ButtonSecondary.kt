@@ -8,7 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun ButtonSecondary(

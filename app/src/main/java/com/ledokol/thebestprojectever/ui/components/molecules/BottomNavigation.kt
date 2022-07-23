@@ -1,7 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,7 +10,6 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.ui.navigation.BottomNavItemMain
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,8 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.ledokol.thebestprojectever.ui.components.atoms.Subtitle1
-import com.ledokol.thebestprojectever.ui.components.atoms.Subtitle2
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Subtitle2
 
 @Composable
 fun BottomNavigation(navController: NavController,bottomBarState: MutableState<Boolean>) {

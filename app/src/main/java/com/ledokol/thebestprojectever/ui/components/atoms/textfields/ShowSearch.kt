@@ -15,7 +15,7 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun showSearch(
+fun ShowSearch(
     userViewModel: UserViewModel
 ){
     var textSearch by remember { mutableStateOf("") }

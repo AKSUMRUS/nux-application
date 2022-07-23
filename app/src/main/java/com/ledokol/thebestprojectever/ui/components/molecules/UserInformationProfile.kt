@@ -21,14 +21,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -162,45 +167,21 @@ fun UserInformationProfile(
         }
     }
 
-//    val REQUEST_CODE = 200
-//
-//    var PERMISSION_ALL = 1
-//
-//// we require two main permissions for accessing camera and external storage. We will use this as runtime permission.
-//
-//    var PERMISSIONS = arrayOf(
-//        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//        Manifest.permission.CAMERA
-//    )
-//
-//    var selectedImageUri: Uri? = null
-//    var cameraUri: Uri? = null
-//
-//    if (!hasPermissions(this, *PERMISSIONS)) {
-//        ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-//    }
-//
-//    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
-//        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-//    }
-
 
     val top: Dp = if (!profile) 70.dp else 120.dp
-    bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous)
 
-    LaunchedEffect(imageUri){
-        if(imageUri!=null){
-            Log.e("updateImage", "UPDATE!!! $imageUri")
-            if (Build.VERSION.SDK_INT < 28) {
-                bitmap = MediaStore.Images
-                    .Media.getBitmap(context.contentResolver,imageUri).asImageBitmap()
+    bitmap = if(imageUri!=null){
+        if (Build.VERSION.SDK_INT < 28) {
+            MediaStore.Images
+                .Media.getBitmap(context.contentResolver,imageUri).asImageBitmap()
 
-            } else {
-                val source = ImageDecoder
-                    .createSource(context.contentResolver, imageUri!!)
-                bitmap = ImageDecoder.decodeBitmap(source).asImageBitmap()
-            }
+        } else {
+            val source = ImageDecoder
+                .createSource(context.contentResolver, imageUri!!)
+            ImageDecoder.decodeBitmap(source).asImageBitmap()
         }
+    }else{
+        ImageBitmap.imageResource(id = R.drawable.anonymous)
     }
 
     Box(){

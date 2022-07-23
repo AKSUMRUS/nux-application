@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -35,7 +36,7 @@ fun GameInList(
         modifier = Modifier
             .fillMaxWidth()
             .height(180.dp)
-            .clickable() {
+            .clickable {
                 onClick()
             }
         ,
@@ -58,8 +59,11 @@ fun GameInList(
                 .align(Alignment.BottomCenter)
             ,
         )
+
+//        Body1(
+//            text = name,
+//            modifier = Modifier.align(Alignment.BottomCenter)
+//        )
     }
-
-
 
 }

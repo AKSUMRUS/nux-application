@@ -23,6 +23,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
 import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import org.intellij.lang.annotations.JdkConstants
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH2
 
 @Composable
 fun EditProfileTopBlock(

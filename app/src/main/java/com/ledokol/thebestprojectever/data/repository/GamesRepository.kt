@@ -14,7 +14,8 @@ import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import retrofit2.*
+import retrofit2.HttpException
+import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -84,13 +85,13 @@ class GamesRepository @Inject constructor(
         }
     }
 
-//    private fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON> {
-//        val res: MutableList<StatusJSON> = mutableListOf()
-//        for (game in games){
-//            res.add(StatusJSON(game.android_package_name,game.name,game.category))
-//        }
-//        return res.toList()
-//    }
+    private fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON> {
+        val res: MutableList<StatusJSON> = mutableListOf()
+        for (game in games){
+            res.add(StatusJSON(game.android_package_name,game.name,game.category.toString()))
+        }
+        return res.toList()
+    }
 
     private fun fromGameJSONToGame(games: List<GameJSON>?): List<Game> {
         val res: MutableList<Game> = mutableListOf()
@@ -114,7 +115,7 @@ class GamesRepository @Inject constructor(
 
     fun getGame(
         packageName: String,
-        fetchRemote: Boolean = false,
+//        fetchRemote: Boolean = false,
         ): Flow<Resource<Game>> {
         return flow {
             emit(Resource.Loading(true))

@@ -1,15 +1,12 @@
 package com.ledokol.thebestprojectever.data.remote
 
-import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.user.Apps
-import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.GameJSON
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 

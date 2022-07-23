@@ -10,7 +10,6 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build.VERSION
@@ -32,28 +31,22 @@ import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.domain.StatusJSON
-import com.ledokol.thebestprojectever.ui.components.atoms.Status
 import com.ledokol.thebestprojectever.ui.components.screens.profile.GameProfile
 import com.ledokol.thebestprojectever.ui.components.screens.profile.getIcon
 import java.text.SimpleDateFormat
@@ -101,7 +94,6 @@ class GamesStatistic{
         }
 
 
-        @RequiresApi(VERSION_CODES.O)
         fun getInstalledAppGamesList(packageManager: PackageManager): List<ApplicationInfo> {
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
@@ -197,9 +189,9 @@ class GamesStatistic{
 //                        "Executed app",
 //                        "usage stats executed : " + usageStats.packageName + "\t\t ID: "
 //                    )
-                    mySortedMap!![usageStats.lastTimeUsed] = usageStats
+                    mySortedMap[usageStats.lastTimeUsed] = usageStats
                 }
-                if (mySortedMap != null && !mySortedMap.isEmpty()) {
+                if (!mySortedMap.isEmpty()) {
                     val currentApp = mySortedMap[mySortedMap.lastKey()]!!.packageName
                     if (!usm.isAppInactive(currentApp)) {
                         return currentApp
@@ -253,13 +245,11 @@ fun getApplicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String
 }
 
 
-@RequiresApi(VERSION_CODES.O)
 fun getApplicationCategory(p: PackageManager, packageInfo: ApplicationInfo): Int {
     return p.getApplicationInfo(packageInfo.packageName,0).category
 }
 
 @SuppressLint("WrongConstant")
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun UserGames() {
     val context = LocalContext.current
@@ -362,7 +352,7 @@ fun UserGames() {
 private fun getStartTime(): Long {
     val calendar: Calendar = Calendar.getInstance()
     calendar.add(Calendar.MONTH, -1)
-    return calendar.getTimeInMillis()
+    return calendar.timeInMillis
 }
 
 fun convertLongToDate(time: Long): String {

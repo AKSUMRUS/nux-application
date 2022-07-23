@@ -31,7 +31,6 @@ UserViewModel @Inject constructor(
     fun onEvent(event: UserEvent){
         when(event){
             is UserEvent.Refresh -> {
-
                 getUsers(
                     fetchRemote = true,
                     shouldReload = event.shouldReload
@@ -48,8 +47,6 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.GetFriendUser -> {
                 getUser(id = event.id)
-//                state = state.copy(isRefreshing = false)
-//                getUserGames(id = event.id)
             }
             is UserEvent.SelectUser -> {
                 viewModelScope.launch {
@@ -147,16 +144,14 @@ UserViewModel @Inject constructor(
         }
     }
 
-    val TAG = "SELECTEDUSER"
-
     private fun removeSelectedUser(selectedUser: User){
-        Log.d(TAG, "REMOVE")
+        Log.d("SELECTEDUSER", "REMOVE")
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList(),
 //            users = state.users!!.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList()
         )
 
-        Log.d(TAG, "REMOVE "+state.users!!.size.toString())
+        Log.d("SELECTEDUSER", "REMOVE "+state.users!!.size.toString())
     }
 
     fun insertSelectedUser(selectedUser: User){
@@ -164,12 +159,12 @@ UserViewModel @Inject constructor(
             clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
 //            users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
         )
-        Log.d(TAG, "INSERT "+state.users!!.size.toString())
+        Log.d("SELECTEDUSER", "INSERT "+state.users!!.size.toString())
     }
 
     fun checkSelectedUser(selectedUser: User): Boolean{
-        Log.d(TAG, "CHECK")
-        var inList: Boolean = false
+        Log.d("SELECTEDUSER", "CHECK")
+        var inList = false
         for(user in state.clickedUsers){
             if (user.userId == selectedUser.userId){
                 inList = true

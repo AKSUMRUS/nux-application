@@ -1,8 +1,5 @@
 package com.ledokol.thebestprojectever.data.local.user
 
-import android.os.Parcel
-import android.os.Parcelable
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy

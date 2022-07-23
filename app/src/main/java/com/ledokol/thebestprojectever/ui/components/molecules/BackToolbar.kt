@@ -51,7 +51,7 @@ fun BackToolbar(
         }
 
         Box(
-            contentAlignment = Alignment.Center,
+            contentAlignment = Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Center),

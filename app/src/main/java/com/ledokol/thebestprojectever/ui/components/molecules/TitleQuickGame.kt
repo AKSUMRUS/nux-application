@@ -8,8 +8,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH6
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun TitleQuickGame(

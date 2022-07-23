@@ -24,7 +24,7 @@ import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
-import com.ledokol.thebestprojectever.ui.components.atoms.textfields.showSearch
+import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
@@ -85,7 +85,7 @@ fun ChooseFriendsForGame(
                                 description = stringResource(id = R.string.description_crew),
                                 modifier = Modifier.padding(top = 110.dp)
                             )
-                            showSearch(userViewModel = userViewModel)
+                            ShowSearch(userViewModel = userViewModel)
                         }
 
                         items(state.users!!.size) { friend ->

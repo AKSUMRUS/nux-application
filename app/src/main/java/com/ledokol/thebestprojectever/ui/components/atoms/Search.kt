@@ -3,12 +3,10 @@ package com.ledokol.thebestprojectever.ui.components.atoms
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.user.UserEvent
-import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
 
 @Composable

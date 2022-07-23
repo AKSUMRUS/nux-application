@@ -11,7 +11,6 @@ import com.ledokol.thebestprojectever.data.local.contact.ContactState
 import com.ledokol.thebestprojectever.data.repository.ContactsRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

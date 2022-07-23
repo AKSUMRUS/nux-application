@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.atoms
+package com.ledokol.thebestprojectever.ui.components.atoms.texts
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

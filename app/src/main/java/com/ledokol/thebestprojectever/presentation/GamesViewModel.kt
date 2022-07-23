@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
-import com.ledokol.thebestprojectever.data.local.game.GamesEvent
-import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
@@ -24,10 +22,6 @@ class GamesViewModel @Inject constructor(
 
     var state by mutableStateOf(GameState())
 
-    fun onEvent(event: GamesEvent){
-
-    }
-
     fun clearGames(){
         viewModelScope.launch {
             repository.clearGames()
@@ -40,60 +34,60 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    private fun insertGames(games: List<Game>){
-        for (game in games){
-            insertGame(game)
-        }
-    }
+//    private fun insertGames(games: List<Game>){
+//        for (game in games){
+//            insertGame(game)
+//        }
+//    }
+//
+//    private fun fromAppsToListGames(apps: Apps): List<Game>{
+//        val res:MutableList<Game> = mutableListOf()
+//        for (app in apps.apps){
+//            res.add(
+//                Game(
+//                    android_package_name = app.android_package_name,
+//                    name = app.name,
+//                    category = app.category,
+//                    icon_preview = app.icon_preview,
+//                    icon_large = app.icon_large,
+//                    image_wide = app.image_wide,
+//                    id = app.id
+//                )
+//            )
+//        }
+//
+//        return res
+//    }
 
-    private fun fromAppsToListGames(apps: Apps): List<Game>{
-        val res:MutableList<Game> = mutableListOf()
-        for (app in apps.apps){
-            res.add(
-                Game(
-                    android_package_name = app.android_package_name,
-                    name = app.name,
-                    category = app.category,
-                    icon_preview = app.icon_preview,
-                    icon_large = app.icon_large,
-                    image_wide = app.image_wide,
-                    id = app.id
-                )
-            )
-        }
-
-        return res
-    }
-
-    fun getGames(
-        query: String = state.searchQuery,
-        id: String
-    ){
-        viewModelScope.launch {
-            repository.getGames(id)
-                .collect{ result ->
-                        when(result){
-                            is Resource.Success -> {
-                                result.data.let { games ->
-                                    val listGames = fromAppsToListGames(games!!)
-                                    insertGames(listGames)
-                                    state = state.copy(
-                                        games = listGames
-                                    )
-                                }
-                                Log.e("GAMES",state.toString())
-                            }
-                            is Resource.Error -> Unit
-                            is Resource.Loading -> {
-                                state = state.copy(
-                                    isLoading = result.isLoading
-                                )
-                            }
-                        }
-
-                }
-        }
-    }
+//    fun getGames(
+//        query: String = state.searchQuery,
+//        id: String
+//    ){
+//        viewModelScope.launch {
+//            repository.getGames(id)
+//                .collect{ result ->
+//                        when(result){
+//                            is Resource.Success -> {
+//                                result.data.let { games ->
+//                                    val listGames = fromAppsToListGames(games!!)
+//                                    insertGames(listGames)
+//                                    state = state.copy(
+//                                        games = listGames
+//                                    )
+//                                }
+//                                Log.e("GAMES",state.toString())
+//                            }
+//                            is Resource.Error -> Unit
+//                            is Resource.Loading -> {
+//                                state = state.copy(
+//                                    isLoading = result.isLoading
+//                                )
+//                            }
+//                        }
+//
+//                }
+//        }
+//    }
 
     fun getGame(
         query: String = state.searchQuery.lowercase()
@@ -132,7 +126,7 @@ class GamesViewModel @Inject constructor(
         ){
         viewModelScope.launch {
             repository.shareGames(games, accessToken)
-                .collect(){result ->
+                .collect{result ->
                     when(result){
                         is Resource.Success -> {
                             state = state.copy(
