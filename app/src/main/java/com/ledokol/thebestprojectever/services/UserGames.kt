@@ -43,7 +43,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.domain.StatusJSON

@@ -1,10 +1,12 @@
 package com.ledokol.thebestprojectever.data.remote
 
+import com.ledokol.thebestprojectever.data.local.game.GameIcons
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.*
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -36,14 +38,14 @@ interface RetrofitServices {
     )
             : Call<User>
 
-    @PUT("status/set/android")
+    @PUT("status/in_app/android")
     fun setStatus(
         @Header("Authorization") authHeader: String,
         @Body status: App
     )
             : Call<StatusJSON>
 
-    @PUT("status/leave")
+    @PUT("status/not_in_app")
     fun leaveStatus(
         @Header("Authorization") authHeader: String
     )
@@ -85,4 +87,12 @@ interface RetrofitServices {
         @Path("app_id") app_id: String,
 
     ) : Call<Profile>
+
+    @Multipart
+    @PUT("app/package/{package_name}/set_images")
+    fun pushGamesIcon(
+        @Header("Authorization") authHeader: String,
+        @Path("package_name") package_name: String,
+        @Part icon_preview: MultipartBody.Part,
+    ) : Call<Any>
 }

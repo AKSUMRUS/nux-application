@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.presentation
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
+import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
 import com.ledokol.thebestprojectever.domain.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
@@ -21,6 +24,18 @@ class GamesViewModel @Inject constructor(
 ): ViewModel() {
 
     var state by mutableStateOf(GameState())
+
+    fun onEvent(event: GamesEvent){
+        when(event){
+            is GamesEvent.PushGamesIcons -> {
+                pushGamesIcons(
+                    games = event.games,
+                    packageManager = event.packageManager,
+                    accessToken = event.accessToken
+                )
+            }
+        }
+    }
 
     fun clearGames(){
         viewModelScope.launch {
@@ -111,6 +126,20 @@ class GamesViewModel @Inject constructor(
                     }
 
                 }
+        }
+    }
+
+    private fun pushGamesIcons(
+        games: List<ApplicationInfo>,
+        packageManager: PackageManager,
+        accessToken: String
+    ) {
+        viewModelScope.launch {
+            repository.pushGamesIcons(
+                games = games,
+                packageManager = packageManager,
+                accessToken = accessToken
+            )
         }
     }
 

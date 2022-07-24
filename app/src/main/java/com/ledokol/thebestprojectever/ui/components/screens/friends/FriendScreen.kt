@@ -47,7 +47,7 @@ fun FriendScreen(
                 .fillMaxSize()
                 .background(
                     MaterialTheme.colors.background
-                )
+                )   
 //            .verticalScroll(rememberScrollState())
         ) {
             BackToolbar (
