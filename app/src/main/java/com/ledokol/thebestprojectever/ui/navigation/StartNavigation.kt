@@ -3,6 +3,7 @@ package com.ledokol.thebestprojectever.ui.navigation
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,13 +12,16 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.internet.ConnectionState
 import com.ledokol.thebestprojectever.internet.connectivityState
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
@@ -59,6 +63,8 @@ fun StartNavigation(
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
 
+    val packageManager = context.packageManager
+
     var accessToken by remember {
         mutableStateOf("")
     }
@@ -69,6 +75,14 @@ fun StartNavigation(
             intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startForegroundService(intentService)
         }
+    }
+
+    fun pushGamesIcons(games: List<ApplicationInfo>){
+        gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
+            games = games,
+            packageManager = packageManager,
+            accessToken = accessToken
+        ))
     }
 
     Log.e("Profile",profile.toString())
@@ -139,8 +153,10 @@ fun StartNavigation(
 
         Log.e("ShareGames","Start "+accessToken)
         gamesViewModel.clearGames()
+        val games = getInstalledAppGamesList(context.packageManager)
+        pushGamesIcons(games)
         gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+            convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
 
@@ -148,10 +164,11 @@ fun StartNavigation(
     } else {
         Log.e("profile",profile.toString())
         accessToken = profile.profile.access_token
-
         gamesViewModel.clearGames()
+        val games = getInstalledAppGamesList(context.packageManager)
+        pushGamesIcons(games)
         gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, getInstalledAppGamesList(context.packageManager)),
+            convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
 
