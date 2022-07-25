@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.data.local.profile
 
+import android.graphics.Bitmap
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -11,7 +12,7 @@ sealed class ProfileEvent{
         val friends_ids: List<String>,
         val app_id: String
         ) : ProfileEvent()
-    data class UpdateAvatar(val accessToken: String, val profile_pic: RequestBody): ProfileEvent()
+    data class UpdateAvatar(val accessToken: String, val profile_pic: Bitmap): ProfileEvent()
     data class SetCurrentFirebaseToken(val token: String, val accessToken: String) : ProfileEvent()
     data class SetFinishRegister(val accessToken: String) : ProfileEvent()
     data class UpdateProfileData(val newProfile: Profile) : ProfileEvent()

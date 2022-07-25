@@ -37,6 +37,7 @@ import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -135,17 +136,13 @@ fun UserInformationProfile(
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
 
-        val file: File = File(uri!!.path)
+        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(
+            imageUri.toString()
+        ))
 
-//        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
-//        val body = MultipartBody.Part.createFormData("profile_pic", file.name, requestFile)
-        val body = RequestBody.create(
-            "image/*".toMediaTypeOrNull(),
-            file
-        )
         profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
             accessToken = profileViewModel.state.profile!!.access_token,
-            profile_pic = body
+            profile_pic = bitmap
         )
         )
     }

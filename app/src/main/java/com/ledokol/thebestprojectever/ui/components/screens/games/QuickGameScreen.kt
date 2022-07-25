@@ -52,7 +52,6 @@ fun QuickGameScreen(
             ProfileEvent.SetCurrentFirebaseToken(token, profileViewModel.state.profile!!.access_token)
         )
         Log.w(TAG, token)
-//        Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
     })
 
     Column(
@@ -62,14 +61,6 @@ fun QuickGameScreen(
                 MaterialTheme.colors.background
             )
     ) {
-//        Body1(text = token)
-//
-//        Button(
-//            text = "Копировать",
-//            onClick = {
-//                myClipboard!!.setPrimaryClip(ClipData.newPlainText("simple text", token))
-//            })
-
         games?.let { GridGames(
             it,
             navController,

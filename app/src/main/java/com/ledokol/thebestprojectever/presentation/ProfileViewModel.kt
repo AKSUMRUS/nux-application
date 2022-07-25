@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.presentation
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -117,12 +118,12 @@ class ProfileViewModel @Inject constructor(
 
     private fun updateAvatar(
         accessToken: String,
-        profile_pic: RequestBody
+        profile_pic: Bitmap
     ){
         viewModelScope.launch {
             repository.uploadAvatar(
                 accessToken = accessToken,
-                profile_pic = profile_pic,
+                profile_pic_bitmap = profile_pic,
             )
         }
     }

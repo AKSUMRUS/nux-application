@@ -56,7 +56,6 @@ class GamesRepository @Inject constructor(
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         return byteArrayOutputStream.toByteArray()
-
     }
 
     fun pushGamesIcons(
@@ -69,12 +68,10 @@ class GamesRepository @Inject constructor(
                 val icon = packageManager.getApplicationIcon(packageName).toBitmap()
                 val out = convertBitmapToPNG(icon)
 
-//                Log.d("GamesRepository1",out.toString())
-
                 val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
                 val icon_preview: MultipartBody.Part = MultipartBody.Part.createFormData("icon_preview", "icon_preview.png", requestBody)
 
-                val iconString = convertBitmapToString(icon)
+//                val iconString = convertBitmapToString(icon)
 
                 val pushGamesIconsCall = api.pushGamesIcon(
                     authHeader = "Bearer $accessToken",

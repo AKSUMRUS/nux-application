@@ -88,7 +88,7 @@ interface RetrofitServices {
     @PUT("current_user/profile_pic")
     fun uploadAvatar(
         @Header("Authorization") authHeader: String,
-        @Part("profile_pic") profile_pic: RequestBody
+        @Part profile_pic: MultipartBody.Part
     ): Call<Profile>
 
     @GET("app/{app_id}")
