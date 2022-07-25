@@ -9,14 +9,13 @@ import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
-import com.ledokol.thebestprojectever.domain.AvatarJSON
 import com.ledokol.thebestprojectever.domain.FirebaseToken
 import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
 import com.ledokol.thebestprojectever.domain.ProfileJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.*
 import java.io.IOException
 import javax.inject.Inject
@@ -52,7 +51,7 @@ class ProfileRepository @Inject constructor(
 
     fun uploadAvatar(
         accessToken: String,
-        profile_pic: MultipartBody.Part,
+        profile_pic: RequestBody,
     ){
         val TAG = "uploadAvatar"
 
@@ -68,7 +67,7 @@ class ProfileRepository @Inject constructor(
             }
 
             override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.e(TAG, "Error")
+                Log.e(TAG, "Error ${t.message}")
             }
 
         })
@@ -101,6 +100,43 @@ class ProfileRepository @Inject constructor(
             }
 
         })
+    }
+
+    fun setDoNotDisturb(
+        canDisturb: Boolean,
+    ) : Flow<Resource<Profile>> {
+        return flow{
+            emit(Resource.Loading(true))
+
+            val remoteProfile = try{
+                val updateCall = api.setDoNotDisturb(do_not_disturbe_mode = canDisturb)
+
+                val profile = updateCall.awaitResponse().body()
+
+                profile
+            }
+            catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            remoteProfile?.let { profile ->
+                dao.clearProfile()
+                dao.insertProfile(profile = profile)
+
+                emit(Resource.Success(
+                    data = profile
+                ))
+
+                emit(Resource.Loading(false))
+            }
+
+        }
     }
 
     fun updateProfileData(newProfile: Profile){

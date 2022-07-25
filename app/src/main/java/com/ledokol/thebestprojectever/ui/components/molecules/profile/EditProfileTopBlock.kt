@@ -18,12 +18,10 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH2
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH3
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import org.intellij.lang.annotations.JdkConstants
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH2
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH3
 
 @Composable
 fun EditProfileTopBlock(

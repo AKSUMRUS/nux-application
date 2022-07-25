@@ -7,11 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalOf
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,16 +15,11 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.TextButton
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.EditProfileInput
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.profile.EditProfileTopBlock
-import org.checkerframework.common.subtyping.qual.Bottom
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EditProfileScreen(
     navController: NavController,

@@ -1,14 +1,14 @@
 package com.ledokol.thebestprojectever.ui.components.screens.friends
 
-import android.content.pm.PackageManager
 import android.os.Handler
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -22,19 +22,12 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
-import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
-import com.ledokol.thebestprojectever.services.GamesStatistic
-import com.ledokol.thebestprojectever.services.getApplicationCategory
-import com.ledokol.thebestprojectever.services.getApplicationLabel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
-import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
-import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
-import com.ledokol.thebestprojectever.ui.components.screens.checkPermissionReadData
+import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 
 @Composable
 fun ListFriendsScreen(
@@ -167,14 +160,4 @@ fun ListFriendsScreen_preview(){
             }
         },
     )
-}
-
-
-fun updateFriends(
-    handler: Handler,
-    userViewModel: UserViewModel,
-    shouldWork: Boolean,
-){
-
-
 }

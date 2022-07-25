@@ -14,6 +14,7 @@ import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import okhttp3.RequestBody
 import javax.inject.Inject
@@ -166,7 +167,11 @@ class ProfileViewModel @Inject constructor(
                             }
                         }
                         is Resource.Error -> Unit
-                        is Resource.Loading -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
         }
@@ -188,7 +193,11 @@ class ProfileViewModel @Inject constructor(
                             }
                         }
                         is Resource.Error -> Unit
-                        is Resource.Loading -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
         }
@@ -213,7 +222,11 @@ class ProfileViewModel @Inject constructor(
                             )
                         }
                         is Resource.Error -> Unit
-                        is Resource.Loading -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
         }

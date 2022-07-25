@@ -23,14 +23,14 @@ fun StartRegistrationScreen(
     navController: NavController,
 ){
 
-    fun onClickSignUp(): Unit{
+    fun onClickSignUp() {
         navController.navigate("signup_screen") {
             popUpTo("signup_screen")
             launchSingleTop = true
         }
     }
 
-    fun onClickLogin(){
+    fun onClickLogin() {
         navController.navigate("login_screen") {
             popUpTo("login_screen")
             launchSingleTop = true

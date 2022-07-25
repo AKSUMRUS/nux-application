@@ -1,12 +1,13 @@
 package com.ledokol.thebestprojectever
 
-import android.content.*
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,14 +23,6 @@ import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
 
-
-//class MainViewModelFactory(val application: Application) :
-//    ViewModelProvider.Factory {
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return MainViewModel(application) as T
-//    }
-//}
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -39,15 +32,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bundle = intent.extras
         myReceiver = MyReceiver()
-
-        if(bundle!=null){
-//            val gamePackageName:String = bundle.getString("gamePackageName").toString()
-//            if(gamePackageName!=null && gamePackageName!=""){
-//                openAppRating(context = this, packageName = gamePackageName)
-//            }
-        }
 
         FirebaseApp.initializeApp(this@MainActivity)
 
@@ -78,11 +63,6 @@ class MainActivity : ComponentActivity() {
         intentFilter.addAction(Intent.ACTION_BOOT_COMPLETED)
         registerReceiver(myReceiver, intentFilter)
     }
-
-    override fun onStop() {
-        super.onStop()
-//        unregisterReceiver(myReceiver)
-    }
 }
 
 
@@ -94,20 +74,14 @@ fun openAppRating(
     context: Context,
     packageName: String
 ) {
-    // you can also use BuildConfig.APPLICATION_ID
-    val appId: String = context.getPackageName()
-//    val rateIntent = Intent(
-//        Intent.ACTION_VIEW,
-//        Uri.parse("market://details?id=$appId")
-//    )
     var marketFound = false
 
     // find all applications able to handle our rateIntent
-    val otherApps: MutableList<ApplicationInfo> = context.getPackageManager().getInstalledApplications(flags)
+    val otherApps: MutableList<ApplicationInfo> = context.packageManager.getInstalledApplications(flags)
     for (otherApp in otherApps) {
         // look for Google Play application
-        if (otherApp.packageName
-            == packageName
+        if (
+            otherApp.packageName == packageName
         ) {
             val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
             launchIntent?.let { context.startActivity(it) }

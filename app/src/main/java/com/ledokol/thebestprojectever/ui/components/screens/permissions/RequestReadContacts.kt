@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.permissions
 
 import android.Manifest
 import android.content.Context
@@ -25,6 +25,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
+import com.ledokol.thebestprojectever.ui.components.screens.getContactArray
 
 
 @OptIn(ExperimentalPermissionsApi::class)

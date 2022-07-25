@@ -9,8 +9,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 
 @Composable
 fun AlertDialogShow(

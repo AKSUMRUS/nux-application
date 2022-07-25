@@ -1,8 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.screens.games
 
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,8 +11,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,16 +26,16 @@ import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 
 
+const val TAG = "FIREBASE MESSAGING"
+
 @Composable
 fun QuickGameScreen(
     navController: NavController,
     gamesViewModel: GamesViewModel,
     profileViewModel: ProfileViewModel,
 ){
-    val TAG = "FIREBASE MESSAGING"
     val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
-    val context: Context = LocalContext.current
 
     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
         if (!task.isSuccessful) {
@@ -89,7 +84,6 @@ fun GridGames(
     navController: NavController,
     gamesViewModel: GamesViewModel,
 ) {
-    val context = LocalContext.current
 
     fun onClick(packageName: String){
         gamesViewModel.getGame(packageName)

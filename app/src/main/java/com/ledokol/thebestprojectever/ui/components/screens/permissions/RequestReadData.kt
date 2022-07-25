@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.ui.components.screens
+package com.ledokol.thebestprojectever.ui.components.screens.permissions
 
 import android.app.AppOpsManager
 import android.content.Context
@@ -44,8 +44,8 @@ fun RequestReadData(
 
                 if(checkPermissionReadData(context)){
 
-                    navController.navigate("quick_game"){
-                        popUpTo("quick_game")
+                    navController.navigate("request_permission_contacts"){
+                        popUpTo("request_permission_contacts")
                         launchSingleTop = true
                     }
                 }else{

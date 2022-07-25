@@ -38,9 +38,8 @@ fun ShareScreen(
 ){
 
     val context: Context = LocalContext.current
-    val packageManager: PackageManager = context.packageManager
 
-    val socialAppsBase = mutableListOf<String>(
+    val socialAppsBase = mutableListOf(
         "com.vkontakte.android",
         "org.telegram.messenger",
         "com.whatsapp",

@@ -5,31 +5,17 @@ import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
-import android.provider.UserDictionary
 import android.util.Log
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.contact.Contact
-import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.Search
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
-import com.ledokol.thebestprojectever.ui.components.molecules.ContactInList
 
 
 private const val TAG = "getContacts"
+
+// А ЭТО БЛЯТЬ ЧТО ТАКОЕ!?!?
 
 class ContactClass(val name: String, val phone: String){
 

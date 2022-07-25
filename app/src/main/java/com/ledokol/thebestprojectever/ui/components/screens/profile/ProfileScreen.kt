@@ -1,13 +1,11 @@
 package com.ledokol.thebestprojectever.ui.components.screens.profile
 
-import com.ledokol.thebestprojectever.ui.components.molecules.profile.ProfileTopBlock
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -21,19 +19,19 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.alertdialogs.AlertDialogShow
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
+import com.ledokol.thebestprojectever.ui.components.molecules.profile.ProfileTopBlock
 
 
+
+// Гордей, ПОЧЕМУ ЭТО БЛЯТЬ ЗДЕСЬ!?!?!?!?!?!!??!
 class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
 
     fun getName(context: Context, packageManager: PackageManager): String{
@@ -60,7 +58,7 @@ private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap? {
         Bitmap.Config.ARGB_8888
     )
     val canvas = Canvas(bmp)
-    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight())
+    drawable.setBounds(0, 0, canvas.width, canvas.height)
     drawable.draw(canvas)
     return bmp
 }
@@ -76,7 +74,6 @@ fun ProfileScreen(
 
     val context = LocalContext.current
     val games = gamesViewModel.state.games
-    val packageManager = context.packageManager
     var openDialog by remember{ mutableStateOf(false) }
     var selectedGame by remember {
         mutableStateOf("")

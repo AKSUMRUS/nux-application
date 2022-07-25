@@ -42,8 +42,6 @@ fun ChooseFriendsForGame(
         userViewModel.clearSelectedUser()
     })
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    val handler = Handler()
-    var runnable: Runnable? = null
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->

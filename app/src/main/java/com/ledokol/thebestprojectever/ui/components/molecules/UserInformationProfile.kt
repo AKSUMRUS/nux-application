@@ -1,12 +1,9 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
-import android.Manifest
 import android.content.ContentUris
 import android.content.Context
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -14,44 +11,35 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
+import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.*
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
-import okhttp3.MediaType
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.InputStream
 
 
 class URIPathHelper {
@@ -131,6 +119,7 @@ class URIPathHelper {
 fun UserInformationProfile(
     name: String,
     profile: Boolean,
+    profile_pic: String,
     onClickEdit: () -> Unit,
     profileViewModel: ProfileViewModel,
 ){
@@ -146,25 +135,19 @@ fun UserInformationProfile(
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
 
-        if(imageUri!=null){
-            val uriPathHelper = URIPathHelper()
-            val filePath = uriPathHelper.getPath(context, imageUri!!)
-            Log.i("FilePath", filePath.toString())
-            val file = File(filePath)
-            val requestFile: RequestBody =
-                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
-            val multiPartBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val file: File = File(uri!!.path)
 
-//            val imageStream: InputStream = context.contentResolver.openInputStream(imageUri!!)!!
-//            val selectedImage: Bitmap = BitmapFactory.decodeStream(imageStream)
-//            var encodedImage: String? = encodeImage(selectedImage)
-//
-            profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
-                accessToken = profileViewModel.state.profile!!.access_token,
-                profile_pic = multiPartBody
-            )
-            )
-        }
+//        val requestFile = RequestBody.create("multipart/form-data".toMediaTypeOrNull(),file)
+//        val body = MultipartBody.Part.createFormData("profile_pic", file.name, requestFile)
+        val body = RequestBody.create(
+            "image/*".toMediaTypeOrNull(),
+            file
+        )
+        profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
+            accessToken = profileViewModel.state.profile!!.access_token,
+            profile_pic = body
+        )
+        )
     }
 
 
@@ -174,7 +157,6 @@ fun UserInformationProfile(
         if (Build.VERSION.SDK_INT < 28) {
             MediaStore.Images
                 .Media.getBitmap(context.contentResolver,imageUri).asImageBitmap()
-
         } else {
             val source = ImageDecoder
                 .createSource(context.contentResolver, imageUri!!)
@@ -218,15 +200,12 @@ fun UserInformationProfile(
                     modifier = Modifier
                         .padding(end = 20.dp, bottom = 20.dp)
                         .clickable {
-                            Toast
-                                .makeText(context, "fddffd", Toast.LENGTH_LONG)
-                                .show()
                             launcher.launch("image/*")
                         }
 
                 ){
-                    Image(
-                        bitmap = bitmap!!,
+                    AsyncImage(
+                        model = profile_pic,
                         contentDescription = "Аноним",
                         modifier = Modifier
                             .size(100.dp),

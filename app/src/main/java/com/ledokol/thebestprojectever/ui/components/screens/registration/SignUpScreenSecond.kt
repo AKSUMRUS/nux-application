@@ -13,7 +13,6 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.R
-//import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.TextFieldTrailingImage
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1

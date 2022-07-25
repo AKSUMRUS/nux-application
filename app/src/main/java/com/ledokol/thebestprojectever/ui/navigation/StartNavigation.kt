@@ -12,9 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -36,6 +34,8 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsS
 import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
+import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadContacts
+import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadData
 import com.ledokol.thebestprojectever.ui.components.screens.profile.EditProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
@@ -151,7 +151,7 @@ fun StartNavigation(
     } else if(profile.finish_register){
         accessToken = profile.profile.access_token
 
-        Log.e("ShareGames","Start "+accessToken)
+        Log.e("ShareGames", "Start $accessToken")
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)

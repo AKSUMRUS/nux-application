@@ -50,8 +50,8 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.SelectUser -> {
                 viewModelScope.launch {
-                    val shoulRemove = checkSelectedUser(event.user)
-                    if (shoulRemove) {
+                    val shouldRemove = checkSelectedUser(event.user)
+                    if (shouldRemove) {
                         removeSelectedUser(event.user)
                     } else {
                         insertSelectedUser(event.user)

@@ -14,8 +14,8 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
-import com.ledokol.thebestprojectever.ui.components.atoms.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.molecules.UserInformationProfile
 
 @Composable
@@ -38,6 +38,7 @@ fun ProfileTopBlock(
         if(state.profile != null){
             UserInformationProfile(
                 name = state.profile.nickname,
+                profile_pic = state.profile.profile_pic!!,
                 profile = true,
                 onClickEdit = {
                     navController.navigate("edit_profile"){
