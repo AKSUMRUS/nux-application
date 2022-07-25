@@ -7,6 +7,7 @@ import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -87,7 +88,7 @@ interface RetrofitServices {
     @PUT("current_user/profile_pic")
     fun uploadAvatar(
         @Header("Authorization") authHeader: String,
-        @Part("profile_pic") profile_pic: MultipartBody.Part
+        @Part("profile_pic") profile_pic: RequestBody
     ): Call<Profile>
 
     @GET("app/{app_id}")
@@ -103,4 +104,9 @@ interface RetrofitServices {
         @Path("package_name") package_name: String,
         @Part icon_preview: MultipartBody.Part,
     ) : Call<Any>
+
+    @PUT("/current_user/do_not_disturb")
+    fun setDoNotDisturb(
+        @Part do_not_disturbe_mode: Boolean
+    ) : Call<Profile>
 }

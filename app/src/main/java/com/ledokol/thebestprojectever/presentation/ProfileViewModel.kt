@@ -13,8 +13,9 @@ import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,6 +64,32 @@ class ProfileViewModel @Inject constructor(
             is ProfileEvent.SetFinishRegister -> {
                 setFinishRegister(event.accessToken)
             }
+            is ProfileEvent.SetDoNotDisturb -> {
+                setDoNotDisturb(event.canDisturb)
+            }
+        }
+    }
+
+    private fun setDoNotDisturb(
+      canDisturb: Boolean
+    ) {
+        viewModelScope.launch {
+            repository.setDoNotDisturb(canDisturb = canDisturb)
+                .collect { result ->
+                    when(result){
+                        is Resource.Success -> {
+                            state = state.copy(
+                                profile = result.data
+                            )
+                        }
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                        is Resource.Error -> Unit
+                    }
+                }
         }
     }
 
@@ -89,7 +116,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun updateAvatar(
         accessToken: String,
-        profile_pic: MultipartBody.Part
+        profile_pic: RequestBody
     ){
         viewModelScope.launch {
             repository.uploadAvatar(
