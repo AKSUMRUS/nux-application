@@ -67,16 +67,23 @@ class ProfileViewModel @Inject constructor(
                 setFinishRegister(event.accessToken)
             }
             is ProfileEvent.SetDoNotDisturb -> {
-                setDoNotDisturb(event.canDisturb)
+                setDoNotDisturb(
+                    canDisturb = event.canDisturb,
+                    accessToken = event.accessToken
+                )
             }
         }
     }
 
     private fun setDoNotDisturb(
-      canDisturb: Boolean
+      canDisturb: Boolean,
+      accessToken: String
     ) {
         viewModelScope.launch {
-            repository.setDoNotDisturb(canDisturb = canDisturb)
+            repository.setDoNotDisturb(
+                canDisturb = canDisturb,
+                accessToken = accessToken
+            )
                 .collect { result ->
                     when(result){
                         is Resource.Success -> {

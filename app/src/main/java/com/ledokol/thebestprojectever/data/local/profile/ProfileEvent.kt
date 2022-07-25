@@ -24,6 +24,7 @@ sealed class ProfileEvent{
         val name: String
         ) : ProfileEvent()
     data class SetDoNotDisturb(
-        val canDisturb: Boolean
+        val canDisturb: Boolean,
+        val accessToken: String
     ) : ProfileEvent()
 }

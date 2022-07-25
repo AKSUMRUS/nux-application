@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.ledokol.thebestprojectever.data.local.profile.DoNotDisturb
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
@@ -119,12 +120,16 @@ class ProfileRepository @Inject constructor(
 
     fun setDoNotDisturb(
         canDisturb: Boolean,
+        accessToken: String
     ) : Flow<Resource<Profile>> {
         return flow{
             emit(Resource.Loading(true))
 
             val remoteProfile = try{
-                val updateCall = api.setDoNotDisturb(do_not_disturbe_mode = canDisturb)
+                val updateCall = api.setDoNotDisturb(
+                    authHeader = "Bearer $accessToken",
+                    DoNotDisturb(do_not_disturb = canDisturb)
+                )
 
                 val profile = updateCall.awaitResponse().body()
 
@@ -142,6 +147,7 @@ class ProfileRepository @Inject constructor(
 
             remoteProfile?.let { profile ->
                 dao.clearProfile()
+                profile.access_token = accessToken
                 dao.insertProfile(profile = profile)
 
                 emit(Resource.Success(

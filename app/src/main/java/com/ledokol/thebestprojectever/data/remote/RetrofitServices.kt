@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.data.remote
 
 import com.ledokol.thebestprojectever.data.local.game.GameIcons
+import com.ledokol.thebestprojectever.data.local.profile.DoNotDisturb
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
@@ -107,6 +108,7 @@ interface RetrofitServices {
 
     @PUT("/current_user/do_not_disturb")
     fun setDoNotDisturb(
-        @Part do_not_disturbe_mode: Boolean
+        @Header("Authorization") authHeader: String,
+        @Body doNotDisturb: DoNotDisturb
     ) : Call<Profile>
 }

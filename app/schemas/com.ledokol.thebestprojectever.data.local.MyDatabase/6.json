@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "4b24edf3184ad4ab7fa7db31fb983708",
+    "identityHash": "c7187f7a0af48d650f6c22e94c1a9c5d",
     "entities": [
       {
         "tableName": "profile",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`access_token` TEXT NOT NULL, `nickname` TEXT NOT NULL, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `status` TEXT, `finish_register` INTEGER NOT NULL, `profile_pic` TEXT, `do_not_disturbe_mode` INTEGER NOT NULL, `phone` TEXT, PRIMARY KEY(`access_token`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`access_token` TEXT NOT NULL, `nickname` TEXT NOT NULL, `name` TEXT NOT NULL, `id` TEXT NOT NULL, `status` TEXT, `finish_register` INTEGER NOT NULL, `profile_pic` TEXT, `do_not_disturb_mode` INTEGER NOT NULL, `phone` TEXT, PRIMARY KEY(`access_token`))",
         "fields": [
           {
             "fieldPath": "access_token",
@@ -51,8 +51,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "do_not_disturbe_mode",
-            "columnName": "do_not_disturbe_mode",
+            "fieldPath": "do_not_disturb_mode",
+            "columnName": "do_not_disturb_mode",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -202,7 +202,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4b24edf3184ad4ab7fa7db31fb983708')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c7187f7a0af48d650f6c22e94c1a9c5d')"
     ]
   }
 }
