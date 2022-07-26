@@ -50,13 +50,6 @@ fun ProfileTopBlock(
             )
         }
         
-        HeadlineH4(
-            text = "Игры",
-            modifier = Modifier.padding(start = 20.dp),
-            color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.W700,
-        )
-        
 //        Row(
 //            modifier = Modifier
 //                .fillMaxWidth()
