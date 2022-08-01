@@ -1,4 +1,4 @@
-package com.ledokol.thebestprojectever.domain
+package com.ledokol.thebestprojectever.domain.games
 
 import com.squareup.moshi.Json
 

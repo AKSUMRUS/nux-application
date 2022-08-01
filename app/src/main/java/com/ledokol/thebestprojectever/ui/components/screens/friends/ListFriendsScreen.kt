@@ -24,7 +24,7 @@ import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
@@ -84,12 +84,7 @@ fun ListFriendsScreen(
             runnable?.let { handler.postDelayed(it, 5000) }
         }
 
-        handler.postDelayed(runnable!!, 10)
-//        updateFriends(
-//            handler = handler,
-//            userViewModel = userViewModel,
-//            shouldWork = shouldWork,
-//        )
+        handler.postDelayed(runnable!!, 5000)
     }
         Column(
             modifier = Modifier
@@ -115,7 +110,7 @@ fun ListFriendsScreen(
                                         modifier = Modifier.padding(top = 110.dp),
                                     )
                                     ShowSearch(userViewModel = userViewModel)
-                                    ButtonPrimary(
+                                    ButtonBorder(
                                         onClick = {onClickShare()},
                                         text = stringResource(id = R.string.share_with_friends),
                                         modifier = Modifier

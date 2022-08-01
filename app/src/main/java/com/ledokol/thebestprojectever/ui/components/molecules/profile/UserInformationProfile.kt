@@ -1,9 +1,10 @@
-package com.ledokol.thebestprojectever.ui.components.molecules
+package com.ledokol.thebestprojectever.ui.components.molecules.profile
 
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -11,7 +12,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Base64
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -31,16 +32,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.decode.DecodeUtils.calculateInSampleSize
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.Compressor.compress
+import id.zelory.compressor.calculateInSampleSize
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 
 
 class URIPathHelper {
@@ -132,13 +139,39 @@ fun UserInformationProfile(
         mutableStateOf<ImageBitmap?>(null)
     }
 
+    LaunchedEffect(true){
+//        profileViewModel.onEvent()
+    }
+
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
 
-        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), Uri.parse(
-            imageUri.toString()
-        ))
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = calculateInSampleSize(options, 10,10);
+        options.inJustDecodeBounds = false;
+//        options.
+
+        Log.e("uploadAvatar", imageUri.toString())
+
+        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
+            context.getContentResolver(),
+            Uri.parse(imageUri.toString()),
+        )
+
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+
+//        val compressedImageFile = compress(context, byteArrayOutputStream) {
+//            resolution(1280, 720)
+//            quality(80)
+//            format(Bitmap.CompressFormat.WEBP)
+//            size(2_097_152) // 2 MB
+//        }
+
+//        val bitmap:Bitmap = B(imageUri.toString(),options)
+//        val compressedImageFile = compress(context, bitmap)
 
         profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
             accessToken = profileViewModel.state.profile!!.access_token,
@@ -149,19 +182,6 @@ fun UserInformationProfile(
 
 
     val top: Dp = if (!profile) 70.dp else 120.dp
-
-    bitmap = if(imageUri!=null){
-        if (Build.VERSION.SDK_INT < 28) {
-            MediaStore.Images
-                .Media.getBitmap(context.contentResolver,imageUri).asImageBitmap()
-        } else {
-            val source = ImageDecoder
-                .createSource(context.contentResolver, imageUri!!)
-            ImageDecoder.decodeBitmap(source).asImageBitmap()
-        }
-    }else{
-        ImageBitmap.imageResource(id = R.drawable.anonymous)
-    }
 
     Box(){
         Row(
@@ -176,7 +196,7 @@ fun UserInformationProfile(
                 if(profile){
                     Body1(
                         text = stringResource(id = R.string.good_evening),
-                        color = MaterialTheme.colors.onSecondary,
+                        color = MaterialTheme.colors.secondaryVariant,
                     )
                 }
                 HeadlineH4(
@@ -228,6 +248,25 @@ fun UserInformationProfile(
         )
     }
 }
+
+
+//private fun fromBitmapToFile(){
+//    File f = new File(context.getCacheDir(), filename);
+//    f.createNewFile();
+//
+////Convert bitmap to byte array
+//    Bitmap bitmap = your bitmap;
+//    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//    bitmap.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+//    byte[] bitmapdata = bos.toByteArray();
+//
+////write the bytes in file
+//    FileOutputStream fos = new FileOutputStream(f);
+//    fos.write(bitmapdata);
+//    fos.flush();
+//    fos.close();
+//}
+
 
 private fun encodeImage(bm: Bitmap): String? {
     val baos = ByteArrayOutputStream()

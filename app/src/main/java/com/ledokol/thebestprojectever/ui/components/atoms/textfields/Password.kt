@@ -47,13 +47,13 @@ fun Password(
                     image,
                     description,
                     modifier = Modifier.size(25.dp),
-                    tint = MaterialTheme.colors.onSecondary
+                    tint = MaterialTheme.colors.secondaryVariant
                 )
             }
         },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.onSecondary,
+            placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,

@@ -37,22 +37,24 @@ fun QuickGameScreen(
     val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
 
-    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-        if (!task.isSuccessful) {
-            Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-            return@OnCompleteListener
-        }
+    LaunchedEffect(true){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
 
-        // Get new FCM registration token
-        val tokenGet = task.result
+            // Get new FCM registration token
+            val tokenGet = task.result
 
-        token = tokenGet
-        Log.e("myFirebaseToken", token)
-        profileViewModel.onEvent(
-            ProfileEvent.SetCurrentFirebaseToken(token, profileViewModel.state.profile!!.access_token)
-        )
-        Log.w(TAG, token)
-    })
+            token = tokenGet
+            Log.e("myFirebaseToken", token)
+            profileViewModel.onEvent(
+                ProfileEvent.SetCurrentFirebaseToken(token, profileViewModel.state.profile!!.access_token)
+            )
+            Log.w(TAG, token)
+        })
+    }
 
     Column(
         modifier = Modifier
@@ -104,8 +106,8 @@ fun GridGames(
             ){
                 TitleQuickGame(
                     step = 1,
-                    title = stringResource(id = R.string.title_game),
-                    description = stringResource(id = R.string.description_quick_game),
+                    title = stringResource(id = R.string.choose_game),
+                    description = stringResource(id = R.string.description_choose_game),
                 )
             }
         }
@@ -115,8 +117,8 @@ fun GridGames(
                 packageName = game.android_package_name,
                 name = game.name,
 //                Временно!
-                icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png", ///КОСТЫЛЬ!
-                iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
+                icon = game.icon_preview!!,
+                iconLarge = game.icon_large!!,
                 backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
                 onClick = { onClick(game.android_package_name) },
             )

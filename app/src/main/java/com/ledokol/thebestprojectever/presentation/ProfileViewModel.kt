@@ -14,6 +14,7 @@ import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -34,10 +35,20 @@ class ProfileViewModel @Inject constructor(
                 updateProfileData(event.newProfile)
             }
             is ProfileEvent.Login -> {
-                login(nickname = event.nickname, password = event.password)
+                login(
+                    id = event.id,
+                    code = event.code,
+                    phone = event.phone,
+                )
             }
             is ProfileEvent.UpdateAvatar -> {
                 updateAvatar(accessToken = event.accessToken, profile_pic = event.profile_pic)
+            }
+            is ProfileEvent.GetDefaultProfilePics -> {
+                getDefaultProfilePics()
+            }
+            is ProfileEvent.ConfirmationPhone -> {
+                confirmationPhone(phone = event.phone, reason = event.reason)
             }
             is ProfileEvent.GetProfile -> {
                 getProfile()
@@ -55,9 +66,11 @@ class ProfileViewModel @Inject constructor(
             is ProfileEvent.SignUp -> {
                 signUp(
                     nickname = event.nickname,
-                    password = event.password,
-                    email = event.email,
-                    name = event.name
+                    name = event.name,
+                    phone = event.phone,
+                    default_profile_pic_id = event.default_profile_pic_id,
+                    id = event.id,
+                    code = event.code,
                 )
             }
             is ProfileEvent.SetCurrentFirebaseToken -> {
@@ -71,6 +84,26 @@ class ProfileViewModel @Inject constructor(
                     canDisturb = event.canDisturb,
                     accessToken = event.accessToken
                 )
+            }
+        }
+    }
+
+    private fun getDefaultProfilePics() {
+        viewModelScope.launch {
+            repository.getDefaultProfilePics().collect{
+                result ->
+                when(result) {
+                    is Resource.Success -> {
+                        state = state.copy (
+                            defaultProfilePicsList = result.data!!.default_profile_pics
+                        )
+                    }
+                    is Resource.Loading -> {
+                        state = state.copy(
+                            isLoading = result.isLoading
+                        )
+                    }
+                }
             }
         }
     }
@@ -102,6 +135,24 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    private fun confirmationPhone(
+        phone: String,
+        reason: String,
+    ){
+        viewModelScope.launch {
+            repository.confirmationPhone(phone = phone, reason = reason).collect{
+                result ->
+                when(result) {
+                    is Resource.Success -> {
+                        state = state.copy(
+                            id_confirmation_phone =  result.data!!.id,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
     private fun updateProfileData(newProfile: Profile){
         viewModelScope.launch {
             repository.updateProfileData(newProfile = newProfile)
@@ -109,17 +160,18 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getProfile(){
-        val response = repository.getProfile()
-        if(response != null) {
-            state = state.copy(
-                profile = response,
-                finish_register = response.finishRegister
-            )
-        }
-        else{
-            state = state.copy(
-                profile = response
-            )
+        viewModelScope.launch {
+            val response = repository.getProfile()
+            if(response != null) {
+                state = state.copy(
+                    profile = response,
+                    finish_register = response.finishRegister
+                )
+            } else{
+                state = state.copy(
+                    profile = response
+                )
+            }
         }
     }
 
@@ -131,7 +183,21 @@ class ProfileViewModel @Inject constructor(
             repository.uploadAvatar(
                 accessToken = accessToken,
                 profile_pic_bitmap = profile_pic,
-            )
+            ).collect{ result ->
+                when(result){
+                    is Resource.Success -> {
+                        if(result.data != null) {
+                            getMe(accessToken = accessToken)
+                        }
+                    }
+                    is Resource.Error -> Unit
+                    is Resource.Loading -> {
+                        state = state.copy(
+                            isLoading = result.isLoading
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -164,9 +230,17 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun login(nickname: String, password: String){
+    private fun login(
+        id: String,
+        code: String,
+        phone: String,
+    ){
         viewModelScope.launch {
-            repository.login(nickname = nickname,password = password)
+            repository.login(
+                id = id,
+                code = code,
+                phone = phone,
+            )
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
@@ -187,16 +261,26 @@ class ProfileViewModel @Inject constructor(
 
     private fun signUp(
         nickname: String,
-        password: String,
-        email: String,
         name: String,
+        phone: String,
+        default_profile_pic_id: String,
+        id: String,
+        code: String,
     ){
         viewModelScope.launch {
-            repository.signUp(nickname = nickname,password = password, name = name)
+            repository.signUp(
+                nickname = nickname,
+                phone = phone,
+                name = name,
+                default_profile_pic_id = default_profile_pic_id,
+                id = id,
+                code = code
+            )
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null){
+                                Log.e("singUpRepository", result.data.toString())
                                 getMe(accessToken = result.data.access_token)
                             }
                         }
@@ -218,7 +302,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getMe(
-        accessToken: String
+        accessToken: String = repository.data.access_token
     ){
         viewModelScope.launch {
             repository.getMe(accessToken)

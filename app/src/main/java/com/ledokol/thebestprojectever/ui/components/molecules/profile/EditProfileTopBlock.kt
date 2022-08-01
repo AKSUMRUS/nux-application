@@ -16,6 +16,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
@@ -30,29 +31,30 @@ fun EditProfileTopBlock(
 
     val state = profileViewModel.state.profile
 
-    Column(
-         modifier = Modifier
-             .fillMaxWidth()
-             .padding(bottom = 20.dp)
-        ,
-        horizontalAlignment = CenterHorizontally
-    ) {
-        Image(
-            bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
-            contentDescription = "Avatar",
-            modifier = Modifier.size(130.dp)
-        )
+    state?.let{
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 20.dp)
+            ,
+            horizontalAlignment = CenterHorizontally
+        ) {
+            AsyncImage(
+                model = state!!.profile_pic,
+                contentDescription = "Avatar",
+                modifier = Modifier.size(130.dp)
+            )
 
-        HeadlineH3(
-            text = state!!.nickname,
-            fontWeight = W700
-        )
-        Body1(
-            text = "89618498101",
-            fontWeight = W700,
-            color = MaterialTheme.colors.onSecondary
-        )
-
+            HeadlineH3(
+                text = state!!.nickname,
+                fontWeight = W700
+            )
+            Body1(
+                text = state.phone!!,
+                fontWeight = W700,
+                color = MaterialTheme.colors.secondaryVariant
+            )
+        }
     }
 
 }

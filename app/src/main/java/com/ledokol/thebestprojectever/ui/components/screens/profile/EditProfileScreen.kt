@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.EditProfileInput
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
@@ -70,6 +71,18 @@ fun EditProfileScreen(
                 description = stringResource(id = R.string.for_notifications),
                 text = name,
                 onValueChange = { onEditName(it) },
+            )
+
+            ButtonBorder(
+                text = stringResource(id = R.string.logout),
+                onClick = {
+                    profileViewModel.onEvent(ProfileEvent.LogOut)
+                },
+                colorBorder = MaterialTheme.colors.error,
+                padding = 2.dp,
+                modifier = Modifier
+                    .padding(top = 20.dp)
+                ,
             )
         }
 

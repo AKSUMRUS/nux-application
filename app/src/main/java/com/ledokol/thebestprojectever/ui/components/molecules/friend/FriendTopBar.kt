@@ -11,6 +11,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.Status
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -48,8 +49,8 @@ fun FriendTopBar(
                 verticalAlignment = Alignment.CenterVertically,
             ){
 
-                Image(
-                    bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
+                AsyncImage(
+                    model = user.profile_pic,
                     contentDescription = "Аноним",
                     modifier = Modifier
                         .size(height = 120.dp, width = 120.dp)
@@ -58,13 +59,4 @@ fun FriendTopBar(
                 )
             }
         }
-}
-
-
-@Preview
-@Composable
-fun FriendTopBar_preview(
-    
-) {
-    FriendTopBar(user = User(nickname = "test", status = Status(online = false),id = ""))
 }

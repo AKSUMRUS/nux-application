@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 
 @Composable
 fun ContactInList(
@@ -28,7 +28,7 @@ fun ContactInList(
             .padding( 20.dp)
     ){
         HeadlineH5(text = name)
-        ButtonPrimaryFull(
+        ButtonFull(
             text = stringResource(id = R.string.invite_contact),
             onClick = {
                 onClick()

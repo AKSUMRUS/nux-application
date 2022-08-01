@@ -22,18 +22,18 @@ fun TitleQuickGame(
     Column(
         modifier = modifier,
     ){
-        Body1(
-            text = stringResource(id = R.string.step)+" "+step.toString(),
-            color = MaterialTheme.colors.primary,
-            fontWeight = FontWeight.W500,
-        )
+//        Body1(
+//            text = stringResource(id = R.string.step)+" "+step.toString(),
+//            color = MaterialTheme.colors.primary,
+//            fontWeight = FontWeight.W500,
+//        )
         HeadlineH4(
             text = title,
-            fontWeight = FontWeight.W700,
+            fontWeight = FontWeight.W500,
         )
-        HeadlineH6(
+        Body1(
             text = description,
-            color = MaterialTheme.colors.onBackground,
+            color = MaterialTheme.colors.secondaryVariant,
         )
     }
 }

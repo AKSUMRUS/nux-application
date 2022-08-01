@@ -52,7 +52,7 @@ fun TextFieldTrailingIcon(
         singleLine = true,
         trailingIcon = {
             IconButton(onClick =  buttonClick) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
+                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },
         modifier = Modifier
@@ -66,7 +66,7 @@ fun TextFieldTrailingIcon(
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.onSecondary,
+            placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,

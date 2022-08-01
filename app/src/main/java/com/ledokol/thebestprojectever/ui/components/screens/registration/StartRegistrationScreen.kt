@@ -1,12 +1,33 @@
 package com.ledokol.thebestprojectever.ui.components.screens.registration
 
+import android.content.Context
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.VectorDrawable
+import android.os.Build
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
+import androidx.compose.ui.Alignment.Companion.Top
+import androidx.compose.ui.Alignment.Companion.TopStart
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -14,14 +35,18 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimary
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonRightIcon
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonSecondary
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH3
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun StartRegistrationScreen(
     navController: NavController,
 ){
+    val context: Context = LocalContext.current
 
     fun onClickSignUp() {
         navController.navigate("signup_screen") {
@@ -37,80 +62,75 @@ fun StartRegistrationScreen(
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
+            .background(MaterialTheme.colors.primary)
             .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp),
+        ,
     ){
-        Box(
+        Image(
+            ImageVector.vectorResource(id = R.drawable.background_onboarding),
+            contentDescription = null,
             modifier = Modifier
-                .weight(5f)
-            ,
-
-        ){
-
-            val pagerState = rememberPagerState(pageCount = 3)
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ){
-                page ->
-                when(page) {
-                    0 ->
-                        HeadlineH4(
-                            text = stringResource(id = R.string.hello_registration),
-                            modifier = Modifier
-                                .padding(bottom = 70.dp)
-                                .align(BottomCenter)
-                            ,
-                            fontWeight = FontWeight.W700,
-                        )
-                    1 ->
-                        HeadlineH4(
-                            text = stringResource(id = R.string.hello_registration),
-                            modifier = Modifier
-                                .padding(bottom = 70.dp)
-                                .align(BottomCenter)
-                            ,
-                            fontWeight = FontWeight.W700,
-                        )
-                    2 ->
-                        HeadlineH4(
-                            text = stringResource(id = R.string.hello_registration),
-                            modifier = Modifier
-                                .padding(bottom = 70.dp)
-                                .align(BottomCenter)
-                            ,
-                            fontWeight = FontWeight.W700,
-                        )
-
-                }
-            }
-        }
-
+                .padding(end = 40.dp)
+                .fillMaxWidth()
+                .align(TopStart)
+        ,
+            contentScale = ContentScale.FillWidth
+        )
 
         Column(
             modifier = Modifier
-                .weight(2f)
+                .fillMaxSize()
+                .align(BottomCenter)
+                .padding(start = 23.dp, end = 23.dp, bottom = 50.dp)
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Bottom,
 //            verticalArrangement = Arrangement.Bottom,
         ){
-            ButtonPrimary(
-                text = stringResource(id = R.string.sign_up),
+            HeadlineH4(
+                text = stringResource(id = R.string.title_onboarding),
+                modifier = Modifier.padding(bottom = 15.dp),
+                color = MaterialTheme.colors.background,
+                fontWeight = W500
+            )
+            Body1(
+                text = stringResource(id = R.string.description_onboarding),
+                modifier = Modifier.padding(bottom = 30.dp),
+                color = MaterialTheme.colors.background
+            )
+
+            ButtonRightIcon(
+                text = stringResource(id = R.string.start_auth),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 20.dp)
 //                .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                 ,
                 onClick = {onClickSignUp()},
-                )
-                ButtonSecondary(
-                text = stringResource(id = R.string.login),
-                modifier = Modifier.fillMaxWidth(),
-                onClick = {onClickLogin()},
+                icon = ImageBitmap.imageResource(id = R.drawable.arrow_right),
+                colorText = MaterialTheme.colors.onPrimary,
+                colorBackground = MaterialTheme.colors.primaryVariant
+            )
+            Body1(
+                text = stringResource(id = R.string.i_already_have_an_account),
+                modifier = Modifier
+                    .drawBehind {
+                        val strokeWidth = 2 * density
+                        val y = size.height - strokeWidth / 2
+
+                        drawLine(
+                            Color.Black,
+                            Offset(0f, y + 10),
+                            Offset(size.width, y + 10),
+                            strokeWidth
+                        )
+                    }
+                    .clickable { onClickLogin() }
+                ,
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colors.primaryVariant
             )
         }
     }

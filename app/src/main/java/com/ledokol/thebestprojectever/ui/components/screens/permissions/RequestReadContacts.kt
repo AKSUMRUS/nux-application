@@ -1,3 +1,4 @@
+
 package com.ledokol.thebestprojectever.ui.components.screens.permissions
 
 import android.Manifest
@@ -24,7 +25,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestprojectever.ui.components.screens.getContactArray
 
 
@@ -126,7 +127,7 @@ fun RequestReadContacts(
                     fontWeight = FontWeight.W500,
                 )
 
-                ButtonPrimaryFull(
+                ButtonFull(
                     text = stringResource(id = R.string.allow_permission_contacts),
                     onClick = onClick,
                 )

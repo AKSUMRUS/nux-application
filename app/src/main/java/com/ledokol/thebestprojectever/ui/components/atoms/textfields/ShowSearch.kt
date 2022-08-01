@@ -35,7 +35,7 @@ fun ShowSearch(
         },
         modifier = Modifier,
         imeAction = ImeAction.Done,
-        keyboardActions = KeyboardActions ( onNext = {
+        keyboardActions = KeyboardActions ( onDone = {
             keyboard!!.hide()
         } )
     )

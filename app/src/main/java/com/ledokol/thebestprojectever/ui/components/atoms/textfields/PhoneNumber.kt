@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body2
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -79,9 +80,10 @@ fun PhoneNumber(
             )
         }
 
-        Body1(
+        Body2(
             text = error,
             color = MaterialTheme.colors.error,
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 

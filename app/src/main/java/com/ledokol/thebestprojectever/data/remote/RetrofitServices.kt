@@ -1,30 +1,28 @@
 package com.ledokol.thebestprojectever.data.remote
 
-import com.ledokol.thebestprojectever.data.local.game.GameIcons
 import com.ledokol.thebestprojectever.data.local.profile.DoNotDisturb
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
-import com.ledokol.thebestprojectever.domain.*
+import com.ledokol.thebestprojectever.domain.games.*
+import com.ledokol.thebestprojectever.domain.profile.*
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 
 interface RetrofitServices {
 
-    @FormUrlEncoded
-    @POST("token")
+    @POST("login")
     fun login(
-        @Field("username") nickname: String,
-        @Field("password") password: String )
+        @Body profile: LoginJSON
+    )
     : Call<ProfileToken>
 
     @Headers("Content-Type: application/json")
     @POST("register")
-    fun createProfile(@Body profile: ProfileJSON)
+    fun createProfile(@Body profile: RegisterJSON)
             : Call<ProfileToken>
 
     @GET("friends")
@@ -106,9 +104,29 @@ interface RetrofitServices {
         @Part icon_preview: MultipartBody.Part,
     ) : Call<Any>
 
-    @PUT("/current_user/do_not_disturb")
+    @PUT("current_user/do_not_disturb")
     fun setDoNotDisturb(
         @Header("Authorization") authHeader: String,
         @Body doNotDisturb: DoNotDisturb
     ) : Call<Profile>
+
+    @POST("confirmation/phone")
+    fun confirmationPhone(
+        @Body confirmationPhone: ConfirmationPhone
+    ) : Call<ResponseConfirmationPhone>
+
+    @GET("users/check")
+    fun checkExistsNickname(
+        @Query("nickname") nickname: String,
+    ) : Call<ExistsUserJSON>
+
+    @GET("users/check")
+    fun checkExistsPhone(
+        @Query("phone") phone: String,
+    ) : Call<ExistsUserJSON>
+
+    @GET("default_profile_pics/list")
+    fun getDefaultProfilePics(
+    ) : Call<DefaultProfilePicsList>
+
 }

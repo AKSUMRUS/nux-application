@@ -64,6 +64,9 @@ class MyService: Service() {
 
     private fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
+        var checkLeave: Boolean = false
+
+        profileRepository.getProfile()
 
         val handler = Handler()
         var runnable: Runnable? = null
@@ -72,7 +75,10 @@ class MyService: Service() {
 
             if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
-                statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                if(!checkLeave){
+                    checkLeave = true
+                    statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                }
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
                 val packageApp = activeAppInfo.packageName
@@ -90,8 +96,9 @@ class MyService: Service() {
                         accessToken = profileRepository.data.access_token
                     )
                 }
-//                viewMo
-                logApps("Сейчас запущено приложение $activeAppPackage")
+
+                checkLeave = false
+                    logApps("Сейчас запущено приложение $activeAppPackage")
             }
             runnable?.let { handler.postDelayed(it, 5000) }
         }

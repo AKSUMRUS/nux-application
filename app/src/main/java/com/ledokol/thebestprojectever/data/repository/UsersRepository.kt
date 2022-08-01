@@ -5,6 +5,7 @@ import com.ledokol.thebestprojectever.data.local.user.CurrentApp
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
+import com.ledokol.thebestprojectever.domain.profile.ExistsUserJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -122,10 +123,75 @@ class UsersRepository @Inject constructor(
                 emit(Resource.Error("Couldn't load data"))
                 null
             }
-            Log.e("FRIEND",games.toString())
+            Log.e("FRIEND_GAMES",games.toString())
             emit(Resource.Success(
                 data = games
             ))
+            emit(Resource.Loading(false))
+        }
+    }
+
+    fun checkExistsNickname(
+        nickname: String
+    ): Flow<Resource<ExistsUserJSON>>{
+        return flow{
+            emit(Resource.Loading(true))
+            val TAG = "checkExistsNickname"
+            Log.e(TAG, "start $nickname")
+            val callExistsUser = api.checkExistsNickname(
+                nickname = nickname
+            )
+
+            val checkUser = try{
+                callExistsUser.awaitResponse().body()
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            checkUser?.let{
+                emit(Resource.Success(
+                    data = checkUser
+                ))
+            }
+            emit(Resource.Loading(false))
+        }
+    }
+
+
+    fun checkExistsPhone(
+        phone: String
+    ): Flow<Resource<ExistsUserJSON>>{
+        return flow{
+            emit(Resource.Loading(true))
+            val TAG = "checkExistsPhone"
+            Log.e(TAG, "start $phone")
+            val callExistsUser = api.checkExistsPhone(
+                phone = phone
+            )
+
+            val checkUser = try{
+                callExistsUser.awaitResponse().body()
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            checkUser?.let{
+                emit(Resource.Success(
+                    data = checkUser
+                ))
+            }
             emit(Resource.Loading(false))
         }
     }

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
@@ -23,15 +24,16 @@ fun TextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
     enabled: Boolean = true,
-    textStyle: TextStyle = LocalTextStyle.current
+    textStyle: TextStyle = LocalTextStyle.current,
+    capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
     ) {
-    OutlinedTextField(
+    TextField(
         value = text,
         onValueChange = { onValueChange(it) },
         placeholder = { Text(text = placeholder) },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType
-        ).copy(imeAction = imeAction),
+        ).copy(imeAction = imeAction,capitalization = capitalization),
         textStyle = textStyle,
         keyboardActions = keyboardActions,
         modifier = modifier
@@ -43,7 +45,7 @@ fun TextField(
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.onSecondary,
+            placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,
@@ -51,6 +53,9 @@ fun TextField(
             disabledTextColor = MaterialTheme.colors.onPrimary,
         ),
         enabled = enabled,
+//        keyboardOptions = KeyboardOptions.Default.copy(
+//            capitalization = KeyboardCapitalization.Sentences
+//        )
     )
 }
 

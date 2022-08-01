@@ -55,10 +55,12 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             fontWeight = W700,
                             modifier = Modifier.padding(bottom = 0.dp)
                             ,
+
+                            color = if(currentRoute == item.screen_route) MaterialTheme.colors.onPrimary else MaterialTheme.colors.secondaryVariant
                         )
                     },
                     selectedContentColor = MaterialTheme.colors.onPrimary,
-                    unselectedContentColor = MaterialTheme.colors.onSecondary,
+                    unselectedContentColor = MaterialTheme.colors.secondaryVariant,
 //                    alwaysShowLabel = true,
                     selected = currentRoute == item.screen_route,
                     onClick = {

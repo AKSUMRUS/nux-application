@@ -16,6 +16,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +35,7 @@ fun TextFieldTrailingImage(
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(),
 ) {
 
     if(textCaption != null){
@@ -58,7 +60,7 @@ fun TextFieldTrailingImage(
                 Icon(
                     image,
                     contentDescription = null,
-                    tint = MaterialTheme.colors.onSecondary,
+                    tint = MaterialTheme.colors.secondaryVariant,
                     modifier = Modifier.size(dimensionResource(id = R.dimen.small_icon)),
                 )
             }
@@ -74,12 +76,14 @@ fun TextFieldTrailingImage(
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.onSecondary,
+            placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,
             cursorColor = Color.DarkGray
-        )
+        ),
+//        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+//        keyboardOptions = keyboardOptions,
     )
 }
 

@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.data.repository
 
 import android.graphics.Bitmap
+import android.media.ExifInterface
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,26 +11,29 @@ import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
-import com.ledokol.thebestprojectever.data.remote.RetrofitServicesCloud
-import com.ledokol.thebestprojectever.domain.FirebaseToken
-import com.ledokol.thebestprojectever.domain.FriendsInviteToGame
-import com.ledokol.thebestprojectever.domain.ProfileJSON
+import com.ledokol.thebestprojectever.domain.games.FriendsInviteToGame
+import com.ledokol.thebestprojectever.domain.profile.*
 import com.ledokol.thebestprojectever.util.Resource
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import id.zelory.compressor.constraint.size
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.*
-import java.io.ByteArrayOutputStream
-import java.io.IOException
+import java.io.*
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
+
 
 @Singleton
 class ProfileRepository @Inject constructor(
     private val api : RetrofitServices,
-    private val apiCloud: RetrofitServicesCloud,
     private val dao: ProfileDao
     ) {
 
@@ -60,33 +64,108 @@ class ProfileRepository @Inject constructor(
         return byteArrayOutputStream.toByteArray()
     }
 
+    fun convertBitmapToJPEG(bitmap: Bitmap): ByteArray {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val byteArray = byteArrayOutputStream.toByteArray()
+//        val compressedImageFile = Compressor.compress(this, byteArray) {
+//            resolution(1280, 720)
+//            quality(80)
+//            format(Bitmap.CompressFormat.WEBP)
+//            size(2_097_152) // 2 MB
+//        }
+        return byteArrayOutputStream.toByteArray()
+    }
+
     fun uploadAvatar(
         accessToken: String,
         profile_pic_bitmap: Bitmap,
-    ){
-        val TAG = "uploadAvatar"
+    ): Flow<Resource<Profile>>{
 
-        val out = convertBitmapToPNG(profile_pic_bitmap)
+        return flow{
+            emit(Resource.Loading(true))
+            val TAG = "uploadAvatar"
 
-        val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
-        val profile_pic: MultipartBody.Part = MultipartBody.Part.createFormData("profile_pic", "profile_pic.png", requestBody)
+            val out = convertBitmapToPNG(profile_pic_bitmap)
 
-        Log.e(TAG, "$accessToken")
-        val callUpdateAvatar = api.uploadAvatar(
-            authHeader = "Bearer $accessToken",
-            profile_pic = profile_pic
-        )
+            val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
+            val profile_pic: MultipartBody.Part = MultipartBody.Part.createFormData("profile_pic", "profile_pic.png", requestBody)
 
-        callUpdateAvatar.enqueue(object : Callback<Profile>{
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                Log.e(TAG, "onResponse ${response.body()!!.toString()}")
+            Log.e(TAG, "$accessToken")
+            val remoteProfile = try{
+                val callUpdateAvatar = api.uploadAvatar(
+                    authHeader = "Bearer $accessToken",
+                    profile_pic = profile_pic
+                )
+                val profile = callUpdateAvatar.awaitResponse().body()
+
+                profile
+            }
+            catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
             }
 
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                Log.e(TAG, "Error ${t.message}")
+            remoteProfile?.let { profile ->
+                emit(Resource.Success(
+                    data = profile
+                ))
+
+                emit(Resource.Loading(false))
             }
 
-        })
+//            callUpdateAvatar.enqueue(object : Callback<Profile>{
+//                override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
+//                    getMe(accessToken)
+//                    emit(Resource.Success(
+//                        data = response.body()!!
+//                    ))
+//                    Log.e(TAG, "$TAG onResponse ${response.body()!!.toString()}")
+//                }
+//
+//                override fun onFailure(call: Call<Profile>, t: Throwable) {
+//                    Log.e(TAG, "$TAG Error ${t.message}")
+//                }
+//
+//            })
+        }
+    }
+
+    fun confirmationPhone(
+        phone: String,
+        reason: String,
+    ): Flow<Resource<ResponseConfirmationPhone>> {
+        return flow{
+            Log.e("confirmationPhone","$phone $reason")
+            val callConfirmationPhone = api.confirmationPhone(
+                confirmationPhone = ConfirmationPhone(phone = phone, reason = reason)
+            )
+
+            val response = try{
+                val response_api = callConfirmationPhone.awaitResponse().body()
+                response_api
+            }catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            response?.let{
+                emit(Resource.Success(
+                    data = response
+                ))
+            }
+        }
+
     }
 
     fun clearProfile(){
@@ -165,7 +244,9 @@ class ProfileRepository @Inject constructor(
         Log.e("Update Profile Data","updated")
     }
 
-    fun getProfile() : Profile?
+    fun getProfile(
+        fetchRemote: Boolean = false,
+    ) : Profile?
     {
 
         if(dao.getProfile() != null) {
@@ -183,13 +264,20 @@ class ProfileRepository @Inject constructor(
     fun signUp(
         nickname: String,
         name: String,
-        password: String
+        phone: String,
+        default_profile_pic_id: String,
+        id: String,
+        code: String,
     ): Flow<Resource<ProfileToken>>{
         return flow {
             emit(Resource.Loading(true))
 
+            Log.e("singUpRepository","$nickname $name $phone $id $code")
             val remoteUser = try{
-                val callRegister = api.createProfile(ProfileJSON(nickname = nickname,password = password,name = name))
+                val callRegister = api.createProfile(RegisterJSON(
+                    user = ProfileJSON(nickname = nickname, name = name, phone = phone, default_profile_pic_id = default_profile_pic_id),
+                    phone_confirmation = ConfirmationPhoneAuth(id = id, code = code)
+                ))
                 val myResponse = callRegister.awaitResponse().body()
 
                 myResponse
@@ -203,6 +291,8 @@ class ProfileRepository @Inject constructor(
                 emit(Resource.Error("Couldn't load data"))
                 null
             }
+
+            Log.e("singUpRepository", remoteUser.toString())
 
             remoteUser?.let { profile ->
 
@@ -218,14 +308,23 @@ class ProfileRepository @Inject constructor(
     }
 
     fun login(
-        nickname: String,
-        password: String
+        id: String,
+        code: String,
+        phone: String,
     ): Flow<Resource<ProfileToken>>{
         return flow {
             emit(Resource.Loading(true))
 
+            val TAG = "loginScreen"
+            Log.e(TAG,"start $id $code $phone")
+
             val remoteUser = try {
-                val callLogin = api.login(nickname = nickname,password = password)
+                val callLogin = api.login(
+                    LoginJSON(
+                        phone = phone,
+                        phone_confirmation = ConfirmationPhoneAuth(id = id, code = code)
+                    )
+                )
                 val myResponse = callLogin.awaitResponse().body()
 
                 myResponse
@@ -239,6 +338,8 @@ class ProfileRepository @Inject constructor(
                 emit(Resource.Error("Couldn't load data"))
                 null
             }
+
+            Log.e(TAG,"res ${remoteUser.toString()}")
 
             remoteUser?.let { profile ->
 
@@ -258,6 +359,7 @@ class ProfileRepository @Inject constructor(
         accessToken: String
     ): Flow<Resource<Profile>> {
         return flow {
+            Log.e("uploadAvatar","start")
             emit(Resource.Loading(true))
             val remoteProfile = try{
                 val profileCall = api.getMe(authHeader = "Bearer $accessToken")
@@ -276,10 +378,11 @@ class ProfileRepository @Inject constructor(
                 null
             }
 
+            Log.e("getMeProfile","good")
             remoteProfile?.let { profile ->
                 dao.clearProfile()
                 dao.insertProfile(profile)
-                Log.e("Insert Profile",profile.toString())
+                Log.e("Insert_Profile",profile.toString())
 
                 data = dao.getProfile()!!
 
@@ -289,7 +392,24 @@ class ProfileRepository @Inject constructor(
 
                 emit(Resource.Loading(false))
             }
+        }
+    }
 
+    fun getDefaultProfilePics() : Flow<Resource<DefaultProfilePicsList>>{
+        return flow{
+            emit(Resource.Loading(true))
+
+            val callProfilePics = api.getDefaultProfilePics()
+
+            val profilePics = callProfilePics.awaitResponse().body()
+
+            Log.e("profilePics", profilePics.toString())
+
+            emit(Resource.Success(
+                data = profilePics
+            ))
+
+            emit(Resource.Loading(false))
         }
     }
 

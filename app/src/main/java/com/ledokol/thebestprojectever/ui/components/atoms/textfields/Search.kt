@@ -51,7 +51,7 @@ fun Search(
         singleLine = true,
         trailingIcon = {
             IconButton(onClick =  trailingButtonClick) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onSecondary)
+                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },
         modifier = Modifier
@@ -65,7 +65,7 @@ fun Search(
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.onSecondary,
+            placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,

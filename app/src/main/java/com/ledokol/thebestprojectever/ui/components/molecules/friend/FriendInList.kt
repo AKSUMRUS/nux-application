@@ -1,23 +1,20 @@
 package com.ledokol.thebestprojectever.ui.components.molecules.friend
 
-import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.layout.ContentScale.Companion.FillHeight
 import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.ui.components.atoms.Status
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
@@ -30,13 +27,11 @@ fun FriendInList(
 ){
 
     val modifier: Modifier = if (clicked) Modifier
-        .padding(bottom = 20.dp)
-        .height(80.dp)
-        .fillMaxWidth()
+        .padding(bottom = 5.dp)
         .border(3.dp, MaterialTheme.colors.primary)
+        .fillMaxWidth()
     else Modifier
-        .padding(bottom = 20.dp)
-        .height(80.dp)
+        .padding(bottom = 5.dp)
         .fillMaxWidth()
 
     Box(
@@ -44,38 +39,35 @@ fun FriendInList(
         ,
     ){
 
-        if(user.status.online){
-            Log.e("IMAGES","https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png")
+        if(user.status.in_app && user.status.app!=null){
             AsyncImage(
-                "https://storage.yandexcloud.net/nux/icons/image_wide/"+user.status.current_app!!.android_package_name+".png",
+                user.status.app!!.image_wide,
                 contentDescription = "user back",
                 modifier = Modifier
+                    .height(80.dp)
                     .fillMaxWidth()
                 ,
                 alpha = 0.3f,
-                contentScale = FillWidth
+                contentScale = Crop
             )
         }
 
         Row(
             modifier = Modifier
+                .height(80.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(0))
                 .clickable(onClick = onClick)
                 .padding(10.dp)
         ){
-            Box(
-            ){
-                Icon(
-                    bitmap = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                    contentDescription = "Аноним",
-                    modifier = Modifier
-                        .fillMaxHeight()
-//                        .clip(RoundedCornerShape(dimensionResource(id = R.dimen.normal_round)))
-                    ,
-                    tint = Color.Unspecified,
-                )
-            }
+            AsyncImage(
+                model = user.profile_pic!!,
+                contentDescription = "Аноним",
+                modifier = Modifier
+                    .size(height = 60.dp, width = 60.dp)
+                ,
+                contentScale = ContentScale.Crop,
+            )
             Body1(text = user.nickname,
                 modifier = Modifier.padding(start = 10.dp),
                 color = MaterialTheme.colors.onPrimary

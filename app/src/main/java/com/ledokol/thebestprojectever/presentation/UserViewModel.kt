@@ -37,6 +37,12 @@ UserViewModel @Inject constructor(
                 )
                 state = state.copy(isRefreshing = false)
             }
+            is UserEvent.CheckExistsNickname -> {
+                checkExistsNickname(event.nickname)
+            }
+            is UserEvent.CheckExistsPhone -> {
+                checkExistsPhone(event.phone)
+            }
             is UserEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
                 searchUser?.cancel()
@@ -190,7 +196,7 @@ UserViewModel @Inject constructor(
                             result.data.let {
                                 games ->
                                 state = state.copy(
-                                    games = games
+                                    games = games,
                                 )
                             }
                         }
@@ -202,6 +208,70 @@ UserViewModel @Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    private fun checkExistsNickname(
+        nickname: String,
+    ){
+        viewModelScope.launch {
+            repository.checkExistsNickname(nickname = nickname).collect{
+                result ->
+                when(result){
+                    is Resource.Success -> {
+                        Log.e("checkExistsNickname", "viewModel ${result.data.toString()}")
+                        state = state.copy(
+                            existsUser = result.data!!.exists
+                        )
+                    }
+                    is Resource.Loading -> {
+                        if(result.isLoading){
+                            state = state.copy(
+                                existsUser = null,
+                            )
+                        }
+                        state = state.copy(
+                            isLoading = result.isLoading
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun checkExistsPhone(
+        phone: String,
+    ){
+        viewModelScope.launch {
+            repository.checkExistsPhone(phone = phone).collect{
+                    result ->
+                when(result){
+                    is Resource.Success -> {
+                        Log.e("checkExistsPhone", "viewModel ${result.data.toString()}")
+                        state = state.copy(
+                            existsUser = result.data!!.exists
+                        )
+                    }
+                    is Resource.Loading -> {
+                        if(result.isLoading){
+                            state = state.copy(
+                                existsUser = null,
+                            )
+                        }
+                        state = state.copy(
+                            isLoading = result.isLoading
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun setNullForExistsUser(){
+        viewModelScope.launch {
+            state = state.copy(
+                existsUser = null,
+            )
         }
     }
 

@@ -26,7 +26,8 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH3
 
 @Composable
 fun RequestReadData(
@@ -44,8 +45,8 @@ fun RequestReadData(
 
                 if(checkPermissionReadData(context)){
 
-                    navController.navigate("request_permission_contacts"){
-                        popUpTo("request_permission_contacts")
+                    navController.navigate("quick_game"){
+                        popUpTo("quick_game")
                         launchSingleTop = true
                     }
                 }else{
@@ -74,7 +75,7 @@ fun RequestReadData(
             Column(
                 modifier = Modifier.weight(3f)
             ){
-                HeadlineH4(text = stringResource(id = R.string.hello_permission_data),
+                HeadlineH5(text = stringResource(id = R.string.hello_permission_data),
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -89,8 +90,8 @@ fun RequestReadData(
                     fontWeight = FontWeight.W500,
                 )
 
-                HeadlineH4(text = stringResource(id = R.string.reason_permission_data),
-                    color = MaterialTheme.colors.onBackground,
+                HeadlineH3(text = stringResource(id = R.string.reason_permission_data),
+                    color = MaterialTheme.colors.primary,
                     modifier = Modifier
                         .fillMaxWidth()
                     ,
@@ -112,11 +113,14 @@ fun RequestReadData(
                     fontWeight = FontWeight.W500,
                 )
 
-                ButtonPrimaryFull(
+                ButtonFull(
                     text = stringResource(id = R.string.allow_permission_data),
                     onClick = {
                         context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
-                    }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                    ,
                 )
             }
 

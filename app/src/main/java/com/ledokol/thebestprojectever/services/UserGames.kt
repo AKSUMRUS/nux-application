@@ -9,9 +9,7 @@ import android.content.Context.POWER_SERVICE
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.PowerManager
@@ -45,9 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
-import com.ledokol.thebestprojectever.domain.StatusJSON
+import com.ledokol.thebestprojectever.domain.games.StatusJSON
 import com.ledokol.thebestprojectever.ui.components.screens.profile.GameProfile
-import com.ledokol.thebestprojectever.ui.components.screens.profile.getIcon
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -82,11 +79,13 @@ class GamesStatistic{
         ): List<StatusJSON>{
             var newGames: MutableList<StatusJSON> = mutableListOf()
             for (game in games){
-                newGames.add(StatusJSON(
+                newGames.add(
+                    StatusJSON(
                     game.packageName,
                     getApplicationLabel(packageManager, game),
                     getApplicationCategory(packageManager, game),
-                ))
+                )
+                )
             }
 
             return newGames
@@ -119,21 +118,21 @@ class GamesStatistic{
 //        }
 
 
-        fun getIconLargeGame(packageName: String, context: Context): String{
-            val bitmapImage = when(packageName) {
-                "com.nintendo.zara" -> "https://storage.yandexcloud.net/nux/games_icon_large/mario.jpg"
-                "com.innersloth.spacemafia" -> "https://storage.yandexcloud.net/nux/games_icon_large/among_us.jpg"
-                "com.tencent.ig" -> "https://storage.yandexcloud.net/nux/games_icon_large/pubg.jpg"
-                "com.blizzard.wtcg.hearthstone" -> "https://storage.yandexcloud.net/nux/games_icon_large/hearthstone.png"
-                "com.miHoYo.GenshinImpact" -> "https://storage.yandexcloud.net/nux/games_icon_large/genshin.jpg"
-                "com.supercell.clashroyale" -> "https://storage.yandexcloud.net/nux/games_icon_large/clash_roayle.jpg"
-                "com.axlebolt.standoff2" -> "https://storage.yandexcloud.net/nux/games_icon_large/standoff.jpg"
-                "com.mobile.legends" -> "https://storage.yandexcloud.net/nux/games_icon_large/mobile_legends.jpg"
-                else -> "https://drive.google.com/drive/u/0/folders/1A6LbsdBDNtLmvBludK7u47wX1vDjmtf0"
-            }
-
-            return bitmapImage
-        }
+//        fun getIconLargeGame(packageName: String, context: Context): String{
+//            val bitmapImage = when(packageName) {
+//                "com.nintendo.zara" -> "https://storage.yandexcloud.net/nux/games_icon_large/mario.jpg"
+//                "com.innersloth.spacemafia" -> "https://storage.yandexcloud.net/nux/games_icon_large/among_us.jpg"
+//                "com.tencent.ig" -> "https://storage.yandexcloud.net/nux/games_icon_large/pubg.jpg"
+//                "com.blizzard.wtcg.hearthstone" -> "https://storage.yandexcloud.net/nux/games_icon_large/hearthstone.png"
+//                "com.miHoYo.GenshinImpact" -> "https://storage.yandexcloud.net/nux/games_icon_large/genshin.jpg"
+//                "com.supercell.clashroyale" -> "https://storage.yandexcloud.net/nux/games_icon_large/clash_roayle.jpg"
+//                "com.axlebolt.standoff2" -> "https://storage.yandexcloud.net/nux/games_icon_large/standoff.jpg"
+//                "com.mobile.legends" -> "https://storage.yandexcloud.net/nux/games_icon_large/mobile_legends.jpg"
+//                else -> "https://drive.google.com/drive/u/0/folders/1A6LbsdBDNtLmvBludK7u47wX1vDjmtf0"
+//            }
+//
+//            return bitmapImage
+//        }
 
         @RequiresApi(VERSION_CODES.O)
         fun convertListApplicationToListStatusJSON(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<StatusJSON> {
@@ -141,22 +140,12 @@ class GamesStatistic{
 
             for (game in games) {
                 val packageName = game.packageName
-                val bitmapImagePreview: String = getIconLargeGame(packageName, context)
-                val applicationIcon:Drawable = packageManager.getApplicationIcon(packageName)
-                var bitmapIcon: Bitmap? = getIcon(
-                    context = context,
-                    packageManager = context.packageManager,
-                    packageName = packageName,
-                )
 
                 newGames.add(
                     StatusJSON(
                         packageName,
                         getApplicationLabel(packageManager,game),
                         game.category,
-//                        bitmapImagePreview,
-//                        bitmapImagePreview,
-//                        bitmapImagePreview,
                     )
                 )
             }

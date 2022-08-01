@@ -1,27 +1,31 @@
 package com.ledokol.thebestprojectever.services
 
-import android.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.app.NotificationCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ledokol.thebestprojectever.MainActivity
+import com.ledokol.thebestprojectever.R
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    /**
-     * Called when message is received.
-     *
-     * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
-     */
-    // [START receive_message]
+    var counterFriendEnteredApp = 1;
+    var counterFriendInviteToApp = 1;
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // [START_EXCLUDE]
         // There are two types of messages data messages and notification messages. Data messages are handled
@@ -46,9 +50,44 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
             if(data["type"] == "friend_entered_app"){
-                sendNotificationFriendEnteredApp(data["user_nickname"].toString(), "Друг зашел в игру $data[\"app_name\"]",data["app_android_package_name"].toString())
+                Glide.with(this)
+                    .asBitmap()
+                    .load(data["app_icon_preview"].toString())
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            sendNotificationFriendEnteredApp(
+                                data["user_nickname"].toString(),
+                                "Начал играть в ${data["app_name"]}",
+                                data["app_android_package_name"].toString(),
+                                resource
+                            )
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {}
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
+
             }else{
-                sendNotificationInviteToApp(data["user_nickname"].toString(), "Приглашает в игру $data[\"app_name\"]",data["app_android_package_name"].toString())
+                Glide.with(this)
+                    .asBitmap()
+                    .load(data["app_icon_preview"].toString())
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            sendNotificationInviteToApp(
+                                data["user_nickname"].toString(),
+                                "Приглашает в игру ${data["app_name"]}",
+                                data["app_android_package_name"].toString(),
+                                resource
+                            )
+                        }
+
+                        override fun onLoadFailed(errorDrawable: Drawable?) {}
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
+
+
             }
 
             if (/* Check if data needs to be processed by long running job */ false) {
@@ -125,18 +164,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageTitle: String,
         messageBody: String,
         packageGame: String,
+        iconGame: Bitmap,
     ) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.putExtra("gamePackageName", packageGame)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.FLAG_IMMUTABLE)
 
         val channelId = "ChannelId"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_delete)
+            .setSmallIcon(R.drawable.star)
             .setContentTitle(messageTitle)
             .setContentText(messageBody)
+            .setLargeIcon(
+                iconGame
+            )
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -150,7 +193,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(144334 /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(counterFriendEnteredApp++ /* ID of notification */, notificationBuilder.build())
     }
 
 
@@ -158,19 +201,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageTitle: String,
         messageBody: String,
         packageGame: String,
-//        messageIcon: Bitmap,
+        iconGame: Bitmap,
     ) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.putExtra("gamePackageName", packageGame)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.FLAG_IMMUTABLE)
+
+//        val image = BitmapFactory.decodeStream(iconGame.openStream())
+        val context: Context = this
 
         val channelId = "ChannelId"
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_delete)
+        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.star)
             .setContentTitle(messageTitle)
             .setContentText(messageBody)
+            .setLargeIcon(
+                iconGame
+            )
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -182,7 +231,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             NotificationManager.IMPORTANCE_DEFAULT)
         notificationManager.createNotificationChannel(channel)
 
-        notificationManager.notify(43242 /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(counterFriendInviteToApp++ /* ID of notification */, notificationBuilder.build())
     }
 
     companion object {

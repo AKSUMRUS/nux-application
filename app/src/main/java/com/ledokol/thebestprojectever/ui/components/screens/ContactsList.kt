@@ -73,7 +73,7 @@ fun ContactsList(
 //                    )
 //            )
 //
-//            ButtonPrimaryFull(
+//            ButtonFull(
 //                text = "Дальше",
 //                onClick = {
 //                    profileViewModel.onEvent(

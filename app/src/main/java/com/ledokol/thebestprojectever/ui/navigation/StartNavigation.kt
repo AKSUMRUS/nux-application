@@ -41,7 +41,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScree
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
-import com.ledokol.thebestprojectever.ui.components.screens.registration.VerifyPhone
+import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreenVerifyPhone
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
 
 @Composable
@@ -85,7 +85,7 @@ fun StartNavigation(
         ))
     }
 
-    Log.e("Profile",profile.toString())
+    Log.e("Profile StartNavigation",profile.toString())
 
     when (navBackStackEntry?.destination?.route) {
         "signup_screen" -> {
@@ -107,7 +107,7 @@ fun StartNavigation(
             bottomBarState.value = false
         }
         "choose_friends_quick_game" -> {
-            bottomBarState.value = true
+            bottomBarState.value = false
         }
         "finish_inviting_friends" -> {
             bottomBarState.value = false
@@ -128,9 +128,6 @@ fun StartNavigation(
             bottomBarState.value = false
         }
         "RequestContentPermission" -> {
-            bottomBarState.value = false
-        }
-        "verify_phone" -> {
             bottomBarState.value = false
         }
         BottomNavItemMain.QuickGame.screen_route -> {
@@ -159,6 +156,7 @@ fun StartNavigation(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
+//        gamesViewModel.getGames
 
         "quick_game"
     } else {
@@ -206,14 +204,15 @@ fun StartNavigation(
                         logOpenScreenEvent("login_screen")
                         LoginScreen(
                             navController = navController,
-                            viewModel = profileViewModel
+                            profileViewModel = profileViewModel
                         )
                     }
                     composable("signup_screen") {
                         logOpenScreenEvent("signup_screen")
                         SignUpScreen(
                             navController = navController,
-                            viewModel = profileViewModel
+                            profileViewModel = profileViewModel,
+                            usersViewModel = userViewModel,
                         )
                     }
                     composable("splash_screen") {
@@ -292,13 +291,6 @@ fun StartNavigation(
                         )
                     }
 
-                    composable("verify_phone") {
-                        logOpenScreenEvent("verify_phone")
-                        VerifyPhone(
-                            navController = navController,
-                            profileViewModel = profileViewModel,
-                        )
-                    }
                     composable("not_internet") {
                         logOpenScreenEvent("not_internet")
                         NotInternet(

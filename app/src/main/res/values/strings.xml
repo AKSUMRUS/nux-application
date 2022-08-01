@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE resources [
-    <!ENTITY appname "Ledokol">
+    <!ENTITY appname "Dvor">
     ]>
 <resources>
     <string name="app_name">&appname;</string>
@@ -8,26 +8,34 @@
 <!--    Authentication-->
     <string name="sign_up">Регистрация</string>
     <string name="login">Вход</string>
+    <string name="title_onboarding">Узнай, во что играют твои друзья 👀</string>
+    <string name="description_onboarding">Приглашай тиммейтов и присоединяйся к тем, кто уже играет</string>
     <string name="email">Почта</string>
     <string name="phone_number">Телефон</string>
     <string name="nickname">Ник</string>
     <string name="password">Пароль</string>
+    <string name = "start_auth">Давай начнем</string>
+    <string name="i_already_have_an_account">У меня уже есть аккаунт</string>
     <string name="forget_password">Забыл пароль?</string>
     <string name="dont_have_an_account">Нету аккаунта? Зарегистрируйся</string>
     <string name="already_have_an_account">Уже есть аккаунт? Войди</string>
     <string name="description_signup_first">Мы хотим узнать тебя получше</string>
     <string name="description_login">Рады видеть вас вновь</string>
-    <string name="choose_nickname">Выбери свой ник</string>
-    <string name="choose_name">Как к тебе можно обращаться?</string>
+    <string name="choose_nickname">Придумай никнейм</string>
+    <string name="resend_code">Отправить код повторно</string>
+    <string name="choose_name">Как нам к тебе обращаться?</string>
     <string name="choose_email">Почта</string>
     <string name="choose_password">Пароль</string>
-    <string name = "profile_nickname">Ник профиля</string>
-    <string name = "profile_name">Твое имя (для уведомлений)</string>
+    <string name="choose_phone">Напомни свой номер телефона…</string>
+    <string name="choose_avatar">Выбери аватарку</string>
+    <string name = "profile_nickname">nickname</string>
+    <string name = "profile_name">Твое имя</string>
     <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
     <string name = "logout">Выйти</string>
     <string name = "verify_code">Подтверди код</string>
     <string name = "verify_code_description">Он был выслан на твой телефон</string>
+    <string name = "description_choose_nickname">Чтобы друзья легко тебя находили</string>
 
 <!--  Navigation  -->
     <string name="nav_quick_game">Быстрая игра</string>
@@ -35,12 +43,17 @@
     <string name="nav_profile">Профиль</string>
     <string name="description_quick_game">Выберай игру, в которую вы пойдете играть</string>
     <string name="description_find_crew">Выбери своих тиммейтов</string>
+    <string name="hint_choose_nickname">Только английские буквы, цифры и нижнее подчеркивание</string>
 
 <!--    QuickGame-->
     <string name="title_game">Игра</string>
+    <string name="choose_game">Выбирай игру</string>
+    <string name="description_choose_game">куда ты хочешь позвать друзей</string>
+    <string name="choose_crew_for_quick_game">Пригласить друзей</string>
+    <string name="open_game">Открыть игру</string>
     <string name="description_game">Выбирети</string>
     <string name="title_crew">Команда</string>
-    <string name="description_crew">Выбирай своих товарищей по команде вручную</string>
+    <string name="description_crew">Выбери своих товарищей по команде</string>
     <string name="button_invite_friends">Пригласить!</string>
     <plurals name="finish_invite_friends">
         <item quantity="one">Ты пригласил %d друга</item>
@@ -52,7 +65,13 @@
 
 <!--Common-->
     <string name = "back">Назад</string>
+    <string name = "next">Дальше</string>
+    <string name = "invite">Пригласить</string>
     <string name = "step">Шаг</string>
+    <string name = "close">Закрыть</string>
+    <string name = "yes">Да</string>
+    <string name = "no">Нет</string>
+    <string name = "cancel">Отмена</string>
     <string name = "enter_nickname_search">Введи ник</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name="loading"> Загрузка…</string>
@@ -62,10 +81,10 @@
     <string name="hello_splash_screen">Привет%1$s✌️</string>
 
 <!--    Permissions-->
-    <string name="hello_permission_data">Привет ✌️</string>
-    <string name="need_permission_data">Предоставь, пожалуйста, разрешение</string>
-    <string name="reason_permission_data">Для полноценной работы приложения</string>
-    <string name="explain_permission_data">Позволь нам отслеживать вашу активность в фоновом режиме и получать доступ к приложениям, в которые вы играете</string>
+    <string name="hello_permission_data">Пш-пш,️</string>
+    <string name="need_permission_data">нам нужно твое разрешение</string>
+    <string name="reason_permission_data">Для полного игрового опыта</string>
+    <string name="explain_permission_data">Позволь нам мониторить твою игровую активность</string>
     <string name="allow_permission_data">Разрешить!</string>
 
     <string name="hello_permission_contacts">Куда же без друзей? 🙈️</string>
@@ -91,7 +110,15 @@
     <string name="save_changes">Сохранить изменения</string>
     <string name="changes_saved">Сохранено</string>
     <string name="edit_profile">Редактировать</string>
+    <string name="profile_open_game_title">"Открыть игру?"</string>
+    <string name="profile_open_game_description">"Нажми да, если хочешь запустить игру прямо сейчас"</string>
 
-<!--    Error-->
+<!--    Friend-->
+    <string name="game_now_friend">Сейчас играет </string>
+    <string name="last_game_friend">Последняя игра</string>
+    <string name="invite_one_friend_alert_dialog_title">Пригласить в игру?</string>
+    <string name="invite_one_friend_alert_dialog_description">Друг получит уведомление, о том что ты зовешь его играть</string>
+
+    <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>
 </resources>

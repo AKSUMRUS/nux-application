@@ -6,5 +6,7 @@ sealed class UserEvent {
     data class GetFriendUser(val id: String): UserEvent() // Получить информацию об аккаунте друга
     data class SelectUser(val user: User): UserEvent()
     data class GetFriendGames(val user: User): UserEvent() // Получить игры пользователя
+    data class CheckExistsNickname(val nickname: String): UserEvent() // Получить игры пользователя
+    data class CheckExistsPhone(val phone: String): UserEvent() // Получить игры пользователя
 }
 

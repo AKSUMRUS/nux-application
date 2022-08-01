@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
@@ -121,8 +122,8 @@ fun ProfileScreen(
                         packageName = game.android_package_name,
                         name = game.name,
 //                    Временно!
-                        icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/" + game.android_package_name + ".png",
-                        iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/" + game.android_package_name + ".png",
+                        icon = game.icon_preview!!,
+                        iconLarge = game.icon_large!!,
                         backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                         openGame = true,
                         onClick = {
@@ -137,20 +138,20 @@ fun ProfileScreen(
 
         }
 
-        DisturbButton(
-            onClick = { onClickDisturb() },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp)
-        )
+//        DisturbButton(
+//            onClick = { onClickDisturb() },
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .padding(bottom = 16.dp)
+//        )
     }
 
     AlertDialogShow(
         openDialog = openDialog,
-        label = "Открыть игру?",
-        description = "Нажми да, если хочешь запустить игру прямо сейчас",
-        buttonTextYes = "Да",
-        buttonTextNo = "Отмена",
+        label = stringResource(id = R.string.profile_open_game_title),
+        description = stringResource(id = R.string.profile_open_game_description),
+        buttonTextYes = stringResource(id = R.string.yes),
+        buttonTextNo = stringResource(id = R.string.cancel),
         onAction = { openGame(selectedGame, context);openDialog = false; selectedGame = "" },
         onClose = { openDialog = false; selectedGame = "" }
     )

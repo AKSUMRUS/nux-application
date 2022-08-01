@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.screens.registration
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -8,66 +9,49 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
-import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.TextField
-import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryFull
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun VerifyPhone(
-    navController: NavController,
-    profileViewModel: ProfileViewModel,
+fun SignUpScreenVerifyPhone(
+    phoneCode: String,
+    setPhoneCode: (String) -> Unit,
+    buttonNextClick: () -> Unit,
+    buttonBackClick: () -> Unit,
 ){
-    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
-
-
-    var code by remember { mutableStateOf("")}
 
     LaunchedEffect(focusRequester) {
         focusRequester.requestFocus()
         keyboard?.show()
     }
 
-    fun onCodeChange(text:String){
-        code = text
-    }
-
-    fun onClick(){
-        profileViewModel.onEvent(
-            ProfileEvent.Login(
-                nickname = "goracio",
-                password = "1"
-            )
-        )    }
-
-
     Box(
         modifier = Modifier.fillMaxSize()
     ){
         BackToolbar(
             buttonBackClick = {
-                navController.popBackStack()
+                buttonBackClick()
             }
         )
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 50.dp,end = 50.dp)
+                .padding(start = 50.dp, end = 50.dp)
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -78,26 +62,36 @@ fun VerifyPhone(
             )
             Body1(
                 text = stringResource(id = R.string.verify_code_description),
-                color = MaterialTheme.colors.onSecondary,
+                color = MaterialTheme.colors.secondaryVariant,
             )
 
             TextField(
-                text = code,
-                onValueChange = {onCodeChange(it)},
+                text = phoneCode,
+                onValueChange = {setPhoneCode(it)},
                 modifier = Modifier
                     .padding(top = 20.dp, bottom = 20.dp)
                     .focusRequester(focusRequester)
                 ,
                 keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Next,
+                keyboardActions = KeyboardActions(onNext = {
+                    buttonNextClick()
+                }),
             )
 
-            ButtonPrimaryFull(
+            ButtonFull(
                 text = stringResource(id = R.string.confirm),
-                onClick = {onClick()},
+                onClick = {buttonNextClick()},
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .fillMaxWidth()
             )
+
+//            Body1(
+//                text = stringResource(id = R.string.resend_code),
+//                textAlign = TextAlign.Center,
+//
+//            )
         }
     }
 

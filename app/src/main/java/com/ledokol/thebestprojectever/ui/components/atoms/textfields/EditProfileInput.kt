@@ -42,7 +42,7 @@ fun EditProfileInput(
             Body2(
                 text = description,
                 modifier = Modifier.padding(bottom = 10.dp),
-                color = MaterialTheme.colors.onSecondary,
+                color = MaterialTheme.colors.secondaryVariant,
             )
         }
 

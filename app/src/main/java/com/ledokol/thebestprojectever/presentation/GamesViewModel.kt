@@ -12,7 +12,7 @@ import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.game.GameState
 import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.data.repository.GamesRepository
-import com.ledokol.thebestprojectever.domain.StatusJSON
+import com.ledokol.thebestprojectever.domain.games.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

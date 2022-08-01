@@ -1,7 +1,14 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
+import android.util.Log
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -9,17 +16,21 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 
 @Composable
-fun GameActivity(
+fun GameInList(
     packageName: String,
-    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
-    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    name: String,
+    icon: String,
+    iconLarge: String,
     backgroundImage: ImageBitmap,
-    startTime: String = "",
-    finishTime: String = "",
     onClick: () -> Unit = {},
+    openGame: Boolean = false,
 ){
+
+    Log.e("iconLink", icon)
 
     Box (
         modifier = Modifier
@@ -28,7 +39,6 @@ fun GameActivity(
             .clickable {
                 onClick()
             }
-            .padding(top = 20.dp)
         ,
     ) {
         AsyncImage(
@@ -36,17 +46,24 @@ fun GameActivity(
             contentDescription = "GameImage",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(20.dp)
+            ,
             contentScale = ContentScale.FillBounds,
         )
         AsyncImage(
             model = icon,
             contentDescription = "GameImage",
             modifier = Modifier
+//                .border(5.dp, MaterialTheme.colors.background)
                 .size(70.dp)
-                .padding(15.dp)
-                .align(Alignment.CenterStart),
+                .align(Alignment.BottomCenter)
+            ,
         )
+
+//        Body1(
+//            text = name,
+//            modifier = Modifier.align(Alignment.BottomCenter)
+//        )
     }
 
 }

@@ -13,8 +13,8 @@ import coil.compose.AsyncImage
 @Composable
 fun GameInQuickGamesFriend(
     packageName: String,
-    icon: String = "https://storage.yandexcloud.net/nux/pubg.png",
-    iconLarge: String = "https://storage.yandexcloud.net/nux/pubg.png",
+    icon: String,
+    iconLarge: String,
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
 ){

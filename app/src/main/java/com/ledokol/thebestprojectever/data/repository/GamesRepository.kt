@@ -3,26 +3,19 @@ package com.ledokol.thebestprojectever.data.repository
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import com.ledokol.thebestprojectever.data.local.game.Game
-import com.ledokol.thebestprojectever.data.local.game.GameIcons
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
 import com.ledokol.thebestprojectever.data.local.user.Apps
-import com.ledokol.thebestprojectever.data.local.user.Status
-import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
-import com.ledokol.thebestprojectever.domain.AppsGame
-import com.ledokol.thebestprojectever.domain.AppsStatus
-import com.ledokol.thebestprojectever.domain.GameJSON
-import com.ledokol.thebestprojectever.domain.StatusJSON
+import com.ledokol.thebestprojectever.domain.games.AppsStatus
+import com.ledokol.thebestprojectever.domain.games.GameJSON
+import com.ledokol.thebestprojectever.domain.games.StatusJSON
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -143,10 +136,9 @@ class GamesRepository @Inject constructor(
         accessToken: String,
     ): Flow<Resource<List<Game>?>> {
         return flow {
-            Log.e("ShareGames Repository", AppsStatus(games).toString())
-            val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(games))
-                .awaitResponse().body()
-            Log.e("Share Games ans ", fromGameJSONToGame(ans?.apps).toString())
+            Log.e("shareGames", AppsStatus(games).toString())
+            val ans = api.shareGames(authHeader = "Bearer $accessToken", games = AppsStatus(games)).awaitResponse().body()
+            Log.e("shareGames", ans.toString())
             dao.insertGames(fromGameJSONToGame(ans?.apps))
             emit(Resource.Success(
                 data = fromGameJSONToGame(ans?.apps)
@@ -184,13 +176,11 @@ class GamesRepository @Inject constructor(
 
     fun getGame(
         packageName: String,
-//        fetchRemote: Boolean = false,
-        ): Flow<Resource<Game>> {
+    ): Flow<Resource<Game>> {
         return flow {
             emit(Resource.Loading(true))
             val game = try {
                 Log.e("PACKAGE GAME",packageName)
-//                Log.e("PACKAGE GAME1",dao.getGames("").toString())
                 dao.getGame(packageName)
             } catch(e: IOException) {
                 e.printStackTrace()

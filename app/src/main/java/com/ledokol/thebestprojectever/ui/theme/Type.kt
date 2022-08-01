@@ -32,19 +32,20 @@ val Typography = Typography(
         h1 = TextStyle(
                 fontFamily = LexendDeca,
                 fontWeight = FontWeight.Light,
-                fontSize = 82.sp,
+                fontSize = 60.sp,
                 letterSpacing = (-1.5).sp
         ),
         h2 = TextStyle(
                 fontFamily = LexendDeca,
                 fontWeight = FontWeight.Light,
-                fontSize = 60.sp,
+                fontSize = 48.sp,
                 letterSpacing = (-0.5).sp
         ),
         h3 = TextStyle(
                 fontFamily = LexendDeca,
                 fontWeight = FontWeight.W400,
-                fontSize = 48.sp,
+                fontSize = 42.sp,
+                letterSpacing = (-1.5).sp,
         ),
         h4 = TextStyle(
                 fontFamily = LexendDeca,

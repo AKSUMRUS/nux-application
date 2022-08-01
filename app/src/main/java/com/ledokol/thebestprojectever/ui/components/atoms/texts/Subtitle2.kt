@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 fun Subtitle2(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.onSurface,
+    color: Color = MaterialTheme.colors.onPrimary,
     fontWeight: FontWeight? = MaterialTheme.typography.subtitle2.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {

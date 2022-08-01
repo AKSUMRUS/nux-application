@@ -1,31 +1,43 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH3
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun TitleRegistration(
     title: String,
     description: String,
+    modifier: Modifier = Modifier,
 ){
     Column(
-        modifier = Modifier.padding(bottom = 40.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 40.dp)
+        ,
     ) {
-        HeadlineH3(
+        HeadlineH4(
             text = title,
-            fontWeight = FontWeight.W700,
+            fontWeight = FontWeight.W400,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
-        HeadlineH6(
+        Body1(
             text = description,
-            fontWeight = FontWeight.W700,
-            color = MaterialTheme.colors.onBackground,
+            fontWeight = FontWeight.W400,
+            color = MaterialTheme.colors.secondaryVariant,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 
