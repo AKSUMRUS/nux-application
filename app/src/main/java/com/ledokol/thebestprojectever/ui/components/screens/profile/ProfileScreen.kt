@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
@@ -29,6 +31,7 @@ import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.alertdialogs.AlertDialogShow
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.profile.DisturbButton
 import com.ledokol.thebestprojectever.ui.components.molecules.profile.ProfileTopBlock
@@ -117,6 +120,15 @@ fun ProfileScreen(
             }
 
             if (games != null) {
+                item{
+                    HeadlineH4(
+                        text = "Игры",
+                        modifier = Modifier.padding(start = 20.dp),
+                        color = MaterialTheme.colors.onBackground,
+                        fontWeight = FontWeight.W700,
+                    )
+                }
+
                 items(games) { game ->
                     GameInList(
                         packageName = game.android_package_name,

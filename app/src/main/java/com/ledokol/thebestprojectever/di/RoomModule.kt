@@ -39,6 +39,7 @@ class RoomModule {
             .build()
 
 
+
     @Provides
     @Singleton
     fun provideProfileDao(myDatabase: MyDatabase): ProfileDao = myDatabase.profileDao()

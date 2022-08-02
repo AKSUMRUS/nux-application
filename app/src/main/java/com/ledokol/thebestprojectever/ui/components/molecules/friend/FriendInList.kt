@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
-import androidx.compose.ui.layout.ContentScale.Companion.FillHeight
-import androidx.compose.ui.layout.ContentScale.Companion.FillWidth
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -40,16 +38,17 @@ fun FriendInList(
     ){
 
         if(user.status.in_app && user.status.app!=null){
-            AsyncImage(
-                user.status.app!!.image_wide,
-                contentDescription = "user back",
-                modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth()
-                ,
-                alpha = 0.3f,
-                contentScale = Crop
-            )
+            user.status.app?.let {
+                AsyncImage(
+                    it.image_wide,
+                    contentDescription = "user back",
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth(),
+                    alpha = 0.3f,
+                    contentScale = Crop
+                )
+            }
         }
 
         Row(
@@ -61,12 +60,12 @@ fun FriendInList(
                 .padding(10.dp)
         ){
             AsyncImage(
-                model = user.profile_pic!!,
+                model = user.profile_pic,
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
                 ,
-                contentScale = ContentScale.Crop,
+                contentScale = Crop,
             )
             Body1(text = user.nickname,
                 modifier = Modifier.padding(start = 10.dp),

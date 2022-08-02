@@ -4,7 +4,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 
 sealed class GamesEvent{
-    data class PushGamesIcons(
+    class PushGamesIcons(
         val games: List<ApplicationInfo>,
         val packageManager: PackageManager,
         val accessToken: String

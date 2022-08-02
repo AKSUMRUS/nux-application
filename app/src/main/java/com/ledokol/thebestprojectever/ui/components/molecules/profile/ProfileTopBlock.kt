@@ -43,13 +43,6 @@ fun ProfileTopBlock(
                 profileViewModel = profileViewModel,
             )
         }
-        
-        HeadlineH4(
-            text = "Игры",
-            modifier = Modifier.padding(start = 20.dp),
-            color = MaterialTheme.colors.onBackground,
-            fontWeight = FontWeight.W700,
-        )
     }
 
 }

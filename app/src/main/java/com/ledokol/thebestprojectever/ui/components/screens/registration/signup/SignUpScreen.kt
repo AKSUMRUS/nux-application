@@ -9,6 +9,7 @@ import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
+import com.ledokol.thebestprojectever.ui.components.screens.registration.signup.SignUpScreenPhone
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -39,7 +40,7 @@ fun SignUpScreen(
             if(numberScreen==1){
                 numberScreen++
             }else if(numberScreen==3){
-                profileViewModel.onEvent(ProfileEvent.ConfirmationPhone(phone = "8$phone", reason = "registration"))
+                profileViewModel.onEvent(ProfileEvent.ConfirmationPhone(phone = "+7$phone", reason = "registration"))
                 numberScreen++
             }
         }else if(usersViewModel.state.existsUser == true){

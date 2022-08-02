@@ -68,7 +68,6 @@ fun ChooseFriendsForGame(
     })
 
     if(state.isRefreshing){
-        Log.e("STATE",state.toString())
         userViewModel.onEvent(UserEvent.Refresh())
     }
     Box(
@@ -93,9 +92,9 @@ fun ChooseFriendsForGame(
                             Row(
                                 modifier = Modifier.padding(top = 100.dp, bottom = 20.dp)
                             ) {
-                                if(gamesViewModel.state.game!!.icon_large!=null){
+                                if(gamesViewModel.state.game?.icon_large!=null){
                                     AsyncImage(
-                                        model = gamesViewModel.state.game!!.icon_large,
+                                        model = gamesViewModel.state.game?.icon_large,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .size(height = 100.dp, width = 100.dp)
@@ -119,7 +118,7 @@ fun ChooseFriendsForGame(
                                         }
                                     },
                                     horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically,
+                                    verticalAlignment = CenterVertically,
                                     modifier = Modifier
                                         .fillMaxSize()
                                         .align(CenterVertically)
@@ -168,7 +167,7 @@ fun ChooseFriendsForGame(
             ButtonFull(
                 text = stringResource(id = R.string.button_invite_friends),
                 onClick = {
-                    if(state.clickedUsers.size == 0){
+                    if(state.clickedUsers.isEmpty()){
                         Toast.makeText(context, "Добавьте друзей в команду", Toast.LENGTH_SHORT).show()
                         return@ButtonFull
                     }

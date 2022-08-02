@@ -1,26 +1,17 @@
-package com.ledokol.thebestprojectever.ui.components.screens.registration
+package com.ledokol.thebestprojectever.ui.components.screens.registration.signup
 
-import android.content.Context
+//import com.ledokol.thebestprojectever.data.remote.Common
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
-//import com.ledokol.thebestprojectever.data.remote.Common
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonWithIcon
-import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Password
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.PhoneNumber
-import com.ledokol.thebestprojectever.ui.components.atoms.textfields.TextFieldTrailingImage
-import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body2
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleRegistration
 

@@ -1,12 +1,12 @@
 package com.ledokol.thebestprojectever.ui.components.screens.registration
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.ui.components.screens.registration.signup.SignUpScreenPhone
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -34,7 +34,7 @@ fun LoginScreen(
     when(numberScreen) {
         0 -> {
             fun buttonClickNext(){
-                profileViewModel.onEvent(ProfileEvent.ConfirmationPhone(phone = "8$phone", reason = "login"))
+                profileViewModel.onEvent(ProfileEvent.ConfirmationPhone(phone = "+7$phone", reason = "login"))
                 numberScreen++
             }
 
@@ -53,7 +53,7 @@ fun LoginScreen(
         1 -> {
             fun buttonClickNext(){
                 profileViewModel.onEvent(ProfileEvent.Login(
-                    phone = "8$phone",
+                    phone = "+7$phone",
                     id = profileViewModel.state.id_confirmation_phone,
                     code = phoneCode,
                 ))

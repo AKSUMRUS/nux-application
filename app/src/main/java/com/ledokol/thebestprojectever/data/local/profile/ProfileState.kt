@@ -10,4 +10,5 @@ data class ProfileState (
     val isLoading: Boolean = false,
     val id_confirmation_phone: String = "",
     val defaultProfilePicsList: List<DefaultProfilePic> = listOf(),
+    val whenCanVerifyPhone : String = "",
 )

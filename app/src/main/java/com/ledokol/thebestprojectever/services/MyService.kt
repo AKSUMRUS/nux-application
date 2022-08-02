@@ -20,6 +20,9 @@ import com.ledokol.thebestprojectever.data.repository.StatusRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+private const val NOTIFICATION_ID = 101
+private const val CHANNEL_ID = "LEDOKOL"
+
 @AndroidEntryPoint
 class MyService: Service() {
 
@@ -29,8 +32,6 @@ class MyService: Service() {
     lateinit var profileRepository: ProfileRepository
 
     private var notificationManager: NotificationManager? = null
-    private val NOTIFICATION_ID = 101
-    private val CHANNEL_ID = "LEDOKOL"
     val context: Context = this
 
     @Nullable
@@ -85,7 +86,7 @@ class MyService: Service() {
                 val labelApp = getApplicationLabel(packageManager, activeAppInfo)
                 val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
 
-                Log.e("DataActiveApp", "$packageApp $labelApp $categoryApp")
+                Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
                 profileRepository.data.let{
                     Log.e("STATUS!!!!",profileRepository.data.toString())
@@ -113,7 +114,7 @@ class MyService: Service() {
         val intent = Intent(applicationContext, MyService::class.java)
         intent.action = Intent.ACTION_MAIN;
 
-        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent
@@ -169,5 +170,6 @@ class MyService: Service() {
 
         //Disabling service
         stopSelf()
+
     }
 }

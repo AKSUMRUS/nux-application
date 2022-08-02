@@ -14,11 +14,8 @@ import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
+import java.text.SimpleDateFormat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -135,18 +132,29 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+
+
     private fun confirmationPhone(
         phone: String,
         reason: String,
     ){
         viewModelScope.launch {
-            repository.confirmationPhone(phone = phone, reason = reason).collect{
-                result ->
-                when(result) {
-                    is Resource.Success -> {
-                        state = state.copy(
-                            id_confirmation_phone =  result.data!!.id,
-                        )
+            val currentTime = System.currentTimeMillis()
+            val sdf = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
+            val time = try{
+                sdf.parse(state.whenCanVerifyPhone)?.time!!
+            } catch (e : Exception){
+                0
+            }
+            if(currentTime > time) {
+                repository.confirmationPhone(phone = phone, reason = reason).collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            state = state.copy(
+                                id_confirmation_phone = result.data!!.id,
+                                whenCanVerifyPhone = result.data.dt_can_retry_after,
+                            )
+                        }
                     }
                 }
             }
