@@ -147,15 +147,21 @@ class ProfileRepository @Inject constructor(
             )
 
             val response = try{
-                val response_api = callConfirmationPhone.awaitResponse().body()
-                response_api
+                val responseApi = callConfirmationPhone.awaitResponse()
+                if(responseApi.code() == 200){
+                    responseApi.body()
+                }
+                else{
+                    emit(Resource.Error("Что-то пошло не так... Попробуй еще раз"))
+                    null
+                }
             }catch(e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
                 null
             } catch (e: HttpException) {
                 e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+                emit(Resource.Error("Couldn't connect to server"))
                 null
             }
 

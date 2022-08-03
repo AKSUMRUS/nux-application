@@ -243,13 +243,13 @@ UserViewModel @Inject constructor(
         phone: String,
     ){
         viewModelScope.launch {
-            repository.checkExistsPhone(phone = phone).collect{
-                    result ->
+            repository.checkExistsPhone(phone = phone)
+                .collect{ result ->
                 when(result){
                     is Resource.Success -> {
                         Log.e("checkExistsPhone", "viewModel ${result.data.toString()}")
                         state = state.copy(
-                            existsUser = result.data!!.exists
+                            existsUser = result.data?.exists
                         )
                     }
                     is Resource.Loading -> {

@@ -33,6 +33,7 @@ fun SignUpScreen(
     var checkPrivacy by remember{ mutableStateOf(false) }
     val keyboard = LocalSoftwareKeyboardController.current
 
+    val state = profileViewModel.state
 
     LaunchedEffect(usersViewModel.state.existsUser){
         if(usersViewModel.state.existsUser == false){
@@ -170,7 +171,7 @@ fun SignUpScreen(
                     var verifyPhone: Boolean = phone.length==10
 
                     if(verifyPhone){
-                        usersViewModel.onEvent(UserEvent.CheckExistsPhone(phone = "8$phone"))
+                        usersViewModel.onEvent(UserEvent.CheckExistsPhone(phone = "+7$phone"))
                     }else{
                         errorPhone = "Некорректный номер телефона"
                     }
@@ -194,7 +195,7 @@ fun SignUpScreen(
                     profileViewModel.onEvent(ProfileEvent.SignUp(
                         nickname = nickname,
                         name = name,
-                        phone = "8$phone",
+                        phone = "+7$phone",
                         default_profile_pic_id = avatarId,
                         id = profileViewModel.state.id_confirmation_phone,
                         code = phoneCode,
@@ -206,6 +207,7 @@ fun SignUpScreen(
                     setPhoneCode = {phoneCode = it},
                     buttonBackClick = {buttonBackClick()},
                     buttonNextClick = {buttonClickNext()},
+                    error = state.verifyErrorMessage
                 )
             }
         }

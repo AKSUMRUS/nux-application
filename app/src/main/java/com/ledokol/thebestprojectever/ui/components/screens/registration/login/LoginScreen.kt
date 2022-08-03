@@ -64,6 +64,7 @@ fun LoginScreen(
                 setPhoneCode = {phoneCode = it},
                 buttonBackClick = {buttonBackClick()},
                 buttonNextClick = {buttonClickNext()},
+                error = profileViewModel.state.verifyErrorMessage
             )
         }
     }

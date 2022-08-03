@@ -30,13 +30,16 @@ fun SignUpScreenVerifyPhone(
     setPhoneCode: (String) -> Unit,
     buttonNextClick: () -> Unit,
     buttonBackClick: () -> Unit,
+    error: String
 ){
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
 
-    LaunchedEffect(focusRequester) {
-        focusRequester.requestFocus()
-        keyboard?.show()
+    if(error.isNotEmpty()) {
+        LaunchedEffect(focusRequester) {
+            focusRequester.requestFocus()
+            keyboard?.show()
+        }
     }
 
     Box(
@@ -56,42 +59,49 @@ fun SignUpScreenVerifyPhone(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ){
-            HeadlineH4(
-                text = stringResource(id = R.string.verify_code),
-                fontWeight = FontWeight.W700,
-            )
-            Body1(
-                text = stringResource(id = R.string.verify_code_description),
-                color = MaterialTheme.colors.secondaryVariant,
-            )
+            if(error.isEmpty()) {
+                HeadlineH4(
+                    text = stringResource(id = R.string.verify_code),
+                    fontWeight = FontWeight.W700,
+                )
+                Body1(
+                    text = stringResource(id = R.string.verify_code_description),
+                    color = MaterialTheme.colors.secondaryVariant,
+                )
 
-            TextField(
-                text = phoneCode,
-                onValueChange = {setPhoneCode(it)},
-                modifier = Modifier
-                    .padding(top = 20.dp, bottom = 20.dp)
-                    .focusRequester(focusRequester)
-                ,
-                keyboardType = KeyboardType.NumberPassword,
-                imeAction = ImeAction.Next,
-                keyboardActions = KeyboardActions(onNext = {
-                    buttonNextClick()
-                }),
-            )
+                TextField(
+                    text = phoneCode,
+                    onValueChange = { setPhoneCode(it) },
+                    modifier = Modifier
+                        .padding(top = 20.dp, bottom = 20.dp)
+                        .focusRequester(focusRequester),
+                    keyboardType = KeyboardType.NumberPassword,
+                    imeAction = ImeAction.Next,
+                    keyboardActions = KeyboardActions(onNext = {
+                        buttonNextClick()
+                    }),
+                )
 
-            ButtonFull(
-                text = stringResource(id = R.string.confirm),
-                onClick = {buttonNextClick()},
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .fillMaxWidth()
-            )
+                ButtonFull(
+                    text = stringResource(id = R.string.confirm),
+                    onClick = { buttonNextClick() },
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .fillMaxWidth()
+                )
 
 //            Body1(
 //                text = stringResource(id = R.string.resend_code),
 //                textAlign = TextAlign.Center,
 //
 //            )
+            }
+            else{
+                HeadlineH4(
+                    text = error,
+                    fontWeight = FontWeight.W700,
+                )
+            }
         }
     }
 

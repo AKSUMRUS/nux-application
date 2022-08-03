@@ -139,22 +139,17 @@ class ProfileViewModel @Inject constructor(
         reason: String,
     ){
         viewModelScope.launch {
-            val currentTime = System.currentTimeMillis()
-            val sdf = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
-            val time = try{
-                sdf.parse(state.whenCanVerifyPhone)?.time!!
-            } catch (e : Exception){
-                0
-            }
-            if(currentTime > time) {
-                repository.confirmationPhone(phone = phone, reason = reason).collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            state = state.copy(
-                                id_confirmation_phone = result.data!!.id,
-                                whenCanVerifyPhone = result.data.dt_can_retry_after,
-                            )
-                        }
+            repository.confirmationPhone(phone = phone, reason = reason).collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        state = state.copy(
+                            id_confirmation_phone = result.data!!.id,
+                        )
+                    }
+                    is Resource.Error -> {
+                        state = state.copy(
+                            verifyErrorMessage = result.message.toString()
+                        )
                     }
                 }
             }
