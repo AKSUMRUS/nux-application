@@ -105,35 +105,6 @@ class GamesStatistic{
             return installedApps
         }
 
-
-//        fun getIconLargeGameOld(packageName: String, context: Context): Bitmap{
-//            val bitmapImage = when(packageName) {
-//                "com.nintendo.zara" -> BitmapFactory.decodeResource(context.resources, R.drawable.mario)
-//                "com.innersloth.spacemafia" -> BitmapFactory.decodeResource(context.resources, R.drawable.among_us)
-////                "com.tencent.ig" -> BitmapFactory.decodeResource(context.resources, R.drawable.pubg)
-//                else -> BitmapFactory.decodeResource(context.resources, R.drawable.mario)
-//            }
-//
-//            return bitmapImage
-//        }
-
-
-//        fun getIconLargeGame(packageName: String, context: Context): String{
-//            val bitmapImage = when(packageName) {
-//                "com.nintendo.zara" -> "https://storage.yandexcloud.net/nux/games_icon_large/mario.jpg"
-//                "com.innersloth.spacemafia" -> "https://storage.yandexcloud.net/nux/games_icon_large/among_us.jpg"
-//                "com.tencent.ig" -> "https://storage.yandexcloud.net/nux/games_icon_large/pubg.jpg"
-//                "com.blizzard.wtcg.hearthstone" -> "https://storage.yandexcloud.net/nux/games_icon_large/hearthstone.png"
-//                "com.miHoYo.GenshinImpact" -> "https://storage.yandexcloud.net/nux/games_icon_large/genshin.jpg"
-//                "com.supercell.clashroyale" -> "https://storage.yandexcloud.net/nux/games_icon_large/clash_roayle.jpg"
-//                "com.axlebolt.standoff2" -> "https://storage.yandexcloud.net/nux/games_icon_large/standoff.jpg"
-//                "com.mobile.legends" -> "https://storage.yandexcloud.net/nux/games_icon_large/mobile_legends.jpg"
-//                else -> "https://drive.google.com/drive/u/0/folders/1A6LbsdBDNtLmvBludK7u47wX1vDjmtf0"
-//            }
-//
-//            return bitmapImage
-//        }
-
         @RequiresApi(VERSION_CODES.O)
         fun convertListApplicationToListStatusJSON(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<StatusJSON> {
             val newGames: MutableList<StatusJSON> = ArrayList()
@@ -204,9 +175,9 @@ class GamesStatistic{
         for ((key,value) in usageStats) {
             try{
                 val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
-//                Log.e("APPLICATION_GAME", application.packageName+" "+application.category.toString()+" "+ convertLongToDate(value.lastTimeUsed))
                 if(application.category == ApplicationInfo.CATEGORY_GAME){
                     games.add(value)
+                    Log.i("ADD GAME",value.toString())
                 }
             }catch (e: PackageManager.NameNotFoundException){
                 Log.d("APPLICATION_GAME", key + " Такой пакет не найден")
@@ -215,16 +186,6 @@ class GamesStatistic{
 
         return games
     }
-
-}
-
-fun getApplicationIcon(game: Game): ImageBitmap{
-//            Log.d("INSTALLEDAPPS", game.icon.toString())
-//            try{
-    return ImageBitmap(0,0)
-//            return null
-//            }catch (e: ClassCastException){
-//            }
 
 }
 

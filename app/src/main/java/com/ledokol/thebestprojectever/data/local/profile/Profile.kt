@@ -14,6 +14,8 @@ data class Profile(
     var nickname: String = "",
     @ColumnInfo(name = "name")
     var name: String = "",
+    @ColumnInfo(name = "password")
+    var password: String = "",
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")

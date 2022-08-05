@@ -1,7 +1,6 @@
 package com.ledokol.thebestprojectever.data.repository
 
 import android.graphics.Bitmap
-import android.media.ExifInterface
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,19 +13,14 @@ import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.games.FriendsInviteToGame
 import com.ledokol.thebestprojectever.domain.profile.*
 import com.ledokol.thebestprojectever.util.Resource
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.format
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.*
-import java.io.*
-import java.util.*
+import java.io.ByteArrayOutputStream
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 

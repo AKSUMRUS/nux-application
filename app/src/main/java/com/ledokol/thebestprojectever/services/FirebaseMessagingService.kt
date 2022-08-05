@@ -170,7 +170,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE)
 
-        val channelId = "ChannelId"
+        val channelId = "ChannelId1"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.star)
             .setContentTitle(messageTitle)
@@ -210,7 +210,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //        val image = BitmapFactory.decodeStream(iconGame.openStream())
         val context: Context = this
 
-        val channelId = "ChannelId"
+        val channelId = "ChannelId2"
         val notificationBuilder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.star)
             .setContentTitle(messageTitle)
