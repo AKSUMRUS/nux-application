@@ -229,10 +229,10 @@ fun StartNavigation(
                             userViewModel = userViewModel,
                             gamesViewModel = gamesViewModel,
                             profileViewModel = profileViewModel,
+                            analytics = analytics
                         )
                     }
                     composable("finish_inviting_friends") {
-                        logOpenScreenEvent("finish_inviting_friends")
                         FinishInvitingFriends(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
@@ -247,6 +247,7 @@ fun StartNavigation(
                             userViewModel = userViewModel2,
                             profileViewModel = profileViewModel,
                             gamesViewModel = gamesViewModel,
+                            analytics = analytics
                         )
                     }
                     composable("request_permission_data") {

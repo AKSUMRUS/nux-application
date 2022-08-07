@@ -24,6 +24,8 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
@@ -44,7 +46,8 @@ fun ChooseFriendsForGame(
     navController: NavController,
     userViewModel: UserViewModel,
     profileViewModel: ProfileViewModel,
-    gamesViewModel: GamesViewModel
+    gamesViewModel: GamesViewModel,
+    analytics: FirebaseAnalytics
 ){
     val state = userViewModel.state
     val context = LocalContext.current
@@ -182,6 +185,10 @@ fun ChooseFriendsForGame(
                             app_id = gamesViewModel.state.game!!.id
                         )
                     )
+                    analytics.logEvent("open_screen") {
+                        param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
+                        param("from_what_screen","choose_friends_quick_game")
+                    }
                     navController.navigate("finish_inviting_friends"){
                         popUpTo("finish_inviting_friends")
                         launchSingleTop = true
