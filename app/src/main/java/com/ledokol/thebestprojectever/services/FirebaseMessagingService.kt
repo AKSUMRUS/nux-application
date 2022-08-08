@@ -17,9 +17,15 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.repository.ProfileRepository
+import com.ledokol.thebestprojectever.data.repository.UsersRepository
+import javax.inject.Inject
 
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+    @Inject
+    lateinit var repository: UsersRepository
 
     var counterFriendEnteredApp = 1;
     var counterFriendInviteToApp = 1;
@@ -174,6 +180,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val join = startActivity(getPackageManager().getLaunchIntentForPackage(packageGame))
+
         val channelId = "ChannelId1"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.star)
@@ -184,6 +192,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+        
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -226,6 +235,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
+
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

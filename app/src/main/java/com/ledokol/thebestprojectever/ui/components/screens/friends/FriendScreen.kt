@@ -20,6 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
@@ -40,6 +42,7 @@ fun FriendScreen(
     userViewModel: UserViewModel,
     gamesViewModel: GamesViewModel,
     profileViewModel: ProfileViewModel,
+    analytics: FirebaseAnalytics
 ){
 
     val user = userViewModel.state.friendUser
@@ -70,6 +73,10 @@ fun FriendScreen(
             friends_ids = listOf(state.friendUser.id),
             app_id = game.id,
         ))
+        analytics.logEvent("open_screen") {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
+            param("from_what_screen","friend_screen")
+        }
         navController.navigate("finish_inviting_friends"){
             popUpTo("finish_inviting_friends")
             launchSingleTop = true
