@@ -106,6 +106,7 @@ fun FinishInvitingFriends(
                 ,
                 onClick = {
                     openGame()
+                    clickFinish()
                 },
                 colorBackground = MaterialTheme.colors.onPrimary,
                 colorText = MaterialTheme.colors.primary

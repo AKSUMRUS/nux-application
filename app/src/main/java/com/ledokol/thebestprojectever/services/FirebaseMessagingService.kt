@@ -57,7 +57,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                                 data["user_nickname"].toString(),
                                 "Начал играть в ${data["app_name"]}",
                                 data["app_android_package_name"].toString(),
-                                resource
+                                resource,
+                                data["user_id"].toString()
                             )
                         }
 
@@ -76,7 +77,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                                 data["user_nickname"].toString(),
                                 "Приглашает в игру ${data["app_name"]}",
                                 data["app_android_package_name"].toString(),
-                                resource
+                                resource,
+                                data["user_id"].toString()
                             )
                         }
 
@@ -163,12 +165,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageBody: String,
         packageGame: String,
         iconGame: Bitmap,
+        notificationId: String,
     ) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.putExtra("gamePackageName", packageGame)
+        intent.putExtra("notification_id", notificationId)
+        intent.putExtra("gamePackageName_$notificationId", packageGame)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val channelId = "ChannelId1"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -200,12 +204,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         messageBody: String,
         packageGame: String,
         iconGame: Bitmap,
+        notificationId: String,
     ) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.putExtra("gamePackageName", packageGame)
+        intent.putExtra("notification_id", notificationId)
+        intent.putExtra("gamePackageName_$notificationId", packageGame)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
 //        val image = BitmapFactory.decodeStream(iconGame.openStream())
         val context: Context = this

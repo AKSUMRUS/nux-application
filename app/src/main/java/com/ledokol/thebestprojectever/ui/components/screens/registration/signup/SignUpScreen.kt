@@ -204,6 +204,7 @@ fun SignUpScreen(
 
                 SignUpScreenVerifyPhone(
                     phoneCode = phoneCode,
+                    phone = "+7$phone",
                     setPhoneCode = {phoneCode = it},
                     buttonBackClick = {buttonBackClick()},
                     buttonNextClick = {buttonClickNext()},

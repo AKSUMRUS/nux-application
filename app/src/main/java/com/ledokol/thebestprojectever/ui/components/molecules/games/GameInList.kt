@@ -30,8 +30,6 @@ fun GameInList(
     openGame: Boolean = false,
 ){
 
-    Log.e("iconLink", icon)
-
     Box (
         modifier = Modifier
             .fillMaxWidth()

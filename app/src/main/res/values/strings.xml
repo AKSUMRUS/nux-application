@@ -34,7 +34,7 @@
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
     <string name = "logout">Выйти</string>
     <string name = "verify_code">Подтверди код</string>
-    <string name = "verify_code_description">Он был выслан на твой телефон</string>
+    <string name = "verify_code_description">Он был выслан на твой телефон %1$s</string>
     <string name = "description_choose_nickname">Чтобы друзья легко тебя находили</string>
 
 <!--  Navigation  -->

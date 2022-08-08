@@ -15,7 +15,7 @@ data class Profile(
     @ColumnInfo(name = "name")
     var name: String = "",
     @ColumnInfo(name = "password")
-    var password: String = "",
+    var password: String? = "",
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")

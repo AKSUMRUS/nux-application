@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
@@ -66,12 +65,12 @@ fun EditProfileScreen(
             EditProfileTopBlock(
                 profileViewModel = profileViewModel,
             )
-            EditProfileInput(
-                mainText = stringResource(id = R.string.name),
-                description = stringResource(id = R.string.for_notifications),
-                text = name,
-                onValueChange = { onEditName(it) },
-            )
+//            EditProfileInput(
+//                mainText = stringResource(id = R.string.name),
+//                description = stringResource(id = R.string.for_notifications),
+//                text = name,
+//                onValueChange = { onEditName(it) },
+//            )
 
             ButtonBorder(
                 text = stringResource(id = R.string.logout),
@@ -86,26 +85,20 @@ fun EditProfileScreen(
             )
         }
 
-        ButtonWithChangeableColor(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 20.dp)
-            ,
-            text1 = stringResource (id = R.string.save_changes),
-            text2 = stringResource(id = R.string.changes_saved),
-            color1 = MaterialTheme.colors.primary,
-            color1Text = MaterialTheme.colors.onPrimary,
-            color2 = MaterialTheme.colors.surface,
-            color2Text = MaterialTheme.colors.onSurface,
-            isClicked = isSaved,
-            onClick = { onSave() }
-        )
+//        ButtonWithChangeableColor(
+//            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+//                .padding(bottom = 20.dp)
+//            ,
+//            text1 = stringResource (id = R.string.save_changes),
+//            text2 = stringResource(id = R.string.changes_saved),
+//            color1 = MaterialTheme.colors.primary,
+//            color1Text = MaterialTheme.colors.onPrimary,
+//            color2 = MaterialTheme.colors.surface,
+//            color2Text = MaterialTheme.colors.onSurface,
+//            isClicked = isSaved,
+//            onClick = { onSave() }
+//        )
     }
 
-}
-
-@Preview
-@Composable
-fun EditProfileScreen_preview(){
-//    EditProfileScreen()
 }

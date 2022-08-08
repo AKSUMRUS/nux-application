@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens.registration
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -61,6 +62,7 @@ fun LoginScreen(
 
             SignUpScreenVerifyPhone(
                 phoneCode = phoneCode,
+                phone = "+7$phone",
                 setPhoneCode = {phoneCode = it},
                 buttonBackClick = {buttonBackClick()},
                 buttonNextClick = {buttonClickNext()},

@@ -27,6 +27,7 @@ import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 @Composable
 fun SignUpScreenVerifyPhone(
     phoneCode: String,
+    phone: String,
     setPhoneCode: (String) -> Unit,
     buttonNextClick: () -> Unit,
     buttonBackClick: () -> Unit,
@@ -65,7 +66,7 @@ fun SignUpScreenVerifyPhone(
                     fontWeight = FontWeight.W700,
                 )
                 Body1(
-                    text = stringResource(id = R.string.verify_code_description),
+                    text = stringResource(id = R.string.verify_code_description, phone),
                     color = MaterialTheme.colors.secondaryVariant,
                 )
 
@@ -100,7 +101,9 @@ fun SignUpScreenVerifyPhone(
                 HeadlineH4(
                     text = error,
                     fontWeight = FontWeight.W700,
-                )
+                    modifier = Modifier
+                        .focusRequester(focusRequester),
+                    )
             }
         }
     }

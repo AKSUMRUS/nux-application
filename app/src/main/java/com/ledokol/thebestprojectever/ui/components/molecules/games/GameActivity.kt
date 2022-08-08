@@ -7,14 +7,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatter.ofPattern
 import java.util.*
 
 @Composable
@@ -28,10 +31,14 @@ fun GameActivity(
     onClick: () -> Unit = {},
 ){
 
-    val localDateTimeStart = LocalDateTime.parse(startTime)
-    var localDateTimeFinish: LocalDateTime = LocalDateTime.now()
+//    startTime = startTime.subSequence(0,19).toString()
+
+    val TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm")
+
+    val localDateTimeStart = LocalDateTime.parse(startTime).atOffset(ZoneOffset.UTC).atZoneSameInstant(ZoneId.systemDefault())
+    var localDateTimeFinish: ZonedDateTime = ZonedDateTime.now()
     if(!in_app){
-        localDateTimeFinish = LocalDateTime.parse(finishTime)
+        localDateTimeFinish = LocalDateTime.parse(finishTime).atOffset(ZoneOffset.UTC).atZoneSameInstant(ZoneId.systemDefault())
     }
     val localDateTimeCurrent = LocalDateTime.now()
 
@@ -55,7 +62,7 @@ fun GameActivity(
         return russianDay
     }
 
-    fun getDay(dateTime: LocalDateTime): String{
+    fun getDay(dateTime: ZonedDateTime): String{
         if(dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth == localDateTimeCurrent.dayOfMonth){
             return "сегодня"
         }
@@ -71,20 +78,19 @@ fun GameActivity(
         )}"
     }
 
-    fun getTime(dateTime: LocalDateTime): String{
-        val formatter = DateTimeFormatter.ofPattern("hh:mm")
-        return "${formatter.format(dateTime)}"
+    fun getTime(dateTime: ZonedDateTime): String{
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        return dateTime.format(formatter)
     }
 
-    Box (
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(180.dp)
             .clickable {
                 onClick()
             }
-            .padding(top = 20.dp)
-        ,
+            .padding(top = 20.dp),
     ) {
         AsyncImage(
             model = imageWide,
@@ -92,8 +98,7 @@ fun GameActivity(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
-                .alpha(0.3f)
-            ,
+                .alpha(0.3f),
             contentScale = ContentScale.Crop,
         )
 
@@ -110,8 +115,7 @@ fun GameActivity(
                 modifier = Modifier
                     .size(height = 100.dp, width = 100.dp)
                     .padding(15.dp)
-                    .align(CenterVertically)
-                ,
+                    .align(CenterVertically),
                 contentScale = ContentScale.Crop,
             )
 
@@ -128,5 +132,4 @@ fun GameActivity(
             }
         }
     }
-
 }

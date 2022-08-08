@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
@@ -42,8 +43,10 @@ fun EditProfileTopBlock(
             AsyncImage(
                 model = state!!.profile_pic,
                 contentDescription = "Avatar",
-                modifier = Modifier.size(130.dp)
+                modifier = Modifier.size(height = 130.dp, width = 130.dp),
+                contentScale = ContentScale.Crop,
             )
+
 
             HeadlineH3(
                 text = state!!.nickname,

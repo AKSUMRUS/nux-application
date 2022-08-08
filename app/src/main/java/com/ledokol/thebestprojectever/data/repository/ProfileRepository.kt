@@ -33,8 +33,11 @@ class ProfileRepository @Inject constructor(
 
     var data by mutableStateOf(Profile(access_token = ""))
 
-    fun setCurrentFirebaseToken(token: String, accessToken: String){
-        Log.e("setCurrentFirebaseToken","$token $accessToken")
+    fun setCurrentFirebaseToken(
+        token: String,
+        accessToken: String
+    ){
+        Log.e("myFirebaseToken","$token $accessToken")
         val callSetCurrentToken = api.setCurrentFirebaseToken(
             authHeader = "Bearer $accessToken",
             FirebaseToken(firebase_messaging_token = token)
@@ -42,11 +45,11 @@ class ProfileRepository @Inject constructor(
 
         callSetCurrentToken.enqueue(object : Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.e("setCurrentFirebaseToken",response.body().toString())
+                Log.e("myFirebaseToken","Success ${response.body().toString()}")
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("setCurrentFirebaseToken","Errrr")
+                Log.e("myFirebaseToken","Errrr")
             }
 
         })

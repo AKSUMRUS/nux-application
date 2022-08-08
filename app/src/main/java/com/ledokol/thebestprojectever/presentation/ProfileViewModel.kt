@@ -144,6 +144,7 @@ class ProfileViewModel @Inject constructor(
                     is Resource.Success -> {
                         state = state.copy(
                             id_confirmation_phone = result.data!!.id,
+                            verifyErrorMessage = ""
                         )
                     }
                     is Resource.Error -> {

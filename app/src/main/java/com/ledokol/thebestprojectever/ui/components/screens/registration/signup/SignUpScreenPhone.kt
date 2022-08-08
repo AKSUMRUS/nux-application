@@ -30,7 +30,7 @@ fun SignUpScreenPhone(
         str = str.replace(")","")
         str = str.replace("-","")
 
-        if(str.length>10){
+        if(str.length>20){
             return
         }
         setPhone(str)

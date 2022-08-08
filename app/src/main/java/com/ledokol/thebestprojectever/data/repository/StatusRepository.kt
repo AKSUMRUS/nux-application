@@ -28,11 +28,11 @@ class StatusRepository @Inject constructor(
             App(StatusJSON(android_package_name = androidPackageName,name = name,android_category = androidCategory))
         ).enqueue(object : Callback<StatusJSON> {
             override fun onResponse(call: Call<StatusJSON>, response: Response<StatusJSON>) {
-                Log.e("SetStatus","Status has set $androidPackageName $accessToken")
+                Log.i("SetStatus","Status has set $androidPackageName $accessToken")
             }
 
             override fun onFailure(call: Call<StatusJSON>, t: Throwable) {
-                Log.e("SetStatus",t.toString())
+                Log.i("SetStatus",t.toString())
             }
 
         })

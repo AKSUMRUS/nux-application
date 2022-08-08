@@ -120,7 +120,7 @@ fun ProfileScreen(
             }
 
             if (games != null) {
-                item{
+                item(span = {GridItemSpan(2)}){
                     HeadlineH4(
                         text = "Игры",
                         modifier = Modifier.padding(start = 20.dp),

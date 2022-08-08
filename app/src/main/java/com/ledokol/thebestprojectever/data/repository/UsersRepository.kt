@@ -75,9 +75,8 @@ class UsersRepository @Inject constructor(
                 emit(Resource.Success(
                     data = dao.getUsers(query)
                 ))
-                emit(Resource.Loading(false))
             }
-
+            emit(Resource.Loading(false))
         }
     }
 

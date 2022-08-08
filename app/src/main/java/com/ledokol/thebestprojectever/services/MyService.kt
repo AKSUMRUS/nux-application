@@ -13,10 +13,14 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.data.repository.StatusRepository
+import com.ledokol.thebestprojectever.ui.components.screens.games.TAG
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -42,7 +46,23 @@ class MyService: Service() {
     override fun onCreate() {
         super.onCreate()
         Log.e("Service onCreate",statusRepository.toString())
-//        statusRepository.setStatus("","","")
+        profileRepository.getProfile()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val tokenGet = task.result
+
+            Log.e("myFirebaseToken", "$tokenGet ${profileRepository.data.access_token}")
+//            profileRepository.setCurrentFirebaseToken(
+//                token = "fdf",
+//                accessToken = "fdfdfd")
+            profileRepository.setCurrentFirebaseToken(tokenGet, profileRepository.data.access_token)
+        })
 
         createNotification()
         doTask(packageManager)
@@ -67,8 +87,6 @@ class MyService: Service() {
         val gamesStatistic = GamesStatistic()
         var checkLeave: Boolean = false
 
-        profileRepository.getProfile()
-
         val handler = Handler()
         var runnable: Runnable? = null
         runnable = Runnable {
@@ -89,7 +107,7 @@ class MyService: Service() {
                 Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
                 profileRepository.data.let{
-                    Log.e("STATUS!!!!",profileRepository.data.toString())
+                    Log.i("STATUS!!!!",profileRepository.data.toString())
                     statusRepository.setStatus(
                         packageApp,
                         labelApp,

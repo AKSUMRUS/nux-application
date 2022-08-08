@@ -36,9 +36,10 @@ class MainActivity : ComponentActivity() {
         myReceiver = MyReceiver()
         val bundle = intent.extras
 
-        if(bundle!=null&& bundle.containsKey("gamePackageName")){
+        if(bundle!=null&& bundle.containsKey("notification_id")){
             Log.e("startMainActivity", bundle.toString())
-            val gamePackageName:String = bundle.getString("gamePackageName").toString()
+            val notification_id = bundle.getString("notification_id").toString()
+            val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
             bundle.clear()
             if(gamePackageName!=null && gamePackageName!=""){
                 openAppRating(context = this, packageName = gamePackageName)

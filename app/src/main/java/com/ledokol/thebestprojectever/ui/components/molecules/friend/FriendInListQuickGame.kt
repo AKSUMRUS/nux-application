@@ -90,13 +90,27 @@ fun FriendInListQuickGame(
                     color = MaterialTheme.colors.onPrimary
                 )
 
-                Body2(
-                    text = if(user.status.online)"online" else "offline",
-                    modifier = Modifier
-                        .padding(top = 5.dp)
-                        .alpha(0.5f)
-                    ,
-                )
+                Row(
+                    modifier = Modifier.padding(top = 5.dp)
+                ){
+                    Status(
+                        status = if(user.status.online)"online" else "offline",
+                        modifier = Modifier
+                            .padding(top = 3.dp, end = 5.dp)
+                            .align(CenterVertically)
+//                            .fillMaxHeight()
+                            .align(CenterVertically)
+                        ,
+                        size = 10.dp,
+                    )
+                    Body2(
+                        text = if(user.status.online)"online" else "offline",
+                        modifier = Modifier
+                            .padding()
+                            .alpha(0.5f)
+                        ,
+                    )
+                }
             }
         }
 
@@ -105,7 +119,7 @@ fun FriendInListQuickGame(
             onCheckedChange = { onClick() },
             modifier = Modifier
                 .padding(end = 10.dp)
-                .size(height = 40.dp, width = 40.dp)
+//                .size(height = 100.dp, width = 100.dp)
                 .align(Alignment.CenterEnd)
                 .clip(RoundedCornerShape(0.dp))
             ,

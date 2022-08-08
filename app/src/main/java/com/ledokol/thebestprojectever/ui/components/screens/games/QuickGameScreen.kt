@@ -37,25 +37,6 @@ fun QuickGameScreen(
     val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
 
-    LaunchedEffect(true){
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            val tokenGet = task.result
-
-            token = tokenGet
-            Log.e("myFirebaseToken", token)
-            profileViewModel.onEvent(
-                ProfileEvent.SetCurrentFirebaseToken(token, profileViewModel.state.profile!!.access_token)
-            )
-            Log.w(TAG, token)
-        })
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
