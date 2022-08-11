@@ -1,11 +1,13 @@
 package com.ledokol.thebestprojectever.ui.components.screens.profile
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.compose.foundation.layout.*
@@ -13,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,12 +28,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLink
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.iosParameters
+import com.google.firebase.ktx.Firebase
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.StatusViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.alertdialogs.AlertDialogShow
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
 import com.ledokol.thebestprojectever.ui.components.molecules.profile.DisturbButton
@@ -95,6 +104,9 @@ fun ProfileScreen(
         ))
     }
 
+    val resources = context.resources
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -115,6 +127,32 @@ fun ProfileScreen(
                         profileViewModel = profileViewModel,
                         statusViewModel = statusViewModel,
                         navController = navController
+                    )
+
+                    ButtonBorder(
+                        text = "Поделиться профилем",
+                        onClick = {
+                            val dynamicLink = Firebase.dynamicLinks.dynamicLink {
+                                link = Uri.parse("https://ledokolit.page.link/?profile_id=${profile!!.access_token}")
+                                domainUriPrefix = "https://ledokolit.page.link"
+                                // Open links with this app on Android
+                                androidParameters {
+
+                                }
+                                // Open links with com.example.ios on iOS
+                                iosParameters("com.example.ios") { }
+                            }
+
+                            val dynamicLinkUri = dynamicLink.uri
+                            Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+
+                            val intent= Intent()
+                            intent.action = Intent.ACTION_SEND  
+                            intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
+                            intent.type="text/plain"
+
+                            context.startActivity(Intent.createChooser(intent,"Поделиться"))
+                        }
                     )
                 }
             }

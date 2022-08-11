@@ -112,6 +112,7 @@
     <string name="edit_profile">Редактировать</string>
     <string name="profile_open_game_title">"Открыть игру?"</string>
     <string name="profile_open_game_description">"Нажми да, если хочешь запустить игру прямо сейчас"</string>
+    <string name = "share_my_profile">Добавляй меня в друзья в Dvor %1$s</string>
 
 <!--    Friend-->
     <string name="game_now_friend">Сейчас играет </string>

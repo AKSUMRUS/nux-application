@@ -32,7 +32,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
         BottomNavigation(
             backgroundColor = MaterialTheme.colors.onBackground,
             contentColor = Color.Gray,
-            modifier = Modifier.height(90.dp),
+            modifier = Modifier.height(80.dp),
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
@@ -43,8 +43,8 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             painterResource(id = item.icon),
                             contentDescription = item.title,
                             modifier = Modifier
-                                .padding(bottom = 10.dp)
-                                .size(40.dp)
+                                .padding(bottom = 8.dp)
+                                .size(35.dp)
                                 .align(CenterVertically)
                             ,
                         )
@@ -72,7 +72,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
 //                            restoreState = true
                         }
                     },
-                    modifier = Modifier.align(CenterVertically).padding(bottom = 8.dp),
+                    modifier = Modifier.align(CenterVertically).padding(bottom = 5.dp),
                 )
             }
 

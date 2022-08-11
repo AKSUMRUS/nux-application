@@ -145,6 +145,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf-ktx'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.6'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.2.1'
+    implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 
 //    Coil
     implementation("io.coil-kt:coil:2.1.0")

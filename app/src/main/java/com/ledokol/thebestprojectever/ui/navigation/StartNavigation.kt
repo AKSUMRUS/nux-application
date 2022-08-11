@@ -4,6 +4,7 @@ package com.ledokol.thebestprojectever.ui.navigation
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.internet.ConnectionState
 import com.ledokol.thebestprojectever.internet.connectivityState
@@ -156,7 +160,27 @@ fun StartNavigation(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
-//        gamesViewModel.getGames
+        val TAG_LINK = "DynamicLink"
+        Firebase.dynamicLinks
+            .getDynamicLink(context)
+            .addOnSuccessListener(context) { pendingDynamicLinkData: PendingDynamicLinkData? ->
+                // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+
+                    Log.e(TAG_LINK, deepLink.toString())
+                }
+
+                // Handle the deep link. For example, open the linked
+                // content, or apply promotional credit to the user's
+                // account.
+                // ...
+
+            }
+            .addOnFailureListener(context) { e -> Log.e(TAG_LINK, "getDynamicLink:onFailure", e)
+            }
+
 
         "quick_game"
     } else {
