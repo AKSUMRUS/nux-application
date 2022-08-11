@@ -20,9 +20,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestprojectever.data.local.game.GamesEvent
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.internet.ConnectionState
 import com.ledokol.thebestprojectever.internet.connectivityState
-import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.*
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestprojectever.services.GamesStatistic.Companion.getInstalledAppGamesList
@@ -41,8 +41,9 @@ import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScree
 import com.ledokol.thebestprojectever.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestprojectever.ui.components.screens.registration.StartRegistrationScreen
-import com.ledokol.thebestprojectever.ui.components.screens.registration.SignUpScreenVerifyPhone
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
+
+const val TAG = "StartNavigation"
 
 @Composable
 fun StartNavigation(
@@ -85,51 +86,9 @@ fun StartNavigation(
         ))
     }
 
-    Log.e("Profile StartNavigation",profile.toString())
+    Log.i(TAG,"profile: $profile")
 
     when (navBackStackEntry?.destination?.route) {
-        "signup_screen" -> {
-            bottomBarState.value = false
-        }
-        "login_screen" -> {
-            bottomBarState.value = false
-        }
-        "start_registration_screen" -> {
-            bottomBarState.value = false
-        }
-        "signup_screen_second" -> {
-            bottomBarState.value = false
-        }
-        "splash_screen" -> {
-            bottomBarState.value = false
-        }
-        "friend_screen" -> {
-            bottomBarState.value = false
-        }
-        "choose_friends_quick_game" -> {
-            bottomBarState.value = false
-        }
-        "finish_inviting_friends" -> {
-            bottomBarState.value = false
-        }
-        "share_screen" -> {
-            bottomBarState.value = false
-        }
-        "not_internet" -> {
-            bottomBarState.value = false
-        }
-        "request_permission_data" -> {
-            bottomBarState.value = false
-        }
-        "request_permission_contacts" -> {
-            bottomBarState.value = false
-        }
-        "contacts_list" -> {
-            bottomBarState.value = false
-        }
-        "RequestContentPermission" -> {
-            bottomBarState.value = false
-        }
         BottomNavItemMain.QuickGame.screen_route -> {
             bottomBarState.value = true
         }
@@ -138,6 +97,12 @@ fun StartNavigation(
         }
         BottomNavItemMain.Friends.screen_route -> {
             bottomBarState.value = true
+        }
+        BottomNavItemMain.Notifications.screen_route -> {
+            bottomBarState.value = true
+        }
+        else -> {
+            bottomBarState.value = false
         }
     }
 
@@ -156,7 +121,6 @@ fun StartNavigation(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
-//        gamesViewModel.getGames
 
         "quick_game"
     } else {
@@ -322,6 +286,13 @@ fun StartNavigation(
                         ListFriendsScreen(
                             navController = navController,
                             userViewModel = userViewModel
+                        )
+                    }
+                    composable(BottomNavItemMain.Notifications.screen_route) {
+                        logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
+                        userViewModel.accessToken = accessToken
+                        NotificationsScreen(
+
                         )
                     }
                 }

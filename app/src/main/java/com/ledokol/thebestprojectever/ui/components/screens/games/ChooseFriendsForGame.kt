@@ -1,6 +1,5 @@
 package com.ledokol.thebestprojectever.ui.components.screens.games
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,7 +8,9 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -36,7 +37,6 @@ import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
-import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestprojectever.ui.components.molecules.TitleQuickGame
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInListQuickGame
 
