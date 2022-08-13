@@ -14,7 +14,7 @@ class NotificationsRepository @Inject constructor(
     val api : RetrofitServices
 ) {
 
-    fun getNotifications()
+    fun getFriendRequestNotifications()
     : Flow<Resource<List<NotificationEntity>>> {
         return flow{
             emit(Resource.Loading(true))

@@ -48,6 +48,14 @@ UserViewModel @Inject constructor(
                 searchUser?.cancel()
                 searchUser = viewModelScope.launch {
                     delay(500L)
+                    getUsersFindFriend()
+                }
+            }
+            is UserEvent.OnSearchQueryChangeFindFriend -> {
+                state = state.copy(searchQuery = event.query)
+                searchUser?.cancel()
+                searchUser = viewModelScope.launch {
+                    delay(500L)
                     getUsers()
                 }
             }
@@ -108,6 +116,42 @@ UserViewModel @Inject constructor(
                                 )
                             }
                             Log.e("USER VIEW MODEL  GET USERS",state.toString())
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state =state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+
+                    }
+                }
+        }
+
+    }
+
+    private fun getUsersFindFriend(
+        query: String = state.searchQuery.lowercase(),
+        fetchRemote: Boolean = false,
+        shouldReload: Boolean = true,
+    ) {
+
+        viewModelScope.launch {
+            repository.getUsersFindFriend(
+                fetchFromRemote = fetchRemote,
+                accessToken = accessToken,
+                query = query,
+                shouldReload = shouldReload
+            )
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let { users ->
+                                state = state.copy(
+                                    findNewFriendsList = users,
+                                )
+                            }
+                            Log.e("USER VIEW MODEL  GET NEW FRIENDS",state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {

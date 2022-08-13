@@ -31,6 +31,19 @@ interface RetrofitServices {
     )
             : Call<List<User>>
 
+    @GET("friends")
+    fun getFindFriends(
+        @Header("Authorization") authHeader: String
+    )
+            : Call<List<User>>
+
+    @GET("friends")
+    fun addFriend(
+        @Header("Authorization") authHeader: String,
+        @Query("user_id") userId: String,
+    )
+            : Call<Any>
+
     @Headers("Content-Type: application/json")
     @GET("user/{id}")
     fun getUser(
