@@ -278,7 +278,13 @@ class ProfileRepository @Inject constructor(
             Log.e("singUpRepository","$nickname $name $phone $id $code")
             val remoteUser = try{
                 val callRegister = api.createProfile(RegisterJSON(
-                    user = ProfileJSON(nickname = nickname, name = name, phone = phone, default_profile_pic_id = default_profile_pic_id),
+                    user = ProfileJSON(
+                        nickname = nickname,
+                        name = name,
+                        phone = phone,
+                        default_profile_pic_id = default_profile_pic_id,
+                        password = "1",
+                    ),
                     phone_confirmation = ConfirmationPhoneAuth(id = id, code = code)
                 ))
                 val myResponse = callRegister.awaitResponse().body()

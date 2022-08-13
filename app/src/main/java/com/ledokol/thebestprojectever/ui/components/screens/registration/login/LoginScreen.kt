@@ -43,7 +43,9 @@ fun LoginScreen(
             SignUpScreenPhone(
                 phone = phone,
                 setPhone = {
-                   phone = it
+                    if(it.length<=10){
+                        phone = it
+                    }
                 },
                 buttonBackClick = {navController.popBackStack() } ,
                 buttonNextClick = {

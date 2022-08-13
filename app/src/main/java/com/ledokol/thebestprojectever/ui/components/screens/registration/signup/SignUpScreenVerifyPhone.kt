@@ -36,7 +36,7 @@ fun SignUpScreenVerifyPhone(
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
 
-    if(error.isNotEmpty()) {
+    if(!error.isNotEmpty()) {
         LaunchedEffect(focusRequester) {
             focusRequester.requestFocus()
             keyboard?.show()

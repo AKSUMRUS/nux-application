@@ -181,7 +181,9 @@ fun SignUpScreen(
                 SignUpScreenPhone(
                     phone = phone,
                     setPhone = {
-                        phone = it
+                        if(it.length<=10){
+                            phone = it
+                        }
                     },
                     buttonBackClick = {buttonBackClick()} ,
                     buttonNextClick = {

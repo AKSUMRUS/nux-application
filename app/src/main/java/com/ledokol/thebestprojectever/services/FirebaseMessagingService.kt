@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
@@ -17,7 +18,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ledokol.thebestprojectever.MainActivity
 import com.ledokol.thebestprojectever.R
-import com.ledokol.thebestprojectever.data.repository.ProfileRepository
 import com.ledokol.thebestprojectever.data.repository.UsersRepository
 import javax.inject.Inject
 
@@ -29,6 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     var counterFriendEnteredApp = 1;
     var counterFriendInviteToApp = 1;
+    var counterAddFriend = 1;
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // [START_EXCLUDE]
@@ -45,15 +46,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: ${remoteMessage.from}")
 
-//        sendNotification("User", "Приглашение в игру", "yio.tro.onliyoy")
-        // Check if message contains a data payload.
-//        sendNotificationFriendEnteredApp("ffdfd", "Друг зашел в игру","ffdklfdjkl")
         if (remoteMessage.data.isNotEmpty()) {
             val data = remoteMessage.data
-//            sendNotification(data["user_nickname"].toString(), "Приглашение в игру")
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
-            if(data["type"] == "friend_entered_app"){
+            if(data["type"] == "friends_invite") {
+                    sendNotificationAddFriend(
+                        "Приглашение в друзья",
+                        "${data["from_user.nickname"].toString()} хочет добавить тебя в друзья",
+                        data["from_user.id"].toString(),
+                        (resources.getDrawable(R.drawable.anonymous) as BitmapDrawable?)!!.getBitmap(),
+                        data["id"].toString(),
+                        data["type"].toString()
+                    )
+            }else if(data["type"] == "friend_entered_app"){
                 Glide.with(this)
                     .asBitmap()
                     .load(data["app_icon_preview"].toString())
@@ -180,8 +186,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val join = startActivity(getPackageManager().getLaunchIntentForPackage(packageGame))
-
         val channelId = "ChannelId1"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.star)
@@ -246,6 +250,48 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.createNotificationChannel(channel)
 
         notificationManager.notify(counterFriendInviteToApp++ /* ID of notification */, notificationBuilder.build())
+    }
+
+
+    private fun sendNotificationAddFriend(
+        messageTitle: String,
+        messageBody: String,
+        userId: String,
+        userIcon: Bitmap,
+        notificationId: String,
+        notificationType: String,
+    ) {
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("notification_type", notificationType)
+        intent.putExtra("notification_id", notificationId)
+        intent.putExtra("userId_$notificationId", userId)
+        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+//        val image = BitmapFactory.decodeStream(iconGame.openStream())
+        val context: Context = this
+
+        val channelId = "ChannelId3"
+        val notificationBuilder = NotificationCompat.Builder(context, channelId)
+            .setSmallIcon(R.drawable.star)
+            .setContentTitle(messageTitle)
+            .setContentText(messageBody)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Since android Oreo notification channel is needed.
+        val channel = NotificationChannel(channelId,
+            "Channel human readable title",
+            NotificationManager.IMPORTANCE_DEFAULT)
+        notificationManager.createNotificationChannel(channel)
+
+        Log.e(TAG, "send!!!")
+        notificationManager.notify(counterAddFriend++ /* ID of notification */, notificationBuilder.build())
     }
 
     companion object {

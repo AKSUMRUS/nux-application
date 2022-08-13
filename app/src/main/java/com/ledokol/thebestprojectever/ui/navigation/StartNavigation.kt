@@ -160,26 +160,26 @@ fun StartNavigation(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
             accessToken
         )
-        val TAG_LINK = "DynamicLink"
-        Firebase.dynamicLinks
-            .getDynamicLink(context)
-            .addOnSuccessListener(context) { pendingDynamicLinkData: PendingDynamicLinkData? ->
-                // Get deep link from result (may be null if no link is found)
-                var deepLink: Uri? = null
-                if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.link
-
-                    Log.e(TAG_LINK, deepLink.toString())
-                }
-
-                // Handle the deep link. For example, open the linked
-                // content, or apply promotional credit to the user's
-                // account.
-                // ...
-
-            }
-            .addOnFailureListener(context) { e -> Log.e(TAG_LINK, "getDynamicLink:onFailure", e)
-            }
+//        val TAG_LINK = "DynamicLink"
+//        Firebase.dynamicLinks
+//            .getDynamicLink(context)
+//            .addOnSuccessListener(context) { pendingDynamicLinkData: PendingDynamicLinkData? ->
+//                // Get deep link from result (may be null if no link is found)
+//                var deepLink: Uri? = null
+//                if (pendingDynamicLinkData != null) {
+//                    deepLink = pendingDynamicLinkData.link
+//
+//                    Log.e(TAG_LINK, deepLink.toString())
+//                }
+//
+//                // Handle the deep link. For example, open the linked
+//                // content, or apply promotional credit to the user's
+//                // account.
+//                // ...
+//
+//            }
+//            .addOnFailureListener(context) { e -> Log.e(TAG_LINK, "getDynamicLink:onFailure", e)
+//            }
 
 
         "quick_game"
