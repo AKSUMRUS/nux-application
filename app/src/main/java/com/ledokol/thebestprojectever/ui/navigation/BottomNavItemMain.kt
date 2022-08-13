@@ -22,4 +22,10 @@ sealed class BottomNavItemMain(var title: String, var icon: Int, var screen_rout
         R.drawable.friends_icon_bottomnav,
         "team"
     )
+
+    object Notifications : BottomNavItemMain(
+        "Уведомления",
+        R.drawable.ic_push_ups,
+        "notifications"
+    )
 }

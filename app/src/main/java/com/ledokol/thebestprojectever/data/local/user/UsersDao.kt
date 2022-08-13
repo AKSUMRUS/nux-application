@@ -22,6 +22,7 @@ interface UsersDao{
             SELECT * 
             FROM users
             WHERE LOWER(nickname) LIKE '%' || LOWER(:query) || '%'
+            OR LOWER() LIKE '%' || LOWER(:query) || '%'
         """
     )
     fun getUsers(query: String) : List<User>
