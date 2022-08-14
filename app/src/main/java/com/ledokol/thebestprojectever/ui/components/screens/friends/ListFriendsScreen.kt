@@ -26,6 +26,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
+import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitleFriends
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
 
 @Composable
@@ -35,7 +36,11 @@ fun ListFriendsScreen(
     needUpdate: Boolean = true,
 ){
     val state = userViewModel.state
-    var shouldWork by remember {
+    var isFindingNewFriends = false
+    var usersList by remember {
+        mutableStateOf(state.users)
+    }
+    val shouldWork by remember {
         mutableStateOf(true)
     }
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
@@ -44,11 +49,21 @@ fun ListFriendsScreen(
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
-            }else if (event == Lifecycle.Event.ON_STOP) {
-                runnable?.let { handler.removeCallbacks(it) }
-                userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
+            if(isFindingNewFriends){
+                if (event == Lifecycle.Event.ON_START) {
+                    userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
+                } else if (event == Lifecycle.Event.ON_STOP) {
+                    runnable?.let { handler.removeCallbacks(it) }
+                    userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
+                }
+            }
+            else {
+                if (event == Lifecycle.Event.ON_START) {
+                    userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
+                } else if (event == Lifecycle.Event.ON_STOP) {
+                    runnable?.let { handler.removeCallbacks(it) }
+                    userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
+                }
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -75,6 +90,20 @@ fun ListFriendsScreen(
         }
     }
 
+    fun onClickFindFriend(){
+        if(!isFindingNewFriends) {
+            usersList = state.findNewFriendsList
+            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
+            userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
+            isFindingNewFriends = true
+        }
+        else{
+            usersList = state.users
+            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
+            userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
+            isFindingNewFriends = false
+        }
+    }
 
     LaunchedEffect(true){
         runnable = Runnable {
@@ -104,9 +133,10 @@ fun ListFriendsScreen(
                         LazyColumn(
                             content = {
                                 item {
-                                    ScreenTitle(
+                                    ScreenTitleFriends(
                                         name = stringResource(id = R.string.nav_friends),
                                         modifier = Modifier.padding(top = 110.dp),
+                                        onFindFriendClick = {onClickFindFriend()}
                                     )
                                     ShowSearch(userViewModel = userViewModel)
                                     ButtonBorder(
@@ -120,8 +150,8 @@ fun ListFriendsScreen(
                                     )
                                 }
 
-                                items(state.users!!.size) { friend ->
-                                    val user = state.users!![friend]
+                                items(usersList!!.size) { friend ->
+                                    val user = usersList!![friend]
                                     FriendInList(
                                         user = user,
                                         onClick = {

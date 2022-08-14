@@ -195,4 +195,57 @@ class UsersRepository @Inject constructor(
         }
     }
 
+    fun getUsersFindFriend(
+        fetchFromRemote: Boolean,
+        query: String,
+        accessToken: String,
+        shouldReload: Boolean
+    ): Flow<Resource<List<User>>> {
+        return flow{
+            if(shouldReload) {
+                emit(Resource.Loading(true))
+            }
+            val localUsers = dao.getUsers(query)
+            emit(Resource.Success(
+                data = localUsers
+            ))
+
+            val isDbEmpty = localUsers.isEmpty() && query.isBlank()
+            val shouldLoadFromCache = !isDbEmpty && !fetchFromRemote
+            if(shouldLoadFromCache){
+                emit(Resource.Loading(false))
+                return@flow
+            }
+            val remoteUsers = try{
+                val usersCall = api.getFindFriends(authHeader = "Bearer $accessToken")
+                val myResponse: List<User>? = usersCall.awaitResponse().body()
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            Log.e("USERS",remoteUsers.toString())
+
+            remoteUsers?.let { users ->
+                dao.clearUsers()
+                dao.insertUsers(
+                    users
+                )
+                Log.e("DAO Users",dao.getUsers(query).toString())
+                emit(Resource.Success(
+                    data = dao.getUsers(query)
+                ))
+                emit(Resource.Loading(false))
+            }
+
+        }
+    }
+
 }
