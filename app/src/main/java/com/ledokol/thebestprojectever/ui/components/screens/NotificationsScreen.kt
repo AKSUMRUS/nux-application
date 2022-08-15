@@ -55,7 +55,7 @@ fun NotificationsScreen(
                 )
             }
 
-            items(usersList.size) { friend ->
+            items(usersList!!.size) { friend ->
                 val user = usersList[friend].from_user
                 FriendInList(
                     user = user,
