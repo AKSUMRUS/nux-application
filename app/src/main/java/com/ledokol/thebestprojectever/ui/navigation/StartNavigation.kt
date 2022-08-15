@@ -57,6 +57,7 @@ fun StartNavigation(
     val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
     val statusViewModel = hiltViewModel<StatusViewModel>()
+    val notificationsViewModel = hiltViewModel<NotificationsViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
     profileViewModel.onEvent(ProfileEvent.GetProfile)
@@ -301,7 +302,10 @@ fun StartNavigation(
                         logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
                         userViewModel.accessToken = accessToken
                         NotificationsScreen(
-
+                            notificationsViewModel = notificationsViewModel,
+                            userViewModel = userViewModel,
+                            profileViewModel = profileViewModel,
+                            navController = navController,
                         )
                     }
                 }
