@@ -149,7 +149,7 @@ interface RetrofitServices {
     fun addFriend(
         @Header("Authorization") authHeader: String,
         @Body addFriend: AddFriend,
-    ): Call<Any>
+    ): Call<String>
 
     @GET("users")
     fun getUserByNickname(
