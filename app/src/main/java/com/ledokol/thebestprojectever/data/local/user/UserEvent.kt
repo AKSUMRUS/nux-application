@@ -9,5 +9,9 @@ sealed class UserEvent {
     class GetFriendGames(val user: User): UserEvent() // Получить игры пользователя
     class CheckExistsNickname(val nickname: String): UserEvent() // Получить игры пользователя
     class CheckExistsPhone(val phone: String): UserEvent() // Получить игры пользователя
+    class AddFriend(val nickname: String, val access_token: String): UserEvent()
+    class GetUserByNickname(val nickname: String): UserEvent()
+    class GetUserByPhone(val phone: String): UserEvent()
+    class OpenScreen(val screen: String): UserEvent()
 }
 

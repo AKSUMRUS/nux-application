@@ -6,6 +6,7 @@ import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.profile.ExistsUserJSON
+import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,6 +24,69 @@ class UsersRepository @Inject constructor(
     fun insertUser(user: User) {
         dao.insertUser(user)
     }
+
+    fun getUserByNickname(nickname: String): Flow<Resource<User> > {
+        return flow{
+            emit(Resource.Loading(true))
+
+            val user = try {
+                val getUser = api.getUserByNickname(nickname)
+
+                val myResponse = getUser.awaitResponse().body()
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            Log.e("addFrined", user.toString())
+
+            user?.let {
+                emit(Resource.Success(
+                    data = user
+                ))
+            }
+
+            emit(Resource.Loading(false))
+        }
+    }
+
+    fun getUserByPhone(phone: String): Flow<Resource<User> > {
+        return flow{
+            emit(Resource.Loading(true))
+
+            val user = try {
+                val getUser = api.getUserByPhone(phone)
+
+                val myResponse = getUser.awaitResponse().body()
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            user?.let {
+                emit(Resource.Success(
+                    data = user
+                ))
+            }
+
+            emit(Resource.Loading(false))
+        }
+    }
+
 
     fun uploadImage(){
 //        api.uploadImage()
@@ -76,6 +140,38 @@ class UsersRepository @Inject constructor(
                     data = dao.getUsers(query)
                 ))
             }
+            emit(Resource.Loading(false))
+        }
+    }
+
+    fun addFriend(
+        accessToken: String,
+        friendId: String
+    ): Flow<Resource<String> > {
+        return flow{
+            emit(Resource.Loading(true))
+
+            Log.e("addFriend", friendId)
+
+            val response = try{
+                val addFriend = api.addFriend(
+                    authHeader = "Bearer $accessToken",
+                    com.ledokol.thebestprojectever.domain.users.AddFriend(user_id = friendId)
+                )
+
+                val myResponse: String? = addFriend.awaitResponse().body()
+
+                myResponse
+            } catch(e: IOException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            } catch (e: HttpException) {
+                e.printStackTrace()
+                emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
             emit(Resource.Loading(false))
         }
     }

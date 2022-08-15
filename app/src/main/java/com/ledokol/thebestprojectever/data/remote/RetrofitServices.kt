@@ -7,6 +7,7 @@ import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.games.*
 import com.ledokol.thebestprojectever.domain.profile.*
+import com.ledokol.thebestprojectever.domain.users.AddFriend
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -141,5 +142,21 @@ interface RetrofitServices {
     @GET("default_profile_pics/list")
     fun getDefaultProfilePics(
     ) : Call<DefaultProfilePicsList>
+
+    @PUT("friends/add")
+    fun addFriend(
+        @Header("Authorization") authHeader: String,
+        @Body addFriend: AddFriend,
+    ): Call<String>
+
+    @GET("users")
+    fun getUserByNickname(
+        @Query("nickname") nickname: String,
+    ): Call<User>
+
+    @GET("users")
+    fun getUserByPhone(
+        @Query("phone") phone: String,
+    ): Call<User>
 
 }

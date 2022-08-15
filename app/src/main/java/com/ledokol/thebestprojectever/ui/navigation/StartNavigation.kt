@@ -4,7 +4,6 @@ package com.ledokol.thebestprojectever.ui.navigation
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -20,9 +19,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 import com.ledokol.thebestprojectever.data.local.game.GamesEvent
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.internet.ConnectionState
@@ -114,21 +110,7 @@ fun StartNavigation(
         "not_internet"
     }else if(profile.profile==null){
         "splash_screen"
-    } else if(profile.finish_register){
-        accessToken = profile.profile.access_token
-
-        Log.e("ShareGames", "Start $accessToken")
-        gamesViewModel.clearGames()
-        val games = getInstalledAppGamesList(context.packageManager)
-        pushGamesIcons(games)
-        gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, games),
-            accessToken
-        )
-//        gamesViewModel.getGames
-
-        "quick_game"
-    } else {
+    } else if(!profile.finish_register){
         Log.e("profile",profile.toString())
         accessToken = profile.profile.access_token
         gamesViewModel.clearGames()
@@ -140,6 +122,26 @@ fun StartNavigation(
         )
 
         "request_permission_data"
+    } else {
+        accessToken = profile.profile.access_token
+
+        Log.e("ShareGames", "Start $accessToken")
+        gamesViewModel.clearGames()
+        val games = getInstalledAppGamesList(context.packageManager)
+        pushGamesIcons(games)
+        gamesViewModel.shareGames(
+            convertListApplicationToListStatusJSON(context, context.packageManager, games),
+            accessToken
+        )
+
+        if(userViewModel.state.openScreen!=null){
+            userViewModel.state = userViewModel.state.copy(
+                openScreen = null
+            )
+            "friend_screen"
+        }else{
+            "quick_game"
+        }
     }
 
     fun logOpenScreenEvent(name: String){
@@ -237,10 +239,12 @@ fun StartNavigation(
                         )
                     }
 
-                    composable("share_screen") {
-                        logOpenScreenEvent("share_screen")
-                        ShareScreen(
+                    composable("invite_friends") {
+                        logOpenScreenEvent("invite_friends")
+                        InviteFriend(
                             navController = navController,
+                            profileViewModel = profileViewModel,
+                            userViewModel = userViewModel,
                         )
                     }
 

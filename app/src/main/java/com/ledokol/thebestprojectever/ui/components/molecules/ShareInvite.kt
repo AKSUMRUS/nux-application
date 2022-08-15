@@ -3,6 +3,8 @@ package com.ledokol.thebestprojectever.ui.components.screens
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -25,6 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLink
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.iosParameters
+import com.google.firebase.ktx.Firebase
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonPrimaryLeadingIcon
@@ -32,9 +39,7 @@ import com.ledokol.thebestprojectever.ui.components.screens.profile.getIcon
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 
 @Composable
-fun ShareScreen(
-    navController: NavController,
-    fromContacts: Boolean = false,
+fun ShareInvite(
 ){
 
     val context: Context = LocalContext.current
@@ -60,11 +65,25 @@ fun ShareScreen(
     })
 
     fun onClick(app: String?){
+        val dynamicLink = Firebase.dynamicLinks.dynamicLink {
+            link = Uri.parse("https://ledokolit.page.link/?profile_id=${""}")
+            domainUriPrefix = "https://ledokolit.page.link"
+            // Open links with this app on Android
+            androidParameters {
+
+            }
+            // Open links with com.example.ios on iOS
+            iosParameters("com.example.ios") { }
+        }
+
+        val dynamicLinkUri = dynamicLink.uri
+        Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+
         val intent= Intent()
-        intent.action= Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT, "Скачай это приложение — &#010;https://vk.com")
-//        intent.putExtra(Intent.EXTRA_TEXT, stringResource(id = R.string.repost_text_in_app).toString())
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
         intent.type="text/plain"
+
 
         if(app==null){
             context.startActivity(Intent.createChooser(intent,"Поделиться"))
@@ -72,25 +91,10 @@ fun ShareScreen(
             intent.setPackage(app)
             context.startActivity(intent)
         }
-
-        if(fromContacts){
-            navController.popBackStack()
-        }
-    }
-
-    fun buttonBackClick(){
-        navController.popBackStack()
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
     ){
-        BackToolbar (
-            buttonBackClick = {
-                buttonBackClick()
-            }
-        )
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             content = {
@@ -134,11 +138,8 @@ fun ShareScreen(
                 }
             },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 100.dp,bottom = 100.dp)
+                .padding(top = 10.dp,bottom = 10.dp)
             ,
-            verticalArrangement = Arrangement.Center,
-            horizontalArrangement = Arrangement.Center,
         )
     }
 

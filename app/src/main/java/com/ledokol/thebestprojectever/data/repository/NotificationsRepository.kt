@@ -1,6 +1,7 @@
 package com.ledokol.thebestprojectever.data.repository
 
 import com.ledokol.thebestprojectever.data.local.notifications.NotificationEntity
+import com.ledokol.thebestprojectever.data.local.notifications.NotificationsDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepository @Inject constructor(
-    val dao : NotificationsRepository,
+    val dao : NotificationsDao,
     val api : RetrofitServices
 ) {
 

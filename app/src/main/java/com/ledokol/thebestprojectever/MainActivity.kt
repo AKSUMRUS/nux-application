@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -23,6 +24,9 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.services.MyReceiver
 import com.ledokol.thebestprojectever.ui.navigation.StartNavigation
 import com.ledokol.thebestprojectever.ui.theme.TheBestProjectEverTheme
@@ -31,7 +35,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var myReceiver: MyReceiver
-
+    val userViewModel: UserViewModel by viewModels<UserViewModel>()
+    val TAG = "startMainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class MainActivity : ComponentActivity() {
         val bundle = intent.extras
 
         if(bundle!=null&& bundle.containsKey("notification_id")){
-            Log.e("startMainActivity", bundle.toString())
+            Log.e(TAG, bundle.toString())
             val notification_id = bundle.getString("notification_id").toString()
             val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
             bundle.clear()
@@ -47,6 +52,28 @@ class MainActivity : ComponentActivity() {
                 openAppRating(context = this, packageName = gamePackageName)
             }
         }
+
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                }
+                //
+                // If the user isn't signed in and the pending Dynamic Link is
+                // an invitation, sign in the user anonymously, and record the
+                // referrer's UID.
+                //
+                if (deepLink != null &&
+                    deepLink.getBooleanQueryParameter("profile_id", false)) {
+                        val profile_id = deepLink.getQueryParameter("profile_id")
+                        Log.e(TAG, profile_id.toString())
+                        userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
+                        userViewModel.onEvent(UserEvent.OpenScreen(screen = "friend_screen"))
+                    }
+            }
 
 
         FirebaseApp.initializeApp(this@MainActivity)
@@ -60,6 +87,31 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+
+            Firebase.dynamicLinks
+                .getDynamicLink(intent)
+                .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                    // Get deep link from result (may be null if no link is found)
+                    var deepLink: Uri? = null
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.link
+                    }
+                    //
+                    // If the user isn't signed in and the pending Dynamic Link is
+                    // an invitation, sign in the user anonymously, and record the
+                    // referrer's UID.
+                    //
+                    if (
+                        deepLink != null &&
+                        deepLink!!.getBooleanQueryParameter("invitedby", false)) {
+                        val referrerUid = deepLink!!.getQueryParameter("invitedby")
+
+
+                        navController.navigate("profile")
+                    }
+                }
+
+
             TheBestProjectEverTheme {
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                         StartNavigation(

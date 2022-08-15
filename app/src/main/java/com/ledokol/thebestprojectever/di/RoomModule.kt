@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.ledokol.thebestprojectever.data.local.MyDatabase
 import com.ledokol.thebestprojectever.data.local.contact.ContactsDao
 import com.ledokol.thebestprojectever.data.local.game.GamesDao
+import com.ledokol.thebestprojectever.data.local.notifications.NotificationsDao
 import com.ledokol.thebestprojectever.data.local.profile.ProfileDao
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
@@ -56,6 +57,10 @@ class RoomModule {
     @Singleton
     fun provideContactsDao(myDatabase: MyDatabase) : ContactsDao = myDatabase.contactsDao()
 
+    @Provides
+    @Singleton
+    fun provideNotificationsDao(myDatabase: MyDatabase) : NotificationsDao = myDatabase.notificationDao()
+
 //    @Provides
 //    @Singleton
 //    fun provideGamesDao(myDatabase: MyDatabase) : StatusRepository = myDatabase.gamesDao()
@@ -69,7 +74,7 @@ class RoomModule {
     @Singleton
     fun provideRetrofitServices(client: OkHttpClient): Retrofit {
 //        val BASE_URL = "https://storage.yandexcloud.net/"
-        val BASE_URL = "http://192.168.21.142:8080/" // Для телефона
+        val BASE_URL = "http://192.168.240.142:8080/" // Для телефона
 //        val BASE_URL = "http://51.250.100.21/"
 //        val BASE_URL = "http://10.0.2.2:8080/" // Для эмулятора
 

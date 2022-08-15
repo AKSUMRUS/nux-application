@@ -43,6 +43,16 @@ UserViewModel @Inject constructor(
             is UserEvent.CheckExistsPhone -> {
                 checkExistsPhone(event.phone)
             }
+            is UserEvent.AddFriend -> {
+                getUserByNickname(event.nickname)
+                Log.e("addFriend",state.friendUser.toString())
+                state.friendUser?.let {
+                    addFriend(
+                        it.id,
+                        event.access_token
+                    )
+                }
+            }
             is UserEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
                 searchUser?.cancel()
@@ -75,8 +85,73 @@ UserViewModel @Inject constructor(
             is UserEvent.GetFriendGames -> {
                 getUsersGames(event.user)
             }
-        }
+            is UserEvent.GetUserByNickname -> {
+                getUserByNickname(event.nickname)
+            }
+            is UserEvent.GetUserByPhone -> {
+                getUserByPhone(event.phone)
+            }
+            is UserEvent.OpenScreen -> {
 
+            }
+        }
+    }
+
+    fun openScreen(
+        screen: String
+    ){
+        viewModelScope.launch {
+            state = state.copy(
+                openScreen = screen,
+            )
+        }
+    }
+
+    fun getUserByNickname(nickname: String){
+        viewModelScope.launch {
+            repository.getUserByNickname(nickname).collect{
+                result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let{ user ->
+                                state = state.copy(
+                                    friendUser = user
+                                )
+                            }
+                        }
+
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                    }
+            }
+        }
+    }
+
+
+    fun getUserByPhone(phone: String){
+        viewModelScope.launch {
+            repository.getUserByPhone(phone).collect{
+                    result ->
+                when(result){
+                    is Resource.Success -> {
+                        result.data.let{ user ->
+                            state = state.copy(
+                                friendUser = user
+                            )
+                        }
+                    }
+
+                    is Resource.Loading -> {
+                        state = state.copy(
+                            isLoading = result.isLoading
+                        )
+                    }
+                }
+            }
+        }
     }
 
 
@@ -90,6 +165,27 @@ UserViewModel @Inject constructor(
     fun uploadImage(){
         viewModelScope.launch {
             repository.uploadImage()
+        }
+    }
+
+    fun addFriend(
+        accessToken: String,
+        friendId: String,
+    ){
+        viewModelScope.launch {
+            repository.addFriend(
+                accessToken = accessToken,
+                friendId = friendId,
+            ).collect{
+                result ->
+                when(result){
+                    is Resource.Success -> {
+                    }
+                    is Resource.Loading -> {
+
+                    }
+                }
+            }
         }
     }
 

@@ -10,5 +10,6 @@ data class UserState(
     val isRefreshing: Boolean = true,
     val searchQuery: String = "",
     val existsUser: Boolean? = null,
+    val openScreen: String? = null,
 //    val numberScreen: Int = 0,
 )

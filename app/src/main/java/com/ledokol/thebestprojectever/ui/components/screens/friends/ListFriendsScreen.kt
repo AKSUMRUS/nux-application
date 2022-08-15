@@ -84,8 +84,8 @@ fun ListFriendsScreen(
     }
 
     fun onClickShare(){
-        navController.navigate("share_screen"){
-            popUpTo("share_screen")
+        navController.navigate("invite_friends"){
+            popUpTo("invite_friends")
             launchSingleTop = true
         }
     }
@@ -141,7 +141,7 @@ fun ListFriendsScreen(
                                     ShowSearch(userViewModel = userViewModel)
                                     ButtonBorder(
                                         onClick = {onClickShare()},
-                                        text = stringResource(id = R.string.share_with_friends),
+                                        text = stringResource(id = R.string.add_friends),
                                         modifier = Modifier
                                             .fillMaxWidth()
                                             .padding(bottom = 20.dp)
