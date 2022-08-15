@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.ledokol.thebestprojectever.data.local.notifications.NotificationsUser
 import com.ledokol.thebestprojectever.data.local.user.Status
+import com.ledokol.thebestprojectever.data.local.user.User
 import java.io.ByteArrayOutputStream
 import java.lang.reflect.Type
 
@@ -35,6 +37,22 @@ class Converters {
 
     @TypeConverter
     fun myObjectsToStoredString(myObjects: Status?): String? {
+        val gson = Gson()
+        return gson.toJson(myObjects)
+    }
+
+    @TypeConverter
+    fun storedStringToMyObject(data: String?): User? {
+        val gson = Gson()
+        if (data == null) {
+            return null
+        }
+        val listType: Type = object : TypeToken<User?>() {}.type
+        return gson.fromJson<User?>(data, listType)
+    }
+
+    @TypeConverter
+    fun myObjectsToStoredStrings(myObjects: User?): String? {
         val gson = Gson()
         return gson.toJson(myObjects)
     }

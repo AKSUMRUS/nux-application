@@ -1,11 +1,13 @@
 package com.ledokol.thebestprojectever.data.remote
 
+import com.ledokol.thebestprojectever.data.local.notifications.NotificationEntity
 import com.ledokol.thebestprojectever.data.local.profile.DoNotDisturb
 import com.ledokol.thebestprojectever.data.local.profile.Profile
 import com.ledokol.thebestprojectever.data.local.profile.ProfileToken
 import com.ledokol.thebestprojectever.data.local.user.Apps
 import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.domain.games.*
+import com.ledokol.thebestprojectever.domain.notifications.FriendPendingInvites
 import com.ledokol.thebestprojectever.domain.profile.*
 import com.ledokol.thebestprojectever.domain.users.AddFriend
 import okhttp3.MultipartBody
@@ -147,7 +149,7 @@ interface RetrofitServices {
     fun addFriend(
         @Header("Authorization") authHeader: String,
         @Body addFriend: AddFriend,
-    ): Call<String>
+    ): Call<Any>
 
     @GET("users")
     fun getUserByNickname(
@@ -158,5 +160,10 @@ interface RetrofitServices {
     fun getUserByPhone(
         @Query("phone") phone: String,
     ): Call<User>
+
+    @GET("friends/pending_invites")
+    fun getFriendPendingInvites(
+        @Header("Authorization") authHeader: String,
+    ): Call<List<NotificationEntity>>
 
 }
