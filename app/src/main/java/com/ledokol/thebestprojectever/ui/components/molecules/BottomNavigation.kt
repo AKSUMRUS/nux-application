@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,7 +34,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
         BottomNavigation(
             backgroundColor = MaterialTheme.colors.onBackground,
             contentColor = Color.Gray,
-            modifier = Modifier.height(80.dp),
+            modifier = Modifier.height(62.dp),
         ) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
@@ -44,22 +45,23 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             painterResource(id = item.icon),
                             contentDescription = item.title,
                             modifier = Modifier
-                                .padding(bottom = 8.dp)
+                                .align(CenterVertically)
+//                                .padding(bottom = 8.dp)
                                 .size(35.dp)
                                 .align(CenterVertically)
                             ,
                         )
                     },
-                    label = {
-                        Subtitle2(
-                            text = item.title,
-                            fontWeight = W700,
-                            modifier = Modifier.padding(bottom = 0.dp)
-                            ,
-
-                            color = if(currentRoute == item.screen_route) MaterialTheme.colors.onPrimary else MaterialTheme.colors.secondaryVariant
-                        )
-                    },
+//                    label = {
+//                        Subtitle2(
+//                            text = item.title,
+//                            fontWeight = W400,
+//                            modifier = Modifier.padding(bottom = 0.dp)
+//                            ,
+//
+//                            color = if(currentRoute == item.screen_route) MaterialTheme.colors.onPrimary else MaterialTheme.colors.secondaryVariant
+//                        )
+//                    },
                     selectedContentColor = MaterialTheme.colors.onPrimary,
                     unselectedContentColor = MaterialTheme.colors.secondaryVariant,
 //                    alwaysShowLabel = true,

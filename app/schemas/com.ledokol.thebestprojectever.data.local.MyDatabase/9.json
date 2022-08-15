@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "d2c7cfc940814bbd3da31edc460fee7b",
+    "identityHash": "a1921b6207977dece582145865e7de5f",
     "entities": [
       {
         "tableName": "profile",
@@ -224,24 +224,24 @@
       },
       {
         "tableName": "notifications",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`foo` TEXT NOT NULL, `bar` INTEGER NOT NULL, PRIMARY KEY(`foo`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dt_sent` TEXT NOT NULL, `from_user` TEXT NOT NULL, PRIMARY KEY(`from_user`))",
         "fields": [
           {
-            "fieldPath": "foo",
-            "columnName": "foo",
+            "fieldPath": "dt_sent",
+            "columnName": "dt_sent",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "bar",
-            "columnName": "bar",
-            "affinity": "INTEGER",
+            "fieldPath": "from_user",
+            "columnName": "from_user",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "foo"
+            "from_user"
           ],
           "autoGenerate": false
         },
@@ -252,7 +252,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd2c7cfc940814bbd3da31edc460fee7b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a1921b6207977dece582145865e7de5f')"
     ]
   }
 }

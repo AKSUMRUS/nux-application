@@ -87,7 +87,7 @@ fun StartNavigation(
         ))
     }
 
-    Log.i(TAG,"profile: $profile")
+    Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
 
     when (navBackStackEntry?.destination?.route) {
         BottomNavItemMain.QuickGame.screen_route -> {
@@ -112,7 +112,7 @@ fun StartNavigation(
     }else if(profile.profile==null){
         "splash_screen"
     } else if(!profile.finish_register){
-        Log.e("profile",profile.toString())
+        Log.e(TAG,"openScreenRegister ${profile.toString()}")
         accessToken = profile.profile.access_token
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
@@ -126,7 +126,7 @@ fun StartNavigation(
     } else {
         accessToken = profile.profile.access_token
 
-        Log.e("ShareGames", "Start $accessToken")
+        Log.e("ShareGames", "Start $accessToken ${userViewModel.state.openScreen}")
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -135,11 +135,12 @@ fun StartNavigation(
             accessToken
         )
 
-        if(userViewModel.state.openScreen!=null){
-            userViewModel.state = userViewModel.state.copy(
-                openScreen = null
-            )
-            "friend_screen"
+        Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
+        val openScreen = userViewModel.state.openScreen
+
+        if(openScreen!=null){
+            Log.e(TAG, "openScreenFinish $openScreen")
+            "$openScreen"
         }else{
             "quick_game"
         }
@@ -229,6 +230,7 @@ fun StartNavigation(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             userViewModel = userViewModel,
+                            profileViewModel = profileViewModel
                         )
                     }
                     composable("request_permission_contacts") {

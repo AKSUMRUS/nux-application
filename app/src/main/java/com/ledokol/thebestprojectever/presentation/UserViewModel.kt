@@ -16,6 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.*
 
 @HiltViewModel
 class
@@ -44,14 +45,10 @@ UserViewModel @Inject constructor(
                 checkExistsPhone(event.phone)
             }
             is UserEvent.AddFriend -> {
-                getUserByNickname(event.nickname)
-                Log.e("addFriend",state.friendUser.toString())
-                state.friendUser?.let {
-                    addFriend(
-                        it.id,
-                        event.access_token
-                    )
-                }
+                addFriend(
+                    accessToken = event.access_token,
+                    nickname = event.nickname
+                )
             }
             is UserEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
@@ -92,7 +89,7 @@ UserViewModel @Inject constructor(
                 getUserByPhone(event.phone)
             }
             is UserEvent.OpenScreen -> {
-
+                openScreen(event.screen)
             }
         }
     }
@@ -170,20 +167,34 @@ UserViewModel @Inject constructor(
 
     fun addFriend(
         accessToken: String,
-        friendId: String,
+        nickname: String,
     ){
         viewModelScope.launch {
-            repository.addFriend(
-                accessToken = accessToken,
-                friendId = friendId,
-            ).collect{
-                result ->
-                when(result){
-                    is Resource.Success -> {
-                    }
-                    is Resource.Loading -> {
+            withContext(Dispatchers.IO) {
+                getUserByNickname(nickname)
 
+                try{
+                    Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")
+
+                    repository.addFriend(
+                        accessToken = accessToken,
+                        friendId = state.friendUser!!.id,
+                    ).collect{
+                            result ->
+                        when(result){
+                            is Resource.Success -> {
+                                Log.e("addFriend", "result: ${result.data.toString()}")
+                            }
+                            is Resource.Loading -> {
+
+                            }
+                            is Resource.Error -> {
+                                Log.e("addFriend", "error")
+                            }
+                        }
                     }
+                }catch (e: Exception){
+                    Log.e("addFriend", e.toString())
                 }
             }
         }

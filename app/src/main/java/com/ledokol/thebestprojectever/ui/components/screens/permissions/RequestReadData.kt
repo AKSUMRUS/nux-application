@@ -21,7 +21,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
+import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
+import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
@@ -33,6 +35,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH3
 fun RequestReadData(
     navController: NavController,
     gamesViewModel: GamesViewModel,
+    profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel
 ) {
     val context: Context = LocalContext.current
@@ -45,10 +48,7 @@ fun RequestReadData(
 
                 if(checkPermissionReadData(context)){
 
-                    navController.navigate("quick_game"){
-                        popUpTo("quick_game")
-                        launchSingleTop = true
-                    }
+                    profileViewModel.onEvent(ProfileEvent.SetFinishRegister(accessToken = profileViewModel.state.profile!!.access_token))
                 }else{
                     checkPermission = false
                 }

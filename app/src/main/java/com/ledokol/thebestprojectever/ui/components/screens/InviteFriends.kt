@@ -53,7 +53,7 @@ fun InviteFriend(
             ButtonBorder(
                 text = "Добавить",
                 onClick = {
-                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = ""))
+                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
                     nickname = ""
                     Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
                 },

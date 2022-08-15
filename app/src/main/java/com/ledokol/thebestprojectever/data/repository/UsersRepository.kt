@@ -6,6 +6,7 @@ import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UsersDao
 import com.ledokol.thebestprojectever.data.remote.RetrofitServices
 import com.ledokol.thebestprojectever.domain.profile.ExistsUserJSON
+import com.ledokol.thebestprojectever.domain.users.AddFriend
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -151,12 +152,12 @@ class UsersRepository @Inject constructor(
         return flow{
             emit(Resource.Loading(true))
 
-            Log.e("addFriend", friendId)
+            Log.e("addFriendRepository", "$friendId $accessToken")
 
             val response = try{
                 val addFriend = api.addFriend(
                     authHeader = "Bearer $accessToken",
-                    com.ledokol.thebestprojectever.domain.users.AddFriend(user_id = friendId)
+                    addFriend = AddFriend(user_id = friendId)
                 )
 
                 val myResponse: String? = addFriend.awaitResponse().body()
@@ -172,6 +173,9 @@ class UsersRepository @Inject constructor(
                 null
             }
 
+            emit(Resource.Success(
+                data = response
+            ))
             emit(Resource.Loading(false))
         }
     }

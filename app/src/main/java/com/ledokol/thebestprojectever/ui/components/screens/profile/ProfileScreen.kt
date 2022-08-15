@@ -131,9 +131,11 @@ fun ProfileScreen(
 
                     ButtonBorder(
                         text = "Поделиться профилем",
+                        padding = 2.dp,
+                        modifier = Modifier.padding(start = 10.dp),
                         onClick = {
                             val dynamicLink = Firebase.dynamicLinks.dynamicLink {
-                                link = Uri.parse("https://ledokolit.page.link/?profile_id=${profile!!.access_token}")
+                                link = Uri.parse("https://ledokolit.page.link/?profile_id=${profile!!.id}")
                                 domainUriPrefix = "https://ledokolit.page.link"
                                 // Open links with this app on Android
                                 androidParameters {
