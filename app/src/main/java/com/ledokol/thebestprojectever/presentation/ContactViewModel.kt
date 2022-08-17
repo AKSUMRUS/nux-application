@@ -9,14 +9,17 @@ import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestprojectever.data.local.contact.Contact
 import com.ledokol.thebestprojectever.data.local.contact.ContactState
 import com.ledokol.thebestprojectever.data.repository.ContactsRepository
+import com.ledokol.thebestprojectever.data.repository.UsersRepository
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ContactViewModel @Inject constructor(
     private val repository: ContactsRepository,
+    private val usersRepository: UsersRepository,
 ): ViewModel() {
     var state by mutableStateOf(ContactState())
 
@@ -29,7 +32,22 @@ class ContactViewModel @Inject constructor(
 
     fun insertContact(contact: Contact){
         viewModelScope.launch {
-            repository.insertContact(contact)
+            usersRepository.checkExistsPhone(contact.phones).collect{
+                result ->
+                when(result) {
+                    is Resource.Success -> {
+                        contact.registered = result.data!!.exists
+                        if(contact.registered){
+                            Log.e("REGISTERED_CONTACT","EEEEEEEEEE")
+                        }
+                        repository.insertContact(contact)
+                    }
+                    is Resource.Loading -> {
+                    }
+                    is Resource.Error -> {
+                    }
+                }
+            }
         }
     }
 

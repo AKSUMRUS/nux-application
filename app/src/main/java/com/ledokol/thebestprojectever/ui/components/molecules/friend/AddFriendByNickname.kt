@@ -29,7 +29,7 @@ fun AddFriendByNickname(
     ButtonBorder(
         text = "Добавить",
         onClick = {
-                  onClickButton()
+            onClickButton()
         },
         padding = 2.dp,
         modifier = Modifier

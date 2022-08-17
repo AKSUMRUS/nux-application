@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
@@ -48,6 +49,7 @@ fun InviteFriend(
             AddFriendByNickname(
                 nickname = nickname,
                 onClickButton = {
+                    Log.e("addFriend","startFront")
                     userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
                     nickname = ""
                     Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()

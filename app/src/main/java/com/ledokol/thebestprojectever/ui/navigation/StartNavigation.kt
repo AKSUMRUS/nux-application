@@ -247,6 +247,7 @@ fun StartNavigation(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,
+                            userViewModel = userViewModel,
                         )
                     }
 

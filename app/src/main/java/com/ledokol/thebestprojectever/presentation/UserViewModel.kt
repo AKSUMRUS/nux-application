@@ -171,14 +171,17 @@ UserViewModel @Inject constructor(
         nickname: String?,
         phone: String?
     ){
+        Log.e("addFriend", "start")
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                if(nickname!=null){
+                if (nickname != null) {
                     getUserByNickname(nickname)
-                }else if(phone!=null){
+                } else if (phone != null) {
                     getUserByPhone(phone)
                 }
+            }
 
+            withContext(Dispatchers.IO) {
                 try{
                     Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")
 
