@@ -228,18 +228,16 @@ fun StartNavigation(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             userViewModel = userViewModel,
+                            profileViewModel = profileViewModel,
                         )
                         logOpenScreenEvent("request_permission_data")
                     }
-                    composable("request_permission_contacts") {
-                        RequestReadContacts(
-                            navController = navController,
-                            gamesViewModel = gamesViewModel,
-                            contactsViewModel = contactsViewModel,
-                            profileViewModel = profileViewModel
-                        )
-                        logOpenScreenEvent("request_permission_contacts")
-                    }
+//                    composable("request_permission_contacts") {
+//                        RequestReadContacts(
+//                            onClickButton = {  },
+//                        )
+//                        logOpenScreenEvent("request_permission_contacts")
+//                    }
                     composable("invite_friends") {
                         InviteFriend(
                             navController = navController,
@@ -250,7 +248,7 @@ fun StartNavigation(
                     }
 
                     composable("contacts_list") {
-                        ContactsList(
+                        ContactsScreen(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,

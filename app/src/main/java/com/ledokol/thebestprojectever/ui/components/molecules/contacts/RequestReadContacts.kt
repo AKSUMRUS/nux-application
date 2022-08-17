@@ -1,5 +1,5 @@
 
-package com.ledokol.thebestprojectever.ui.components.screens.permissions
+package com.ledokol.thebestprojectever.ui.components.molecules.contacts
 
 import android.Manifest
 import android.content.Context
