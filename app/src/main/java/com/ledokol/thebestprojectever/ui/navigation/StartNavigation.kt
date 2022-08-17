@@ -34,7 +34,6 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsS
 import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
-import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadContacts
 import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadData
 import com.ledokol.thebestprojectever.ui.components.screens.profile.EditProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScreen
@@ -233,15 +232,6 @@ fun StartNavigation(
                             profileViewModel = profileViewModel
                         )
                     }
-                    composable("request_permission_contacts") {
-                        logOpenScreenEvent("request_permission_contacts")
-                        RequestReadContacts(
-                            navController = navController,
-                            gamesViewModel = gamesViewModel,
-                            contactsViewModel = contactsViewModel,
-                        )
-                    }
-
                     composable("invite_friends") {
                         logOpenScreenEvent("invite_friends")
                         InviteFriend(
@@ -253,7 +243,7 @@ fun StartNavigation(
 
                     composable("contacts_list") {
                         logOpenScreenEvent("contacts_list")
-                        ContactsList(
+                        ContactsScreen(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,

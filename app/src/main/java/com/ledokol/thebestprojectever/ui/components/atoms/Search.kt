@@ -12,7 +12,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.textfields.Search
 @Composable
 fun Search(
     text: String,
-    placeholder: String,
+    placeholder: String = stringResource(id = R.string.enter_nickname_search),
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
@@ -20,7 +20,7 @@ fun Search(
         modifier = modifier,
     ){
         Search(
-            placeholder = stringResource(id = R.string.enter_nickname_search),
+            placeholder = placeholder,
             text = text,
             icon = Icons.Default.Close,
             onValueChange = {

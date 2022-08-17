@@ -124,4 +124,7 @@
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>
+
+<!--    Contacts-->
+    <string name = "enter_name_friend_from_contacts">Введи имя друга</string>
 </resources>

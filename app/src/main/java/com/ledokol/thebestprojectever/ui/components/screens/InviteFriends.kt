@@ -13,7 +13,10 @@ import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.Search
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.components.molecules.friend.AddFriendByNickname
+import com.ledokol.thebestprojectever.ui.components.molecules.friend.AddFriendByPhone
 
 @Composable
 fun InviteFriend(
@@ -23,6 +26,7 @@ fun InviteFriend(
 ){
     val context = LocalContext.current
     var nickname by remember{ mutableStateOf("")}
+    var phone by remember{ mutableStateOf("")}
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -41,26 +45,44 @@ fun InviteFriend(
                 .fillMaxSize()
                 .align(Alignment.Center)
         ){
-            Search(
-                text = nickname,
-                placeholder = "Введи ник друга",
-                onValueChange = {
-                    nickname = it
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            ButtonBorder(
-                text = "Добавить",
-                onClick = {
+            AddFriendByNickname(
+                nickname = nickname,
+                onClickButton = {
                     userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
                     nickname = ""
                     Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
                 },
-                padding = 2.dp,
+                onValueChange = {
+                    nickname = it
+                }
+            )
+
+            AddFriendByPhone(
+                phone = phone,
+                onClickButton = {
+                    userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
+                    phone = ""
+                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
+                },
+                onValueChange = {
+                    phone = it
+                },
+            )
+
+            ButtonFull(
+                text = "Добавить из контактов",
+                onClick = {
+                    navController.navigate("contacts_list"){
+                        popUpTo("contacts_list")
+                        launchSingleTop = true
+                    }
+                },
+                padding = 8.dp,
                 modifier = Modifier
+                    .padding(top = 10.dp)
                     .fillMaxWidth()
-                    .padding(bottom = 10.dp)
+                    .padding(bottom = 10.dp),
+
             )
 
             ShareInvite()

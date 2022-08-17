@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,11 +25,11 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 fun Search(
     placeholder: String,
     text: String,
-    icon: ImageVector,
+    icon: ImageVector = Icons.Default.Close,
     modifier: Modifier = Modifier,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
-    trailingButtonClick: () -> Unit,
+    trailingButtonClick: () -> Unit = {onValueChange("")},
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
@@ -55,13 +57,14 @@ fun Search(
             }
         },
         modifier = Modifier
+            .then(modifier)
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 15.dp)
             .background(
                 MaterialTheme.colors.secondary,
                 RoundedCornerShape(0.dp)
             )
-            .then(modifier),
+        ,
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,

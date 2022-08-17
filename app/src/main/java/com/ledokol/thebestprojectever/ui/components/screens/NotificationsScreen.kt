@@ -54,7 +54,7 @@ fun NotificationsScreen(
             item {
                 ScreenTitle(
                     name = stringResource(id = R.string.nav_notifications),
-                    modifier = Modifier.padding(top = 110.dp),
+                    modifier = Modifier.padding(start = 20.dp, top = 110.dp),
                 )
             }
 

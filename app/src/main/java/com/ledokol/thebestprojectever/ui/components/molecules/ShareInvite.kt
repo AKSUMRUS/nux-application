@@ -105,7 +105,7 @@ fun ShareInvite(
                         text = "Поделиться",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 20.dp),
+                            .padding(bottom = 10.dp),
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.W700,
                     )
@@ -131,7 +131,7 @@ fun ShareInvite(
                         text = stringResource(id = R.string.repost_another_app),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 30.dp, end = 30.dp, top = 10.dp, bottom = 10.dp),
+                            .padding(start = 0.dp, end = 0.dp, top = 10.dp, bottom = 10.dp),
                         onClick = { onClick(null) },
                         icon = Icons.Default.Share,
                     )

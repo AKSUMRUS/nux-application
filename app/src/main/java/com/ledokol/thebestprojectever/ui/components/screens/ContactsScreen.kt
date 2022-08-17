@@ -1,16 +1,31 @@
 package com.ledokol.thebestprojectever.ui.components.screens
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.database.Cursor
+import android.net.Uri
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.util.Log
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
 import com.ledokol.thebestprojectever.data.local.contact.Contact
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
+import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
+import com.ledokol.thebestprojectever.ui.components.molecules.ShowMyContacts
+import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadContacts
+import com.ledokol.thebestprojectever.ui.components.screens.profile.getLinkProfile
 
 
 private const val TAG = "getContacts"
@@ -21,58 +36,80 @@ class ContactClass(val name: String, val phone: String){
 
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("Range")
 @Composable
-fun ContactsList(
+fun ContactsScreen(
     navController: NavController,
     contactsViewModel: ContactViewModel,
     profileViewModel: ProfileViewModel,
 ) {
 
-//    val context: Context = LocalContext.current
-//    var textSearch by remember{ mutableStateOf("")}
-//    var showShareScreen by remember { mutableStateOf(false) }
-//
-//    fun onClick(){
-//        showShareScreen = true
-//    }
-//
-//    fun onValueChange(text: String){
-//        textSearch = text
-////        contactsViewModel.getContacts(text)
-//    }
-//
-//    if(!showShareScreen){
-//        Box(){
-//            LazyColumn(content = {
-//                item(){
-//                    Search(
-//                        text = textSearch,
-//                        placeholder = stringResource(id = R.string.choose_name),
-//                        onValueChange = {
-//                            onValueChange(it)
-//                        },
-//                        modifier = Modifier.padding(
-//                            top = 120.dp,
-//                        )
-//                    )
-//                }
-//                items(contactsViewModel.state.contacts!!){ contact ->
-//                    ContactInList(
-//                        name = contact.name,
-//                        navController = navController,
-//                        onClick = { onClick() },
-//                    )
-//                }
-//            },
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .padding(
-//                        start = 20.dp,
-//                        end = 20.dp,
-//                    )
-//            )
-//
+    val context: Context = LocalContext.current
+    var textSearch by remember{ mutableStateOf("")}
+    var showShareScreen by remember { mutableStateOf(false) }
+
+    var onClickButtonRequest by remember {
+        mutableStateOf({})
+    }
+
+    var permissionAlreadyRequested by remember {
+        mutableStateOf(false)
+    }
+
+    val permissionState = rememberPermissionState(permission = Manifest.permission.READ_CONTACTS) {
+        permissionAlreadyRequested = true
+    }
+
+    if(permissionState.status.isGranted && contactsViewModel.state.contacts!!.isEmpty()){
+        getContactArray(
+            context,
+            contactsViewModel
+        )
+        contactsViewModel.getContacts("")
+    }else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {
+        onClickButtonRequest = { permissionState.launchPermissionRequest() }
+    } else if (permissionState.status.shouldShowRationale) {
+        onClickButtonRequest = { permissionState.launchPermissionRequest() }
+    } else {
+        onClickButtonRequest = { context.openSettings() }
+    }
+
+    fun onClickContact(){
+        val dynamicLink = getLinkProfile(profile_id = profileViewModel.state.profile!!.access_token)
+
+        val intent= Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в приложении Dvor $dynamicLink")
+        intent.type="text/plain"
+
+        context.startActivity(Intent.createChooser(intent,"Поделиться"))
+    }
+
+    fun onValueChange(text: String){
+        textSearch = text
+//        contactsViewModel.getContacts(text)
+    }
+
+    if(permissionState.status.isGranted){
+        if(contactsViewModel.state.isLoading){
+            LoadingView()
+        }else{
+            Box(){
+                ShowMyContacts(
+                    textSearch = textSearch,
+                    onValueChange = {onValueChange(it)},
+                    contacts = contactsViewModel.state.contacts,
+                    onClickContact = {
+                        onClickContact()
+                    }
+                )
+
+                BackToolbar (
+                    buttonBackClick = {
+                        navController.popBackStack()
+                    }
+                )
 //            ButtonFull(
 //                text = "Дальше",
 //                onClick = {
@@ -84,13 +121,15 @@ fun ContactsList(
 //                    .align(Alignment.BottomEnd)
 //                    .padding(end = 20.dp, bottom = 20.dp)
 //            )
-//        }
-//    }else{
-//        navController.navigate("share_screen"){
-//            popUpTo("share_screen")
-//            launchSingleTop = true
-//        }
-//    }
+            }
+        }
+    }else{
+        RequestReadContacts(
+            onClickButton = {
+                onClickButtonRequest()
+            }
+        )
+    }
 
 }
 
@@ -180,4 +219,12 @@ fun getContactArray(
     if (cur != null) {
         cur.close()
     }
+}
+
+fun Context.openSettings() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    val uri = Uri.fromParts("package",packageName,null)
+    intent.data = uri
+    startActivity(intent)
 }

@@ -22,7 +22,7 @@ fun ScreenTitle(
     ) {
         HeadlineH4(
             text = name,
-            fontWeight = FontWeight.W700,
+            fontWeight = FontWeight.W500,
         )
         if(description != null) {
             Body1(

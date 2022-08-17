@@ -134,18 +134,7 @@ fun ProfileScreen(
                         padding = 2.dp,
                         modifier = Modifier.padding(start = 10.dp),
                         onClick = {
-                            val dynamicLink = Firebase.dynamicLinks.dynamicLink {
-                                link = Uri.parse("https://ledokolit.page.link/?profile_id=${profile!!.id}")
-                                domainUriPrefix = "https://ledokolit.page.link"
-                                // Open links with this app on Android
-                                androidParameters {
-
-                                }
-                                // Open links with com.example.ios on iOS
-                                iosParameters("com.example.ios") { }
-                            }
-
-                            val dynamicLinkUri = dynamicLink.uri
+                            val dynamicLinkUri = getLinkProfile(profile!!.id)
                             Log.e("dynamicLinkUri", dynamicLinkUri.toString())
 
                             val intent= Intent()
@@ -213,4 +202,22 @@ fun ProfileScreen(
 fun openGame(packageName: String, context: Context){
     val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
     launchIntent?.let { context.startActivity(it) }
+}
+
+fun getLinkProfile(
+    profile_id: String,
+) : String {
+    val dynamicLink = Firebase.dynamicLinks.dynamicLink {
+        link = Uri.parse("https://ledokolit.page.link/?profile_id=${profile_id}")
+        domainUriPrefix = "https://ledokolit.page.link"
+        // Open links with this app on Android
+        androidParameters {
+
+        }
+        // Open links with com.example.ios on iOS
+        iosParameters("com.example.ios") { }
+    }
+
+    val dynamicLinkUri = dynamicLink.uri
+    return dynamicLinkUri.toString()
 }

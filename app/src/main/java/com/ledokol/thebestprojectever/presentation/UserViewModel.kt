@@ -47,7 +47,8 @@ UserViewModel @Inject constructor(
             is UserEvent.AddFriend -> {
                 addFriend(
                     accessToken = event.access_token,
-                    nickname = event.nickname
+                    nickname = event.nickname,
+                    phone = event.phone,
                 )
             }
             is UserEvent.OnSearchQueryChange -> {
@@ -167,11 +168,16 @@ UserViewModel @Inject constructor(
 
     fun addFriend(
         accessToken: String,
-        nickname: String,
+        nickname: String?,
+        phone: String?
     ){
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                getUserByNickname(nickname)
+                if(nickname!=null){
+                    getUserByNickname(nickname)
+                }else if(phone!=null){
+                    getUserByPhone(phone)
+                }
 
                 try{
                     Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")

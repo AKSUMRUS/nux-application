@@ -1,11 +1,10 @@
 package com.ledokol.thebestprojectever.ui.components.molecules
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -13,26 +12,38 @@ import androidx.navigation.NavController
 import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun ContactInList(
     name: String,
-    navController: NavController,
     onClick: () -> Unit,
 ){
-    Column(
+    Row(
         modifier = Modifier
+            .padding(top = 10.dp,bottom = 10.dp)
             .fillMaxWidth()
-            .padding(top = 20.dp,bottom = 20.dp)
             .background(MaterialTheme.colors.secondary)
-            .padding( 20.dp)
+            .padding(15.dp)
     ){
-        HeadlineH5(text = name)
+        HeadlineH6(
+            text = name,
+            modifier = Modifier
+                .weight(4f)
+                .padding(end = 10.dp)
+//                .align(Alignment.CenterStart)
+        )
         ButtonFull(
             text = stringResource(id = R.string.invite_contact),
             onClick = {
                 onClick()
-            }
+            },
+            padding = 3.dp,
+            modifier = Modifier
+//                .align(Alignment.CenterStart)
+                .weight(3f)
+//                .align(Arrangement.End)
+//                .height(40.dp)
         )
     }
 }
