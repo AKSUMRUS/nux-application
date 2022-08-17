@@ -28,6 +28,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitleFriends
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
+import kotlinx.coroutines.withContext
 
 @Composable
 fun ListFriendsScreen(
@@ -109,10 +110,7 @@ fun ListFriendsScreen(
         runnable = Runnable {
             Log.e("FinishListFriends", "getUsers Okay $shouldWork")
             userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
-            runnable?.let { handler.postDelayed(it, 5000) }
         }
-
-        handler.postDelayed(runnable!!, 5000)
     }
         Column(
             modifier = Modifier

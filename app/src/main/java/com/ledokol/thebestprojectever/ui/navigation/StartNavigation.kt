@@ -167,35 +167,34 @@ fun StartNavigation(
                 startDestination = start,
                 builder = {
                     composable("start_registration_screen") {
-                        logOpenScreenEvent("start_registration_screen")
                         StartRegistrationScreen(
                             navController = navController,
                         )
+                        logOpenScreenEvent("start_registration_screen")
                     }
                     composable("login_screen") {
-                        logOpenScreenEvent("login_screen")
                         LoginScreen(
                             navController = navController,
                             profileViewModel = profileViewModel
                         )
+                        logOpenScreenEvent("login_screen")
                     }
                     composable("signup_screen") {
-                        logOpenScreenEvent("signup_screen")
                         SignUpScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             usersViewModel = userViewModel,
                         )
+                        logOpenScreenEvent("signup_screen")
                     }
                     composable("splash_screen") {
-                        logOpenScreenEvent("splash_screen")
                         SplashScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                         )
+                        logOpenScreenEvent("splash_screen")
                     }
                     composable("friend_screen") {
-                        logOpenScreenEvent("friend_screen")
                         FriendScreen(
                             navController = navController,
                             userViewModel = userViewModel,
@@ -203,6 +202,7 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                             analytics = analytics
                         )
+                        logOpenScreenEvent("friend_screen")
                     }
                     composable("finish_inviting_friends") {
                         FinishInvitingFriends(
@@ -212,7 +212,6 @@ fun StartNavigation(
                         )
                     }
                     composable("choose_friends_quick_game") {
-                        logOpenScreenEvent("choose_friends_quick_game")
                         userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,
@@ -221,58 +220,58 @@ fun StartNavigation(
                             gamesViewModel = gamesViewModel,
                             analytics = analytics
                         )
+                        logOpenScreenEvent("choose_friends_quick_game")
                     }
                     composable("request_permission_data") {
-                        logOpenScreenEvent("request_permission_data")
                         userViewModel.accessToken = accessToken
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             userViewModel = userViewModel,
                         )
+                        logOpenScreenEvent("request_permission_data")
                     }
                     composable("request_permission_contacts") {
-                        logOpenScreenEvent("request_permission_contacts")
                         RequestReadContacts(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             contactsViewModel = contactsViewModel,
                         )
+                        logOpenScreenEvent("request_permission_contacts")
                     }
 
                     composable("invite_friends") {
-                        logOpenScreenEvent("invite_friends")
                         InviteFriend(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             userViewModel = userViewModel,
                         )
+                        logOpenScreenEvent("invite_friends")
                     }
 
                     composable("contacts_list") {
-                        logOpenScreenEvent("contacts_list")
                         ContactsList(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,
                         )
+                        logOpenScreenEvent("contacts_list")
                     }
 
                     composable("edit_profile") {
-                        logOpenScreenEvent("edit_profile")
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
                         )
+                        logOpenScreenEvent("edit_profile")
                     }
 
                     composable("not_internet") {
-                        logOpenScreenEvent("not_internet")
                         NotInternet(
                         )
+                        logOpenScreenEvent("not_internet")
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
-                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
                         TheBestProjectEverTheme {
                             QuickGameScreen(
                                 navController = navController,
@@ -280,26 +279,26 @@ fun StartNavigation(
                                 profileViewModel = profileViewModel,
                             )
                         }
+                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
                     }
                     composable(BottomNavItemMain.Profile.screen_route) {
-                        logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
                         ProfileScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             gamesViewModel = gamesViewModel,
                             statusViewModel = statusViewModel
                         )
+                        logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {
-                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                         userViewModel.accessToken = accessToken
                         ListFriendsScreen(
                             navController = navController,
                             userViewModel = userViewModel
                         )
+                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                     }
                     composable(BottomNavItemMain.Notifications.screen_route) {
-                        logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
                         userViewModel.accessToken = accessToken
                         NotificationsScreen(
                             notificationsViewModel = notificationsViewModel,
@@ -307,6 +306,7 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                             navController = navController,
                         )
+                        logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
                     }
                 }
             )
