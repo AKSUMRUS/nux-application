@@ -34,7 +34,6 @@ import com.ledokol.thebestprojectever.ui.components.screens.friends.ListFriendsS
 import com.ledokol.thebestprojectever.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestprojectever.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestprojectever.ui.components.screens.games.QuickGameScreen
-import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadContacts
 import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadData
 import com.ledokol.thebestprojectever.ui.components.screens.profile.EditProfileScreen
 import com.ledokol.thebestprojectever.ui.components.screens.profile.ProfileScreen
@@ -87,7 +86,7 @@ fun StartNavigation(
         ))
     }
 
-    Log.i(TAG,"profile: $profile")
+    Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
 
     when (navBackStackEntry?.destination?.route) {
         BottomNavItemMain.QuickGame.screen_route -> {
@@ -112,7 +111,7 @@ fun StartNavigation(
     }else if(profile.profile==null){
         "splash_screen"
     } else if(!profile.finish_register){
-        Log.e("profile",profile.toString())
+        Log.e(TAG,"openScreenRegister ${profile.toString()}")
         accessToken = profile.profile.access_token
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
@@ -126,7 +125,7 @@ fun StartNavigation(
     } else {
         accessToken = profile.profile.access_token
 
-        Log.e("ShareGames", "Start $accessToken")
+        Log.e("ShareGames", "Start $accessToken ${userViewModel.state.openScreen}")
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -135,11 +134,12 @@ fun StartNavigation(
             accessToken
         )
 
-        if(userViewModel.state.openScreen!=null){
-            userViewModel.state = userViewModel.state.copy(
-                openScreen = null
-            )
-            "friend_screen"
+        Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
+        val openScreen = userViewModel.state.openScreen
+
+        if(openScreen!=null){
+            Log.e(TAG, "openScreenFinish $openScreen")
+            "$openScreen"
         }else{
             "quick_game"
         }
@@ -236,10 +236,10 @@ fun StartNavigation(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             contactsViewModel = contactsViewModel,
+                            profileViewModel = profileViewModel
                         )
                         logOpenScreenEvent("request_permission_contacts")
                     }
-
                     composable("invite_friends") {
                         InviteFriend(
                             navController = navController,
@@ -291,6 +291,7 @@ fun StartNavigation(
                         logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {
+                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                         userViewModel.accessToken = accessToken
                         ListFriendsScreen(
                             navController = navController,

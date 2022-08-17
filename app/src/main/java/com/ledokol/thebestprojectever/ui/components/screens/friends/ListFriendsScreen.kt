@@ -91,26 +91,30 @@ fun ListFriendsScreen(
         }
     }
 
-    fun onClickFindFriend(){
-        if(!isFindingNewFriends) {
-            usersList = state.findNewFriendsList
-            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
-            userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
-            isFindingNewFriends = true
-        }
-        else{
-            usersList = state.users
-            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
-            userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
-            isFindingNewFriends = false
-        }
-    }
+    //Поиск по всем пользователям
+//    fun onClickFindFriend(){
+//        if(!isFindingNewFriends) {
+//            usersList = state.findNewFriendsList
+//            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
+//            userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
+//            isFindingNewFriends = true
+//        }
+//        else{
+//            usersList = state.users
+//            Log.e("ListFriendsScreen", "onClickFindFriend $usersList")
+//            userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
+//            isFindingNewFriends = false
+//        }
+//    }
 
     LaunchedEffect(true){
         runnable = Runnable {
             Log.e("FinishListFriends", "getUsers Okay $shouldWork")
             userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
+            runnable?.let { handler.postDelayed(it, 5000) }
         }
+
+        handler.postDelayed(runnable!!, 100)
     }
         Column(
             modifier = Modifier
@@ -134,7 +138,7 @@ fun ListFriendsScreen(
                                     ScreenTitleFriends(
                                         name = stringResource(id = R.string.nav_friends),
                                         modifier = Modifier.padding(top = 110.dp),
-                                        onFindFriendClick = {onClickFindFriend()}
+//                                        onFindFriendClick = {onClickFindFriend()}
                                     )
                                     ShowSearch(userViewModel = userViewModel)
                                     ButtonBorder(
@@ -148,8 +152,8 @@ fun ListFriendsScreen(
                                     )
                                 }
 
-                                items(usersList!!.size) { friend ->
-                                    val user = usersList!![friend]
+                                items(state.users!!.size) { friend ->
+                                    val user = state.users!![friend]
                                     FriendInList(
                                         user = user,
                                         onClick = {

@@ -19,15 +19,15 @@ import id.zelory.compressor.loadBitmap
 fun ScreenTitleFriends(
     name: String,
     description: String? = null,
-    onFindFriendClick : () -> Unit,
+    onFindFriendClick : () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Row{
         ScreenTitle(name, description, modifier)
-        ButtonWithImage(
-            icon = painterResource(id = R.drawable.ic_radar),
-            onClick = onFindFriendClick,
-            modifier = modifier
-        )
+//        ButtonWithImage(
+//            icon = painterResource(id = R.drawable.ic_radar),
+//            onClick = onFindFriendClick,
+//            modifier = modifier
+//        )
     }
 }

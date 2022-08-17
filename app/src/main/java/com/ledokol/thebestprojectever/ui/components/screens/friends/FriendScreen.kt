@@ -94,7 +94,12 @@ fun FriendScreen(
         ) {
             BackToolbar (
                 buttonBackClick = {
-                    navController.popBackStack()
+//                    navController.popBackStack()
+                    navController.navigate("team"){
+                        popUpTo("team")
+                        launchSingleTop = true
+                    }
+
                 }
             )
 

@@ -85,6 +85,10 @@ class MainActivity : ComponentActivity() {
             param(FirebaseAnalytics.Param.SCREEN_CLASS, "MainActivity")
         }
 
+        userViewModel.state = userViewModel.state.copy(
+            openScreen = null
+        )
+
         setContent {
             val navController = rememberNavController()
 

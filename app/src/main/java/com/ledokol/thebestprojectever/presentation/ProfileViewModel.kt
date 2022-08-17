@@ -85,6 +85,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+
     private fun getDefaultProfilePics() {
         viewModelScope.launch {
             repository.getDefaultProfilePics().collect{

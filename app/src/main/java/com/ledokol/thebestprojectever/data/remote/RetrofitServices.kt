@@ -94,7 +94,7 @@ interface RetrofitServices {
         @Body friends: FriendsInviteToGame
     ) : Call<Any>
 
-    @GET("get_me")
+    @GET("current_user")
     fun getMe(
         @Header("Authorization") authHeader: String
     ) : Call<Profile>
