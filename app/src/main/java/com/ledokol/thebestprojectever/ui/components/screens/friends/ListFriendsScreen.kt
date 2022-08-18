@@ -28,6 +28,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitle
 import com.ledokol.thebestprojectever.ui.components.molecules.ScreenTitleFriends
 import com.ledokol.thebestprojectever.ui.components.molecules.friend.FriendInList
+import kotlinx.coroutines.withContext
 
 @Composable
 fun ListFriendsScreen(

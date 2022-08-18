@@ -1,5 +1,6 @@
 package com.ledokol.thebestprojectever.data.repository
 
+import android.util.Log
 import com.ledokol.thebestprojectever.data.local.notifications.NotificationEntity
 import com.ledokol.thebestprojectever.data.local.notifications.NotificationsDao
 import com.ledokol.thebestprojectever.data.local.user.User
@@ -31,6 +32,8 @@ class NotificationsRepository @Inject constructor(
                 emit(Resource.Error(e.message ?: "Error"))
                 return@flow
             }
+
+            Log.e("NotificationsRepository", "notificationsCall: $notificationsCall")
 
             emit(Resource.Loading(false))
 

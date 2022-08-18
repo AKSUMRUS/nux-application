@@ -26,7 +26,7 @@ import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.ShowMyContacts
-import com.ledokol.thebestprojectever.ui.components.screens.permissions.RequestReadContacts
+import com.ledokol.thebestprojectever.ui.components.molecules.contacts.RequestReadContacts
 import com.ledokol.thebestprojectever.ui.components.screens.profile.getLinkProfile
 
 
