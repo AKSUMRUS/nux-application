@@ -49,10 +49,10 @@ class StatusRepository @Inject constructor(
             }
 
             override fun onFailure(call: Call<StatusJSON>, t: Throwable) {
+
                 Log.e("Leave Status",t.toString())
             }
 
         })
     }
-
 }

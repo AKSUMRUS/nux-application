@@ -110,7 +110,7 @@ fun ProfileScreen(
         context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
     val calendar: Calendar = Calendar.getInstance()
-    calendar.add(Calendar.WEEK_OF_MONTH, -1)
+    calendar.add(Calendar.WEEK_OF_YEAR, -1)
     val start: Long = calendar.getTimeInMillis()
     val end = System.currentTimeMillis()
     val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
@@ -189,9 +189,6 @@ fun ProfileScreen(
                     )
                 }
             }
-
-
-
         }
 
 //        DisturbButton(
