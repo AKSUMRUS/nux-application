@@ -63,7 +63,10 @@ fun FriendScreen(
 
     LaunchedEffect(key1 = userViewModel.state.users, block ={
         val users = userViewModel.state.users
-        if(users!=null&&user!=null&&user.id!=profileViewModel.state.profile!!.access_token){
+        if(user!=null && user.id == profileViewModel.state.profile!!.id){
+            showButtonAddFriend = false
+        }
+        if(users!=null&&user!=null&&user.id!=profileViewModel.state.profile!!.id){
             Log.e("UsersFriendScreen", users.toString())
             for(userInList in users){
                 if(user!!.id == userInList.id){
