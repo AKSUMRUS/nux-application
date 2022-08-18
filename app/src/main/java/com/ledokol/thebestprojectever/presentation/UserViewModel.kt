@@ -172,36 +172,37 @@ UserViewModel @Inject constructor(
         phone: String?
     ){
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                if(nickname!=null){
+            val job = launch {
+                if (nickname != null) {
                     getUserByNickname(nickname)
-                }else if(phone!=null){
+                } else if (phone != null) {
                     getUserByPhone(phone)
                 }
+            }
 
-                try{
-                    Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")
+            job.join()
 
-                    repository.addFriend(
-                        accessToken = accessToken,
-                        friendId = state.friendUser!!.id,
-                    ).collect{
-                            result ->
-                        when(result){
-                            is Resource.Success -> {
-                                Log.e("addFriend", "result: ${result.data.toString()}")
-                            }
-                            is Resource.Loading -> {
+            try{
+                Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")
+                repository.addFriend(
+                    accessToken = accessToken,
+                    friendId = state.friendUser!!.id,
+                ).collect{
+                        result ->
+                    when(result){
+                        is Resource.Success -> {
+                            Log.e("addFriend", "result: ${result.data.toString()}")
+                        }
+                        is Resource.Loading -> {
 
-                            }
-                            is Resource.Error -> {
-                                Log.e("addFriend", "error")
-                            }
+                        }
+                        is Resource.Error -> {
+                            Log.e("addFriend", "error")
                         }
                     }
-                }catch (e: Exception){
-                    Log.e("addFriend", e.toString())
                 }
+            }catch (e: Exception){
+                Log.e("addFriend", e.toString())
             }
         }
     }

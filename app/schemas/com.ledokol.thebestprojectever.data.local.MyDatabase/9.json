@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "a1921b6207977dece582145865e7de5f",
+    "identityHash": "0bb35b0bf6cc13552c8f2cf2192b7d1a",
     "entities": [
       {
         "tableName": "profile",
@@ -224,7 +224,7 @@
       },
       {
         "tableName": "notifications",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dt_sent` TEXT NOT NULL, `from_user` TEXT NOT NULL, PRIMARY KEY(`from_user`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dt_sent` TEXT NOT NULL, `from_user` TEXT NOT NULL, PRIMARY KEY(`dt_sent`))",
         "fields": [
           {
             "fieldPath": "dt_sent",
@@ -241,7 +241,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "from_user"
+            "dt_sent"
           ],
           "autoGenerate": false
         },
@@ -252,7 +252,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a1921b6207977dece582145865e7de5f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0bb35b0bf6cc13552c8f2cf2192b7d1a')"
     ]
   }
 }
