@@ -99,8 +99,8 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getUserByNickname(nickname: String,accessToken: String){
-        viewModelScope.launch {
+    private suspend fun getUserByNickname(nickname: String){
+
             repository.getUserByNickname(nickname).collect{
                 result ->
                     when(result){
@@ -110,9 +110,9 @@ UserViewModel @Inject constructor(
                                     friendUser = user
                                 )
                             }
-                            addFriendFinally(
-                                accessToken = accessToken,
-                            )
+//                            addFriendFinally(
+//                                accessToken = accessToken,
+//                            )
                         }
 
                         is Resource.Loading -> {
@@ -122,12 +122,11 @@ UserViewModel @Inject constructor(
                         }
                     }
             }
-        }
     }
 
 
-    private suspend fun getUserByPhone(phone: String,accessToken: String){
-        viewModelScope.launch {
+    private suspend fun getUserByPhone(phone: String){
+
             repository.getUserByPhone(phone).collect{
                     result ->
                 when(result){
@@ -137,9 +136,9 @@ UserViewModel @Inject constructor(
                                 friendUser = user
                             )
                         }
-                        addFriendFinally(
-                            accessToken = accessToken,
-                        )
+//                        addFriendFinally(
+//                            accessToken = accessToken,
+//                        )
                     }
 
                     is Resource.Loading -> {
@@ -149,7 +148,7 @@ UserViewModel @Inject constructor(
                     }
                 }
             }
-        }
+
     }
 
 
@@ -175,48 +174,48 @@ UserViewModel @Inject constructor(
         viewModelScope.launch {
 
 //            withContext(Dispatchers.IO){
-//                val job = launch {
-//                    try {
+                val job = launch {
+                    try {
                         Log.e(TAG, "addFriend: try $nickname $phone")
                         if (nickname != null) {
-                            getUserByNickname(nickname,accessToken)
+                            getUserByNickname(nickname)
                         }
                         if (phone != null) {
-                            getUserByPhone(phone,accessToken)
+                            getUserByPhone(phone)
                         }
-//                    } finally {
-////                        delay(500L)
-//                        Log.e(TAG, "addFriend: finally ${state.friendUser}")
-//                    }
-//                }
-//
-//                job.join()
-//
-//            Log.e(TAG,"addFriend: I have passed the job")
-//
-////                launch {
-//
-//                    try {
-//                        Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
-//                        repository.addFriend(
-//                            accessToken = accessToken,
-//                            friendId = state.friendUser!!.id,
-//                        ).collect { result ->
-//                            when (result) {
-//                                is Resource.Success -> {
-//                                    Log.e("addFriend", "result: ${result.data.toString()}")
-//                                }
-//                                is Resource.Loading -> {
-//
-//                                }
-//                                is Resource.Error -> {
-//                                    Log.e("addFriend", "error")
-//                                }
-//                            }
-//                        }
-//                    } catch (e: Exception) {
-//                        Log.e("addFriend", e.toString())
-//                    }
+                    } finally {
+//                        delay(500L)
+                        Log.e(TAG, "addFriend: finally ${state.friendUser}")
+                    }
+                }
+
+                job.join()
+
+            Log.e(TAG,"addFriend: I have passed the job")
+
+//                launch {
+
+                    try {
+                        Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
+                        repository.addFriend(
+                            accessToken = accessToken,
+                            friendId = state.friendUser!!.id,
+                        ).collect { result ->
+                            when (result) {
+                                is Resource.Success -> {
+                                    Log.e("addFriend", "result: ${result.data.toString()}")
+                                }
+                                is Resource.Loading -> {
+
+                                }
+                                is Resource.Error -> {
+                                    Log.e("addFriend", "error")
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        Log.e("addFriend", e.toString())
+                    }
                 }
             }
 
