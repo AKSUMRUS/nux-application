@@ -13,4 +13,6 @@ data class Contact(
     var name: String,
     @ColumnInfo(name = "phones")
     var phones: String,
+    @ColumnInfo(name = "registered")
+    var registered: Boolean = false,
 )

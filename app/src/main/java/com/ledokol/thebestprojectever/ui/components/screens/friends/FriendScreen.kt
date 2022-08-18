@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 //import com.google.accompanist.swiperefresh.SwipeRefresh
 //import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -26,11 +27,14 @@ import com.ledokol.thebestprojectever.R
 import com.ledokol.thebestprojectever.data.local.game.Game
 import com.ledokol.thebestprojectever.data.local.profile.ProfileEvent
 import com.ledokol.thebestprojectever.data.local.user.CurrentApp
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.GamesViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
 import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.alertdialogs.AlertDialogShow
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.*
@@ -84,30 +88,20 @@ fun FriendScreen(
     }
 
     if(user!=null&&!state.isLoading) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(
                     MaterialTheme.colors.background
-                )   
+                )
 //            .verticalScroll(rememberScrollState())
         ) {
-            BackToolbar (
-                buttonBackClick = {
-//                    navController.popBackStack()
-                    navController.navigate("team"){
-                        popUpTo("team")
-                        launchSingleTop = true
-                    }
-
-                }
-            )
-
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
 //                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
+                    .padding(top = 40.dp)
             ){
                 item(
                     span = { GridItemSpan(2) },
@@ -183,6 +177,30 @@ fun FriendScreen(
                     }
                 }
             }
+
+            BackToolbar (
+                buttonBackClick = {
+//                    navController.popBackStack()
+                    navController.navigate("team"){
+                        popUpTo("team")
+                        launchSingleTop = true
+                    }
+                },
+//                modifier = Modifier
+//                    .align(Alignment.TopCenter)
+            )
+
+            ButtonFull(
+                text = "Добавить в друзья",
+                onClick = {
+                    userViewModel.onEvent(UserEvent.AddFriend(nickname = user.nickname, access_token = profileViewModel.state.profile!!.access_token))
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 20.dp)
+                ,
+                padding = 10.dp
+            )
         }
 
         AlertDialogShow(

@@ -18,7 +18,8 @@ fun ShowMyContacts(
     textSearch: String,
     onValueChange: (String) -> Unit,
     contacts: List<Contact>?,
-    onClickContact: () -> Unit,
+    inviteFriend: () -> Unit,
+    addFriend: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -43,9 +44,11 @@ fun ShowMyContacts(
             ){
             }
             items(contacts!!.filter { it.name.lowercase().contains(textSearch.lowercase()) }){ contact ->
+
                 ContactInList(
                     name = contact.name,
-                    onClick = { onClickContact() },
+                    onClick = { if(contact.registered) addFriend(contact.phones) else inviteFriend() },
+                    textButton = if(contact.registered) "Добавить в друзья" else "Пригласить",
                 )
             }
         },

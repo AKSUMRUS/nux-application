@@ -1,5 +1,7 @@
 package com.ledokol.thebestprojectever.ui.components.screens.profile
 
+import android.app.usage.UsageStats
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,10 +17,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -42,9 +42,11 @@ import com.ledokol.thebestprojectever.ui.components.atoms.alertdialogs.AlertDial
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.molecules.GameInList
-import com.ledokol.thebestprojectever.ui.components.molecules.profile.DisturbButton
 import com.ledokol.thebestprojectever.ui.components.molecules.profile.ProfileTopBlock
-
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 
 // Гордей, ПОЧЕМУ ЭТО БЛЯТЬ ЗДЕСЬ!?!?!?!?!?!!??!
@@ -104,8 +106,14 @@ fun ProfileScreen(
         ))
     }
 
-    val resources = context.resources
+    val usageStatsManager =
+        context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
 
+    val calendar: Calendar = Calendar.getInstance()
+    calendar.add(Calendar.WEEK_OF_MONTH, -1)
+    val start: Long = calendar.getTimeInMillis()
+    val end = System.currentTimeMillis()
+    val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
 
     Box(
         modifier = Modifier
@@ -149,6 +157,9 @@ fun ProfileScreen(
             }
 
             if (games != null) {
+
+
+
                 item(span = {GridItemSpan(2)}){
                     HeadlineH4(
                         text = "Игры",
@@ -170,7 +181,11 @@ fun ProfileScreen(
                         onClick = {
                             openDialog = true
                             selectedGame = game.android_package_name
-                        }
+                        },
+                        usageTime = if(game.android_package_name in stats.keys)
+                            (stats.get(game.android_package_name)!!.totalTimeInForeground).toString()
+//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.minutes.toString())
+                        else null
                     )
                 }
             }

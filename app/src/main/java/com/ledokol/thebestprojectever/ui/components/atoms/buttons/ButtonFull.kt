@@ -49,7 +49,7 @@ fun ButtonFull(
             text = text,
             color = colorText,
             modifier = Modifier
-                .fillMaxWidth()
+//                .fillMaxWidth()
                 .align(CenterVertically)
                 .padding(bottom = 2.dp)
         ,

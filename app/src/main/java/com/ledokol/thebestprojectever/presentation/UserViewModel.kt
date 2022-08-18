@@ -171,6 +171,7 @@ UserViewModel @Inject constructor(
         nickname: String?,
         phone: String?
     ){
+        Log.e("addFriend", "start")
         viewModelScope.launch {
             val job = launch {
                 if (nickname != null) {

@@ -26,6 +26,7 @@ import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH6
 import com.ledokol.thebestprojectever.ui.components.screens.getContactArray
 
 
@@ -53,21 +54,23 @@ fun RequestReadContacts(
                     .fillMaxWidth(),
                 fontWeight = FontWeight.W500,
             )
-            HeadlineH5(
+            HeadlineH6(
                 text = stringResource(id = R.string.need_permission_contacts),
                 color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+                ,
                 fontWeight = FontWeight.W500,
             )
 
-            HeadlineH4(
-                text = stringResource(id = R.string.reason_permission_contacts),
-                color = MaterialTheme.colors.onBackground,
-                modifier = Modifier
-                    .fillMaxWidth(),
-                fontWeight = FontWeight.W500,
-            )
+//            HeadlineH4(
+//                text = stringResource(id = R.string.reason_permission_contacts),
+//                color = MaterialTheme.colors.onBackground,
+//                modifier = Modifier
+//                    .fillMaxWidth(),
+//                fontWeight = FontWeight.W500,
+//            )
         }
 
         Column(

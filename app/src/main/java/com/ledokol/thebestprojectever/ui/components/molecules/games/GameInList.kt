@@ -28,6 +28,7 @@ fun GameInList(
     backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
     openGame: Boolean = false,
+    usageTime: String? = null,
 ){
 
     Box (
@@ -58,10 +59,11 @@ fun GameInList(
             ,
         )
 
-//        Body1(
-//            text = name,
-//            modifier = Modifier.align(Alignment.BottomCenter)
-//        )
+        usageTime?.let {
+            Body1(
+                text = it,
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
+        }
     }
-
 }

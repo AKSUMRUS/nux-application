@@ -19,8 +19,10 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.ledokol.thebestprojectever.data.local.contact.Contact
+import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.presentation.ContactViewModel
 import com.ledokol.thebestprojectever.presentation.ProfileViewModel
+import com.ledokol.thebestprojectever.presentation.UserViewModel
 import com.ledokol.thebestprojectever.ui.components.atoms.LoadingView
 import com.ledokol.thebestprojectever.ui.components.molecules.BackToolbar
 import com.ledokol.thebestprojectever.ui.components.molecules.ShowMyContacts
@@ -43,6 +45,7 @@ fun ContactsScreen(
     navController: NavController,
     contactsViewModel: ContactViewModel,
     profileViewModel: ProfileViewModel,
+    userViewModel: UserViewModel,
 ) {
 
     val context: Context = LocalContext.current
@@ -61,6 +64,10 @@ fun ContactsScreen(
         permissionAlreadyRequested = true
     }
 
+    LaunchedEffect(key1 = true, block = {
+        contactsViewModel.clearContacts()
+    })
+
     if(permissionState.status.isGranted && contactsViewModel.state.contacts!!.isEmpty()){
         getContactArray(
             context,
@@ -75,7 +82,7 @@ fun ContactsScreen(
         onClickButtonRequest = { context.openSettings() }
     }
 
-    fun onClickContact(){
+    fun inviteFriend(){
         val dynamicLink = getLinkProfile(profile_id = profileViewModel.state.profile!!.access_token)
 
         val intent= Intent()
@@ -84,6 +91,10 @@ fun ContactsScreen(
         intent.type="text/plain"
 
         context.startActivity(Intent.createChooser(intent,"Поделиться"))
+    }
+
+    fun addFriend(phone: String){
+        userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
     }
 
     fun onValueChange(text: String){
@@ -100,8 +111,11 @@ fun ContactsScreen(
                     textSearch = textSearch,
                     onValueChange = {onValueChange(it)},
                     contacts = contactsViewModel.state.contacts,
-                    onClickContact = {
-                        onClickContact()
+                    inviteFriend = {
+                        inviteFriend()
+                    },
+                    addFriend = {
+                        addFriend(it)
                     }
                 )
 
@@ -196,7 +210,7 @@ fun getContactArray(
                 )
 
 //                array.add(ContactClass(name,""))
-                val phones: MutableList<String> = mutableListOf()
+                var phones: MutableList<String> = mutableListOf()
 
                 while (pCur!!.moveToNext()) {
                     val phoneNo: String = pCur!!.getString(
@@ -210,6 +224,9 @@ fun getContactArray(
                     Log.i(TAG, "Phone Number: $phoneNo")
                 }
 
+                if(phones[0][0]=='8'){
+                    phones[0] = "+7" + phones[0].subSequence(1,phones[0].length)
+                }
                 contactsViewModel.insertContact(Contact(contactId = id, name = name, phones = phones[0]))
                 pCur!!.close()
             }
