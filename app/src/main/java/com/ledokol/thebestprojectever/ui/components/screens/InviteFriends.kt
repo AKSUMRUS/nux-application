@@ -59,17 +59,17 @@ fun InviteFriend(
                 }
             )
 
-            AddFriendByPhone(
-                phone = phone,
-                onClickButton = {
-                    userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
-                    phone = ""
-                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
-                },
-                onValueChange = {
-                    phone = it
-                },
-            )
+//            AddFriendByPhone(
+//                phone = phone,
+//                onClickButton = {
+//                    userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
+//                    phone = ""
+//                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
+//                },
+//                onValueChange = {
+//                    phone = it
+//                },
+//            )
 
             ButtonFull(
                 text = "Добавить из контактов",

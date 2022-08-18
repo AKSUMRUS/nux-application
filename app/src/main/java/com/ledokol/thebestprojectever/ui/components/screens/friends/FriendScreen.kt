@@ -46,7 +46,7 @@ fun FriendScreen(
     userViewModel: UserViewModel,
     gamesViewModel: GamesViewModel,
     profileViewModel: ProfileViewModel,
-    analytics: FirebaseAnalytics
+    analytics: FirebaseAnalytics,
 ){
 
     val user = userViewModel.state.friendUser
@@ -54,6 +54,24 @@ fun FriendScreen(
     val context: Context = LocalContext.current
     var openDialog by remember{ mutableStateOf(false)}
     var selectedGame by remember{ mutableStateOf("")}
+    var sendInvite by remember { mutableStateOf(false) }
+    var showButtonAddFriend by remember{ mutableStateOf(true)}
+
+    LaunchedEffect(key1 = true, block ={
+        userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
+    })
+
+    LaunchedEffect(key1 = userViewModel.state.users, block ={
+        val users = userViewModel.state.users
+        if(users!=null&&user!=null&&user.id!=profileViewModel.state.profile!!.access_token){
+            Log.e("UsersFriendScreen", users.toString())
+            for(userInList in users){
+                if(user!!.id == userInList.id){
+                    showButtonAddFriend = false
+                }
+            }
+        }
+    })
 
     fun inviteFriend(game: CurrentApp){
         gamesViewModel.setSelectedGame(
@@ -190,17 +208,22 @@ fun FriendScreen(
 //                    .align(Alignment.TopCenter)
             )
 
-            ButtonFull(
-                text = "Добавить в друзья",
-                onClick = {
-                    userViewModel.onEvent(UserEvent.AddFriend(nickname = user.nickname, access_token = profileViewModel.state.profile!!.access_token))
-                },
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 20.dp)
-                ,
-                padding = 10.dp
-            )
+            if(showButtonAddFriend){
+                ButtonFull(
+                    text = if(!sendInvite) "Добавить в друзья" else "Приглашение отправлено",
+                    onClick = {
+                        sendInvite = true
+                        userViewModel.onEvent(UserEvent.AddFriend(nickname = user.nickname, access_token = profileViewModel.state.profile!!.access_token))
+                    },
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 20.dp)
+                    ,
+                    padding = 10.dp,
+                    colorBackground = if(sendInvite) MaterialTheme.colors.surface else MaterialTheme.colors.primary,
+                    colorText = if(sendInvite) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
+                )
+            }
         }
 
         AlertDialogShow(

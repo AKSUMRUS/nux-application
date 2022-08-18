@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "0bb35b0bf6cc13552c8f2cf2192b7d1a",
+    "identityHash": "153966cdf39500ffce4e96f70a71e4a3",
     "entities": [
       {
         "tableName": "profile",
@@ -192,7 +192,7 @@
       },
       {
         "tableName": "contacts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contactId` TEXT NOT NULL, `name` TEXT NOT NULL, `phones` TEXT NOT NULL, PRIMARY KEY(`contactId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`contactId` TEXT NOT NULL, `name` TEXT NOT NULL, `phones` TEXT NOT NULL, `registered` INTEGER NOT NULL, PRIMARY KEY(`contactId`))",
         "fields": [
           {
             "fieldPath": "contactId",
@@ -210,6 +210,12 @@
             "fieldPath": "phones",
             "columnName": "phones",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "registered",
+            "columnName": "registered",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -252,7 +258,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0bb35b0bf6cc13552c8f2cf2192b7d1a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '153966cdf39500ffce4e96f70a71e4a3')"
     ]
   }
 }

@@ -27,7 +27,7 @@ fun ScreenTitle(
         if(description != null) {
             Body1(
                 text = description,
-                color = MaterialTheme.colors.onBackground,
+                color = MaterialTheme.colors.secondaryVariant,
             )
         }
     }

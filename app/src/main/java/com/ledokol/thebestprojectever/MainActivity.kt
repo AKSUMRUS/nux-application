@@ -56,16 +56,11 @@ class MainActivity : ComponentActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                // Get deep link from result (may be null if no link is found)
                 var deepLink: Uri? = null
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.link
                 }
-                //
-                // If the user isn't signed in and the pending Dynamic Link is
-                // an invitation, sign in the user anonymously, and record the
-                // referrer's UID.
-                //
+
                 if (deepLink != null &&
                     deepLink.getBooleanQueryParameter("profile_id", false)) {
                         val profile_id = deepLink.getQueryParameter("profile_id")
@@ -91,30 +86,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
-
-            Firebase.dynamicLinks
-                .getDynamicLink(intent)
-                .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                    // Get deep link from result (may be null if no link is found)
-                    var deepLink: Uri? = null
-                    if (pendingDynamicLinkData != null) {
-                        deepLink = pendingDynamicLinkData.link
-                    }
-                    //
-                    // If the user isn't signed in and the pending Dynamic Link is
-                    // an invitation, sign in the user anonymously, and record the
-                    // referrer's UID.
-                    //
-                    if (
-                        deepLink != null &&
-                        deepLink!!.getBooleanQueryParameter("invitedby", false)) {
-                        val referrerUid = deepLink!!.getQueryParameter("invitedby")
-
-
-                        navController.navigate("profile")
-                    }
-                }
-
 
             TheBestProjectEverTheme {
                     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {

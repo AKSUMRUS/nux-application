@@ -47,6 +47,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.seconds
 
 
 // Гордей, ПОЧЕМУ ЭТО БЛЯТЬ ЗДЕСЬ!?!?!?!?!?!!??!
@@ -183,8 +184,9 @@ fun ProfileScreen(
                             selectedGame = game.android_package_name
                         },
                         usageTime = if(game.android_package_name in stats.keys)
-                            (stats.get(game.android_package_name)!!.totalTimeInForeground).toString()
-//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.minutes.toString())
+//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
+//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000).toString()
+                            null
                         else null
                     )
                 }

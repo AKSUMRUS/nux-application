@@ -43,18 +43,17 @@ fun NotificationsScreen(
         notificationEntity: NotificationEntity
     ){
         notificationsViewModel.onEvent(NotificationsEvent.AddFriend(token, notificationEntity))
-//        navController.navigate("friend_screen") {
-//            popUpTo("friend_screen")
-//            launchSingleTop = true
-//        }
     }
 
     LazyColumn(
+        modifier = Modifier
+            .padding(start = 20.dp, top = 110.dp)
+        ,
         content = {
             item {
                 ScreenTitle(
                     name = stringResource(id = R.string.nav_notifications),
-                    modifier = Modifier.padding(start = 20.dp, top = 110.dp),
+                    description = "Здесь будет список пользователей, которые хотят тебя добавить в друзья",
                 )
             }
 
