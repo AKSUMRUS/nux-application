@@ -10,13 +10,13 @@ import com.ledokol.thebestprojectever.data.local.user.User
 import com.ledokol.thebestprojectever.data.local.user.UserEvent
 import com.ledokol.thebestprojectever.data.local.user.UserState
 import com.ledokol.thebestprojectever.data.repository.UsersRepository
+import com.ledokol.thebestprojectever.ui.navigation.TAG
 import com.ledokol.thebestprojectever.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlinx.coroutines.*
 
 @HiltViewModel
 class
@@ -83,19 +83,13 @@ UserViewModel @Inject constructor(
             is UserEvent.GetFriendGames -> {
                 getUsersGames(event.user)
             }
-            is UserEvent.GetUserByNickname -> {
-                getUserByNickname(event.nickname)
-            }
-            is UserEvent.GetUserByPhone -> {
-                getUserByPhone(event.phone)
-            }
             is UserEvent.OpenScreen -> {
                 openScreen(event.screen)
             }
         }
     }
 
-    fun openScreen(
+    private fun openScreen(
         screen: String
     ){
         viewModelScope.launch {
@@ -105,7 +99,7 @@ UserViewModel @Inject constructor(
         }
     }
 
-    fun getUserByNickname(nickname: String){
+    private suspend fun getUserByNickname(nickname: String,accessToken: String){
         viewModelScope.launch {
             repository.getUserByNickname(nickname).collect{
                 result ->
@@ -116,6 +110,9 @@ UserViewModel @Inject constructor(
                                     friendUser = user
                                 )
                             }
+                            addFriendFinally(
+                                accessToken = accessToken,
+                            )
                         }
 
                         is Resource.Loading -> {
@@ -129,7 +126,7 @@ UserViewModel @Inject constructor(
     }
 
 
-    fun getUserByPhone(phone: String){
+    private suspend fun getUserByPhone(phone: String,accessToken: String){
         viewModelScope.launch {
             repository.getUserByPhone(phone).collect{
                     result ->
@@ -140,6 +137,9 @@ UserViewModel @Inject constructor(
                                 friendUser = user
                             )
                         }
+                        addFriendFinally(
+                            accessToken = accessToken,
+                        )
                     }
 
                     is Resource.Loading -> {
@@ -173,24 +173,65 @@ UserViewModel @Inject constructor(
     ){
         Log.e("addFriend", "start")
         viewModelScope.launch {
-            val job = launch {
-                if (nickname != null) {
-                    getUserByNickname(nickname)
-                } else if (phone != null) {
-                    getUserByPhone(phone)
+
+//            withContext(Dispatchers.IO){
+//                val job = launch {
+//                    try {
+                        Log.e(TAG, "addFriend: try $nickname $phone")
+                        if (nickname != null) {
+                            getUserByNickname(nickname,accessToken)
+                        }
+                        if (phone != null) {
+                            getUserByPhone(phone,accessToken)
+                        }
+//                    } finally {
+////                        delay(500L)
+//                        Log.e(TAG, "addFriend: finally ${state.friendUser}")
+//                    }
+//                }
+//
+//                job.join()
+//
+//            Log.e(TAG,"addFriend: I have passed the job")
+//
+////                launch {
+//
+//                    try {
+//                        Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
+//                        repository.addFriend(
+//                            accessToken = accessToken,
+//                            friendId = state.friendUser!!.id,
+//                        ).collect { result ->
+//                            when (result) {
+//                                is Resource.Success -> {
+//                                    Log.e("addFriend", "result: ${result.data.toString()}")
+//                                }
+//                                is Resource.Loading -> {
+//
+//                                }
+//                                is Resource.Error -> {
+//                                    Log.e("addFriend", "error")
+//                                }
+//                            }
+//                        }
+//                    } catch (e: Exception) {
+//                        Log.e("addFriend", e.toString())
+//                    }
                 }
             }
 
-            job.join()
-
-            try{
-                Log.e("addFriend", "viewModel ${state.friendUser!!.id.toString()}")
+    private fun addFriendFinally(
+        accessToken: String,
+    ) {
+        Log.e("addFriendFinally", "start")
+        viewModelScope.launch {
+            try {
+                Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
                 repository.addFriend(
                     accessToken = accessToken,
                     friendId = state.friendUser!!.id,
-                ).collect{
-                        result ->
-                    when(result){
+                ).collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             Log.e("addFriend", "result: ${result.data.toString()}")
                         }
@@ -202,7 +243,7 @@ UserViewModel @Inject constructor(
                         }
                     }
                 }
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("addFriend", e.toString())
             }
         }
