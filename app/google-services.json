@@ -7,6 +7,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:297120773646:android:f1bdc7a327e65017712e5f",
+        "android_client_info": {
+          "package_name": "com.ledokol.thebestproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297120773646-of2b8iaqhalkbj7tnrn1ci2drsf3j24l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ledokol.thebestproject",
+            "certificate_hash": "16707bf7943d2c77566a178d8857b378093da2d4"
+          }
+        },
+        {
+          "client_id": "297120773646-mkga5dkhv80jcfeoqlom9npqml5hglj2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6nXVC36xd557L0g7Ufejqh3wBFXCLU_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297120773646-mkga5dkhv80jcfeoqlom9npqml5hglj2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:297120773646:android:013ce92a4539d9a7712e5f",
         "android_client_info": {
           "package_name": "com.ledokol.thebestprojectever"

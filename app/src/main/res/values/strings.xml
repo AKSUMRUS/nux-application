@@ -29,7 +29,7 @@
     <string name="choose_phone">Напомни свой номер телефона…</string>
     <string name="choose_avatar">Выбери аватарку</string>
     <string name = "profile_nickname">nickname</string>
-    <string name = "profile_name">Твое имя</string>
+    <string name = "profile_name">Твое реальное имя</string>
     <string name = "privacy_police">Я согласен с правилами пользования и политикой конфеденциальности</string>
     <string name = "hello_registration">Добро пожаловать в &appname;</string>
     <string name = "logout">Выйти</string>
@@ -73,9 +73,11 @@
     <string name = "yes">Да</string>
     <string name = "no">Нет</string>
     <string name = "cancel">Отмена</string>
-    <string name = "enter_nickname_search">Введи ник</string>
+    <string name = "enter_nickname_search">Поиск по друзьям</string>
     <string name = "good_evening">Добрый вечер, </string>
-    <string name="loading"> Загрузка…</string>
+    <string name = "loading"> Загрузка…</string>
+    <string name = "empty_screen_title">Здесь пока пусто 😕</string>
+
 <!--    <string name = "hello_splash_screen">Добро пожаловать!</string>-->
     <string name = "confirm">Подтвердить</string>
     <string name = "not_internet">Подключите интернет :)</string>

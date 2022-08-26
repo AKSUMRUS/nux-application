@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.ledokol.thebestprojectever"
+    package="com.ledokol.thebestproject"
     android:installLocation="internalOnly"
     >
 
@@ -30,7 +30,7 @@
         android:theme="@style/Theme.TheBestProjectEver"
         android:usesCleartextTraffic="true">
         <receiver
-            android:name="com.ledokol.thebestprojectever.services.MyReceiver"
+            android:name=".services.MyReceiver"
             android:enabled="true"
             android:exported="false">
 
@@ -57,7 +57,7 @@
 
 
         <service
-            android:name="com.ledokol.thebestprojectever.services.MyService"
+            android:name=".services.MyService"
             android:enabled="true"
             android:exported="true" />
 
