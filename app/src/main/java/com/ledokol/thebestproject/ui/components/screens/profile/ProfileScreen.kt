@@ -181,8 +181,8 @@ fun ProfileScreen(
                         },
                         usageTime = if(game.android_package_name in stats.keys)
 //                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
-//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000).toString()
-                            null
+                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000).toString()
+//                            null
                         else null
                     )
                 }
