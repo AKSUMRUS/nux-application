@@ -9,6 +9,7 @@ import com.ledokol.thebestproject.data.local.profile.DoNotDisturb
 import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileDao
 import com.ledokol.thebestproject.data.local.profile.ProfileToken
+import com.ledokol.thebestproject.data.local.token.TokenEntity
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.domain.games.FriendsInviteToGame
 import com.ledokol.thebestproject.domain.profile.*
@@ -27,6 +28,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ProfileRepository @Inject constructor(
+    private val tokenRepository: TokenRepository,
     private val api : RetrofitServices,
     private val dao: ProfileDao
     ) {
@@ -35,8 +37,9 @@ class ProfileRepository @Inject constructor(
 
     fun setCurrentFirebaseToken(
         token: String,
-        accessToken: String
+        accessToken2: String
     ){
+        val accessToken = tokenRepository.getToken()
         Log.e("myFirebaseToken","$token $accessToken")
         val callSetCurrentToken = api.setCurrentFirebaseToken(
             authHeader = "Bearer $accessToken",
@@ -83,15 +86,17 @@ class ProfileRepository @Inject constructor(
             emit(Resource.Loading(true))
             val TAG = "uploadAvatar"
 
+            val token = tokenRepository.getToken()
+
             val out = convertBitmapToPNG(profile_pic_bitmap)
 
             val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
             val profile_pic: MultipartBody.Part = MultipartBody.Part.createFormData("profile_pic", "profile_pic.png", requestBody)
 
-            Log.e(TAG, "$accessToken")
+            Log.e(TAG, "$token")
             val remoteProfile = try{
                 val callUpdateAvatar = api.uploadAvatar(
-                    authHeader = "Bearer $accessToken",
+                    authHeader = "Bearer $token",
                     profile_pic = profile_pic
                 )
                 val profile = callUpdateAvatar.awaitResponse().body()
@@ -166,8 +171,11 @@ class ProfileRepository @Inject constructor(
         app_id: String
     ){
         Log.e("INVITE!!", FriendsInviteToGame(friends_ids = friends_ids, app_id = app_id).toString())
+
+        val token = tokenRepository.getToken()
+
         val callInvite = api.friendsInvite(
-            authHeader = "Bearer $accessToken",
+            authHeader = "Bearer $token",
             friends = FriendsInviteToGame(
                 friends_ids = friends_ids,
                 app_id = app_id
@@ -192,9 +200,11 @@ class ProfileRepository @Inject constructor(
         return flow{
             emit(Resource.Loading(true))
 
+            val token = tokenRepository.getToken()
+
             val remoteProfile = try{
                 val updateCall = api.setDoNotDisturb(
-                    authHeader = "Bearer $accessToken",
+                    authHeader = "Bearer $token",
                     DoNotDisturb(do_not_disturb = canDisturb)
                 )
 
@@ -214,8 +224,10 @@ class ProfileRepository @Inject constructor(
 
             remoteProfile?.let { profile ->
                 dao.clearProfile()
-                profile.access_token = accessToken
+                profile.access_token = token
                 dao.insertProfile(profile = profile)
+
+                tokenRepository.addToken(profile.access_token)
 
                 emit(Resource.Success(
                     data = profile
@@ -246,7 +258,9 @@ class ProfileRepository @Inject constructor(
     fun setFinishRegister(
         accessToken: String
     ){
-        dao.finishRegister(accessToken,true)
+        val token = tokenRepository.getToken()
+
+        dao.finishRegister(token,true)
     }
 
     fun signUp(
@@ -353,12 +367,15 @@ class ProfileRepository @Inject constructor(
         accessToken: String
     ): Flow<Resource<Profile>> {
         return flow {
+
+            val token = tokenRepository.getToken()
             Log.e("uploadAvatar","start")
             emit(Resource.Loading(true))
+
             val remoteProfile = try{
-                val profileCall = api.getMe(authHeader = "Bearer $accessToken")
+                val profileCall = api.getMe(authHeader = "Bearer $token")
                 val myResponse: Profile? = profileCall.awaitResponse().body()
-                myResponse?.access_token = accessToken
+                myResponse?.access_token = token
 
                 myResponse
             }
@@ -377,6 +394,8 @@ class ProfileRepository @Inject constructor(
                 dao.clearProfile()
                 dao.insertProfile(profile)
                 Log.e("Insert_Profile",profile.toString())
+
+                tokenRepository.addToken(token = profile.access_token)
 
                 data = dao.getProfile()!!
 

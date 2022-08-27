@@ -18,6 +18,7 @@ import javax.inject.Singleton
 
 @Singleton
 class UsersRepository @Inject constructor(
+    private val tokenRepository: TokenRepository,
     private val api : RetrofitServices,
     private val dao : UsersDao,
 ){

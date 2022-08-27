@@ -3,6 +3,7 @@ package com.ledokol.thebestproject.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestproject.data.repository.StatusRepository
+import com.ledokol.thebestproject.data.repository.TokenRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

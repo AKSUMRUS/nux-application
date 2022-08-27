@@ -11,11 +11,13 @@ import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsDao
 import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileDao
+import com.ledokol.thebestproject.data.local.token.TokenDao
+import com.ledokol.thebestproject.data.local.token.TokenEntity
 import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
 
 @Database(
-    entities = [(Profile::class),(User::class),(Game::class),(Contact::class), (NotificationEntity::class)],
+    entities = [(Profile::class),(User::class),(Game::class),(Contact::class), (NotificationEntity::class),(TokenEntity::class)],
     version = 9
 )
 @TypeConverters(Converters::class)
@@ -25,4 +27,5 @@ abstract class MyDatabase: RoomDatabase() {
     abstract fun gamesDao(): GamesDao
     abstract fun contactsDao(): ContactsDao
     abstract fun notificationDao(): NotificationsDao
+    abstract fun tokenDao() : TokenDao
 }
