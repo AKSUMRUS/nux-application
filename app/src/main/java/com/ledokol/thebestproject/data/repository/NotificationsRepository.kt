@@ -14,6 +14,7 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepository @Inject constructor(
+    private val tokenRepository: TokenRepository,
     val dao : NotificationsDao,
     val api : RetrofitServices
 ) {

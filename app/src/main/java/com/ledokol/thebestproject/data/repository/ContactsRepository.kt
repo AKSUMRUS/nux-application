@@ -12,6 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 class ContactsRepository @Inject constructor(
+    private val tokenRepository: TokenRepository,
     private val api: RetrofitServices,
     private val dao: ContactsDao,
 ){
