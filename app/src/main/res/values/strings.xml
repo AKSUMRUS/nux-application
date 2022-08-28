@@ -121,6 +121,10 @@
 <!--    Friend-->
     <string name="game_now_friend">Сейчас играет </string>
     <string name="last_game_friend">Последняя игра</string>
+    <string name="add_friend_title">Добавь друга</string>
+    <string name="add_by_nickname">По никнейму</string>
+    <string name="add_from_contacts">Из контактов</string>
+    <string name="add_by_qr">По QR-коду</string>
     <string name="invite_one_friend_alert_dialog_title">Пригласить в игру?</string>
     <string name="invite_one_friend_alert_dialog_description">Друг получит уведомление, о том что ты зовешь его играть</string>
 
