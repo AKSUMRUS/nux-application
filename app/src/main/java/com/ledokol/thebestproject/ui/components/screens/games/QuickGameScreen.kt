@@ -37,6 +37,7 @@ fun QuickGameScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(start = 10.dp, end = 10.dp)
             .background(
                 MaterialTheme.colors.background
             )

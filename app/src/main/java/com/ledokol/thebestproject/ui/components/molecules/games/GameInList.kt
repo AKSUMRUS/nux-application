@@ -1,10 +1,15 @@
 package com.ledokol.thebestproject.ui.components.molecules
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
@@ -25,34 +30,38 @@ fun GameInList(
 
     Column (
         modifier = Modifier
-            .clickable {
-                onClick()
-            }
         ,
     ) {
-        Box(
+        Column(
             modifier = Modifier
+                .padding(5.dp)
                 .fillMaxWidth()
-                .height(180.dp)
-        ){
-            AsyncImage(
-                model = iconLarge,
-                contentDescription = "GameImage",
-                modifier = Modifier
-//                    .fillMaxWidth()
-                    .padding(20.dp)
-                ,
-                contentScale = ContentScale.FillBounds,
-            )
+                .height(175.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(MaterialTheme.colors.secondary)
+                .clickable {
+                    onClick()
+                }
 
+            ,
+            verticalArrangement = Arrangement.Center,
+        ){
             AsyncImage(
                 model = icon,
                 contentDescription = "GameImage",
                 modifier = Modifier
 //                .border(5.dp, MaterialTheme.colors.background)
-                    .size(70.dp)
-                    .align(Alignment.BottomCenter)
+                    .size(100.dp)
+                    .align(CenterHorizontally)
+                    .padding(10.dp)
                 ,
+            )
+
+            Body1(
+                text = name,
+                modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(bottom = 8.dp)
             )
 
         }

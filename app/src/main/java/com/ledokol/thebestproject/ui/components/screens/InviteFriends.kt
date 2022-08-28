@@ -6,15 +6,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W600
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.friend.AddFriendByNickname
+import com.ledokol.thebestproject.ui.components.molecules.friend.BoxTypeAddFriend
 
 @Composable
 fun InviteFriend(
@@ -37,24 +45,48 @@ fun InviteFriend(
 
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+//            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(start = 20.dp, end = 20.dp)
+                .padding(start = 20.dp, end = 20.dp, top = 50.dp)
                 .fillMaxSize()
-                .align(Alignment.Center)
+//                .align(Alignment.Start)
         ){
-            AddFriendByNickname(
-                nickname = nickname,
-                onClickButton = {
-                    Log.e("addFriend","startFront")
-                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
-                    nickname = ""
-                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
-                },
-                onValueChange = {
-                    nickname = it
-                }
+            HeadlineH4(
+                text = stringResource(id = R.string.add_friend_title),
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+            ,
+                fontWeight = W600,
             )
+
+            BoxTypeAddFriend(
+                icon = ImageBitmap.imageResource(id = R.drawable.add_by_nickname),
+                title = stringResource(id = R.string.add_by_nickname)
+            )
+
+            BoxTypeAddFriend(
+                icon = ImageBitmap.imageResource(id = R.drawable.add_from_contacts),
+                title = stringResource(id = R.string.add_from_contacts)
+            )
+
+            BoxTypeAddFriend(
+                icon = ImageBitmap.imageResource(id = R.drawable.add_by_qr),
+                title = stringResource(id = R.string.add_by_qr)
+            )
+
+//            AddFriendByNickname(
+//                nickname = nickname,
+//                onClickButton = {
+//                    Log.e("addFriend","startFront")
+//                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
+//                    nickname = ""
+//                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
+//                },
+//                onValueChange = {
+//                    nickname = it
+//                }
+//            )
 
 //            AddFriendByPhone(
 //                phone = phone,
