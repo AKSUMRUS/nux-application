@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.theme
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -26,19 +27,26 @@ val LexendDeca = FontFamily(
         Font(R.font.lexenddeca_black, FontWeight.W900),
 )
 
+//val FiraSans = FontFamily(
+////        Font(R.font.f, FontWeight.W300),
+////        Font(R.font.fira_sans_regular, FontWeight.W400),
+////        Font(R.font.fira_sans_medium, FontWeight.W500),
+////        Font(R.font.fira_sans_bold, FontWeight.W700),
+//)
+
 
 // Set of Material typography styles to start with
 val Typography = Typography(
         h1 = TextStyle(
                 fontFamily = LexendDeca,
-                fontWeight = FontWeight.Light,
-                fontSize = 60.sp,
+                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp,
                 letterSpacing = (-1.5).sp
         ),
         h2 = TextStyle(
                 fontFamily = LexendDeca,
-                fontWeight = FontWeight.Light,
-                fontSize = 48.sp,
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
                 letterSpacing = (-0.5).sp
         ),
         h3 = TextStyle(
@@ -100,4 +108,6 @@ val Typography = Typography(
                 fontSize = 12.sp,
                 letterSpacing = (0.4).sp
         ),
+
+
 )

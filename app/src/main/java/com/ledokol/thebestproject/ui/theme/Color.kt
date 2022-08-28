@@ -16,6 +16,11 @@ val Black = Color(0xFF000000)
 val Gray = Color(0xFF3b3a40)
 val GrayHelper = Color(0xFF646464)
 
+val BackgroundDark = Color(0x00000000) //
+val OnPrimaryDark = Color(0xFFFFFFFF)
+val SecondaryDark = Color(0xFF13121B)
+val OnSecondaryDark = Color(0xFF4D4F71)
+
 
 val Black2 = Color(0xFF000000)
 val GrayLow = Color(0xFF1E1F28)

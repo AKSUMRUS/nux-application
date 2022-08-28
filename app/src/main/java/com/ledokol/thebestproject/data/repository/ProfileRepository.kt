@@ -304,6 +304,8 @@ class ProfileRepository @Inject constructor(
 
             remoteUser?.let { profile ->
 
+                tokenRepository.addToken(profile.access_token)
+
                 emit(Resource.Success(
                     data = profile
                 ))
@@ -352,6 +354,8 @@ class ProfileRepository @Inject constructor(
             remoteUser?.let { profile ->
 
                 Log.e("AccessToken",profile.toString())
+
+                tokenRepository.addToken(profile.access_token)
 
                 emit(Resource.Success(
                     data = profile
