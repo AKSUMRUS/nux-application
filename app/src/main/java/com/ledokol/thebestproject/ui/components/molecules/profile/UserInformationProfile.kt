@@ -189,7 +189,7 @@ fun UserInformationProfile(
                 if(profile){
                     Body1(
                         text = stringResource(id = R.string.good_evening),
-                        color = MaterialTheme.colors.secondaryVariant,
+                        color = MaterialTheme.colors.onPrimary,
                     )
                 }
                 HeadlineH4(

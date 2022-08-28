@@ -1,6 +1,7 @@
 package com.ledokol.thebestproject.ui.components.molecules.friend
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ fun FriendTopBar(
             ){
                 HeadlineH4(
                     text = user.nickname,
+                    color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.W700,
                 )
 

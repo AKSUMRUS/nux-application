@@ -26,11 +26,12 @@ fun TitleQuickGame(
 //        )
         HeadlineH4(
             text = title,
+            color = MaterialTheme.colors.onBackground,
             fontWeight = FontWeight.W500,
         )
         Body1(
             text = description,
-            color = MaterialTheme.colors.secondaryVariant,
+            color = MaterialTheme.colors.onPrimary,
         )
     }
 }

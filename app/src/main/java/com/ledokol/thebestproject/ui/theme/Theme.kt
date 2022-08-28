@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -22,14 +23,14 @@ import androidx.compose.runtime.Composable
 //isLight: Boolean
 
 private val DarkColorPalette = darkColors(
-    primary = Purple,
-    onPrimary = White,
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = Gray4,
-    onSecondary = White,
-    background = Black2,
-    onBackground = GrayLow,
+    secondary = SecondaryDark,
+    onSecondary = OnSecondaryDark,
+    background = BackgroundDark,
+    onBackground = OnBackgroundDark,
     surface = Gray5,
     onSurface = White,
     error = Red,
@@ -37,16 +38,16 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple,
-    onPrimary = White,
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = Gray4,
-    onSecondary = White,
-    background = Black2,
-    onBackground = GrayLow,
+    secondary = SecondaryDark,
+    onSecondary = OnSecondaryDark,
+    background = BackgroundDark,
+    onBackground = OnBackgroundDark,
     surface = Gray5,
-    onSurface = GrayHelper,
+    onSurface = White,
     error = Red,
     onError = White,
 

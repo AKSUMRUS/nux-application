@@ -22,12 +22,13 @@ fun ScreenTitle(
     ) {
         HeadlineH4(
             text = name,
+            color = MaterialTheme.colors.onBackground,
             fontWeight = FontWeight.W500,
         )
         if(description != null) {
             Body1(
                 text = description,
-                color = MaterialTheme.colors.secondaryVariant,
+                color = MaterialTheme.colors.onPrimary,
             )
         }
     }
