@@ -146,7 +146,6 @@ interface RetrofitServices {
 
     @PUT("friends/add")
     fun addFriend(
-        @Header("Authorization") authHeader: String,
         @Body addFriend: AddFriend,
     ): Call<String>
 

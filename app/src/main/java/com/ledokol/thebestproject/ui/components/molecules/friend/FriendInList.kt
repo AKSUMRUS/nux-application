@@ -68,7 +68,7 @@ fun FriendInList(
             )
             Body1(text = user.nickname,
                 modifier = Modifier.padding(start = 10.dp),
-                color = MaterialTheme.colors.onPrimary
+                color = MaterialTheme.colors.onBackground
             )
         }
 

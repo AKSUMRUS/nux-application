@@ -29,6 +29,8 @@ import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalled
 import com.ledokol.thebestproject.services.MyService
 import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestproject.ui.components.screens.*
+import com.ledokol.thebestproject.ui.components.screens.friends.AddFriendByName
+import com.ledokol.thebestproject.ui.components.screens.friends.FindFriendByName
 import com.ledokol.thebestproject.ui.components.screens.friends.FriendScreen
 import com.ledokol.thebestproject.ui.components.screens.friends.ListFriendsScreen
 import com.ledokol.thebestproject.ui.components.screens.games.ChooseFriendsForGame
@@ -232,12 +234,6 @@ fun StartNavigation(
                         )
                         logOpenScreenEvent("request_permission_data")
                     }
-//                    composable("request_permission_contacts") {
-//                        RequestReadContacts(
-//                            onClickButton = {  },
-//                        )
-//                        logOpenScreenEvent("request_permission_contacts")
-//                    }
                     composable("invite_friends") {
                         InviteFriend(
                             navController = navController,
@@ -269,6 +265,18 @@ fun StartNavigation(
                         NotInternet(
                         )
                         logOpenScreenEvent("not_internet")
+                    }
+                    composable("find_friend_by_name"){
+                        FindFriendByName(
+                            userViewModel = userViewModel,
+                            navController = navController
+                        )
+                    }
+                    composable("add_friend_by_name"){
+                        AddFriendByName(
+                            userViewModel = userViewModel,
+                            navController = navController
+                        )
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
                         TheBestProjectEverTheme {

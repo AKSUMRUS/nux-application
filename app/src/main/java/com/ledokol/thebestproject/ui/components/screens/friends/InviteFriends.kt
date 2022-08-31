@@ -62,17 +62,25 @@ fun InviteFriend(
 
             BoxTypeAddFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_nickname),
-                title = stringResource(id = R.string.add_by_nickname)
+                title = stringResource(id = R.string.add_by_nickname),
+                onClick = {
+                    navController.navigate("find_friend_by_name"){
+                        popUpTo("invite_friends")
+                        launchSingleTop = false
+                    }
+                }
             )
 
             BoxTypeAddFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_from_contacts),
-                title = stringResource(id = R.string.add_from_contacts)
+                title = stringResource(id = R.string.add_from_contacts),
+                onClick = {  }
             )
 
             BoxTypeAddFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_qr),
-                title = stringResource(id = R.string.add_by_qr)
+                title = stringResource(id = R.string.add_by_qr),
+                onClick = {}
             )
 
 //            AddFriendByNickname(

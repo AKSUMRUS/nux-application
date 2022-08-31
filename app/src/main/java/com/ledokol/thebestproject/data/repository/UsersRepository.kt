@@ -33,9 +33,13 @@ class UsersRepository @Inject constructor(
             val user = try {
                 val getUser = api.getUserByNickname(nickname)
 
-                val myResponse = getUser.awaitResponse().body()
+                val myResponse = getUser.awaitResponse()
 
-                myResponse
+                if(myResponse.code() != 200){
+                    emit(Resource.Error("Не удалось найти пользователя"))
+                }
+
+                myResponse.body()
             } catch(e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
@@ -146,17 +150,14 @@ class UsersRepository @Inject constructor(
     }
 
     fun addFriend(
-        accessToken: String,
         friendId: String
     ): Flow<Resource<String> > {
         return flow{
             emit(Resource.Loading(true))
 
-            Log.e("addFriendRepository", "$friendId $accessToken")
 
             val response = try{
                 val addFriend = api.addFriend(
-                    authHeader = "Bearer $accessToken",
                     addFriend = AddFriend(user_id = friendId)
                 )
 

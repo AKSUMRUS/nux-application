@@ -61,7 +61,7 @@ fun Search(
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 15.dp)
             .background(
-                MaterialTheme.colors.secondary,
+                MaterialTheme.colors.primary,
                 RoundedCornerShape(0.dp)
             )
         ,

@@ -131,10 +131,6 @@ fun UserInformationProfile(
         mutableStateOf<ImageBitmap?>(null)
     }
 
-    LaunchedEffect(true){
-//        profileViewModel.onEvent()
-    }
-
     val launcher = rememberLauncherForActivityResult(contract =
     ActivityResultContracts.GetContent()) { uri: Uri? ->
         imageUri = uri
@@ -142,8 +138,7 @@ fun UserInformationProfile(
 
         val options = BitmapFactory.Options()
         options.inSampleSize = calculateInSampleSize(options, 10,10);
-        options.inJustDecodeBounds = false;
-//        options.
+        options.inJustDecodeBounds = false
 
         Log.e("uploadAvatar", imageUri.toString())
 
@@ -151,19 +146,6 @@ fun UserInformationProfile(
             context.getContentResolver(),
             Uri.parse(imageUri.toString()),
         )
-
-//        val byteArrayOutputStream = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-
-//        val compressedImageFile = compress(context, byteArrayOutputStream) {
-//            resolution(1280, 720)
-//            quality(80)
-//            format(Bitmap.CompressFormat.WEBP)
-//            size(2_097_152) // 2 MB
-//        }
-
-//        val bitmap:Bitmap = B(imageUri.toString(),options)
-//        val compressedImageFile = compress(context, bitmap)
 
             profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
                 accessToken = profileViewModel.state.profile!!.access_token,
@@ -176,7 +158,7 @@ fun UserInformationProfile(
 
     val top: Dp = if (!profile) 70.dp else 120.dp
 
-    Box(){
+    Box{
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -194,6 +176,7 @@ fun UserInformationProfile(
                 }
                 HeadlineH4(
                     text = name,
+                    color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.W700,
                 )
             }

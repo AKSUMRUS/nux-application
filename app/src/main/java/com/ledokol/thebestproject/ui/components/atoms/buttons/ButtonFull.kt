@@ -26,7 +26,7 @@ fun ButtonFull(
 ){
 
     Button(
-        onClick = onClick,
+        onClick = {onClick()},
         modifier = Modifier
             .then(modifier)
     ,

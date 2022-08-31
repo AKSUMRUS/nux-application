@@ -11,5 +11,6 @@ data class UserState(
     val searchQuery: String = "",
     val existsUser: Boolean? = null,
     val openScreen: String? = null,
+    val error: String? = null,
 //    val numberScreen: Int = 0,
 )
