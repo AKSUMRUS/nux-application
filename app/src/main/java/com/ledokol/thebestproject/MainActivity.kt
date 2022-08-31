@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         myReceiver = MyReceiver()
         val bundle = intent.extras
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         userViewModel.state = userViewModel.state.copy(
             openScreen = null
@@ -53,7 +55,7 @@ class MainActivity : ComponentActivity() {
                 val profile_id = bundle.getString("userId_$notification_id").toString()
                 Log.e(TAG, profile_id.toString())
                 userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
-                userViewModel.onEvent(UserEvent.OpenScreen(screen = "friend_screen"))
+                userViewModel.onEvent(UserEvent.OpenScreen(screen = "preview_friend"))
             }else{
                 val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
                 bundle.clear()
@@ -76,7 +78,7 @@ class MainActivity : ComponentActivity() {
                         val profile_id = deepLink.getQueryParameter("profile_id")
                         Log.e(TAG, profile_id.toString())
                         userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
-                            userViewModel.onEvent(UserEvent.OpenScreen(screen = "friend_screen"))
+                        userViewModel.onEvent(UserEvent.OpenScreen(screen = "preview_friend"))
                     }
             }
 

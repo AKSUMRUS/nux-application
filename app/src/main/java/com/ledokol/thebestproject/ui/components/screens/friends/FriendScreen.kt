@@ -206,26 +206,7 @@ fun FriendScreen(
                         launchSingleTop = true
                     }
                 },
-//                modifier = Modifier
-//                    .align(Alignment.TopCenter)
             )
-
-            if(showButtonAddFriend){
-                ButtonFull(
-                    text = if(!sendInvite) "Добавить в друзья" else "Приглашение отправлено",
-                    onClick = {
-                        sendInvite = true
-                        userViewModel.onEvent(UserEvent.AddFriend(nickname = user.nickname, access_token = profileViewModel.state.profile!!.access_token))
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 20.dp)
-                    ,
-                    padding = 10.dp,
-                    colorBackground = if(sendInvite) MaterialTheme.colors.surface else MaterialTheme.colors.primary,
-                    colorText = if(sendInvite) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
-                )
-            }
         }
 
         AlertDialogShow(

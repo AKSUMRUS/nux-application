@@ -1,6 +1,7 @@
 package com.ledokol.thebestproject.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -22,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 
 @Composable
-fun Search(
+fun SearchBorder(
     placeholder: String,
     text: String,
     icon: ImageVector = Icons.Default.Close,
@@ -56,15 +58,19 @@ fun Search(
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },
-        shape = RoundedCornerShape(16.dp),
         modifier = Modifier
             .then(modifier)
+//            .padding(top = 10.dp, bottom = 15.dp)
+//            .border(3.dp, MaterialTheme.colors.primary)
             .fillMaxWidth()
-            .padding(top = 10.dp, bottom = 15.dp)
+            .clip(RoundedCornerShape(16.dp))
+//            .border(3.dp, MaterialTheme.colors.primary)
+            .border(1.dp, MaterialTheme.colors.primary, RoundedCornerShape(16.dp))
             .background(
                 MaterialTheme.colors.secondary,
-                RoundedCornerShape(0.dp)
+//                RoundedCornerShape(16.dp)
             )
+//            .border(3.dp, MaterialTheme.colors.primary)
         ,
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(

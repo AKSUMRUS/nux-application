@@ -2,6 +2,7 @@ package com.ledokol.thebestproject.ui.components.molecules.friend
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,20 +23,20 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 fun BoxTypeAddFriend(
     icon: ImageBitmap,
     title: String,
+    onClick: () -> Unit,
 ){
-
     Row(
         modifier = Modifier
             .padding(top = 7.dp, bottom = 8.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
+            .clickable {
+                onClick()
+            }
             .background(MaterialTheme.colors.secondary)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ){
-//        Box(){
-//
-//        }
         Icon(
             icon,
             modifier = Modifier

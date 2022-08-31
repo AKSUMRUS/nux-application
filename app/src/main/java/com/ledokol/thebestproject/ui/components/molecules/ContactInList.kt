@@ -36,7 +36,7 @@ fun ContactInList(
             onClick = {
                 onClick()
             },
-            padding = 3.dp,
+            padding = PaddingValues(3.dp),
             modifier = Modifier
 //                .align(Alignment.CenterStart)
                 .weight(3f)

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 9,
-    "identityHash": "153966cdf39500ffce4e96f70a71e4a3",
+    "identityHash": "739f260cd7ce8739b6aa43e107282b1c",
     "entities": [
       {
         "tableName": "profile",
@@ -253,12 +253,38 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "token",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `token` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "token",
+            "columnName": "token",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '153966cdf39500ffce4e96f70a71e4a3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '739f260cd7ce8739b6aa43e107282b1c')"
     ]
   }
 }

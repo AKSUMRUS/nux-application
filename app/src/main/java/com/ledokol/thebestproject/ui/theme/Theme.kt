@@ -23,14 +23,14 @@ import androidx.compose.runtime.Composable
 //isLight: Boolean
 
 private val DarkColorPalette = darkColors(
-    primary = PrimaryDark,
-    onPrimary = OnPrimaryDark,
+    primary = Purple,
+    onPrimary = White,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = SecondaryDark,
-    onSecondary = OnSecondaryDark,
-    background = BackgroundDark,
-    onBackground = OnBackgroundDark,
+    secondary = Gray4,
+    onSecondary = White,
+    background = Black2,
+    onBackground = GrayLow,
     surface = Gray5,
     onSurface = White,
     error = Red,
@@ -38,16 +38,16 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = PrimaryDark,
-    onPrimary = OnPrimaryDark,
+    primary = Purple,
+    onPrimary = White,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = SecondaryDark,
-    onSecondary = OnSecondaryDark,
-    background = BackgroundDark,
-    onBackground = OnBackgroundDark,
+    secondary = Gray4,
+    onSecondary = White,
+    background = Black2,
+    onBackground = GrayLow,
     surface = Gray5,
-    onSurface = White,
+    onSurface = GrayHelper,
     error = Red,
     onError = White,
 

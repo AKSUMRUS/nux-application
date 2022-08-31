@@ -52,6 +52,9 @@ UserViewModel @Inject constructor(
                     phone = event.phone,
                 )
             }
+            is UserEvent.ClearFriendUser -> {
+                state = state.copy(friendUser = null)
+            }
             is UserEvent.OnSearchQueryChange -> {
                 state = state.copy(searchQuery = event.query)
                 searchUser?.cancel()
@@ -119,6 +122,11 @@ UserViewModel @Inject constructor(
                         is Resource.Loading -> {
                             state = state.copy(
                                 isLoading = result.isLoading
+                            )
+                        }
+                        is Resource.Error -> {
+                            state = state.copy(
+                                isLoading = false
                             )
                         }
                     }
@@ -207,7 +215,9 @@ UserViewModel @Inject constructor(
                                     Log.e("addFriend", "result: ${result.data.toString()}")
                                 }
                                 is Resource.Loading -> {
-
+                                    state = state.copy(
+                                        isLoading = result.isLoading
+                                    )
                                 }
                                 is Resource.Error -> {
                                     Log.e("addFriend", "error")

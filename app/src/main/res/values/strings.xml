@@ -122,11 +122,17 @@
     <string name="game_now_friend">Сейчас играет </string>
     <string name="last_game_friend">Последняя игра</string>
     <string name="add_friend_title">Добавь друга</string>
+    <string name="add_friend_description">И следи за его активностью</string>
     <string name="add_by_nickname">По никнейму</string>
     <string name="add_from_contacts">Из контактов</string>
     <string name="add_by_qr">По QR-коду</string>
+    <string name="add_by_nickname_title_screen">Добавить по никнейму</string>
+    <string name="search_by_nickname">Найти!</string>
+    <string name="title_invite_by_qr_code">Привет, добавляй меня в &appname;</string>
     <string name="invite_one_friend_alert_dialog_title">Пригласить в игру?</string>
     <string name="invite_one_friend_alert_dialog_description">Друг получит уведомление, о том что ты зовешь его играть</string>
+    <string name="empty_friend_title">Хм, похоже такого человека тут еще нет</string>
+    <string name="empty_friend_description">Попробуйте найти его другими способами</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>
