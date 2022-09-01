@@ -28,6 +28,7 @@ import com.ledokol.thebestproject.services.GamesStatistic.Companion.convertListA
 import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestproject.services.MyService
 import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestproject.ui.components.molecules.profile.GamesListProfile
 import com.ledokol.thebestproject.ui.components.screens.*
 import com.ledokol.thebestproject.ui.components.screens.friends.AddFriendByName
 import com.ledokol.thebestproject.ui.components.screens.friends.FindFriendByName
@@ -271,12 +272,21 @@ fun StartNavigation(
                             userViewModel = userViewModel,
                             navController = navController
                         )
+                        logOpenScreenEvent("find_friend_by_name")
                     }
                     composable("add_friend_by_name"){
                         AddFriendByName(
                             userViewModel = userViewModel,
                             navController = navController
                         )
+                        logOpenScreenEvent("add_friend_by_name")
+                    }
+                    composable("games"){
+                        GamesListProfile(
+                            gamesViewModel = gamesViewModel,
+                            navController = navController,
+                        )
+                        logOpenScreenEvent("games")
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
                         TheBestProjectEverTheme {

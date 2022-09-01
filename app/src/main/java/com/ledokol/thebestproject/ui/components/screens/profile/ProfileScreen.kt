@@ -17,8 +17,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -42,7 +47,10 @@ import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogSh
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
+import com.ledokol.thebestproject.ui.components.molecules.profile.AdditionalBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.ProfileTopBlock
+import com.ledokol.thebestproject.ui.components.molecules.profile.StatisticsBlock
+import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 import java.util.*
 
 
@@ -90,10 +98,6 @@ fun ProfileScreen(
     val context = LocalContext.current
     val games = gamesViewModel.state.games
     val profile = profileViewModel.state.profile
-    var openDialog by remember{ mutableStateOf(false) }
-    var selectedGame by remember {
-        mutableStateOf("")
-    }
 
     fun onClickDisturb(){
         Log.d("ProfileScreen", "onClickDisturb ${profile?.access_token} ${profile!!.do_not_disturb}")
@@ -102,15 +106,6 @@ fun ProfileScreen(
             accessToken = profile.access_token
         ))
     }
-
-    val usageStatsManager =
-        context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.add(Calendar.WEEK_OF_YEAR, -1)
-    val start: Long = calendar.getTimeInMillis()
-    val end = System.currentTimeMillis()
-    val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
 
     Box(
         modifier = Modifier
@@ -126,7 +121,6 @@ fun ProfileScreen(
                 span = { GridItemSpan(2) }
             ) {
                 Column(
-
                 ) {
                     ProfileTopBlock(
                         profileViewModel = profileViewModel,
@@ -134,84 +128,46 @@ fun ProfileScreen(
                         userViewModel = userViewModel,
                     )
 
-                    ButtonBorder(
-                        text = "Поделиться профилем",
-                        padding = 2.dp,
-                        modifier = Modifier.padding(start = 10.dp),
-                        onClick = {
-                            val dynamicLinkUri = getLinkProfile(profile!!.id)
-                            Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(CenterHorizontally)
+                    ) {
 
-                            val intent= Intent()
-                            intent.action = Intent.ACTION_SEND  
-                            intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
-                            intent.type="text/plain"
+                        AdditionalBlock(
+                            text = "Игры",
+                            openText = "Смотреть",
+                            onClick = {
+                                      navController.navigate("games"){
+                                          popUpTo("profile")
+                                      }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 20.dp, end = 5.dp)
+                        )
 
-                            context.startActivity(Intent.createChooser(intent,"Поделиться"))
-                        }
-                    )
-                }
-            }
+                        AdditionalBlock(
+                            text = "Друзья",
+                            openText = "Добавить",
+                            onClick = {
+                                navController.navigate(BottomNavItemMain.Friends.screen_route){
+                                    popUpTo("profile")
+                                }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 5.dp, end = 20.dp)
+                        )
 
-            if (games != null) {
+                    }
 
-
-
-                item(span = {GridItemSpan(2)}){
-                    HeadlineH4(
-                        text = "Игры",
-                        modifier = Modifier.padding(start = 20.dp),
-                        color = MaterialTheme.colors.onBackground,
-                        fontWeight = FontWeight.W700,
-                    )
-                }
-
-                items(games) { game ->
-                    GameInList(
-                        packageName = game.android_package_name,
-                        name = game.name,
-//                    Временно!
-                        icon = game.icon_preview!!,
-                        iconLarge = game.icon_large!!,
-                        backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
-                        openGame = true,
-                        onClick = {
-                            openDialog = true
-                            selectedGame = game.android_package_name
-                        },
-                        usageTime = if(game.android_package_name in stats.keys)
-//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
-                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000).toString()
-//                            null
-                        else null
-                    )
+                    StatisticsBlock()
                 }
             }
         }
-
-//        DisturbButton(
-//            onClick = { onClickDisturb() },
-//            modifier = Modifier
-//                .align(Alignment.BottomCenter)
-//                .padding(bottom = 16.dp)
-//        )
     }
 
-    AlertDialogShow(
-        openDialog = openDialog,
-        label = stringResource(id = R.string.profile_open_game_title),
-        description = stringResource(id = R.string.profile_open_game_description),
-        buttonTextYes = stringResource(id = R.string.yes),
-        buttonTextNo = stringResource(id = R.string.cancel),
-        onAction = { openGame(selectedGame, context);openDialog = false; selectedGame = "" },
-        onClose = { openDialog = false; selectedGame = "" }
-    )
-
-}
-
-fun openGame(packageName: String, context: Context){
-    val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
-    launchIntent?.let { context.startActivity(it) }
 }
 
 fun getLinkProfile(
@@ -231,3 +187,22 @@ fun getLinkProfile(
     val dynamicLinkUri = dynamicLink.uri
     return dynamicLinkUri.toString()
 }
+
+
+
+//ButtonBorder(
+//text = "Поделиться профилем",
+//padding = 2.dp,
+//modifier = Modifier.padding(start = 10.dp),
+//onClick = {
+//    val dynamicLinkUri = getLinkProfile(profile!!.id)
+//    Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+//
+//    val intent= Intent()
+//    intent.action = Intent.ACTION_SEND
+//    intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
+//    intent.type="text/plain"
+//
+//    context.startActivity(Intent.createChooser(intent,"Поделиться"))
+//}
+//)
