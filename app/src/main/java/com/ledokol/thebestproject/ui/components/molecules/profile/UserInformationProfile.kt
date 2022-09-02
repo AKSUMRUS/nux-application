@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -15,20 +16,30 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomEnd
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.res.ResourcesCompat
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
@@ -37,9 +48,11 @@ import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestproject.ui.components.molecules.UploadAvatar
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 import id.zelory.compressor.calculateInSampleSize
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 class URIPathHelper {
@@ -124,60 +137,96 @@ fun UserInformationProfile(
     profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel,
 ){
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val context = LocalContext.current
+    var bitmap by remember {
+        mutableStateOf<ImageBitmap?>(null)
+    }
+
+    val state = profileViewModel.state.profile
+
+    val launcher = rememberLauncherForActivityResult(contract =
+    ActivityResultContracts.GetContent()) { uri: Uri? ->
+        imageUri = uri
+
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = calculateInSampleSize(options, 10,10);
+        options.inJustDecodeBounds = false
+
+        Log.e("uploadAvatar", imageUri.toString())
+
+        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
+            context.getContentResolver(),
+            Uri.parse(imageUri.toString()),
+        )
+
+            profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
+                accessToken = profileViewModel.state.profile!!.access_token,
+                profile_pic = bitmap
+                )
+            )
+        userViewModel.onEvent(UserEvent.OpenScreen(screen = "profile"))
+    }
+
+
     val top: Dp = if (!profile) 70.dp else 120.dp
 
-    Box(){
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 0.dp, end = 0.dp, top = top, bottom = 10.dp)
-        ){
-            Column(
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = top, bottom = 10.dp)
+    ){
+        Row{
+            Box(
                 modifier = Modifier
-                    .weight(4f),
+                    .padding(end = 20.dp, bottom = 20.dp)
+                    .size(69.dp)
+                    .clip(CircleShape)
+                    .background(color = MaterialTheme.colors.secondary)
+                    .clickable {
+                        launcher.launch("image/*")
+                    },
             ){
-                if(profile){
-                    Body1(
-                        text = stringResource(id = R.string.good_evening),
-                        color = MaterialTheme.colors.onPrimary,
-                    )
-                }
-
-                HeadlineH4(
-                    text = name,
-                    fontWeight = FontWeight.W700,
-//                    color = MaterialTheme.colors.onPrimary
+                AsyncImage(
+                    model = profile_pic,
+                    contentDescription = "Аватарка",
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .align(Alignment.Center),
+//                           .padding(end = 20.dp, bottom = 20.dp)
+                    contentScale = ContentScale.Crop,
                 )
             }
-
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp, top = 10.dp)
-                    .weight(2f),
-            ){
-
-                UploadAvatar(
-                    profile_pic = profile_pic,
-                    profileViewModel = profileViewModel,
-                    userViewModel = userViewModel,
-                    modifier = Modifier.size(80.dp,80.dp)
+                    .padding(start = 10.dp)
+            ) {
+                HeadlineH5(
+                    text = name,
+                    color = MaterialTheme.colors.onBackground,
+                    fontWeight = FontWeight.W700,
+                )
+                HeadlineH6(
+                    text = "@${state?.nickname}",
+                    color = MaterialTheme.colors.onPrimary,
+                    fontWeight = FontWeight.W700,
                 )
             }
         }
-
         Image(
-            bitmap = ImageBitmap.imageResource(id = R.drawable.edit),
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_three_points),
             contentDescription = null,
             modifier = Modifier
-                .align(BottomEnd)
-                .padding(end = 0.dp, bottom = 0.dp)
+                .align(TopEnd)
+                .padding(bottom = 10.dp)
                 .clickable {
                     onClickEdit()
                 }
-                .size(50.dp)
-                .padding(15.dp),
+                .size(40.dp,40.dp),
             contentScale = ContentScale.Crop,
         )
     }

@@ -56,7 +56,7 @@ class NotificationsRepository @Inject constructor(
             emit(Resource.Loading(true))
 
             val notificationsCall = try {
-                api.addFriend(authHeader = "Bearer $token", addFriend = AddFriend(user_id = notificationEntity.from_user.id)).awaitResponse()
+                api.addFriend(addFriend = AddFriend(user_id = notificationEntity.from_user.id)).awaitResponse()
             } catch (e: Exception) {
                 emit(Resource.Loading(false))
                 emit(Resource.Error(e.message ?: "Error"))

@@ -65,6 +65,7 @@ UserViewModel @Inject constructor(
                 state = state.copy(searchQuery = event.query)
                 searchUser?.cancel()
                 searchUser = viewModelScope.launch {
+//                    delay(500L)
                     getUsersFindFriend()
                 }
             }
@@ -94,6 +95,15 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.OpenScreen -> {
                 openScreen(event.screen)
+            }
+            is UserEvent.GetUserByNickname -> {
+                getUserByNicknameAsync(event.nickname)
+            }
+            is UserEvent.AddFriendById -> {
+                addFriendById()
+            }
+            is UserEvent.ClearError -> {
+                clearError()
             }
         }
     }
@@ -135,19 +145,22 @@ UserViewModel @Inject constructor(
 
 
     private suspend fun getUserByNickname(nickname: String){
-        repository.getUserByNickname(nickname).collect{
-            result ->
-                when(result){
-                    is Resource.Success -> {
-                        result.data.let{ user ->
+
+            repository.getUserByNickname(nickname).collect{
+                result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let{ user ->
+                                state = state.copy(
+                                    friendUser = user
+                                )
+                            }
+                        }
+                        is Resource.Error -> {
                             state = state.copy(
-                                friendUser = user
+                                error = result.message
                             )
                         }
-//                            addFriendFinally(
-//                                accessToken = accessToken,
-//                            )
-                    }
 
                     is Resource.Loading -> {
                         state = state.copy(
@@ -182,8 +195,15 @@ UserViewModel @Inject constructor(
             }
         }
     }
+    private fun getUserByNicknameAsync(nickname: String){
+        viewModelScope.launch {
+            getUserByNickname(nickname)
+        }
+    }
+
 
     private suspend fun getUserByPhone(phone: String){
+
             repository.getUserByPhone(phone).collect{
                     result ->
                 when(result){
@@ -193,6 +213,9 @@ UserViewModel @Inject constructor(
                                 friendUser = user
                             )
                         }
+//                        addFriendFinally(
+//                            accessToken = accessToken,
+//                        )
                     }
 
                     is Resource.Loading -> {
@@ -202,6 +225,7 @@ UserViewModel @Inject constructor(
                     }
                 }
             }
+
     }
 
 
@@ -215,6 +239,33 @@ UserViewModel @Inject constructor(
     fun uploadImage(){
         viewModelScope.launch {
             repository.uploadImage()
+        }
+    }
+
+    private fun addFriendById(){
+        viewModelScope.launch {
+            try {
+                Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
+                repository.addFriend(
+                    friendId = state.friendUser!!.id,
+                ).collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            Log.e("addFriend", "result: ${result.data.toString()}")
+                        }
+                        is Resource.Loading -> {
+
+                        }
+                        is Resource.Error -> {
+                            state = state.copy(
+                                error = result.message
+                            )
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("addFriend", e.toString())
+            }
         }
     }
 
@@ -262,7 +313,9 @@ UserViewModel @Inject constructor(
                                     )
                                 }
                                 is Resource.Error -> {
-                                    Log.e("addFriend", "error")
+                                    state = state.copy(
+                                        error = result.message
+                                    )
                                 }
                             }
                         }
@@ -525,6 +578,14 @@ UserViewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(
                 existsUser = null,
+            )
+        }
+    }
+
+    private fun clearError(){
+        viewModelScope.launch {
+            state = state.copy(
+                error = null,
             )
         }
     }

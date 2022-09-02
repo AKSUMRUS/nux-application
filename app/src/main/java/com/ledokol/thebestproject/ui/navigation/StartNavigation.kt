@@ -30,8 +30,11 @@ import com.ledokol.thebestproject.services.GamesStatistic.Companion.convertListA
 import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestproject.services.MyService
 import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestproject.ui.components.molecules.profile.GamesListProfile
 import com.ledokol.thebestproject.ui.components.molecules.AddByQrCode
 import com.ledokol.thebestproject.ui.components.screens.*
+import com.ledokol.thebestproject.ui.components.screens.friends.AddFriendByName
+import com.ledokol.thebestproject.ui.components.screens.friends.FindFriendByName
 import com.ledokol.thebestproject.ui.components.screens.friends.AddByNickname
 import com.ledokol.thebestproject.ui.components.screens.friends.FriendScreen
 import com.ledokol.thebestproject.ui.components.screens.friends.Friends
@@ -105,7 +108,6 @@ fun StartNavigation(
             accessToken = accessToken
         ))
     }
-
 
     Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
 
@@ -305,7 +307,6 @@ fun StartNavigation(
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
-                            userViewModel = userViewModel,
                         )
                         logOpenScreenEvent("edit_profile")
                     }
@@ -314,6 +315,27 @@ fun StartNavigation(
                         NotInternet(
                         )
                         logOpenScreenEvent("not_internet")
+                    }
+                    composable("find_friend_by_name"){
+                        FindFriendByName(
+                            userViewModel = userViewModel,
+                            navController = navController
+                        )
+                        logOpenScreenEvent("find_friend_by_name")
+                    }
+                    composable("add_friend_by_name"){
+                        AddFriendByName(
+                            userViewModel = userViewModel,
+                            navController = navController
+                        )
+                        logOpenScreenEvent("add_friend_by_name")
+                    }
+                    composable("games"){
+                        GamesListProfile(
+                            gamesViewModel = gamesViewModel,
+                            navController = navController,
+                        )
+                        logOpenScreenEvent("games")
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
                         TheBestProjectEverTheme {

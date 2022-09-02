@@ -59,8 +59,8 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
 //                            color = if(currentRoute == item.screen_route) MaterialTheme.colors.onPrimary else MaterialTheme.colors.secondaryVariant
 //                        )
 //                    },
-                    selectedContentColor = MaterialTheme.colors.onPrimary,
-                    unselectedContentColor = MaterialTheme.colors.secondaryVariant,
+                    selectedContentColor = MaterialTheme.colors.onBackground,
+                    unselectedContentColor = MaterialTheme.colors.onPrimary,
 //                    alwaysShowLabel = true,
                     selected = currentRoute == item.screen_route,
                     onClick = {

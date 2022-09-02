@@ -13,6 +13,8 @@ sealed class UserEvent {
     class GetUserByNickname(val nickname: String): UserEvent()
     class GetUserByPhone(val phone: String): UserEvent()
     class OpenScreen(val screen: String): UserEvent()
+    object AddFriendById : UserEvent()
+    object ClearError : UserEvent()
     object ClearFriendUser: UserEvent()
 }
 

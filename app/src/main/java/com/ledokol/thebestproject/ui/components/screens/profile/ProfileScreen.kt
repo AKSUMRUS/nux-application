@@ -19,8 +19,13 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
@@ -45,12 +50,17 @@ import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
 import com.ledokol.thebestproject.ui.components.molecules.GameStat
+import com.ledokol.thebestproject.ui.components.molecules.profile.AdditionalBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.ProfileTopBlock
+import com.ledokol.thebestproject.ui.components.molecules.profile.StatisticsBlock
+import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 import java.util.*
 
 
 fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
     val icon: Drawable = (packageManager.getApplicationIcon(packageName))
+//    if (icon == null)
+//        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));
     return getBitmapFromDrawable(icon)
 }
 
@@ -111,6 +121,7 @@ fun ProfileScreen(
             modifier = Modifier,
         ) {
             item(
+                span = { GridItemSpan(2) }
             ) {
                 Column(
 
@@ -130,7 +141,7 @@ fun ProfileScreen(
                             Log.e("dynamicLinkUri", dynamicLinkUri.toString())
 
                             val intent= Intent()
-                            intent.action = Intent.ACTION_SEND  
+                            intent.action = Intent.ACTION_SEND
                             intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
                             intent.type="text/plain"
 
@@ -149,7 +160,45 @@ fun ProfileScreen(
                         fontWeight = FontWeight.W700,
                     )
                 }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(CenterHorizontally)
+                    ) {
 
+                        AdditionalBlock(
+                            text = "Игры",
+                            openText = "Смотреть",
+                            onClick = {
+                                      navController.navigate("games"){
+                                          popUpTo("profile")
+                                      }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 20.dp, end = 5.dp)
+                        )
+
+                        AdditionalBlock(
+                            text = "Друзья",
+                            openText = "Добавить",
+                            onClick = {
+                                navController.navigate(BottomNavItemMain.Friends.screen_route){
+                                    popUpTo("profile")
+                                }
+                            },
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 5.dp, end = 20.dp)
+                        )
+
+                    }
+
+                    StatisticsBlock()
+                }
+            }
+        }
+    }
                 items(games) { game ->
                     GameStat(
                         packageName = game.android_package_name,

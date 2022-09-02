@@ -110,6 +110,7 @@
     <string name="add_friends">Добавить друзей</string>
     <string name="dontdisturb">Не беспокоить</string>
     <string name="name">Имя</string>
+    <string name="statistics">Статистика</string>
     <string name="for_notifications">Для уведомлений</string>
     <string name="save_changes">Сохранить изменения</string>
     <string name="changes_saved">Сохранено</string>
@@ -143,4 +144,6 @@
 
 <!--    Contacts-->
     <string name = "enter_name_friend_from_contacts">Введи имя друга</string>
+
+
 </resources>
