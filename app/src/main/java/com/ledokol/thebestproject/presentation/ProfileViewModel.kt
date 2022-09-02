@@ -16,6 +16,7 @@ import com.ledokol.thebestproject.domain.profile.UpdateProfile
 import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,6 +28,12 @@ class ProfileViewModel @Inject constructor(
 
 ): ViewModel() {
     var state by mutableStateOf(ProfileState())
+
+    var job = Job()
+        get() {
+            if (field.isCancelled) field = Job()
+            return field
+        }
 
     fun onEvent(event: ProfileEvent){
         when(event){
@@ -161,7 +168,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun updateProfileData(newProfile: UpdateProfileJSON){
-        viewModelScope.launch {
+        job.cancel()
+        viewModelScope.launch(job) {
             repository
                 .updateProfileData(newProfile = newProfile)
                 .collect{

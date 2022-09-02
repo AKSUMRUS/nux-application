@@ -26,6 +26,7 @@ import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithChangeab
 import com.ledokol.thebestproject.ui.components.atoms.textfields.EditProfileInput
 import com.ledokol.thebestproject.ui.components.screens.registration.checkCorrectName
 import com.ledokol.thebestproject.ui.components.screens.registration.checkCorrectNickname
+import kotlinx.coroutines.Job
 
 @Composable
 fun EditProfileScreen(
