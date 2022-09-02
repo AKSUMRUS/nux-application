@@ -23,7 +23,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
         BottomNavItemMain.Profile,
         BottomNavItemMain.QuickGame,
         BottomNavItemMain.Friends,
-        BottomNavItemMain.Notifications
+//        BottomNavItemMain.Notifications
     )
     
     AnimatedVisibility(visible = bottomBarState.value) {

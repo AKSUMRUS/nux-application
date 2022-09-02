@@ -56,10 +56,6 @@ fun FriendScreen(
     var sendInvite by remember { mutableStateOf(false) }
     var showButtonAddFriend by remember{ mutableStateOf(true)}
 
-    LaunchedEffect(key1 = true, block ={
-        userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
-    })
-
     LaunchedEffect(userViewModel.state.users, user){
         val users = userViewModel.state.users
         if(user!=null && user.id == profileViewModel.state.profile!!.id){
@@ -107,7 +103,7 @@ fun FriendScreen(
         }
     }
 
-    if(user!=null&&!state.isLoading) {
+    if(user!=null&&!state.isLoadingUser) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -126,7 +122,7 @@ fun FriendScreen(
                 item(
                     span = { GridItemSpan(2) },
                 ) {
-                    FriendTopBar(user = user!!)
+                    FriendTopBar(user = user)
                 }
 
                 if(state.friendUser!!.status.app != null) {

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
@@ -61,6 +62,7 @@ fun Search(
             .then(modifier)
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 15.dp)
+            .clip(RoundedCornerShape(16.dp))
             .background(
                 MaterialTheme.colors.secondary,
                 RoundedCornerShape(0.dp)

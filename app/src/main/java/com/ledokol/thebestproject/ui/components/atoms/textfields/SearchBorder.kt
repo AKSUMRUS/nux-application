@@ -64,7 +64,6 @@ fun SearchBorder(
 //            .border(3.dp, MaterialTheme.colors.primary)
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-//            .border(3.dp, MaterialTheme.colors.primary)
             .border(1.dp, MaterialTheme.colors.primary, RoundedCornerShape(16.dp))
             .background(
                 MaterialTheme.colors.secondary,

@@ -12,8 +12,11 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileState
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.data.repository.ProfileRepository
+import com.ledokol.thebestproject.domain.profile.UpdateProfile
+import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -157,9 +160,33 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun updateProfileData(newProfile: Profile){
+    private fun updateProfileData(newProfile: UpdateProfileJSON){
         viewModelScope.launch {
-            repository.updateProfileData(newProfile = newProfile)
+            repository
+                .updateProfileData(newProfile = newProfile)
+                .collect{
+                    result ->
+                    when(result){
+                        is Resource.Success -> {
+//                            state.profile!!.name = result.data!!.name
+
+                            val newProfileState = state.profile
+                            newProfileState!!.name = result.data!!.name
+                            newProfileState.nickname = result.data.nickname
+
+                            Log.e("updateProfile", "Finish ${newProfileState}")
+                            state = state.copy(
+                                profile = newProfileState
+                            )
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                    }
+                }
         }
     }
 
@@ -216,7 +243,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun setCurrentFirebaseToken(
+    fun setCurrentFirebaseToken(
         token: String,
         accessToken: String,
     ){

@@ -27,6 +27,7 @@ import com.ledokol.thebestproject.ui.components.atoms.Cross
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
+import com.ledokol.thebestproject.ui.components.screens.profile.getLinkProfile
 
 
 @Composable
@@ -54,7 +55,9 @@ fun AddByQrCode(
 
 
             Image(
-                generateQR(profileViewModel.state.profile!!.id, 800),
+                generateQR(
+                    getLinkProfile(profileViewModel.state.profile!!.id),
+                    800),
                 contentDescription = "Красный прямоугольник",
                 modifier = Modifier
                     .padding(bottom = 10.dp)

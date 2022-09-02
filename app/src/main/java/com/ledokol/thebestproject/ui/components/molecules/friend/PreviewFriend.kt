@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 //import com.google.accompanist.swiperefresh.SwipeRefresh
 //import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
@@ -78,6 +79,7 @@ fun PreviewFriend(
                     .padding(bottom = 10.dp)
                 ,
                 alignment = Alignment.Center,
+                contentScale = Crop,
             )
 
             HeadlineH2(
@@ -102,7 +104,9 @@ fun PreviewFriend(
                 ButtonFull(
                     text = if(!sendInvite) "Добавить в друзья" else "Приглашение отправлено",
                     onClick = {
-                              inviteFriends()
+                        if(!sendInvite){
+                            inviteFriends()
+                        }
                     },
                     modifier = Modifier
                         .padding(bottom = 20.dp)

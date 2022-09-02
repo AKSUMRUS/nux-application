@@ -82,7 +82,7 @@ fun PreviewFriendScreen(
         userViewModel.onEvent(UserEvent.AddFriend(nickname = user!!.nickname, access_token = profileViewModel.state.profile!!.access_token))
     }
 
-    if(!state.isLoading) {
+    if(!state.isLoadingUser) {
         if(user != null){
             PreviewFriend(
                 navController = navController,
@@ -93,7 +93,12 @@ fun PreviewFriendScreen(
                     inviteFriend()
                 },
                 onClickCross = {
-                    navController.popBackStack()
+                    navController.navigate("team"){
+                        popUpTo("team")
+                        launchSingleTop = true
+                    }
+
+//                    navController.popBackStack()
                 }
             )
         }else{

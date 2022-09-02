@@ -12,7 +12,7 @@
     <string name="description_onboarding">Приглашай тиммейтов и присоединяйся к тем, кто уже играет</string>
     <string name="email">Почта</string>
     <string name="phone_number">Телефон</string>
-    <string name="nickname">Ник</string>
+    <string name="nickname">Никнейм</string>
     <string name="password">Пароль</string>
     <string name = "start_auth">Давай начнем</string>
     <string name="i_already_have_an_account">У меня уже есть аккаунт</string>
@@ -73,7 +73,7 @@
     <string name = "yes">Да</string>
     <string name = "no">Нет</string>
     <string name = "cancel">Отмена</string>
-    <string name = "enter_nickname_search">Поиск по друзьям</string>
+    <string name = "enter_nickname_search">Поиск по никам</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name = "loading"> Загрузка…</string>
     <string name = "empty_screen_title">Здесь пока пусто 😕</string>
@@ -122,6 +122,7 @@
     <string name="game_now_friend">Сейчас играет </string>
     <string name="last_game_friend">Последняя игра</string>
     <string name="add_friend_title">Добавь друга</string>
+    <string name="add_friend">Добавить в друзья</string>
     <string name="add_friend_description">И следи за его активностью</string>
     <string name="add_by_nickname">По никнейму</string>
     <string name="add_from_contacts">Из контактов</string>
@@ -133,6 +134,9 @@
     <string name="invite_one_friend_alert_dialog_description">Друг получит уведомление, о том что ты зовешь его играть</string>
     <string name="empty_friend_title">Хм, похоже такого человека тут еще нет</string>
     <string name="empty_friend_description">Попробуйте найти его другими способами</string>
+    <string name="friend_requests">Запросы в друзья</string>
+    <string name="my_friends">Мои друзья</string>
+    <string name="no_friends">Нет друзей</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>

@@ -17,11 +17,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.data.local.game.GamesEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
-import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.internet.ConnectionState
 import com.ledokol.thebestproject.internet.connectivityState
 import com.ledokol.thebestproject.presentation.*
@@ -79,6 +80,21 @@ fun StartNavigation(
             val intentService = Intent(context, MyService::class.java)
             intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startForegroundService(intentService)
+
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(com.ledokol.thebestproject.ui.components.screens.games.TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val tokenGet = task.result
+
+                if(profileViewModel.state.profile != null){
+                    Log.e("myFirebaseToken", "$tokenGet ${profileViewModel.state.profile!!.access_token}")
+                    profileViewModel.setCurrentFirebaseToken(tokenGet, profileViewModel.state.profile!!.access_token)
+                }
+            })
+
         }
     }
 
@@ -103,9 +119,9 @@ fun StartNavigation(
         BottomNavItemMain.Friends.screen_route -> {
             bottomBarState.value = true
         }
-        BottomNavItemMain.Notifications.screen_route -> {
-            bottomBarState.value = true
-        }
+//        BottomNavItemMain.Notifications.screen_route -> {
+//            bottomBarState.value = true
+//        }
         else -> {
             bottomBarState.value = false
         }
@@ -117,7 +133,7 @@ fun StartNavigation(
         "splash_screen"
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister ${profile.toString()}")
-        accessToken = profile.profile.access_token
+        accessToken = profile.profile!!.access_token
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -128,7 +144,7 @@ fun StartNavigation(
 
         "request_permission_data"
     } else {
-        accessToken = profile.profile.access_token
+        accessToken = profile.profile!!.access_token
 
         Log.e("ShareGames", "Start $accessToken ${userViewModel.state.openScreen}")
         gamesViewModel.clearGames()
@@ -289,6 +305,7 @@ fun StartNavigation(
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
+                            userViewModel = userViewModel,
                         )
                         logOpenScreenEvent("edit_profile")
                     }
@@ -324,6 +341,7 @@ fun StartNavigation(
                             navController = navController,
                             userViewModel = userViewModel,
                             profileViewModel = profileViewModel,
+                            notificationsViewModel = notificationsViewModel,
                         )
                         logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                     }

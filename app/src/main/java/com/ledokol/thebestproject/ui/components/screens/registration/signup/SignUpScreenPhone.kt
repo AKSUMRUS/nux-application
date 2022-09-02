@@ -43,7 +43,8 @@ fun SignUpScreenPhone(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp),
+                .padding(start = 20.dp, end = 20.dp)
+            ,
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -63,7 +64,7 @@ fun SignUpScreenPhone(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 50.dp),
+                    .padding(top = 30.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
                 ButtonWithIcon(

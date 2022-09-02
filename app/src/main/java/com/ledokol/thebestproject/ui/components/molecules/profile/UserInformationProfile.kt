@@ -37,6 +37,7 @@ import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.components.molecules.UploadAvatar
 import id.zelory.compressor.calculateInSampleSize
 import java.io.ByteArrayOutputStream
 
@@ -123,64 +124,13 @@ fun UserInformationProfile(
     profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel,
 ){
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-    val context = LocalContext.current
-    var bitmap by remember {
-        mutableStateOf<ImageBitmap?>(null)
-    }
-
-    LaunchedEffect(true){
-//        profileViewModel.onEvent()
-    }
-
-    val launcher = rememberLauncherForActivityResult(contract =
-    ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageUri = uri
-
-
-        val options = BitmapFactory.Options()
-        options.inSampleSize = calculateInSampleSize(options, 10,10);
-        options.inJustDecodeBounds = false;
-//        options.
-
-        Log.e("uploadAvatar", imageUri.toString())
-
-        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
-            context.getContentResolver(),
-            Uri.parse(imageUri.toString()),
-        )
-
-//        val byteArrayOutputStream = ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-
-//        val compressedImageFile = compress(context, byteArrayOutputStream) {
-//            resolution(1280, 720)
-//            quality(80)
-//            format(Bitmap.CompressFormat.WEBP)
-//            size(2_097_152) // 2 MB
-//        }
-
-//        val bitmap:Bitmap = B(imageUri.toString(),options)
-//        val compressedImageFile = compress(context, bitmap)
-
-            profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
-                accessToken = profileViewModel.state.profile!!.access_token,
-                profile_pic = bitmap
-                )
-            )
-        userViewModel.onEvent(UserEvent.OpenScreen(screen = "profile"))
-    }
-
-
     val top: Dp = if (!profile) 70.dp else 120.dp
 
     Box(){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, top = top, bottom = 10.dp)
+                .padding(start = 0.dp, end = 0.dp, top = top, bottom = 10.dp)
         ){
             Column(
                 modifier = Modifier
@@ -192,9 +142,11 @@ fun UserInformationProfile(
                         color = MaterialTheme.colors.onPrimary,
                     )
                 }
+
                 HeadlineH4(
                     text = name,
                     fontWeight = FontWeight.W700,
+//                    color = MaterialTheme.colors.onPrimary
                 )
             }
 
@@ -202,27 +154,16 @@ fun UserInformationProfile(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 0.dp)
+                    .padding(start = 20.dp, end = 20.dp, top = 10.dp)
                     .weight(2f),
             ){
 
-                Box(
-                    modifier = Modifier
-                        .padding(end = 20.dp, bottom = 20.dp)
-                        .clickable {
-                            launcher.launch("image/*")
-                        }
-
-                ){
-                    AsyncImage(
-                        model = profile_pic,
-                        contentDescription = "Аноним",
-                        modifier = Modifier
-                            .size(100.dp),
-//                            .padding(end = 20.dp, bottom = 20.dp)
-                        contentScale = ContentScale.Crop,
-                    )
-                }
+                UploadAvatar(
+                    profile_pic = profile_pic,
+                    profileViewModel = profileViewModel,
+                    userViewModel = userViewModel,
+                    modifier = Modifier.size(80.dp,80.dp)
+                )
             }
         }
 
@@ -231,7 +172,7 @@ fun UserInformationProfile(
             contentDescription = null,
             modifier = Modifier
                 .align(BottomEnd)
-                .padding(end = 20.dp, bottom = 10.dp)
+                .padding(end = 0.dp, bottom = 0.dp)
                 .clickable {
                     onClickEdit()
                 }

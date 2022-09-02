@@ -5,7 +5,6 @@ import android.os.Handler
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,14 +22,13 @@ import androidx.navigation.NavController
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
-import com.ledokol.thebestproject.ui.components.molecules.EmptyScreen
-import com.ledokol.thebestproject.ui.components.molecules.ScreenTitleFriends
-import com.ledokol.thebestproject.ui.components.molecules.friend.FriendInList
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
+import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
+import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
-import com.ledokol.thebestproject.ui.components.molecules.friend.ButtonAddFriend
+import com.ledokol.thebestproject.ui.components.molecules.friend.*
 import com.ledokol.thebestproject.ui.components.screens.InviteFriend
 import kotlinx.coroutines.launch
 
@@ -43,6 +40,7 @@ fun Friends(
     userViewModel: UserViewModel,
     profileViewModel: ProfileViewModel,
     needUpdate: Boolean = true,
+    notificationsViewModel: NotificationsViewModel,
 ){
     val state = userViewModel.state
     var isFindingNewFriends = false
@@ -52,6 +50,8 @@ fun Friends(
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
     val handler = Handler()
     var runnable: Runnable? = null
+    val token = profileViewModel.state.profile?.access_token.toString()
+    val usersList = notificationsViewModel.state.friendInvites
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -89,21 +89,22 @@ fun Friends(
         }
     }
 
+    fun onClick(
+        notificationEntity: NotificationEntity
+    ){
+        notificationsViewModel.onEvent(NotificationsEvent.AddFriend(token, notificationEntity))
+    }
+
     val coroutineScope = rememberCoroutineScope()
     val modalBottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         confirmStateChange = {
             it != ModalBottomSheetValue.HalfExpanded
         },
-
     )
+
     var isSheetOpened by remember { mutableStateOf(false) }
 
-
-//    fun onClickShare(){
-//        isSheetOpened = true
-//        modalBottomSheetState.show()
-//    }
 
     BackHandler {
         coroutineScope.launch {
@@ -111,59 +112,18 @@ fun Friends(
         }
     }
 
-    LaunchedEffect(
-        key1 = modalBottomSheetState.currentValue,
-    ) {
-//        if (modalBottomSheetState.targetValue == ModalBottomSheetValue.HalfExpanded) {
-//            coroutineScope.launch {
-//                modalBottomSheetState.animateTo(ModalBottomSheetValue.Hidden)
-//            }
-//        }else if(modalBottomSheetState.targetValue == ModalBottomSheetValue.Expanded){
-//            coroutineScope.launch {
-//                modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
-//            }
-//        }
+    LaunchedEffect(true) {
+        notificationsViewModel.onEvent(NotificationsEvent.GetFriendsRequests(token))
     }
 
-//    LaunchedEffect(modalBottomSheetState.currentValue) {
-//        when (modalBottomSheetState.currentValue) {
-//            ModalBottomSheetValue.Hidden -> {
-//                when {
-////                    isSheetOpened -> parent.removeView(composeView)
-////                    !isSheetOpened -> {
-////                        isSheetOpened = true
-////                        modalBottomSheetState.show()
-////                    }
-//                }
-//            }
-//            else -> {
-////                Log.i(TAG, "Bottom sheet ${...} state")
-//            }
-//        }
-//    }
 
     var textSearch by remember { mutableStateOf("") }
-
-    //Поиск по всем пользователям
-//    fun onClickFindFriend(){
-//        if(!isFindingNewFriends) {
-//            usersList = state.findNewFriendsList
-//            Log.e("Friends", "onClickFindFriend $usersList")
-//            userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
-//            isFindingNewFriends = true
-//        }
-//        else{
-//            usersList = state.users
-//            Log.e("Friends", "onClickFindFriend $usersList")
-//            userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
-//            isFindingNewFriends = false
-//        }
-//    }
 
     LaunchedEffect(true){
         runnable = Runnable {
             Log.e("FinishListFriends", "getFriends Okay $shouldWork")
             userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
+            notificationsViewModel.onEvent(NotificationsEvent.GetFriendsRequests(token))
             runnable?.let { handler.postDelayed(it, 5000) }
         }
 
@@ -214,30 +174,73 @@ fun Friends(
                 } else {
                     LazyColumn(
                         content = {
-                            item {
-                                ScreenTitleFriends(
-                                    name = stringResource(id = R.string.nav_friends),
-                                    modifier = Modifier.padding(top = 110.dp),
-//                                        onFindFriendClick = {onClickFindFriend()}
-                                )
-                                ShowSearch(
-                                    userViewModel = userViewModel,
-                                    textSearch = textSearch,
-                                    onValueChange = {
-                                        textSearch = it
-                                    }
-                                )
+                            item() {
+
+                                Box(
+                                    modifier = Modifier.height(90.dp)
+                                ){
+
+                                }
 
                                 ButtonAddFriend(
                                     onClick = {
                                         coroutineScope.launch {
                                             isSheetOpened = true
                                             modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
-//                                            modalBottomSheetState.show()
-//                                            modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
                                         }
                                     }
                                 )
+                            }
+
+                            if(usersList!=null && usersList.size>0){
+                                item(){
+                                    Column(){
+                                        TitleFriends(text = stringResource(id = R.string.friend_requests))
+                                        ShowSearch(
+                                            userViewModel = userViewModel,
+                                            textSearch = textSearch,
+                                            onValueChange = {
+                                                textSearch = it
+                                            },
+                                            modifier = Modifier.padding(top = 10.dp)
+                                        )
+                                    }
+                                }
+
+                                items(usersList!!.size) { friend ->
+                                    val user = usersList[friend].from_user
+                                    FriendInNotification(
+                                        user = user,
+                                        addFriend = {
+                                            onClick(
+                                                notificationEntity = usersList[friend]
+                                            )
+                                        },
+                                        openFriend = {
+                                            userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
+                                            navController.navigate("preview_friend"){
+                                                popUpTo("preview_friend")
+                                                launchSingleTop = true
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+
+                            item(){
+                                Column(){
+                                    TitleFriends(text = stringResource(id = R.string.my_friends))
+
+                                    ShowSearch(
+                                        userViewModel = userViewModel,
+                                        textSearch = textSearch,
+                                        onValueChange = {
+                                            textSearch = it
+                                        },
+                                        modifier = Modifier.padding(top = 0.dp)
+                                    )
+
+                                }
                             }
 
                             if(state.users!=null && state.users!!.size>0){
@@ -253,7 +256,7 @@ fun Friends(
                                 }
                             }else{
                                 item(){
-                                    EmptyScreen(title = stringResource(id = R.string.empty_screen_title))
+                                    EmptyScreenFriend(title = stringResource(id = R.string.no_friends))
                                 }
                             }
                         },

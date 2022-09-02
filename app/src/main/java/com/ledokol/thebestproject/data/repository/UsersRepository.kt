@@ -182,6 +182,7 @@ class UsersRepository @Inject constructor(
 
     fun getUser(id: String): Flow<Resource<User>> {
         return flow {
+            Log.e("FRIEND","Start")
             emit(Resource.Loading(true))
             val friend = try {
                 val friendCall = api.getUser(id)

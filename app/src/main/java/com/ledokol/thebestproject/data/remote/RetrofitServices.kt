@@ -166,6 +166,11 @@ interface RetrofitServices {
     ): Call<List<NotificationEntity>>
 
 
+    @PUT("current_user/edit")
+    fun updateProfile(
+        @Header("Authorization") authHeader: String,
+        @Body updateProfile: UpdateProfileJSON
+    ): Call<User>
 
 
 }

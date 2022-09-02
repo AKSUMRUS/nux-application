@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.ColorPainter
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.text.font.FontWeight.Companion.W600
@@ -35,6 +39,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AddByNickname(
     navController: NavController,
@@ -43,6 +48,13 @@ fun AddByNickname(
 ) {
 
     var nickname by remember{ mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
+    val keyboard = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(focusRequester) {
+        focusRequester.requestFocus()
+        keyboard?.show()
+    }
 
     LaunchedEffect(true){
         userViewModel.onEvent(UserEvent.ClearFriendUser)
@@ -80,13 +92,16 @@ fun AddByNickname(
                 text = nickname,
                 onValueChange = {
                     nickname = it
-                }
+                },
+                modifier = Modifier
+                    .focusRequester(focusRequester)
+            ,
             )
 
             ButtonFull(
                 text = stringResource(id = R.string.search_by_nickname),
                 onClick = {
-                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.id))
+                    userViewModel.onEvent(UserEvent.GetUserByNickname(nickname = nickname))
 
                     navController.navigate("preview_friend"){
                         popUpTo("preview_friend")
