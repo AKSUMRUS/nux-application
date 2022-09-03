@@ -10,7 +10,6 @@ import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileDao
 import com.ledokol.thebestproject.data.local.profile.ProfileToken
 import com.ledokol.thebestproject.data.local.token.TokenEntity
-import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.domain.games.FriendsInviteToGame
 import com.ledokol.thebestproject.domain.profile.*
@@ -240,56 +239,9 @@ class ProfileRepository @Inject constructor(
         }
     }
 
-    fun updateProfileData(
-        newProfile: UpdateProfileJSON
-    ): Flow<Resource<User>>{
-        return flow {
-            emit(Resource.Loading(true))
-            val token = tokenRepository.getToken()
-
-            Log.e("updateProfile", "$token ${newProfile.toString()}")
-            val remoteUser = try{
-                val callRegister = api.updateProfile(
-                    authHeader = "Bearer $token",
-                    updateProfile = newProfile,
-                )
-                val myResponse = callRegister.awaitResponse().body()
-
-                myResponse
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            }
-
-            Log.e("updateProfile", remoteUser.toString())
-
-            remoteUser?.let { profile ->
-                val newProfile = dao.getProfile()
-                newProfile!!.name = profile.name
-                newProfile!!.nickname = profile.nickname
-
-                dao.clearProfile()
-                dao.insertProfile(newProfile)
-                Log.e("Insert_Profile",newProfile.toString())
-
-                data = dao.getProfile()!!
-
-
-                emit(Resource.Success(
-                    data = profile
-                ))
-
-                emit(Resource.Loading(false))
-
-            }
-
-        }
+    fun updateProfileData(newProfile: Profile){
+        // Обращение к серваку
+        Log.e("Update Profile Data","updated")
     }
 
     fun getProfile(

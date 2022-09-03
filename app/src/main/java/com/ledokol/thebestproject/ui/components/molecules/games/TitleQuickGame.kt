@@ -1,12 +1,10 @@
 package com.ledokol.thebestproject.ui.components.molecules
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 
@@ -19,9 +17,7 @@ fun TitleQuickGame(
 ){
 
     Column(
-        modifier = modifier
-            .padding(bottom = 10.dp)
-        ,
+        modifier = modifier,
     ){
 //        Body1(
 //            text = stringResource(id = R.string.step)+" "+step.toString(),
@@ -30,6 +26,7 @@ fun TitleQuickGame(
 //        )
         HeadlineH4(
             text = title,
+            color = MaterialTheme.colors.onBackground,
             fontWeight = FontWeight.W500,
         )
         Body1(

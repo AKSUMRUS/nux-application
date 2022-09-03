@@ -1,9 +1,10 @@
 package com.ledokol.thebestproject.ui.components.screens
 
-import android.graphics.Bitmap
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -14,13 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
+import com.ledokol.thebestproject.ui.components.molecules.friend.AddFriendByNickname
 import com.ledokol.thebestproject.ui.components.molecules.friend.BoxTypeAddFriend
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.journeyapps.barcodescanner.BarcodeEncoder
 
 @Composable
 fun InviteFriend(
@@ -35,17 +37,17 @@ fun InviteFriend(
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-//        BackToolbar (
-//            buttonBackClick = {
-//                navController.popBackStack()
-//            }
-//        )
+        BackToolbar (
+            buttonBackClick = {
+                navController.popBackStack()
+            }
+        )
 
         Column(
             verticalArrangement = Arrangement.Center,
 //            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .padding(start = 20.dp, end = 20.dp, top = 0.dp)
+                .padding(start = 20.dp, end = 20.dp, top = 50.dp)
                 .fillMaxSize()
 //                .align(Alignment.Start)
         ){
@@ -53,7 +55,8 @@ fun InviteFriend(
                 text = stringResource(id = R.string.add_friend_title),
                 textAlign = TextAlign.Start,
                 modifier = Modifier
-                    .padding(bottom = 10.dp),
+                    .padding(bottom = 10.dp)
+            ,
                 fontWeight = W600,
             )
 
@@ -61,9 +64,9 @@ fun InviteFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_nickname),
                 title = stringResource(id = R.string.add_by_nickname),
                 onClick = {
-                    navController.navigate("add_by_nickname"){
-                        popUpTo("add_by_nickname")
-                        launchSingleTop = true
+                    navController.navigate("find_friend_by_name"){
+                        popUpTo("invite_friends")
+                        launchSingleTop = false
                     }
                 }
             )
@@ -71,44 +74,59 @@ fun InviteFriend(
             BoxTypeAddFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_from_contacts),
                 title = stringResource(id = R.string.add_from_contacts),
-                onClick = {
-                    navController.navigate("contacts_list"){
-                        popUpTo("contacts_list")
-                        launchSingleTop = true
-                    }
-                }
+                onClick = {  }
             )
 
             BoxTypeAddFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_qr),
                 title = stringResource(id = R.string.add_by_qr),
-                onClick = {
-                    navController.navigate("qr_code_profile"){
-                        popUpTo("qr_code_profile")
-                        launchSingleTop = true
-                    }
-                }
-
+                onClick = {}
             )
 
+//            AddFriendByNickname(
+//                nickname = nickname,
+//                onClickButton = {
+//                    Log.e("addFriend","startFront")
+//                    userViewModel.onEvent(UserEvent.AddFriend(nickname = nickname, access_token = profileViewModel.state.profile!!.access_token))
+//                    nickname = ""
+//                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
+//                },
+//                onValueChange = {
+//                    nickname = it
+//                }
+//            )
+
+//            AddFriendByPhone(
+//                phone = phone,
+//                onClickButton = {
+//                    userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
+//                    phone = ""
+//                    Toast.makeText(context, "Запрос отправлен!", Toast.LENGTH_LONG).show()
+//                },
+//                onValueChange = {
+//                    phone = it
+//                },
+//            )
+
+            ButtonFull(
+                text = "Добавить из контактов",
+                onClick = {
+                    navController.navigate("contacts_list"){
+                        popUpTo("contacts_list")
+                        launchSingleTop = true
+                    }
+                },
+                padding = 8.dp,
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp),
+
+            )
 
             ShareInvite(
                 profile_id = profileViewModel.state.profile!!.id
             )
         }
     }
-}
-
-fun generateQR(content: String?, size: Int): Bitmap? {
-    var bitmap: Bitmap? = null
-    try {
-        val barcodeEncoder = BarcodeEncoder()
-        bitmap = barcodeEncoder.encodeBitmap(
-            content,
-            BarcodeFormat.QR_CODE, size, size
-        )
-    } catch (e: WriterException) {
-        Log.e("generateQR()", e.message.toString())
-    }
-    return bitmap
 }

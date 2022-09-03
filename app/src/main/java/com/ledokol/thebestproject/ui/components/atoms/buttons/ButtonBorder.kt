@@ -29,13 +29,12 @@ fun ButtonBorder(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
-            .border(2.dp, colorBorder, RoundedCornerShape(16.dp))
+            .border(2.dp, colorBorder)
+            .clip(RoundedCornerShape(0.dp))
     ,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
         )
-    ,
-        shape = RoundedCornerShape(16.dp)
     ) {
         HeadlineH6(
             text = text,

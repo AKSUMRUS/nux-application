@@ -7,7 +7,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -19,14 +18,11 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 @Composable
 fun EditProfileInput(
     mainText: String,
-    description: String? = null,
+    description: String?,
     text: String,
-    init_text: String? = null,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    exists: Boolean? = null,
-    checkCorrect: (String) -> Boolean,
-) {
+    ) {
     val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
@@ -51,29 +47,8 @@ fun EditProfileInput(
             imeAction = ImeAction.Done,
             keyboardActions = KeyboardActions ( onDone = {
                 keyboard!!.hide()
-            } ),
-            modifier = Modifier.padding(top = 5.dp)
+            } )
         )
-
-        if(!checkCorrect(text)){
-            Body2(
-                text = "Некорректный ввод",
-                color = MaterialTheme.colors.error,
-            )
-        }else{
-            if(exists!=null){
-                if(!exists || init_text == text){
-                    Body2(
-                        text = "Свободен",
-                        color = Color.Green,
-                    )
-                }else{
-                    Body2(
-                        text = "Занято",
-                        color = MaterialTheme.colors.error,
-                    )
-                }
-            }
-        }
     }
+
 }

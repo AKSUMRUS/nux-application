@@ -12,12 +12,8 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileState
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.data.repository.ProfileRepository
-import com.ledokol.thebestproject.domain.profile.UpdateProfile
-import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,12 +24,6 @@ class ProfileViewModel @Inject constructor(
 
 ): ViewModel() {
     var state by mutableStateOf(ProfileState())
-
-    var job = Job()
-        get() {
-            if (field.isCancelled) field = Job()
-            return field
-        }
 
     fun onEvent(event: ProfileEvent){
         when(event){
@@ -167,34 +157,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun updateProfileData(newProfile: UpdateProfileJSON){
-        job.cancel()
-        viewModelScope.launch(job) {
-            repository
-                .updateProfileData(newProfile = newProfile)
-                .collect{
-                    result ->
-                    when(result){
-                        is Resource.Success -> {
-//                            state.profile!!.name = result.data!!.name
-
-                            val newProfileState = state.profile
-                            newProfileState!!.name = result.data!!.name
-                            newProfileState.nickname = result.data.nickname
-
-                            Log.e("updateProfile", "Finish ${newProfileState}")
-                            state = state.copy(
-                                profile = newProfileState
-                            )
-                        }
-                        is Resource.Error -> Unit
-                        is Resource.Loading -> {
-                            state = state.copy(
-                                isLoading = result.isLoading
-                            )
-                        }
-                    }
-                }
+    private fun updateProfileData(newProfile: Profile){
+        viewModelScope.launch {
+            repository.updateProfileData(newProfile = newProfile)
         }
     }
 
@@ -251,7 +216,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun setCurrentFirebaseToken(
+    private fun setCurrentFirebaseToken(
         token: String,
         accessToken: String,
     ){

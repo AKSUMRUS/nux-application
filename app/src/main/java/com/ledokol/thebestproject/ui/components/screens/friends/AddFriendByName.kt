@@ -52,7 +52,7 @@ fun AddFriendByName(
                 onClick = {
                     textButton = "Отправлено"
                     Log.e("AddFriendByName", "Отправлено")
-//                    userViewModel.onEvent(UserEvent.AddFriendById)
+                    userViewModel.onEvent(UserEvent.AddFriendById)
                 }
             )
 

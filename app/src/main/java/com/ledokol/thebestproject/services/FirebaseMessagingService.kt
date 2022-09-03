@@ -80,7 +80,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         override fun onLoadCleared(placeholder: Drawable?) {}
                     })
 
-            }else if(data["type"] == "invite_to_app"){
+            }else{
                 Glide.with(this)
                     .asBitmap()
                     .load(data["app.icon_preview"].toString())
@@ -100,19 +100,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                         override fun onLoadCleared(placeholder: Drawable?) {}
                     })
-            }else{
-                val intentService = Intent(this, MyService::class.java)
-                intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.startForegroundService(intentService)
+
+
             }
 
-//            if (/* Check if data needs to be processed by long running job */ false) {
-//                // For long-running tasks (10 seconds or more) use WorkManager.
-//                scheduleJob()
-//            } else {
-//                // Handle message within 10 seconds
-//                handleNow()
-//            }
+            if (/* Check if data needs to be processed by long running job */ false) {
+                // For long-running tasks (10 seconds or more) use WorkManager.
+                scheduleJob()
+            } else {
+                // Handle message within 10 seconds
+                handleNow()
+            }
         }
 
         // Check if message contains a notification payload.

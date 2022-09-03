@@ -13,7 +13,7 @@ sealed class BottomNavItemMain(var title: String, var icon: Int, var screen_rout
 
     object Profile : BottomNavItemMain(
         "Профиль",
-        R.drawable.profile_icon_bottomnav,
+        R.drawable.home_icon_bottomnav,
         "profile"
     )
 

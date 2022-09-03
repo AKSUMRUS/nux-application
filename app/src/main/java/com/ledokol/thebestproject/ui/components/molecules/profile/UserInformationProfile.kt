@@ -74,7 +74,7 @@ class URIPathHelper {
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
-                return getDataColumn(context, contentUri, null, null)
+                    return getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).toTypedArray()
@@ -163,11 +163,11 @@ fun UserInformationProfile(
             Uri.parse(imageUri.toString()),
         )
 
-        profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
-            accessToken = profileViewModel.state.profile!!.access_token,
-            profile_pic = bitmap
-        )
-        )
+            profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
+                accessToken = profileViewModel.state.profile!!.access_token,
+                profile_pic = bitmap
+                )
+            )
         userViewModel.onEvent(UserEvent.OpenScreen(screen = "profile"))
     }
 

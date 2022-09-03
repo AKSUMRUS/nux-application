@@ -138,9 +138,9 @@ fun ProfileScreen(
                             text = "Игры",
                             openText = "Смотреть",
                             onClick = {
-                                navController.navigate("games"){
-                                    popUpTo("profile")
-                                }
+                                      navController.navigate("games"){
+                                          popUpTo("profile")
+                                      }
                             },
                             modifier = Modifier
                                 .weight(1f)

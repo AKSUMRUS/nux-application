@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.domain.games.StatusJSON
+import com.ledokol.thebestproject.ui.components.screens.profile.GameProfile
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,6 +60,16 @@ class GamesStatistic{
             val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
             return mode == AppOpsManager.MODE_ALLOWED
         }
+
+        fun convertApplicationInfoToClassGame(games: List<ApplicationInfo>): List<GameProfile>{
+            var newGames: MutableList<GameProfile> = mutableListOf()
+            for (game in games){
+                newGames.add(GameProfile(game.packageName))
+            }
+
+            return newGames
+        }
+
 
         fun convertApplicationInfoToApps(
             packageManager: PackageManager,

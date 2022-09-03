@@ -46,6 +46,22 @@ class MyService: Service() {
         Log.e("Service onCreate",statusRepository.toString())
         profileRepository.getProfile()
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val tokenGet = task.result
+
+            Log.e("myFirebaseToken", "$tokenGet ${profileRepository.data.access_token}")
+//            profileRepository.setCurrentFirebaseToken(
+//                token = "fdf",
+//                accessToken = "fdfdfd")
+            profileRepository.setCurrentFirebaseToken(tokenGet, profileRepository.data.access_token)
+        })
+
         createNotification()
         doTask(packageManager)
 

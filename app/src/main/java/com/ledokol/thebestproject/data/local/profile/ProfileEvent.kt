@@ -1,8 +1,6 @@
 package com.ledokol.thebestproject.data.local.profile
 
 import android.graphics.Bitmap
-import com.ledokol.thebestproject.domain.profile.UpdateProfile
-import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 
 sealed class ProfileEvent{
     object GetProfile: ProfileEvent()
@@ -17,7 +15,7 @@ sealed class ProfileEvent{
     class ConfirmationPhone(val phone: String, val reason: String): ProfileEvent()
     class SetCurrentFirebaseToken(val token: String, val accessToken: String) : ProfileEvent()
     class SetFinishRegister(val accessToken: String) : ProfileEvent()
-    class UpdateProfileData(val newProfile: UpdateProfileJSON) : ProfileEvent()
+    class UpdateProfileData(val newProfile: Profile) : ProfileEvent()
     class Login(val phone: String, val id: String, val code: String) : ProfileEvent()
     class SignUp(
         val nickname: String,

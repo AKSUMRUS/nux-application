@@ -28,11 +28,11 @@ fun FriendTopBar(
             ){
                 HeadlineH4(
                     text = user.nickname,
-                    color = MaterialTheme.colors.onPrimary,
+                    color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.W700,
                 )
 
-                StripFriend(user = user)
+                FriendStatus(user = user)
             }
 
             Row(

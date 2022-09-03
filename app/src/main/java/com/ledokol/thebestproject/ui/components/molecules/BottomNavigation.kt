@@ -23,13 +23,13 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
         BottomNavItemMain.Profile,
         BottomNavItemMain.QuickGame,
         BottomNavItemMain.Friends,
-//        BottomNavItemMain.Notifications
+        BottomNavItemMain.Notifications
     )
     
     AnimatedVisibility(visible = bottomBarState.value) {
 
         BottomNavigation(
-            backgroundColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.primary,
             contentColor = Color.Gray,
             modifier = Modifier.height(62.dp),
         ) {

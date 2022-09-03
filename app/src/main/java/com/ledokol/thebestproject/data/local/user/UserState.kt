@@ -7,7 +7,6 @@ data class UserState(
     var games: List<CurrentApp>? = mutableListOf(),
     val friendUser: User? = null,
     val isLoading: Boolean = false,
-    val isLoadingUser: Boolean = false,
     val isRefreshing: Boolean = true,
     val searchQuery: String = "",
     val existsUser: Boolean? = null,

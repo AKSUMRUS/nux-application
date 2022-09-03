@@ -166,46 +166,45 @@ fun ChooseFriendsForGame(
             }
         }
 
-        if (!(state.isLoading || gamesViewModel.state.game==null)) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomEnd),
-            ) {
-                ButtonFull(
-                    text = stringResource(id = R.string.button_invite_friends),
-                    onClick = {
-                        if (state.clickedUsers.isEmpty()) {
-                            Toast.makeText(context, "Добавьте друзей в команду", Toast.LENGTH_SHORT)
-                                .show()
-                            return@ButtonFull
-                        }
-                        val users: MutableList<String> = mutableListOf()
-                        for (x in state.clickedUsers) {
-                            users.add(x.id)
-                        }
-                        profileViewModel.onEvent(
-                            ProfileEvent.InviteFriends(
-                                accessToken = profileViewModel.state.profile!!.access_token,
-                                friends_ids = users.toList(),
-                                app_id = gamesViewModel.state.game!!.id
-                            )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomEnd)
+        ,
+        ){
+            ButtonFull(
+                text = stringResource(id = R.string.button_invite_friends),
+                onClick = {
+                    if(state.clickedUsers.isEmpty()){
+                        Toast.makeText(context, "Добавьте друзей в команду", Toast.LENGTH_SHORT).show()
+                        return@ButtonFull
+                    }
+                    val users: MutableList<String> = mutableListOf()
+                    for(x in state.clickedUsers){
+                        users.add(x.id)
+                    }
+                    profileViewModel.onEvent(
+                        ProfileEvent.InviteFriends(
+                            accessToken = profileViewModel.state.profile!!.access_token,
+                            friends_ids = users.toList(),
+                            app_id = gamesViewModel.state.game!!.id
                         )
-                        analytics.logEvent("open_screen") {
-                            param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
-                            param("from_what_screen", "choose_friends_quick_game")
-                        }
-                        navController.navigate("finish_inviting_friends") {
-                            popUpTo("finish_inviting_friends")
-                            launchSingleTop = true
-                        }
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, bottom = 20.dp, end = 20.dp),
-                )
-            }
+                    )
+                    analytics.logEvent("open_screen") {
+                        param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
+                        param("from_what_screen","choose_friends_quick_game")
+                    }
+                    navController.navigate("finish_inviting_friends"){
+                        popUpTo("finish_inviting_friends")
+                        launchSingleTop = true
+                    }
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, bottom = 20.dp, end = 20.dp)
+                ,
+            )
         }
 
         BackToolbar(
