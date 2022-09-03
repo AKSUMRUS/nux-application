@@ -56,10 +56,6 @@ fun FriendScreen(
     var sendInvite by remember { mutableStateOf(false) }
     var showButtonAddFriend by remember{ mutableStateOf(true)}
 
-    LaunchedEffect(key1 = true, block ={
-        userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
-    })
-
     LaunchedEffect(userViewModel.state.users, user){
         val users = userViewModel.state.users
         if(user!=null && user.id == profileViewModel.state.profile!!.id){
@@ -107,7 +103,7 @@ fun FriendScreen(
         }
     }
 
-    if(user!=null&&!state.isLoading) {
+    if(user!=null&&!state.isLoadingUser) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -126,7 +122,7 @@ fun FriendScreen(
                 item(
                     span = { GridItemSpan(2) },
                 ) {
-                    FriendTopBar(user = user!!)
+                    FriendTopBar(user = user)
                 }
 
                 if(state.friendUser!!.status.app != null) {
@@ -206,26 +202,7 @@ fun FriendScreen(
                         launchSingleTop = true
                     }
                 },
-//                modifier = Modifier
-//                    .align(Alignment.TopCenter)
             )
-
-            if(showButtonAddFriend){
-                ButtonFull(
-                    text = if(!sendInvite) "Добавить в друзья" else "Приглашение отправлено",
-                    onClick = {
-                        sendInvite = true
-                        userViewModel.onEvent(UserEvent.AddFriend(nickname = user.nickname, access_token = profileViewModel.state.profile!!.access_token))
-                    },
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 20.dp)
-                    ,
-                    padding = 10.dp,
-                    colorBackground = if(sendInvite) MaterialTheme.colors.surface else MaterialTheme.colors.primary,
-                    colorText = if(sendInvite) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
-                )
-            }
         }
 
         AlertDialogShow(

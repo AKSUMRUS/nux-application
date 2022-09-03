@@ -64,7 +64,7 @@ fun FindFriendByName(
                 ButtonFull(
                     text = "найти",
                     onClick = {
-                        userViewModel.onEvent(UserEvent.ClearError)
+//                        userViewModel.onEvent(UserEvent.ClearError)
                         userViewModel.onEvent(UserEvent.GetUserByNickname(name))
                     },
                 )

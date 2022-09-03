@@ -2,12 +2,12 @@ package com.ledokol.thebestproject.ui.components.molecules.friend
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -25,40 +25,37 @@ fun BoxTypeAddFriend(
     title: String,
     onClick: () -> Unit,
 ){
-
-    Button(onClick = { onClick() }) {
-
-        Row(
+    Row(
+        modifier = Modifier
+            .padding(top = 7.dp, bottom = 8.dp)
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .clickable {
+                onClick()
+            }
+            .background(MaterialTheme.colors.secondary)
+            .padding(10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ){
+        Icon(
+            icon,
             modifier = Modifier
-                .padding(top = 7.dp, bottom = 8.dp)
-                .fillMaxWidth()
+                .padding(start = 8.dp)
+                .size(height = 60.dp, width = 60.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.secondary)
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-//        Box(){
-//
-//        }
-            Icon(
-                icon,
-                modifier = Modifier
-                    .padding(start = 8.dp)
-                    .size(height = 60.dp, width = 60.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colors.primary)
-                    .padding(14.dp),
-                contentDescription = null,
-                tint = Color.White,
-            )
+                .background(MaterialTheme.colors.primary)
+                .padding(14.dp)
+                ,
+            contentDescription = null,
+            tint = Color.White,
+        )
 
-            HeadlineH6(
-                text = title,
-                modifier = Modifier
-                    .padding(start = 26.dp)
-            )
+        HeadlineH6(
+            text = title,
+            modifier = Modifier
+                .padding(start = 26.dp)
+        )
 
-        }
     }
 
 }

@@ -13,12 +13,15 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.presentation.ProfileViewModel
+import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
+import com.ledokol.thebestproject.ui.components.molecules.UploadAvatar
 
 @Composable
 fun EditProfileTopBlock(
-    profileViewModel: ProfileViewModel
+    profileViewModel: ProfileViewModel,
+    userViewModel: UserViewModel,
 ) {
 
     val state = profileViewModel.state.profile
@@ -31,13 +34,12 @@ fun EditProfileTopBlock(
             ,
             horizontalAlignment = CenterHorizontally
         ) {
-            AsyncImage(
-                model = state!!.profile_pic,
-                contentDescription = "Avatar",
-                modifier = Modifier.size(height = 130.dp, width = 130.dp),
-                contentScale = ContentScale.Crop,
+            UploadAvatar(
+                profile_pic = state.profile_pic.toString(),
+                profileViewModel = profileViewModel,
+                userViewModel = userViewModel,
+                modifier = Modifier.size(130.dp,130.dp)
             )
-
 
             HeadlineH3(
                 text = state!!.nickname,

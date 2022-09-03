@@ -16,12 +16,6 @@ val Black = Color(0xFF000000)
 val Gray = Color(0xFF3b3a40)
 val GrayHelper = Color(0xFF646464)
 
-val BackgroundDark = Color(0xFF000000) // Главный бэкграунд для всего приложения (Primary)
-val OnBackgroundDark = Color(0xFFFFFFFF) // Цвет для текста на бэкграунде (OnPrimary)
-val PrimaryDark = Color(0xFF13121B) // Цвет блоков на бэкграунде (Secondary)
-val OnPrimaryDark = Color(0xFF4D4F71) // Цвет текста в блоках на бэкграунде (OnSecondary)
-val SecondaryDark = Color(0xFF6943FF) // Цвет элементов на блоках (Tertiary)
-val OnSecondaryDark = Color(0xFF323454) // Цвет текста элементов на блоках (OnTertiary)
 
 val Black2 = Color(0xFF000000)
 val GrayLow = Color(0xFF1E1F28)

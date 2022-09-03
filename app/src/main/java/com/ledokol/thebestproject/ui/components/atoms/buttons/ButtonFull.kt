@@ -22,7 +22,7 @@ fun ButtonFull(
     onClick: () -> Unit,
     colorBackground: Color = MaterialTheme.colors.primary,
     colorText: Color = MaterialTheme.colors.onPrimary,
-    padding: Dp = 10.dp,
+    padding: PaddingValues = PaddingValues(10.dp),
 ){
 
     Button(
@@ -30,11 +30,11 @@ fun ButtonFull(
         modifier = Modifier
             .then(modifier)
     ,
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(34.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
         ),
-        contentPadding = PaddingValues(padding)
+        contentPadding = padding,
 
 //        elevation = ButtonElevation.elevation(null)
     ) {
