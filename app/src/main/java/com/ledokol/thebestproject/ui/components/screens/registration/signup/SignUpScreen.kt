@@ -69,7 +69,7 @@ fun SignUpScreen(
         when(numberScreen) {
             0 -> {
                 val buttonClickNext = {
-                    var verifyName: Boolean = name.isNotEmpty()
+                    var verifyName: Boolean = checkCorrectName(name)
 
                     if(verifyName){
                         errorName = ""
@@ -97,20 +97,6 @@ fun SignUpScreen(
                 )
             }
             1 -> {
-                fun checkCorrectNickname(nickname: String): Boolean{
-                    var verifyNickname: Boolean = (nickname.isNotEmpty())
-
-                    for(symbol in nickname){
-                        if(symbol=='_' || symbol in '0'..'9') continue
-                        if(!((symbol in 'a'..'z')||(symbol in 'A'..'Z'))){
-                            verifyNickname = false
-                            break
-                        }
-                    }
-
-                    return verifyNickname
-                }
-
                 val buttonClickNext = {
                     val verifyNickname: Boolean = checkCorrectNickname(nickname)
 
@@ -215,4 +201,31 @@ fun SignUpScreen(
             }
         }
     }
+}
+
+fun checkCorrectName(name: String): Boolean {
+    var verifyNickname: Boolean = (name.isNotEmpty())
+
+    for(symbol in name){
+        if(symbol=='_' || symbol in '0'..'9' || symbol==' ') {
+            verifyNickname = false
+            break
+        }
+    }
+
+    return verifyNickname
+}
+
+fun checkCorrectNickname(nickname: String): Boolean{
+    var verifyNickname: Boolean = (nickname.isNotEmpty())
+
+    for(symbol in nickname){
+        if(symbol=='_' || symbol in '0'..'9') continue
+        if(!((symbol in 'a'..'z')||(symbol in 'A'..'Z'))){
+            verifyNickname = false
+            break
+        }
+    }
+
+    return verifyNickname
 }

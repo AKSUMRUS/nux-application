@@ -2,6 +2,7 @@ package com.ledokol.thebestproject.ui.components.screens.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -65,6 +67,7 @@ fun SignUpScreenNickname(
 
             Row(
                 modifier = Modifier
+                    .clip(RoundedCornerShape(16.dp))
                     .background(MaterialTheme.colors.primary)
             ){
                 Body1(

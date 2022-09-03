@@ -13,11 +13,13 @@ import android.net.Uri
 import android.util.Log
 import androidx.annotation.NonNull
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -54,22 +56,8 @@ import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 import java.util.*
 
 
-// Гордей, ПОЧЕМУ ЭТО БЛЯТЬ ЗДЕСЬ!?!?!?!?!?!!??!
-class GameProfile(private val packageName: String, val name: String = "Name", val icon: String = "Icon", val users: List<String> = listOf()){
-
-    fun getName(context: Context, packageManager: PackageManager): String{
-        return packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0)).toString()
-    }
-
-    fun getIcon(context: Context, packageManager: PackageManager): ImageBitmap {
-        return (packageManager.getApplicationIcon(packageName) as BitmapDrawable).bitmap.asImageBitmap()
-    }
-}
-
 fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
     val icon: Drawable = (packageManager.getApplicationIcon(packageName))
-//    if (icon == null)
-//        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));
     return getBitmapFromDrawable(icon)
 }
 
@@ -112,13 +100,11 @@ fun ProfileScreen(
             .fillMaxSize()
     ) {
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(top = 0.dp, start = 0.dp, end = 0.dp),
+        LazyColumn(
+            contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
             modifier = Modifier,
         ) {
             item(
-                span = { GridItemSpan(2) }
             ) {
                 Column(
                 ) {

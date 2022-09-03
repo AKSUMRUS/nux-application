@@ -15,5 +15,6 @@ sealed class UserEvent {
     class OpenScreen(val screen: String): UserEvent()
     object AddFriendById : UserEvent()
     object ClearError : UserEvent()
+    object ClearFriendUser: UserEvent()
 }
 

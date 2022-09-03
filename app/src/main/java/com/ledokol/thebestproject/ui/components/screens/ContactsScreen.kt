@@ -83,7 +83,7 @@ fun ContactsScreen(
     }
 
     fun inviteFriend(){
-        val dynamicLink = getLinkProfile(profile_id = profileViewModel.state.profile!!.access_token)
+        val dynamicLink = getLinkProfile(profile_id = profileViewModel.state.profile!!.id)
 
         val intent= Intent()
         intent.action = Intent.ACTION_SEND

@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.components.molecules.friend
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,19 +8,22 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.ui.components.atoms.Status
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun FriendInNotification(
     user: User,
-    onClick: () -> Unit,
+    addFriend: () -> Unit,
+    openFriend: () -> Unit,
     clicked: Boolean = false,
 ){
 
@@ -33,29 +37,16 @@ fun FriendInNotification(
 
     Box(
         modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colors.secondary)
+            .clickable { openFriend() }
         ,
     ){
 
-        if(user.status.in_app && user.status.app!=null){
-            user.status.app?.let {
-                AsyncImage(
-                    it.image_wide,
-                    contentDescription = "user back",
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth(),
-                    alpha = 0.3f,
-                    contentScale = Crop
-                )
-            }
-        }
-
         Row(
             modifier = Modifier
-                .height(80.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(0))
-                .clickable(onClick = onClick)
                 .padding(10.dp)
         ){
             AsyncImage(
@@ -63,30 +54,40 @@ fun FriendInNotification(
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
+                    .align(CenterVertically)
                 ,
                 contentScale = Crop,
+                alignment = Alignment.Center,
             )
 
             Column(
-                modifier = Modifier.padding(start = 10.dp),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(start = 20.dp)
+            ){
+                Row(
+                    modifier = Modifier.padding(0.dp)
                 ){
-                Body1(text = user.nickname,
-                    color = MaterialTheme.colors.onPrimary
-                )
+                    HeadlineH6(
+                        text = user.name,
+                        modifier = Modifier,
+                        color = MaterialTheme.colors.onPrimary,
+                        fontWeight = FontWeight.Medium,
+                    )
 
-                Body1(
-                    text = "Добавить в друзья",
-                    color = MaterialTheme.colors.primary
-                )
+                    Body1(text = "@${user.nickname}",
+                        modifier = Modifier
+                            .padding(start = 10.dp)
+                        ,
+                        color = MaterialTheme.colors.secondaryVariant,
+                    )
+                }
+
+                StripFriend(user = user, addFriend = true, onClick = {
+                    addFriend()
+                })
             }
-        }
 
-        Status(
-            status = if(user.status.online)"online" else "offline",
-            modifier = Modifier
-                .padding(top = 15.dp, end = 20.dp)
-                .align(Alignment.TopEnd)
-            ,
-        )
+        }
     }
 }

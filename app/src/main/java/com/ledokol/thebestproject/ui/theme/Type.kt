@@ -27,26 +27,19 @@ val LexendDeca = FontFamily(
         Font(R.font.lexenddeca_black, FontWeight.W900),
 )
 
-//val FiraSans = FontFamily(
-////        Font(R.font.f, FontWeight.W300),
-////        Font(R.font.fira_sans_regular, FontWeight.W400),
-////        Font(R.font.fira_sans_medium, FontWeight.W500),
-////        Font(R.font.fira_sans_bold, FontWeight.W700),
-//)
-
 
 // Set of Material typography styles to start with
 val Typography = Typography(
         h1 = TextStyle(
                 fontFamily = LexendDeca,
-                fontWeight = FontWeight.Bold,
-                fontSize = 32.sp,
+                fontWeight = FontWeight.Light,
+                fontSize = 60.sp,
                 letterSpacing = (-1.5).sp
         ),
         h2 = TextStyle(
                 fontFamily = LexendDeca,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontWeight = FontWeight.Light,
+                fontSize = 48.sp,
                 letterSpacing = (-0.5).sp
         ),
         h3 = TextStyle(

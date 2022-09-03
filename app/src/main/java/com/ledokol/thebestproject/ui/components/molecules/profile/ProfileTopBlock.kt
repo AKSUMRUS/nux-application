@@ -28,8 +28,8 @@ fun ProfileTopBlock(
     ) {
         if(state.profile != null){
             UserInformationProfile(
-                name = state.profile.nickname,
-                profile_pic = state.profile.profile_pic!!,
+                name = state.profile!!.nickname,
+                profile_pic = state.profile!!.profile_pic!!,
                 profile = true,
                 onClickEdit = {
                     navController.navigate("edit_profile"){

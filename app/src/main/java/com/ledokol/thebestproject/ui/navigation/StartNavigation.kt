@@ -17,8 +17,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.data.local.game.GamesEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.internet.ConnectionState
@@ -28,12 +30,15 @@ import com.ledokol.thebestproject.services.GamesStatistic.Companion.convertListA
 import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestproject.services.MyService
 import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestproject.ui.components.molecules.AddByQrCode
 import com.ledokol.thebestproject.ui.components.molecules.profile.GamesListProfile
 import com.ledokol.thebestproject.ui.components.screens.*
+import com.ledokol.thebestproject.ui.components.screens.friends.AddByNickname
 import com.ledokol.thebestproject.ui.components.screens.friends.AddFriendByName
 import com.ledokol.thebestproject.ui.components.screens.friends.FindFriendByName
 import com.ledokol.thebestproject.ui.components.screens.friends.FriendScreen
-import com.ledokol.thebestproject.ui.components.screens.friends.ListFriendsScreen
+import com.ledokol.thebestproject.ui.components.screens.friends.Friends
+import com.ledokol.thebestproject.ui.components.screens.friends.PreviewFriendScreen
 import com.ledokol.thebestproject.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestproject.ui.components.screens.games.QuickGameScreen
@@ -78,6 +83,21 @@ fun StartNavigation(
             val intentService = Intent(context, MyService::class.java)
             intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startForegroundService(intentService)
+
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(com.ledokol.thebestproject.ui.components.screens.games.TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                val tokenGet = task.result
+
+                if(profileViewModel.state.profile != null){
+                    Log.e("myFirebaseToken", "$tokenGet ${profileViewModel.state.profile!!.access_token}")
+                    profileViewModel.setCurrentFirebaseToken(tokenGet, profileViewModel.state.profile!!.access_token)
+                }
+            })
+
         }
     }
 
@@ -88,6 +108,7 @@ fun StartNavigation(
             accessToken = accessToken
         ))
     }
+
 
     Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
 
@@ -101,9 +122,9 @@ fun StartNavigation(
         BottomNavItemMain.Friends.screen_route -> {
             bottomBarState.value = true
         }
-        BottomNavItemMain.Notifications.screen_route -> {
-            bottomBarState.value = true
-        }
+//        BottomNavItemMain.Notifications.screen_route -> {
+//            bottomBarState.value = true
+//        }
         else -> {
             bottomBarState.value = false
         }
@@ -243,6 +264,29 @@ fun StartNavigation(
                         )
                         logOpenScreenEvent("invite_friends")
                     }
+                    composable("qr_code_profile") {
+                        AddByQrCode(
+                            navController = navController,
+                            profileViewModel = profileViewModel,
+                        )
+                        logOpenScreenEvent("qr_code_profile")
+                    }
+                    composable("add_by_nickname") {
+                        AddByNickname(
+                            navController = navController,
+                            profileViewModel = profileViewModel,
+                            userViewModel = userViewModel,
+                        )
+                        logOpenScreenEvent("add_by_nickname")
+                    }
+                    composable("preview_friend") {
+                        PreviewFriendScreen(
+                            navController = navController,
+                            profileViewModel = profileViewModel,
+                            userViewModel = userViewModel,
+                        )
+                        logOpenScreenEvent("preview_friend")
+                    }
 
                     composable("contacts_list") {
                         ContactsScreen(
@@ -258,6 +302,7 @@ fun StartNavigation(
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
+                            userViewModel = userViewModel,
                         )
                         logOpenScreenEvent("edit_profile")
                     }
@@ -266,27 +311,6 @@ fun StartNavigation(
                         NotInternet(
                         )
                         logOpenScreenEvent("not_internet")
-                    }
-                    composable("find_friend_by_name"){
-                        FindFriendByName(
-                            userViewModel = userViewModel,
-                            navController = navController
-                        )
-                        logOpenScreenEvent("find_friend_by_name")
-                    }
-                    composable("add_friend_by_name"){
-                        AddFriendByName(
-                            userViewModel = userViewModel,
-                            navController = navController
-                        )
-                        logOpenScreenEvent("add_friend_by_name")
-                    }
-                    composable("games"){
-                        GamesListProfile(
-                            gamesViewModel = gamesViewModel,
-                            navController = navController,
-                        )
-                        logOpenScreenEvent("games")
                     }
                     composable(BottomNavItemMain.QuickGame.screen_route) {
                         TheBestProjectEverTheme {
@@ -310,9 +334,11 @@ fun StartNavigation(
                     composable(BottomNavItemMain.Friends.screen_route) {
                         logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                         userViewModel.accessToken = accessToken
-                        ListFriendsScreen(
+                        Friends(
                             navController = navController,
-                            userViewModel = userViewModel
+                            userViewModel = userViewModel,
+                            profileViewModel = profileViewModel,
+                            notificationsViewModel = notificationsViewModel,
                         )
                         logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                     }

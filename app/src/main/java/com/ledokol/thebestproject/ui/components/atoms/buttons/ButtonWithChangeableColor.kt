@@ -29,7 +29,7 @@ fun ButtonWithChangeableColor(
         colors = ButtonDefaults.buttonColors(
                 backgroundColor = if(!isClicked) color1 else color2,
         ),
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(16.dp),
     ) {
         HeadlineH6(
             text = if(!isClicked) text1 else text2,
