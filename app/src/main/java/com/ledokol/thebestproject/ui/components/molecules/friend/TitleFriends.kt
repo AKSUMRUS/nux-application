@@ -31,6 +31,7 @@ fun TitleFriends(
     HeadlineH5(
         text = text,
         fontWeight = FontWeight.Medium,
+        color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .padding(top = 20.dp, bottom = 0.dp)
     )

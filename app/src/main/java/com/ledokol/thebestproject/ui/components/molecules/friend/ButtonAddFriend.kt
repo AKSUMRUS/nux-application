@@ -33,7 +33,7 @@ fun ButtonAddFriend(
             .fillMaxWidth()
             .padding(bottom = 10.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
             .clickable { onClick() }
     ){
         Box(
@@ -41,12 +41,12 @@ fun ButtonAddFriend(
                 .align(CenterVertically)
                 .padding(start = 10.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.primary)
+                .background(MaterialTheme.colors.secondary)
         ){
             Icon(
                 ImageBitmap.imageResource(id = R.drawable.plus),
                 contentDescription = null,
-                tint = MaterialTheme.colors.onPrimary,
+                tint = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(Alignment.Center)
                     .size(50.dp, 50.dp)
@@ -62,6 +62,7 @@ fun ButtonAddFriend(
         ){
             HeadlineH6(
                 text = stringResource(id = R.string.add_friend_title),
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .padding(bottom = 5.dp)
             ,
@@ -72,7 +73,7 @@ fun ButtonAddFriend(
                 modifier = Modifier
 //                    .padding(bottom = 10.dp)
             ,
-                color = MaterialTheme.colors.secondaryVariant,
+                color = MaterialTheme.colors.onPrimary,
                 fontWeight = FontWeight.Bold,
             )
         }

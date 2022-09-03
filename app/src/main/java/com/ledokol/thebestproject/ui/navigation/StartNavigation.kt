@@ -31,14 +31,8 @@ import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalled
 import com.ledokol.thebestproject.services.MyService
 import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestproject.ui.components.molecules.AddByQrCode
-import com.ledokol.thebestproject.ui.components.molecules.profile.GamesListProfile
 import com.ledokol.thebestproject.ui.components.screens.*
-import com.ledokol.thebestproject.ui.components.screens.friends.AddByNickname
-import com.ledokol.thebestproject.ui.components.screens.friends.AddFriendByName
-import com.ledokol.thebestproject.ui.components.screens.friends.FindFriendByName
-import com.ledokol.thebestproject.ui.components.screens.friends.FriendScreen
-import com.ledokol.thebestproject.ui.components.screens.friends.Friends
-import com.ledokol.thebestproject.ui.components.screens.friends.PreviewFriendScreen
+import com.ledokol.thebestproject.ui.components.screens.friends.*
 import com.ledokol.thebestproject.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestproject.ui.components.screens.games.QuickGameScreen
@@ -136,7 +130,6 @@ fun StartNavigation(
         "splash_screen"
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister ${profile.toString()}")
-        accessToken = profile.profile.access_token
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -147,7 +140,6 @@ fun StartNavigation(
 
         "request_permission_data"
     } else {
-        accessToken = profile.profile.access_token
 
         Log.e("ShareGames", "Start $accessToken ${userViewModel.state.openScreen}")
         gamesViewModel.clearGames()

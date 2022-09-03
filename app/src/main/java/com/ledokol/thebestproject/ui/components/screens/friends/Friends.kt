@@ -29,7 +29,6 @@ import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
-import com.ledokol.thebestproject.ui.components.screens.InviteFriend
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -229,7 +228,7 @@ fun Friends(
 
                             item(){
                                 Column(){
-                                    TitleFriends(text = stringResource(id = R.string.my_friends))
+                                    TitleFriends(text = stringResource(id = R.string.my_friends),)
 
                                     ShowSearch(
                                         userViewModel = userViewModel,

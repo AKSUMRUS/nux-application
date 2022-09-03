@@ -29,7 +29,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
     AnimatedVisibility(visible = bottomBarState.value) {
 
         BottomNavigation(
-            backgroundColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.primary,
             contentColor = Color.Gray,
             modifier = Modifier.height(62.dp),
         ) {

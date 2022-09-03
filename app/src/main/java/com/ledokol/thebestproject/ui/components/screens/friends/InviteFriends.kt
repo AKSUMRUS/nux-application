@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.screens
+package com.ledokol.thebestproject.ui.components.screens.friends
 
 import android.graphics.Bitmap
 import android.util.Log
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
@@ -23,6 +22,7 @@ import com.ledokol.thebestproject.ui.components.molecules.friend.BoxTypeAddFrien
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.ledokol.thebestproject.ui.components.screens.ShareInvite
 
 @Composable
 fun InviteFriend(

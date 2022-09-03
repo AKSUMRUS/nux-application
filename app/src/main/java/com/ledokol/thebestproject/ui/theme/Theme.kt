@@ -23,14 +23,14 @@ import androidx.compose.runtime.Composable
 //isLight: Boolean
 
 private val DarkColorPalette = darkColors(
-    primary = Purple,
-    onPrimary = White,
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = Gray4,
-    onSecondary = White,
-    background = Black2,
-    onBackground = GrayLow,
+    secondary = SecondaryDark,
+    onSecondary = OnSecondaryDark,
+    background = BackgroundDark,
+    onBackground = OnBackgroundDark,
     surface = Gray5,
     onSurface = White,
     error = Red,
@@ -38,16 +38,16 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple,
-    onPrimary = White,
+    primary = PrimaryDark,
+    onPrimary = OnPrimaryDark,
     primaryVariant = GrayLow,
     secondaryVariant = Gray3,
-    secondary = Gray4,
-    onSecondary = White,
-    background = Black2,
-    onBackground = GrayLow,
+    secondary = SecondaryDark,
+    onSecondary = OnSecondaryDark,
+    background = BackgroundDark,
+    onBackground = OnBackgroundDark,
     surface = Gray5,
-    onSurface = GrayHelper,
+    onSurface = White,
     error = Red,
     onError = White,
 
@@ -66,16 +66,16 @@ onSurface = Color.Black,
 fun TheBestProjectEverTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors =
         if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
-    }
+            DarkColorPalette
+        } else {
+            LightColorPalette
+        }
 
 
     MaterialTheme(
-            colors = colors,
-            typography = Typography,
-            shapes = Shapes,
-            content = content
+        colors = colors,
+        typography = Typography,
+        shapes = Shapes,
+        content = content
     )
 }

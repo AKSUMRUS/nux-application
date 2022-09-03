@@ -124,7 +124,7 @@ fun ProfileScreen(
                             text = "Игры",
                             openText = "Смотреть",
                             onClick = {
-                                      navController.navigate("games"){
+                                      navController.navigate(BottomNavItemMain.QuickGame.screen_route){
                                           popUpTo("profile")
                                       }
                             },

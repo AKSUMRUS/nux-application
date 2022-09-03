@@ -37,7 +37,7 @@ fun FriendInList(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
         ,
     ){
 
@@ -46,6 +46,7 @@ fun FriendInList(
 //                .height(80.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(0))
+                .background(MaterialTheme.colors.primary)
                 .clickable(onClick = onClick)
                 .padding(10.dp)
         ){
@@ -77,7 +78,7 @@ fun FriendInList(
                         modifier = Modifier
                             .padding(start = 10.dp)
                         ,
-                        color = MaterialTheme.colors.secondaryVariant,
+                        color = MaterialTheme.colors.onPrimary,
                     )
                 }
 
