@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -20,8 +21,8 @@ fun ButtonFull(
     text: String,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    colorBackground: Color = MaterialTheme.colors.primary,
-    colorText: Color = MaterialTheme.colors.onPrimary,
+    colorBackground: Color = MaterialTheme.colors.secondary,
+    colorText: Color = MaterialTheme.colors.onBackground,
     padding: Dp = 10.dp,
 ){
 

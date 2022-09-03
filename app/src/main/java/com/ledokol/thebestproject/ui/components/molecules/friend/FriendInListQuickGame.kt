@@ -39,7 +39,7 @@ fun FriendInListQuickGame(
 
     Box(
         modifier = modifier
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
         ,
     ){
 
@@ -65,7 +65,7 @@ fun FriendInListQuickGame(
                 .padding(12.dp)
         ){
             AsyncImage(
-                model = user.profile_pic!!,
+                model = user.profile_pic,
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
@@ -83,7 +83,7 @@ fun FriendInListQuickGame(
                 Body1(text = user.nickname,
                     modifier = Modifier
                     ,
-                    color = MaterialTheme.colors.onPrimary
+                    color = MaterialTheme.colors.onBackground
                 )
 
                 Row(

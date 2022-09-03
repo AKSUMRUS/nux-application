@@ -174,6 +174,8 @@ fun ChooseFriendsForGame(
         ){
             ButtonFull(
                 text = stringResource(id = R.string.button_invite_friends),
+                colorBackground = MaterialTheme.colors.secondary,
+                colorText = MaterialTheme.colors.onBackground,
                 onClick = {
                     if(state.clickedUsers.isEmpty()){
                         Toast.makeText(context, "Добавьте друзей в команду", Toast.LENGTH_SHORT).show()
