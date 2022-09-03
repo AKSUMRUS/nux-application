@@ -32,7 +32,7 @@ fun EditProfileTopBlock(
             horizontalAlignment = CenterHorizontally
         ) {
             AsyncImage(
-                model = state!!.profile_pic,
+                model = state.profile_pic,
                 contentDescription = "Avatar",
                 modifier = Modifier.size(height = 130.dp, width = 130.dp),
                 contentScale = ContentScale.Crop,
