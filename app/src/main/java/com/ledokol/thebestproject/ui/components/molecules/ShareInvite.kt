@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
@@ -84,14 +85,15 @@ fun ShareInvite(
                 item(
                     span = { GridItemSpan(3) }
                 ) {
-                    HeadlineH5(
-                        text = "Поделиться",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 10.dp),
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.W700,
-                    )
+//                    HeadlineH5(
+//                        text = "Поделиться",
+//                        color = MaterialTheme.colors.onBackground,
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(bottom = 10.dp),
+//                        textAlign = TextAlign.Center,
+//                        fontWeight = FontWeight.W700,
+//                    )
                 }
                 items(socialApps) { app ->
                     if (appInstalledOrNot(context,app)) {

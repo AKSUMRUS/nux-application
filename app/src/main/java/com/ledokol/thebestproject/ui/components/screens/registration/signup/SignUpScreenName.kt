@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.components.screens.registration
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
@@ -89,6 +90,8 @@ fun SignUpScreenName(
 
         ButtonFull(
             text = stringResource(id = R.string.next),
+            colorText = MaterialTheme.colors.onBackground,
+            colorBackground = MaterialTheme.colors.secondary,
             onClick = buttonNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)

@@ -64,7 +64,7 @@ fun FriendScreen(
         if(users!=null&&user!=null&&user.id!=profileViewModel.state.profile!!.id){
             Log.e("UsersFriendScreen", users.toString())
             for(userInList in users){
-                if(user!!.id == userInList.id){
+                if(user.id == userInList.id){
                     showButtonAddFriend = false
                 }
             }

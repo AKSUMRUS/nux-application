@@ -1,6 +1,8 @@
 package com.ledokol.thebestproject.ui.components.screens.registration.signup
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.Composable
@@ -70,7 +72,8 @@ fun SignUpScreenPhone(
                 ButtonWithIcon(
                     icon = Icons.Default.ArrowForward,
                     onClick = { buttonNextClick() },
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .background(color = MaterialTheme.colors.primary),
                 )
             }
         }

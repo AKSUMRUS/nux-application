@@ -21,7 +21,7 @@ fun ButtonBorder(
     onClick: () -> Unit,
     padding: Dp = 10.dp,
     colorBackground: Color = MaterialTheme.colors.background,
-    colorBorder:Color = MaterialTheme.colors.primary,
+    colorBorder:Color = MaterialTheme.colors.onBackground,
     colorText: Color = colorBorder,
 ){
 

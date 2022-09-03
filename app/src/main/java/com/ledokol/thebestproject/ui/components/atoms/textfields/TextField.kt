@@ -27,7 +27,7 @@ fun TextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
     enabled: Boolean = true,
-    textStyle: TextStyle = LocalTextStyle.current,
+    textStyle: TextStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
     capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
     ) {
     TextField(
@@ -43,7 +43,7 @@ fun TextField(
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
             .background(
-                MaterialTheme.colors.secondary
+                MaterialTheme.colors.primary
             )
         ,
         singleLine = true,

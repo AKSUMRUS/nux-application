@@ -44,11 +44,19 @@ fun PhoneNumber(
     }
 
     var textStyle = MaterialTheme.typography.body1
-    textStyle = textStyle.copy(
-        textAlign = TextAlign.Center
+
+    val textStyle2 = textStyle.copy(
+        color = MaterialTheme.colors.onBackground
     )
 
-    Column(){
+    textStyle = textStyle.copy(
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onBackground
+    )
+
+    Column(
+        modifier = Modifier
+    ){
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -80,6 +88,7 @@ fun PhoneNumber(
                 ,
                 keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Next,
+                textStyle = textStyle2,
                 keyboardActions = KeyboardActions(onNext = {
                     onNextClick()
                 }),

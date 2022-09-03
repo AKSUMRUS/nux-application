@@ -68,12 +68,12 @@ fun SignUpScreenNickname(
             Row(
                 modifier = Modifier
                     .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colors.secondary)
+                    .background(MaterialTheme.colors.primary)
             ){
                 Body1(
                     text = "@",
                     modifier = Modifier
-                        .background(MaterialTheme.colors.secondary)
+                        .background(MaterialTheme.colors.primary)
                         .align(CenterVertically)
                         .padding(start = 20.dp,end = 0.dp)
                     ,
@@ -96,7 +96,7 @@ fun SignUpScreenNickname(
             }
             Body2(
                 text = stringResource(id = R.string.hint_choose_nickname),
-                color = if(correctText) MaterialTheme.colors.secondaryVariant else MaterialTheme.colors.error,
+                color = if(correctText) MaterialTheme.colors.onPrimary else MaterialTheme.colors.error,
                 modifier = Modifier.padding(top = 10.dp)
             )
 
@@ -109,6 +109,8 @@ fun SignUpScreenNickname(
 
         ButtonFull(
             text = stringResource(id = R.string.next),
+            colorText = MaterialTheme.colors.onBackground,
+            colorBackground = MaterialTheme.colors.secondary,
             onClick = buttonNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)

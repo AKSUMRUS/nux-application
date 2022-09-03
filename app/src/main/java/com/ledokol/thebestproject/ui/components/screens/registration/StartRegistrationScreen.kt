@@ -54,7 +54,7 @@ fun StartRegistrationScreen(
 
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colors.primary)
+            .background(MaterialTheme.colors.secondary)
             .fillMaxSize()
         ,
     ){
@@ -100,8 +100,8 @@ fun StartRegistrationScreen(
                 ,
                 onClick = {onClickSignUp()},
                 icon = ImageBitmap.imageResource(id = R.drawable.arrow_right),
-                colorText = MaterialTheme.colors.onPrimary,
-                colorBackground = MaterialTheme.colors.primaryVariant
+                colorText = MaterialTheme.colors.onBackground,
+                colorBackground = MaterialTheme.colors.primary
             )
             Body1(
                 text = stringResource(id = R.string.i_already_have_an_account),
@@ -120,7 +120,7 @@ fun StartRegistrationScreen(
                     .clickable { onClickLogin() }
                 ,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colors.primaryVariant
+                color = MaterialTheme.colors.primary
             )
         }
     }

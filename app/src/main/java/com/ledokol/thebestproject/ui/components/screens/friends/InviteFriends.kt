@@ -3,8 +3,10 @@ package com.ledokol.thebestproject.ui.components.screens
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
@@ -51,6 +53,7 @@ fun InviteFriend(
         ){
             HeadlineH4(
                 text = stringResource(id = R.string.add_friend_title),
+                color = MaterialTheme.colors.onBackground,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
                     .padding(bottom = 10.dp),
@@ -87,6 +90,13 @@ fun InviteFriend(
                         popUpTo("qr_code_profile")
                         launchSingleTop = true
                     }
+                },
+                colorText = MaterialTheme.colors.onBackground,
+                padding = 8.dp,
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp),
                 }
 
             )

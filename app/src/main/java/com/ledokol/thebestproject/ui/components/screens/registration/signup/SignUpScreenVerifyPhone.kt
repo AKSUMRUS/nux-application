@@ -63,10 +63,11 @@ fun SignUpScreenVerifyPhone(
                 HeadlineH4(
                     text = stringResource(id = R.string.verify_code),
                     fontWeight = FontWeight.W700,
+                    color = MaterialTheme.colors.onBackground
                 )
                 Body1(
                     text = stringResource(id = R.string.verify_code_description, phone),
-                    color = MaterialTheme.colors.secondaryVariant,
+                    color = MaterialTheme.colors.onPrimary,
                 )
 
                 TextField(
@@ -84,6 +85,8 @@ fun SignUpScreenVerifyPhone(
 
                 ButtonFull(
                     text = stringResource(id = R.string.confirm),
+                    colorText = MaterialTheme.colors.onBackground,
+                    colorBackground = MaterialTheme.colors.secondary,
                     onClick = { buttonNextClick() },
                     modifier = Modifier
                         .padding(top = 10.dp)
@@ -99,6 +102,7 @@ fun SignUpScreenVerifyPhone(
             else{
                 HeadlineH4(
                     text = error,
+                    color = MaterialTheme.colors.error,
                     fontWeight = FontWeight.W700,
                     modifier = Modifier
                         .focusRequester(focusRequester),
