@@ -27,13 +27,14 @@ fun TitleRegistration(
         HeadlineH4(
             text = title,
             fontWeight = FontWeight.W400,
+            color = MaterialTheme.colors.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )
         Body1(
             text = description,
             fontWeight = FontWeight.W400,
-            color = MaterialTheme.colors.secondaryVariant,
+            color = MaterialTheme.colors.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth()
         )

@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.components.atoms.textfields
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.MaterialTheme
@@ -41,13 +42,23 @@ fun PhoneNumber(
     }
 
     var textStyle = MaterialTheme.typography.body1
-    textStyle = textStyle.copy(
-        textAlign = TextAlign.Center
+
+    val textStyle2 = textStyle.copy(
+        color = MaterialTheme.colors.onBackground
     )
 
-    Column(){
+    textStyle = textStyle.copy(
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colors.onBackground
+    )
+
+    Column(
+        modifier = Modifier
+    ){
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+            ,
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             TextField(
@@ -73,6 +84,7 @@ fun PhoneNumber(
                 ,
                 keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Next,
+                textStyle = textStyle2,
                 keyboardActions = KeyboardActions(onNext = {
                     onNextClick()
                 }),

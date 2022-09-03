@@ -33,7 +33,7 @@ fun BoxTypeAddFriend(
                 .padding(top = 7.dp, bottom = 8.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.primary)
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -46,7 +46,7 @@ fun BoxTypeAddFriend(
                     .padding(start = 8.dp)
                     .size(height = 60.dp, width = 60.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colors.primary)
+                    .background(MaterialTheme.colors.secondary)
                     .padding(14.dp),
                 contentDescription = null,
                 tint = Color.White,
@@ -54,6 +54,7 @@ fun BoxTypeAddFriend(
 
             HeadlineH6(
                 text = title,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .padding(start = 26.dp)
             )

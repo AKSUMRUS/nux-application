@@ -85,6 +85,8 @@ fun SignUpScreenAvatar(
 
         ButtonFull(
             text = stringResource(id = R.string.next),
+            colorText = MaterialTheme.colors.onBackground,
+            colorBackground = MaterialTheme.colors.secondary,
             onClick = buttonNextClick,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
