@@ -68,7 +68,6 @@ interface RetrofitServices {
 
     @PUT("sync_installed_apps/android")
     fun shareGames(
-        @Header("Authorization") authHeader: String,
         @Body games: AppsStatus
     )
             : Call<AppsGame>

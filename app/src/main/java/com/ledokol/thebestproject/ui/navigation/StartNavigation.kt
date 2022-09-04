@@ -135,7 +135,6 @@ fun StartNavigation(
         pushGamesIcons(games)
         gamesViewModel.shareGames(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
-            accessToken
         )
 
         "request_permission_data"
@@ -147,7 +146,6 @@ fun StartNavigation(
         pushGamesIcons(games)
         gamesViewModel.shareGames(
             convertListApplicationToListStatusJSON(context, context.packageManager, games),
-            accessToken
         )
 
         Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
