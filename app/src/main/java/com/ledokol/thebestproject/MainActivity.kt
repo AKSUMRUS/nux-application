@@ -131,6 +131,11 @@ class MainActivity : ComponentActivity() {
         intentFilter.addAction(Intent.ACTION_BOOT_COMPLETED)
         registerReceiver(myReceiver, intentFilter)
     }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(myReceiver)
+    }
 }
 
 

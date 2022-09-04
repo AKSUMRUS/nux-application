@@ -152,6 +152,42 @@ fun StartNavigation(
                 navController = navController,
                 startDestination = start,
                 builder = {
+                    composable(BottomNavItemMain.QuickGame.screen_route) {
+                        TheBestProjectEverTheme {
+                            QuickGameScreen(
+                                navController = navController,
+                                gamesViewModel = gamesViewModel,
+                            )
+                        }
+                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
+                    }
+                    composable(BottomNavItemMain.Profile.screen_route) {
+                        ProfileScreen(
+                            navController = navController,
+                            profileViewModel = profileViewModel,
+                            gamesViewModel = gamesViewModel,
+                            userViewModel = userViewModel,
+                        )
+                        logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
+                    }
+                    composable(BottomNavItemMain.Friends.screen_route) {
+                        Friends(
+                            navController = navController,
+                            userViewModel = userViewModel,
+                            profileViewModel = profileViewModel,
+                            notificationsViewModel = notificationsViewModel,
+                        )
+                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
+                    }
+                    composable(BottomNavItemMain.Notifications.screen_route) {
+                        NotificationsScreen(
+                            notificationsViewModel = notificationsViewModel,
+                            userViewModel = userViewModel,
+                            profileViewModel = profileViewModel,
+                            navController = navController,
+                        )
+                        logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
+                    }
                     composable("start_registration_screen") {
                         StartRegistrationScreen(
                             navController = navController,
@@ -271,44 +307,6 @@ fun StartNavigation(
                         NotInternet(
                         )
                         logOpenScreenEvent("not_internet")
-                    }
-                    composable(BottomNavItemMain.QuickGame.screen_route) {
-                        TheBestProjectEverTheme {
-                            QuickGameScreen(
-                                navController = navController,
-                                gamesViewModel = gamesViewModel,
-                                profileViewModel = profileViewModel,
-                            )
-                        }
-                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
-                    }
-                    composable(BottomNavItemMain.Profile.screen_route) {
-                        ProfileScreen(
-                            navController = navController,
-                            profileViewModel = profileViewModel,
-                            gamesViewModel = gamesViewModel,
-                            userViewModel = userViewModel,
-                        )
-                        logOpenScreenEvent(BottomNavItemMain.Profile.screen_route)
-                    }
-                    composable(BottomNavItemMain.Friends.screen_route) {
-                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
-                        Friends(
-                            navController = navController,
-                            userViewModel = userViewModel,
-                            profileViewModel = profileViewModel,
-                            notificationsViewModel = notificationsViewModel,
-                        )
-                        logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
-                    }
-                    composable(BottomNavItemMain.Notifications.screen_route) {
-                        NotificationsScreen(
-                            notificationsViewModel = notificationsViewModel,
-                            userViewModel = userViewModel,
-                            profileViewModel = profileViewModel,
-                            navController = navController,
-                        )
-                        logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
                     }
                 }
             )

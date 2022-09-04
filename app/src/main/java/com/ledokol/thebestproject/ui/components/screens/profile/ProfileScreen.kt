@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.bumptech.glide.Glide.init
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLink
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
@@ -92,18 +93,9 @@ fun ProfileScreen(
 
     val context = LocalContext.current
     val games = gamesViewModel.state.games
-    val profile = profileViewModel.state.profile
     var openDialog by remember{ mutableStateOf(false) }
     var selectedGame by remember {
         mutableStateOf("")
-    }
-
-    fun onClickDisturb(){
-        Log.d("ProfileScreen", "onClickDisturb ${profile?.access_token} ${profile!!.do_not_disturb}")
-        profileViewModel.onEvent(ProfileEvent.SetDoNotDisturb(
-            canDisturb = !profile.do_not_disturb,
-            accessToken = profile.access_token
-        ))
     }
 
     val usageStatsManager =
@@ -111,7 +103,7 @@ fun ProfileScreen(
 
     val calendar: Calendar = Calendar.getInstance()
     calendar.add(Calendar.WEEK_OF_YEAR, -1)
-    val start: Long = calendar.getTimeInMillis()
+    val start: Long = calendar.timeInMillis
     val end = System.currentTimeMillis()
     val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
 
