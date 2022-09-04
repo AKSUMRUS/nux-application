@@ -227,7 +227,7 @@ fun UserInformationProfile(
                 .clickable {
                     onClickEdit()
                 }
-                .size(40.dp,40.dp),
+                .size(40.dp, 40.dp),
             contentScale = ContentScale.Crop,
         )
     }

@@ -36,7 +36,7 @@ fun StripFriend(
             modifier = Modifier
                 .padding(top = 10.dp)
                 .clip(RoundedCornerShape(80.dp))
-                .background(MaterialTheme.colors.primary)
+                .background(MaterialTheme.colors.secondary)
                 .clickable { onClick() }
         ){
             HeadlineH6(
@@ -52,7 +52,7 @@ fun StripFriend(
                 modifier = Modifier
                     .padding(top = 10.dp)
                     .clip(RoundedCornerShape(80.dp))
-                    .background(MaterialTheme.colors.primary)
+                    .background(MaterialTheme.colors.secondary)
             ){
                 HeadlineH6(
                     text = user.status.app!!.name,

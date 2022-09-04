@@ -38,7 +38,7 @@ fun FriendInNotification(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
             .clickable { openFriend() }
         ,
     ){
@@ -71,7 +71,7 @@ fun FriendInNotification(
                     HeadlineH6(
                         text = user.name,
                         modifier = Modifier,
-                        color = MaterialTheme.colors.onPrimary,
+                        color = MaterialTheme.colors.onBackground,
                         fontWeight = FontWeight.Medium,
                     )
 

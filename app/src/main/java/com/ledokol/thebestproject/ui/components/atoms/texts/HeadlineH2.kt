@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 fun HeadlineH2(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colors.onPrimary,
+    color: Color = MaterialTheme.colors.onBackground,
     fontWeight: FontWeight? = MaterialTheme.typography.h2.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {

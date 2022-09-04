@@ -35,7 +35,7 @@ fun GameStat(
         modifier = Modifier
             .padding(bottom = 8.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
         ,
     ){
 
@@ -64,15 +64,15 @@ fun GameStat(
                 HeadlineH6(
                     text = name,
                     modifier = Modifier,
-                    color = MaterialTheme.colors.onPrimary,
+                    color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.Medium,
                 )
 
                 Body1(text = "Играл ${usageTime} минуты",
                     modifier = Modifier
-                        .padding(start = 10.dp)
+                        .padding(start = 0.dp)
                     ,
-                    color = MaterialTheme.colors.secondaryVariant,
+                    color = MaterialTheme.colors.onBackground,
                 )
             }
 

@@ -28,7 +28,7 @@ fun ButtonPrimaryLeadingIcon(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
-            .border(2.dp, MaterialTheme.colors.primary)
+            .border(2.dp, MaterialTheme.colors.secondary)
     ,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.background,
@@ -42,12 +42,12 @@ fun ButtonPrimaryLeadingIcon(
                     .size(30.dp)
                     .align(CenterVertically)
             ,
-                tint = MaterialTheme.colors.primary,
+                tint = MaterialTheme.colors.secondary,
             )
 
             Body1(
                 text = text,
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.secondary,
                 modifier = Modifier
                     .padding(start = 10.dp)
                     .align(CenterVertically)

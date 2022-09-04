@@ -20,7 +20,7 @@ fun ProfileTopBlock(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(
                 MaterialTheme.colors.background
             )

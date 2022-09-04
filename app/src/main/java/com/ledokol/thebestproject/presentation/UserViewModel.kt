@@ -135,27 +135,27 @@ UserViewModel @Inject constructor(
 
     private suspend fun getUserByNickname(nickname: String){
         repository.getUserByNickname(nickname).collect{
-            result ->
-                when(result){
-                    is Resource.Success -> {
-                        result.data.let{ user ->
-                            state = state.copy(
-                                friendUser = user
-                            )
-                        }
+                result ->
+            when(result){
+                is Resource.Success -> {
+                    result.data.let{ user ->
+                        state = state.copy(
+                            friendUser = user
+                        )
+                    }
 //                            addFriendFinally(
 //                                accessToken = accessToken,
 //                            )
-                    }
-
-                    is Resource.Loading -> {
-                        state = state.copy(
-                            isLoadingUser = result.isLoading
-                        )
-                    }
-                    is Resource.Error -> {
-                    }
                 }
+
+                is Resource.Loading -> {
+                    state = state.copy(
+                        isLoadingUser = result.isLoading
+                    )
+                }
+                is Resource.Error -> {
+                }
+            }
         }
     }
 
@@ -183,24 +183,24 @@ UserViewModel @Inject constructor(
     }
 
     private suspend fun getUserByPhone(phone: String){
-            repository.getUserByPhone(phone).collect{
-                    result ->
-                when(result){
-                    is Resource.Success -> {
-                        result.data.let{ user ->
-                            state = state.copy(
-                                friendUser = user
-                            )
-                        }
-                    }
-
-                    is Resource.Loading -> {
+        repository.getUserByPhone(phone).collect{
+                result ->
+            when(result){
+                is Resource.Success -> {
+                    result.data.let{ user ->
                         state = state.copy(
-                            isLoading = result.isLoading
+                            friendUser = user
                         )
                     }
                 }
+
+                is Resource.Loading -> {
+                    state = state.copy(
+                        isLoading = result.isLoading
+                    )
+                }
             }
+        }
     }
 
 
@@ -245,32 +245,32 @@ UserViewModel @Inject constructor(
 
 //                launch {
 
-                    try {
-                        Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
-                        repository.addFriend(
-                            friendId = state.friendUser!!.id,
-                        ).collect { result ->
-                            when (result) {
-                                is Resource.Success -> {
-                                    Log.e("addFriend", "result: ${result.data.toString()}")
-                                }
-                                is Resource.Loading -> {
-                                    state = state.copy(
-                                        isLoading = result.isLoading
-                                    )
-                                }
-                                is Resource.Error -> {
-                                    state = state.copy(
-                                        error = result.message
-                                    )
-                                }
-                            }
+            try {
+                Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
+                repository.addFriend(
+                    friendId = state.friendUser!!.id,
+                ).collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            Log.e("addFriend", "result: ${result.data.toString()}")
                         }
-                    } catch (e: Exception) {
-                        Log.e("addFriend", e.toString())
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                        is Resource.Error -> {
+                            state = state.copy(
+                                error = result.message
+                            )
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                Log.e("addFriend", e.toString())
             }
+        }
+    }
 
     private fun addFriendFinally(
         accessToken: String,
@@ -382,7 +382,7 @@ UserViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             result.data.let {
-                                user ->
+                                    user ->
                                 state = state.copy(
                                     friendUser = user
                                 )
@@ -447,7 +447,7 @@ UserViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             result.data.let {
-                                games ->
+                                    games ->
                                 state = state.copy(
                                     games = games,
                                 )
@@ -469,7 +469,7 @@ UserViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.checkExistsNickname(nickname = nickname).collect{
-                result ->
+                    result ->
                 when(result){
                     is Resource.Success -> {
                         Log.e("checkExistsNickname", "viewModel ${result.data.toString()}")
@@ -498,25 +498,25 @@ UserViewModel @Inject constructor(
         viewModelScope.launch {
             repository.checkExistsPhone(phone = phone)
                 .collect{ result ->
-                when(result){
-                    is Resource.Success -> {
-                        Log.e("checkExistsPhone", "viewModel ${result.data.toString()}")
-                        state = state.copy(
-                            existsUser = result.data?.exists
-                        )
-                    }
-                    is Resource.Loading -> {
-                        if(result.isLoading){
+                    when(result){
+                        is Resource.Success -> {
+                            Log.e("checkExistsPhone", "viewModel ${result.data.toString()}")
                             state = state.copy(
-                                existsUser = null,
+                                existsUser = result.data?.exists
                             )
                         }
-                        state = state.copy(
-                            isLoading = result.isLoading
-                        )
+                        is Resource.Loading -> {
+                            if(result.isLoading){
+                                state = state.copy(
+                                    existsUser = null,
+                                )
+                            }
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
-            }
         }
     }
 

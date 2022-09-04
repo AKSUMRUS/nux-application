@@ -112,8 +112,8 @@ fun PreviewFriend(
                         .padding(bottom = 20.dp)
                     ,
                     padding = PaddingValues(start = 35.dp, end = 35.dp, top = 10.dp, bottom = 10.dp),
-                    colorBackground = if(sendInvite) MaterialTheme.colors.surface else MaterialTheme.colors.primary,
-                    colorText = if(sendInvite) MaterialTheme.colors.onSurface else MaterialTheme.colors.onPrimary,
+                    colorBackground = if(sendInvite) MaterialTheme.colors.surface else MaterialTheme.colors.secondary,
+                    colorText = if(sendInvite) MaterialTheme.colors.onSurface else MaterialTheme.colors.onBackground,
                 )
             }
         }
