@@ -113,7 +113,6 @@ interface RetrofitServices {
     @Multipart
     @PUT("app/package/{package_name}/set_images")
     fun pushGamesIcon(
-        @Header("Authorization") authHeader: String,
         @Path("package_name") package_name: String,
         @Part icon_preview: MultipartBody.Part,
     ) : Call<Any>

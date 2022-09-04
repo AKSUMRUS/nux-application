@@ -36,7 +36,7 @@ fun AddByQrCode(
     profileViewModel: ProfileViewModel,
 ) {
 
-    Box(){
+    Box{
 
         Column(
             modifier = Modifier

@@ -57,7 +57,6 @@ fun StartNavigation(
     val gamesViewModel = hiltViewModel<GamesViewModel>()
     val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
-    val statusViewModel = hiltViewModel<StatusViewModel>()
     val notificationsViewModel = hiltViewModel<NotificationsViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val bottomBarState = rememberSaveable { (mutableStateOf(false)) }
@@ -67,10 +66,6 @@ fun StartNavigation(
     val isConnected = connection === ConnectionState.Available
 
     val packageManager = context.packageManager
-
-    var accessToken by remember {
-        mutableStateOf("")
-    }
 
     LaunchedEffect(profile.profile){
         if(profile.profile!=null){
@@ -99,7 +94,6 @@ fun StartNavigation(
         gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
             games = games,
             packageManager = packageManager,
-            accessToken = accessToken
         ))
     }
 
@@ -116,9 +110,6 @@ fun StartNavigation(
         BottomNavItemMain.Friends.screen_route -> {
             bottomBarState.value = true
         }
-//        BottomNavItemMain.Notifications.screen_route -> {
-//            bottomBarState.value = true
-//        }
         else -> {
             bottomBarState.value = false
         }
@@ -129,7 +120,7 @@ fun StartNavigation(
     }else if(profile.profile==null){
         "splash_screen"
     } else if(!profile.finish_register){
-        Log.e(TAG,"openScreenRegister ${profile.toString()}")
+        Log.e(TAG,"openScreenRegister $profile")
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -140,7 +131,6 @@ fun StartNavigation(
         "request_permission_data"
     } else {
 
-        Log.e("ShareGames", "Start $accessToken ${userViewModel.state.openScreen}")
         gamesViewModel.clearGames()
         val games = getInstalledAppGamesList(context.packageManager)
         pushGamesIcons(games)
@@ -164,9 +154,6 @@ fun StartNavigation(
             param(FirebaseAnalytics.Param.SCREEN_NAME, name)
         }
     }
-
-
-    Log.e("ACCESS",accessToken)
 
     Scaffold(
 
@@ -226,7 +213,6 @@ fun StartNavigation(
                         )
                     }
                     composable("choose_friends_quick_game") {
-                        userViewModel2.accessToken = accessToken
                         ChooseFriendsForGame(
                             navController = navController,
                             userViewModel = userViewModel2,
@@ -237,7 +223,6 @@ fun StartNavigation(
                         logOpenScreenEvent("choose_friends_quick_game")
                     }
                     composable("request_permission_data") {
-                        userViewModel.accessToken = accessToken
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
@@ -323,7 +308,6 @@ fun StartNavigation(
                     }
                     composable(BottomNavItemMain.Friends.screen_route) {
                         logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
-                        userViewModel.accessToken = accessToken
                         Friends(
                             navController = navController,
                             userViewModel = userViewModel,
@@ -333,7 +317,6 @@ fun StartNavigation(
                         logOpenScreenEvent(BottomNavItemMain.Friends.screen_route)
                     }
                     composable(BottomNavItemMain.Notifications.screen_route) {
-                        userViewModel.accessToken = accessToken
                         NotificationsScreen(
                             notificationsViewModel = notificationsViewModel,
                             userViewModel = userViewModel,

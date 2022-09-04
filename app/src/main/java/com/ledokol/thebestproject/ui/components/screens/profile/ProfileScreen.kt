@@ -125,7 +125,7 @@ fun ProfileScreen(
                             openText = "Смотреть",
                             onClick = {
                                       navController.navigate(BottomNavItemMain.QuickGame.screen_route){
-                                          popUpTo("profile")
+                                          popUpTo(BottomNavItemMain.Profile.screen_route)
                                       }
                             },
                             modifier = Modifier
@@ -138,7 +138,7 @@ fun ProfileScreen(
                             openText = "Добавить",
                             onClick = {
                                 navController.navigate(BottomNavItemMain.Friends.screen_route){
-                                    popUpTo("profile")
+                                    popUpTo(BottomNavItemMain.Profile.screen_route)
                                 }
                             },
                             modifier = Modifier

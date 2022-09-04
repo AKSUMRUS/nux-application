@@ -31,7 +31,6 @@ class GamesViewModel @Inject constructor(
                 pushGamesIcons(
                     games = event.games,
                     packageManager = event.packageManager,
-                    accessToken = event.accessToken
                 )
             }
         }
@@ -132,13 +131,11 @@ class GamesViewModel @Inject constructor(
     private fun pushGamesIcons(
         games: List<ApplicationInfo>,
         packageManager: PackageManager,
-        accessToken: String
     ) {
         viewModelScope.launch {
             repository.pushGamesIcons(
                 games = games,
                 packageManager = packageManager,
-                accessToken = accessToken
             )
         }
     }

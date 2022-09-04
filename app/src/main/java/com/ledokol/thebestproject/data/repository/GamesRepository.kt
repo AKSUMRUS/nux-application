@@ -55,7 +55,6 @@ class GamesRepository @Inject constructor(
     fun pushGamesIcons(
         games: List<ApplicationInfo>,
         packageManager: PackageManager,
-        accessToken: String
     ) {
         for(game in games){
             game.packageName.let { packageName ->
@@ -68,7 +67,6 @@ class GamesRepository @Inject constructor(
 //                val iconString = convertBitmapToString(icon)
 
                 val pushGamesIconsCall = api.pushGamesIcon(
-                    authHeader = "Bearer $accessToken",
                     package_name = game.packageName,
                     icon_preview = icon_preview
                 )

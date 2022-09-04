@@ -7,6 +7,5 @@ sealed class GamesEvent{
     class PushGamesIcons(
         val games: List<ApplicationInfo>,
         val packageManager: PackageManager,
-        val accessToken: String
     ) : GamesEvent()
 }
