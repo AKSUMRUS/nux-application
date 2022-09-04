@@ -18,8 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomNavigationItem
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -49,7 +49,6 @@ import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogSh
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
-import com.ledokol.thebestproject.ui.components.molecules.GameStat
 import com.ledokol.thebestproject.ui.components.molecules.profile.AdditionalBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.ProfileTopBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.StatisticsBlock
@@ -59,8 +58,6 @@ import java.util.*
 
 fun getIcon(context: Context, packageManager: PackageManager, packageName: String): Bitmap? {
     val icon: Drawable = (packageManager.getApplicationIcon(packageName))
-//    if (icon == null)
-//        icon = getBitmapFromDrawable(context.getApplicationInfo().loadIcon(context.getPackageManager()));
     return getBitmapFromDrawable(icon)
 }
 
@@ -89,10 +86,6 @@ fun ProfileScreen(
     val context = LocalContext.current
     val games = gamesViewModel.state.games
     val profile = profileViewModel.state.profile
-    var openDialog by remember{ mutableStateOf(false) }
-    var selectedGame by remember {
-        mutableStateOf("")
-    }
 
     fun onClickDisturb(){
         Log.d("ProfileScreen", "onClickDisturb ${profile?.access_token} ${profile!!.do_not_disturb}")
@@ -101,15 +94,6 @@ fun ProfileScreen(
             accessToken = profile.access_token
         ))
     }
-
-    val usageStatsManager =
-        context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-
-    val calendar: Calendar = Calendar.getInstance()
-    calendar.add(Calendar.WEEK_OF_YEAR, -1)
-    val start: Long = calendar.getTimeInMillis()
-    val end = System.currentTimeMillis()
-    val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
 
     Box(
         modifier = Modifier
@@ -121,10 +105,8 @@ fun ProfileScreen(
             modifier = Modifier,
         ) {
             item(
-                span = { GridItemSpan(2) }
             ) {
                 Column(
-
                 ) {
                     ProfileTopBlock(
                         profileViewModel = profileViewModel,
@@ -132,34 +114,6 @@ fun ProfileScreen(
                         userViewModel = userViewModel,
                     )
 
-                    ButtonBorder(
-                        text = "Поделиться профилем",
-                        padding = 2.dp,
-                        modifier = Modifier.padding(start = 0.dp),
-                        onClick = {
-                            val dynamicLinkUri = getLinkProfile(profile!!.id)
-                            Log.e("dynamicLinkUri", dynamicLinkUri.toString())
-
-                            val intent= Intent()
-                            intent.action = Intent.ACTION_SEND
-                            intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
-                            intent.type="text/plain"
-
-                            context.startActivity(Intent.createChooser(intent,"Поделиться"))
-                        }
-                    )
-                }
-            }
-
-            if (games != null) {
-                item(){
-                    HeadlineH4(
-                        text = "Игры",
-                        modifier = Modifier.padding(start = 0.dp, bottom = 10.dp),
-                        color = MaterialTheme.colors.onBackground,
-                        fontWeight = FontWeight.W700,
-                    )
-                }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -170,7 +124,7 @@ fun ProfileScreen(
                             text = "Игры",
                             openText = "Смотреть",
                             onClick = {
-                                      navController.navigate("games"){
+                                      navController.navigate(BottomNavItemMain.QuickGame.screen_route){
                                           popUpTo("profile")
                                       }
                             },
@@ -199,44 +153,7 @@ fun ProfileScreen(
             }
         }
     }
-                items(games) { game ->
-                    GameStat(
-                        packageName = game.android_package_name,
-                        name = game.name,
-                        icon = game.icon_preview!!,
-                        iconLarge = game.icon_large!!,
-                        backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
-                        openGame = true,
-                        onClick = {
-                            openDialog = true
-                            selectedGame = game.android_package_name
-                        },
-                        usageTime = if(game.android_package_name in stats.keys)
-//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
-                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000).toString()
-//                            null
-                        else null
-                    )
-                }
-            }
-        }
-    }
 
-    AlertDialogShow(
-        openDialog = openDialog,
-        label = stringResource(id = R.string.profile_open_game_title),
-        description = stringResource(id = R.string.profile_open_game_description),
-        buttonTextYes = stringResource(id = R.string.yes),
-        buttonTextNo = stringResource(id = R.string.cancel),
-        onAction = { openGame(selectedGame, context);openDialog = false; selectedGame = "" },
-        onClose = { openDialog = false; selectedGame = "" }
-    )
-
-}
-
-fun openGame(packageName: String, context: Context){
-    val launchIntent = context.packageManager.getLaunchIntentForPackage(packageName)
-    launchIntent?.let { context.startActivity(it) }
 }
 
 fun getLinkProfile(
@@ -256,3 +173,22 @@ fun getLinkProfile(
     val dynamicLinkUri = dynamicLink.uri
     return dynamicLinkUri.toString()
 }
+
+
+
+//ButtonBorder(
+//text = "Поделиться профилем",
+//padding = 2.dp,
+//modifier = Modifier.padding(start = 10.dp),
+//onClick = {
+//    val dynamicLinkUri = getLinkProfile(profile!!.id)
+//    Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+//
+//    val intent= Intent()
+//    intent.action = Intent.ACTION_SEND
+//    intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
+//    intent.type="text/plain"
+//
+//    context.startActivity(Intent.createChooser(intent,"Поделиться"))
+//}
+//)

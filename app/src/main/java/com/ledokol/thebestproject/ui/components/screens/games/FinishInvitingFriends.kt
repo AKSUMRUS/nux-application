@@ -52,7 +52,7 @@ fun FinishInvitingFriends(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.primary)
+            .background(MaterialTheme.colors.background)
             .padding(20.dp)
         ,
 
@@ -67,7 +67,7 @@ fun FinishInvitingFriends(
                 userViewModel.state.clickedUsers.size,
                 userViewModel.state.clickedUsers.size,
             ),
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .fillMaxWidth()
@@ -77,7 +77,7 @@ fun FinishInvitingFriends(
                 fontWeight = FontWeight.W500,
             )
             HeadlineH4(text = "В ${gamesViewModel.state.game!!.name}",
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentSize(Alignment.Center)
@@ -105,8 +105,8 @@ fun FinishInvitingFriends(
                     openGame()
                     clickFinish()
                 },
-                colorBackground = MaterialTheme.colors.onPrimary,
-                colorText = MaterialTheme.colors.primary
+                colorBackground = MaterialTheme.colors.onBackground,
+                colorText = MaterialTheme.colors.background
             )
 
             ButtonBorder(
@@ -118,9 +118,9 @@ fun FinishInvitingFriends(
                 onClick = {
                     clickFinish()
                 },
-                colorBackground = MaterialTheme.colors.primary,
-                colorText = MaterialTheme.colors.onPrimary,
-                colorBorder = MaterialTheme.colors.onPrimary,
+                colorBackground = MaterialTheme.colors.background,
+                colorText = MaterialTheme.colors.onBackground,
+                colorBorder = MaterialTheme.colors.onBackground,
             )
         }
     }

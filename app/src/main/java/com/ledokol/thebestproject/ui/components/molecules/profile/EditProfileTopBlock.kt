@@ -42,13 +42,14 @@ fun EditProfileTopBlock(
             )
 
             HeadlineH3(
-                text = state!!.nickname,
+                text = state.nickname,
+                color = MaterialTheme.colors.onBackground,
                 fontWeight = W700
             )
             Body1(
                 text = state.phone!!,
                 fontWeight = W700,
-                color = MaterialTheme.colors.secondaryVariant
+                color = MaterialTheme.colors.onPrimary
             )
         }
     }

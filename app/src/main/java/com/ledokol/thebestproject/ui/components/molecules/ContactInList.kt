@@ -21,7 +21,7 @@ fun ContactInList(
         modifier = Modifier
             .padding(top = 10.dp, bottom = 10.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
             .padding(15.dp)
     ){
         HeadlineH6(
@@ -30,6 +30,8 @@ fun ContactInList(
                 .weight(4f)
                 .padding(end = 10.dp)
 //                .align(Alignment.CenterStart)
+            ,
+            color = MaterialTheme.colors.onBackground
         )
         ButtonFull(
             text = textButton,

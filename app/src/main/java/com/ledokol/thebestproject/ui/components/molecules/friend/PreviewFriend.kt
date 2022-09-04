@@ -95,7 +95,7 @@ fun PreviewFriend(
                 modifier = Modifier
                     .padding(bottom = 20.dp)
                 ,
-                color = MaterialTheme.colors.secondary,
+                color = MaterialTheme.colors.onPrimary,
 
                 )
 

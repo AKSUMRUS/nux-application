@@ -27,7 +27,7 @@ fun Cross(
             .then(modifier)
             .clip(RoundedCornerShape(11.dp))
             .clickable { onClick() }
-            .background(MaterialTheme.colors.secondary)
+            .background(MaterialTheme.colors.primary)
     ){
         Icon(
             ImageBitmap.imageResource(id = R.drawable.cross),

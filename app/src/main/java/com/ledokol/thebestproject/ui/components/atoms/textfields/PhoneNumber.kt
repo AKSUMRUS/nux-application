@@ -61,7 +61,7 @@ fun PhoneNumber(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.primary)
             ,
             horizontalArrangement = Arrangement.SpaceBetween
         ){

@@ -37,14 +37,14 @@ fun RequestReadContacts(
         ){
             HeadlineH4(
                 text = stringResource(id = R.string.hello_permission_contacts),
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth(),
                 fontWeight = FontWeight.W500,
             )
             HeadlineH6(
                 text = stringResource(id = R.string.need_permission_contacts),
-                color = MaterialTheme.colors.onPrimary,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 10.dp)
@@ -67,7 +67,7 @@ fun RequestReadContacts(
         ){
             Body1(
                 text = stringResource(id = R.string.explain_permission_contacts),
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 20.dp),
@@ -76,6 +76,8 @@ fun RequestReadContacts(
 
             ButtonFull(
                 text = stringResource(id = R.string.allow_permission_contacts),
+                colorText = MaterialTheme.colors.onBackground,
+                colorBackground = MaterialTheme.colors.secondary,
                 onClick = { onClickButton() },
             )
         }

@@ -38,7 +38,7 @@ fun GameInList(
                 .fillMaxWidth()
                 .height(175.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(MaterialTheme.colors.secondary)
+                .background(MaterialTheme.colors.primary)
                 .clickable {
                     onClick()
                 }
@@ -59,6 +59,7 @@ fun GameInList(
 
             Body1(
                 text = name,
+                color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .padding(bottom = 8.dp)

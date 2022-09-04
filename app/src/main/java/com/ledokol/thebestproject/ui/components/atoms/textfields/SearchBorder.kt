@@ -55,7 +55,7 @@ fun SearchBorder(
         singleLine = true,
         trailingIcon = {
             IconButton(onClick =  trailingButtonClick) {
-                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
+                Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onPrimary)
             }
         },
         modifier = Modifier
@@ -66,15 +66,15 @@ fun SearchBorder(
             .clip(RoundedCornerShape(16.dp))
             .border(1.dp, MaterialTheme.colors.primary, RoundedCornerShape(16.dp))
             .background(
-                MaterialTheme.colors.secondary,
+                MaterialTheme.colors.primary,
 //                RoundedCornerShape(16.dp)
             )
 //            .border(3.dp, MaterialTheme.colors.primary)
         ,
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onPrimary,
-            placeholderColor = MaterialTheme.colors.secondaryVariant,
+            textColor = MaterialTheme.colors.onBackground,
+            placeholderColor = MaterialTheme.colors.onPrimary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,

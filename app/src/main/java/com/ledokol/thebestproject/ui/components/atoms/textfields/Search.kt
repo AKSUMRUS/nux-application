@@ -70,7 +70,7 @@ fun Search(
         ,
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
-            textColor = MaterialTheme.colors.onPrimary,
+            textColor = MaterialTheme.colors.onBackground,
             placeholderColor = MaterialTheme.colors.secondaryVariant,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,

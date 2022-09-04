@@ -65,7 +65,7 @@ fun AddByQrCode(
 
             HeadlineH4(
                 text = "@${profileViewModel.state.profile!!.nickname}",
-                color = MaterialTheme.colors.primary,
+                color = MaterialTheme.colors.onPrimary,
                 fontWeight = W600,
             )
         }
