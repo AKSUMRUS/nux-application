@@ -28,9 +28,7 @@ interface RetrofitServices {
             : Call<ProfileToken>
 
     @GET("friends")
-    fun getFriends(
-        @Header("Authorization") authHeader: String
-    )
+    fun getFriends()
             : Call<List<User>>
 
     @GET("friends")

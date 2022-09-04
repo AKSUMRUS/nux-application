@@ -29,7 +29,6 @@ const val TAG = "FIREBASE MESSAGING"
 fun QuickGameScreen(
     navController: NavController,
     gamesViewModel: GamesViewModel,
-    profileViewModel: ProfileViewModel,
 ){
     val games = gamesViewModel.state.games
     var token by remember{ mutableStateOf("")}
@@ -71,7 +70,6 @@ fun GridGames(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(top = 120.dp, start = 0.dp, end = 0.dp),
         modifier = Modifier
-//            .padding(start = 20.dp, end = 20.dp)
         ,
     ) {
         item(

@@ -49,19 +49,8 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                             ,
                         )
                     },
-//                    label = {
-//                        Subtitle2(
-//                            text = item.title,
-//                            fontWeight = W400,
-//                            modifier = Modifier.padding(bottom = 0.dp)
-//                            ,
-//
-//                            color = if(currentRoute == item.screen_route) MaterialTheme.colors.onPrimary else MaterialTheme.colors.secondaryVariant
-//                        )
-//                    },
                     selectedContentColor = MaterialTheme.colors.onBackground,
                     unselectedContentColor = MaterialTheme.colors.onPrimary,
-//                    alwaysShowLabel = true,
                     selected = currentRoute == item.screen_route,
                     onClick = {
                         navController.navigate(item.screen_route) {
@@ -69,7 +58,6 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                                 inclusive = true
                             }
                             launchSingleTop = true
-//                            restoreState = true
                         }
                     },
                     modifier = Modifier.align(CenterVertically).padding(bottom = 5.dp),

@@ -265,7 +265,6 @@ UserViewModel @Inject constructor(
         viewModelScope.launch {
             repository.getFriends(
                 fetchFromRemote = fetchRemote,
-                accessToken = accessToken,
                 query = query,
                 shouldReload = shouldReload
             )

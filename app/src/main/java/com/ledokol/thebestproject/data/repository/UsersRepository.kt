@@ -100,7 +100,6 @@ class UsersRepository @Inject constructor(
     fun getFriends(
         fetchFromRemote: Boolean,
         query: String,
-        accessToken: String,
         shouldReload: Boolean
     ): Flow<Resource<List<User>>> {
         return flow{
@@ -119,7 +118,7 @@ class UsersRepository @Inject constructor(
                 return@flow
             }
             val remoteUsers = try{
-                val usersCall = api.getFriends(authHeader = "Bearer $accessToken")
+                val usersCall = api.getFriends()
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
