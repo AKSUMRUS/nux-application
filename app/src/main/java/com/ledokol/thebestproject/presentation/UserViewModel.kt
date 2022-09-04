@@ -94,6 +94,9 @@ UserViewModel @Inject constructor(
             is UserEvent.OpenScreen -> {
                 openScreen(event.screen)
             }
+            else -> {
+                Log.e("UserViewModel", "unknown event: $event")
+            }
         }
     }
 
@@ -143,9 +146,6 @@ UserViewModel @Inject constructor(
                             friendUser = user
                         )
                     }
-//                            addFriendFinally(
-//                                accessToken = accessToken,
-//                            )
                 }
 
                 is Resource.Loading -> {
@@ -159,7 +159,7 @@ UserViewModel @Inject constructor(
         }
     }
 
-    fun getUserByPhoneScope(phone: String){
+    private fun getUserByPhoneScope(phone: String){
         viewModelScope.launch {
             repository.getUserByPhone(phone).collect{
                     result ->
@@ -203,22 +203,8 @@ UserViewModel @Inject constructor(
         }
     }
 
-
-    fun insertUser(user: User){
-        viewModelScope.launch{
-            repository.insertUser(user)
-            getFriends()
-        }
-    }
-
-    fun uploadImage(){
-        viewModelScope.launch {
-            repository.uploadImage()
-        }
-    }
-
     fun addFriend(
-        accessToken: String,
+        accessToken: String = "",
         nickname: String?,
         phone: String?
     ){
@@ -242,8 +228,6 @@ UserViewModel @Inject constructor(
             job.join()
 
             Log.e(TAG,"addFriend: I have passed the job")
-
-//                launch {
 
             try {
                 Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
@@ -272,34 +256,6 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private fun addFriendFinally(
-        accessToken: String,
-    ) {
-        Log.e("addFriendFinally", "start")
-        viewModelScope.launch {
-            try {
-                Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
-                repository.addFriend(
-                    friendId = state.friendUser!!.id,
-                ).collect { result ->
-                    when (result) {
-                        is Resource.Success -> {
-                            Log.e("addFriend", "result: ${result.data.toString()}")
-                        }
-                        is Resource.Loading -> {
-
-                        }
-                        is Resource.Error -> {
-                            Log.e("addFriend", "error")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("addFriend", e.toString())
-            }
-        }
-    }
-
     private fun getFriends(
         query: String = state.searchQuery.lowercase(),
         fetchRemote: Boolean = false,
@@ -319,14 +275,13 @@ UserViewModel @Inject constructor(
                             result.data.let { users ->
                                 state = state.copy(
                                     users = users,
-//                                    isLoading = false,
                                 )
                             }
                             Log.e("USER VIEW MODEL  GET USERS",state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
-                            state =state.copy(
+                            state = state.copy(
                                 isLoading = result.isLoading
                             )
                         }
@@ -407,7 +362,6 @@ UserViewModel @Inject constructor(
         Log.d("SELECTEDUSER", "REMOVE")
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList(),
-//            users = state.users!!.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList()
         )
 
         Log.d("SELECTEDUSER", "REMOVE "+state.users!!.size.toString())
@@ -416,7 +370,6 @@ UserViewModel @Inject constructor(
     fun insertSelectedUser(selectedUser: User){
         state = state.copy(
             clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
-//            users = state.users!!.toMutableList().apply { add(selectedUser) }.toList()
         )
         Log.d("SELECTEDUSER", "INSERT "+state.users!!.size.toString())
     }

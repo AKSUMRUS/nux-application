@@ -226,8 +226,8 @@ fun Friends(
                                 }
                             }
 
-                            item(){
-                                Column(){
+                            item{
+                                Column{
                                     TitleFriends(text = stringResource(id = R.string.my_friends),)
 
                                     ShowSearch(
@@ -242,7 +242,7 @@ fun Friends(
                                 }
                             }
 
-                            if(state.users!=null && state.users!!.size>0){
+                            if(state.users != null && state.users!!.isNotEmpty()){
                                 items(state.users!!.filter { it.nickname.contains(textSearch) }) { friend ->
                                     FriendInList(
                                         user = friend,
