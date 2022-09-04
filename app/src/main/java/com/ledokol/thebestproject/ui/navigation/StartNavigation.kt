@@ -119,10 +119,10 @@ fun StartNavigation(
         "splash_screen"
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister $profile")
-        updateGames(context, gamesViewModel)
 
         "request_permission_data"
     } else {
+
         Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
         val openScreen = userViewModel.state.openScreen
 
