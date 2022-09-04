@@ -68,6 +68,7 @@ class MyService: Service() {
     private fun doTask(packageManager: PackageManager){
         val gamesStatistic = GamesStatistic()
         var checkLeave: Boolean = false
+        var lastApp: String? = null
 
         val handler = Handler()
         var runnable: Runnable? = null
@@ -76,9 +77,12 @@ class MyService: Service() {
 
             if(activeAppPackage==null){
                 logApps("Сейчас нету запущенных приложений")
-                if(!checkLeave){
-                    checkLeave = true
-                    statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                if(lastApp!=null){
+                    if(!checkLeave){
+                        lastApp = null
+                        checkLeave = true
+                        statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                    }
                 }
             }else{
                 val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
@@ -88,23 +92,27 @@ class MyService: Service() {
 
                 Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                profileRepository.data.let{
-                    Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
-                    statusRepository.setStatus(
-                        packageApp,
-                        labelApp,
-                        categoryApp,
-                        accessToken = profileRepository.data.access_token
-                    )
+                if(lastApp!=packageApp){
+                    profileRepository.data.let{
+
+                        Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
+                        statusRepository.setStatus(
+                            packageApp,
+                            labelApp,
+                            categoryApp,
+                            accessToken = profileRepository.data.access_token
+                        )
+                    }
+                    lastApp = packageApp
                 }
 
                 checkLeave = false
-                    logApps("Сейчас запущено приложение $activeAppPackage")
+                logApps("Сейчас запущено приложение $activeAppPackage")
             }
-            runnable?.let { handler.postDelayed(it, 5000) }
+            runnable?.let { handler.postDelayed(it, 20000) }
         }
 
-        handler.postDelayed(runnable, 3000)
+        handler.postDelayed(runnable, 1000)
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {

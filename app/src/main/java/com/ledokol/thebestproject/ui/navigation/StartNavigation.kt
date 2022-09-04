@@ -4,6 +4,7 @@ package com.ledokol.thebestproject.ui.navigation
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -65,7 +66,11 @@ fun StartNavigation(
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
 
-    val packageManager = context.packageManager
+    LaunchedEffect(true){
+        if(profile.profile!=null){
+            updateGames(context, gamesViewModel)
+        }
+    }
 
     LaunchedEffect(profile.profile){
         if(profile.profile!=null){
@@ -88,13 +93,6 @@ fun StartNavigation(
             })
 
         }
-    }
-
-    fun pushGamesIcons(games: List<ApplicationInfo>){
-        gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
-            games = games,
-            packageManager = packageManager,
-        ))
     }
 
 
@@ -121,23 +119,10 @@ fun StartNavigation(
         "splash_screen"
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister $profile")
-        gamesViewModel.clearGames()
-        val games = getInstalledAppGamesList(context.packageManager)
-        pushGamesIcons(games)
-        gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, games),
-        )
+        updateGames(context, gamesViewModel)
 
         "request_permission_data"
     } else {
-
-        gamesViewModel.clearGames()
-        val games = getInstalledAppGamesList(context.packageManager)
-        pushGamesIcons(games)
-        gamesViewModel.shareGames(
-            convertListApplicationToListStatusJSON(context, context.packageManager, games),
-        )
-
         Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
         val openScreen = userViewModel.state.openScreen
 
@@ -329,4 +314,21 @@ fun StartNavigation(
             )
         }
     }
+}
+
+
+fun updateGames(context: Context, gamesViewModel: GamesViewModel){
+    gamesViewModel.clearGames()
+    val games = getInstalledAppGamesList(context.packageManager)
+    pushGamesIcons(games, gamesViewModel,context.packageManager)
+    gamesViewModel.shareGames(
+        convertListApplicationToListStatusJSON(context, context.packageManager, games),
+    )
+}
+
+fun pushGamesIcons(games: List<ApplicationInfo>, gamesViewModel: GamesViewModel, packageManager: PackageManager){
+    gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
+        games = games,
+        packageManager = packageManager,
+    ))
 }

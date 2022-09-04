@@ -19,6 +19,7 @@ import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
+import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
 import com.ledokol.thebestproject.ui.components.molecules.TitleQuickGame
 
@@ -42,11 +43,16 @@ fun QuickGameScreen(
                 MaterialTheme.colors.background
             )
     ) {
-        games?.let { GridGames(
-            it,
-            navController,
-            gamesViewModel = gamesViewModel
-        ) }
+
+        if(gamesViewModel.state.isLoading){
+            LoadingView()
+        }else{
+            GridGames(
+                games!!,
+                navController,
+                gamesViewModel = gamesViewModel
+            )
+        }
     }
 }
 

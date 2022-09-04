@@ -195,14 +195,6 @@ fun Friends(
                                 item(){
                                     Column(){
                                         TitleFriends(text = stringResource(id = R.string.friend_requests))
-                                        ShowSearch(
-                                            userViewModel = userViewModel,
-                                            textSearch = textSearch,
-                                            onValueChange = {
-                                                textSearch = it
-                                            },
-                                            modifier = Modifier.padding(top = 10.dp)
-                                        )
                                     }
                                 }
 

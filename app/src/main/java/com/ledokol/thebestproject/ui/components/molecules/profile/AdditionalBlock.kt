@@ -67,7 +67,7 @@ fun AdditionalBlock(
                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevron_right),
                    contentDescription = "chevron right",
                    modifier = Modifier
-                       .alignByBaseline()
+                       .align(CenterVertically)
                )
             }
 
