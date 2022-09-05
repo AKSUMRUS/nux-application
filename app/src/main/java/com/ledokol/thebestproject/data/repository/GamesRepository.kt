@@ -136,6 +136,9 @@ class GamesRepository @Inject constructor(
         return flow {
             Log.e("shareGames", AppsStatus(games).toString())
             val ans = api.shareGames(games = AppsStatus(games)).awaitResponse().body()
+
+            //ans?.send_icons_apps_ids
+
             Log.e("shareGames", ans.toString())
             dao.insertGames(fromGameJSONToGame(ans?.apps))
             emit(Resource.Success(
