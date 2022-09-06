@@ -59,13 +59,15 @@ fun EditProfileScreen(
     fun onSave(){
         if(!checkCorrectName(name)||!checkCorrectNickname(nickname)){
             Toast.makeText(context, "Данные некорректны", Toast.LENGTH_LONG).show()
-        }else{
+        }else if(!userViewModel.state.existsUser!! || nickname == state!!.nickname){
             if(!isSaved) {
                 isSaved = true
                 profileViewModel.onEvent(
                     ProfileEvent.UpdateProfileData(newProfile = UpdateProfileJSON(user = UpdateProfile(nickname = nickname, name = name)))
                 )
             }
+        }else{
+            Toast.makeText(context, "Такой никнейм уже существует", Toast.LENGTH_LONG).show()
         }
     }
 
