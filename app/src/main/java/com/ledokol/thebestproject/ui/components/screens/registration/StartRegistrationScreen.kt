@@ -30,6 +30,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonRightIcon
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -39,15 +40,15 @@ fun StartRegistrationScreen(
     val context: Context = LocalContext.current
 
     fun onClickSignUp() {
-        navController.navigate("signup_screen") {
-            popUpTo("signup_screen")
+        navController.navigate(ScreenRoutes.SIGNUP_SCREEN) {
+            popUpTo(ScreenRoutes.SIGNUP_SCREEN)
             launchSingleTop = true
         }
     }
 
     fun onClickLogin() {
-        navController.navigate("login_screen") {
-            popUpTo("login_screen")
+        navController.navigate(ScreenRoutes.LOGIN_SCREEN) {
+            popUpTo(ScreenRoutes.LOGIN_SCREEN)
             launchSingleTop = true
         }
     }

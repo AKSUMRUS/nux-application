@@ -29,6 +29,7 @@ import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -82,8 +83,8 @@ fun Friends(
         id: String,
     ){
         userViewModel.onEvent(UserEvent.GetFriendUser(id = id))
-        navController.navigate("friend_screen") {
-            popUpTo("friend_screen")
+        navController.navigate(ScreenRoutes.FRIEND_SCREEN) {
+            popUpTo(ScreenRoutes.FRIEND_SCREEN)
             launchSingleTop = true
         }
     }
@@ -209,8 +210,8 @@ fun Friends(
                                         },
                                         openFriend = {
                                             userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
-                                            navController.navigate("preview_friend"){
-                                                popUpTo("preview_friend")
+                                            navController.navigate(ScreenRoutes.PREVIEW_FRIEND){
+                                                popUpTo(ScreenRoutes.PREVIEW_FRIEND)
                                                 launchSingleTop = true
                                             }
                                         }

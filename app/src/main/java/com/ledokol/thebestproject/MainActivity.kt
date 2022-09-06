@@ -29,6 +29,7 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.services.MyReceiver
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.StartNavigation
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 val profile_id = bundle.getString("userId_$notification_id").toString()
                 Log.e(TAG, profile_id.toString())
                 userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
-                userViewModel.onEvent(UserEvent.OpenScreen(screen = "preview_friend"))
+                userViewModel.onEvent(UserEvent.OpenScreen(screen = ScreenRoutes.PREVIEW_FRIEND))
             }else{
                 val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
                 bundle.clear()
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
                         val profile_id = deepLink.getQueryParameter("profile_id")
                         Log.e(TAG, profile_id.toString())
                         userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
-                        userViewModel.onEvent(UserEvent.OpenScreen(screen = "preview_friend"))
+                        userViewModel.onEvent(UserEvent.OpenScreen(screen = ScreenRoutes.PREVIEW_FRIEND))
                     }
             }
 

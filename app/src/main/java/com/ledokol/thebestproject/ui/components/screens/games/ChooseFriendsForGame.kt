@@ -37,6 +37,7 @@ import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.TitleQuickGame
 import com.ledokol.thebestproject.ui.components.molecules.friend.FriendInListQuickGame
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 
 @Composable
@@ -194,11 +195,11 @@ fun ChooseFriendsForGame(
                             )
                         )
                         analytics.logEvent("open_screen") {
-                            param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
-                            param("from_what_screen", "choose_friends_quick_game")
+                            param(FirebaseAnalytics.Param.SCREEN_NAME, ScreenRoutes.FINISH_INVITING_FRIENDS)
+                            param("from_what_screen", ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME)
                         }
-                        navController.navigate("finish_inviting_friends") {
-                            popUpTo("finish_inviting_friends")
+                        navController.navigate(ScreenRoutes.FINISH_INVITING_FRIENDS) {
+                            popUpTo(ScreenRoutes.FINISH_INVITING_FRIENDS)
                             launchSingleTop = true
                         }
                     },

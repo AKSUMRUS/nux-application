@@ -8,8 +8,10 @@ import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.domain.profile.ExistsUserJSON
 import com.ledokol.thebestproject.domain.users.AddFriend
 import com.ledokol.thebestproject.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.awaitResponse
 import java.io.IOException
@@ -346,6 +348,14 @@ class UsersRepository @Inject constructor(
                 emit(Resource.Loading(false))
             }
 
+        }
+    }
+
+    suspend fun doAsync(
+        block: suspend () -> Unit
+    ) {
+        withContext(Dispatchers.IO) {
+            block()
         }
     }
 

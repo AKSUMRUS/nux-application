@@ -38,6 +38,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -105,8 +106,8 @@ fun AddByNickname(
                 onClick = {
                     userViewModel.onEvent(UserEvent.GetUserByNickname(nickname = nickname))
 
-                    navController.navigate("preview_friend"){
-                        popUpTo("preview_friend")
+                    navController.navigate(ScreenRoutes.PREVIEW_FRIEND){
+                        popUpTo(ScreenRoutes.PREVIEW_FRIEND)
                         launchSingleTop = true
                     }
                 },

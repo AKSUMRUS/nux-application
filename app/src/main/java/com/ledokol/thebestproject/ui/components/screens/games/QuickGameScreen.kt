@@ -22,6 +22,7 @@ import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
 import com.ledokol.thebestproject.ui.components.molecules.TitleQuickGame
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 
 const val TAG = "FIREBASE MESSAGING"
@@ -64,8 +65,8 @@ fun GridGames(
 
     fun onClick(packageName: String){
         gamesViewModel.getGame(packageName)
-        navController.navigate("choose_friends_quick_game"){
-            popUpTo("choose_friends_quick_game"){
+        navController.navigate(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME){
+            popUpTo(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME){
                 inclusive = true
             }
             launchSingleTop = true

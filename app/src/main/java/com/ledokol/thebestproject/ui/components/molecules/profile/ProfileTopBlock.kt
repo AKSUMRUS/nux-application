@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
 fun ProfileTopBlock(
@@ -32,8 +33,8 @@ fun ProfileTopBlock(
                 profile_pic = state.profile!!.profile_pic!!,
                 profile = true,
                 onClickEdit = {
-                    navController.navigate("edit_profile"){
-                        popUpTo("edit_profile")
+                    navController.navigate(ScreenRoutes.EDIT_PROFILE){
+                        popUpTo(ScreenRoutes.EDIT_PROFILE)
                         launchSingleTop = true
                     }
                 },

@@ -114,13 +114,13 @@ fun StartNavigation(
     }
 
     val start: String = if(!isConnected){
-        "not_internet"
+        ScreenRoutes.NO_INTERNET
     }else if(profile.profile==null){
-        "splash_screen"
+        ScreenRoutes.SPLASH_SCREEN
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister $profile")
 
-        "request_permission_data"
+        ScreenRoutes.REQUEST_PERMISSION_DATA
     } else {
 
         Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
@@ -188,35 +188,35 @@ fun StartNavigation(
                         )
                         logOpenScreenEvent(BottomNavItemMain.Notifications.screen_route)
                     }
-                    composable("start_registration_screen") {
+                    composable(ScreenRoutes.START_REGISTRATION_SCREEN) {
                         StartRegistrationScreen(
                             navController = navController,
                         )
-                        logOpenScreenEvent("start_registration_screen")
+                        logOpenScreenEvent(ScreenRoutes.START_REGISTRATION_SCREEN)
                     }
-                    composable("login_screen") {
+                    composable(ScreenRoutes.LOGIN_SCREEN) {
                         LoginScreen(
                             navController = navController,
                             profileViewModel = profileViewModel
                         )
-                        logOpenScreenEvent("login_screen")
+                        logOpenScreenEvent(ScreenRoutes.LOGIN_SCREEN)
                     }
-                    composable("signup_screen") {
+                    composable(ScreenRoutes.SIGNUP_SCREEN) {
                         SignUpScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             usersViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("signup_screen")
+                        logOpenScreenEvent(ScreenRoutes.SIGNUP_SCREEN)
                     }
-                    composable("splash_screen") {
+                    composable(ScreenRoutes.SPLASH_SCREEN) {
                         SplashScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                         )
-                        logOpenScreenEvent("splash_screen")
+                        logOpenScreenEvent(ScreenRoutes.SPLASH_SCREEN)
                     }
-                    composable("friend_screen") {
+                    composable(ScreenRoutes.FRIEND_SCREEN) {
                         FriendScreen(
                             navController = navController,
                             userViewModel = userViewModel,
@@ -224,16 +224,17 @@ fun StartNavigation(
                             profileViewModel = profileViewModel,
                             analytics = analytics
                         )
-                        logOpenScreenEvent("friend_screen")
+                        logOpenScreenEvent(ScreenRoutes.FRIEND_SCREEN)
                     }
-                    composable("finish_inviting_friends") {
+                    composable(ScreenRoutes.FINISH_INVITING_FRIENDS) {
                         FinishInvitingFriends(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             userViewModel = userViewModel,
                         )
+                        logOpenScreenEvent(ScreenRoutes.FINISH_INVITING_FRIENDS)
                     }
-                    composable("choose_friends_quick_game") {
+                    composable(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME) {
                         ChooseFriendsForGame(
                             navController = navController,
                             userViewModel = userViewModel2,
@@ -241,72 +242,71 @@ fun StartNavigation(
                             gamesViewModel = gamesViewModel,
                             analytics = analytics
                         )
-                        logOpenScreenEvent("choose_friends_quick_game")
+                        logOpenScreenEvent(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME)
                     }
-                    composable("request_permission_data") {
+                    composable(ScreenRoutes.REQUEST_PERMISSION_DATA) {
                         RequestReadData(
                             navController = navController,
                             gamesViewModel = gamesViewModel,
                             userViewModel = userViewModel,
                             profileViewModel = profileViewModel,
                         )
-                        logOpenScreenEvent("request_permission_data")
+                        logOpenScreenEvent(ScreenRoutes.REQUEST_PERMISSION_DATA)
                     }
-                    composable("invite_friends") {
+                    composable(ScreenRoutes.INVITE_FRIENDS) {
                         InviteFriend(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             userViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("invite_friends")
+                        logOpenScreenEvent(ScreenRoutes.INVITE_FRIENDS)
                     }
-                    composable("qr_code_profile") {
+                    composable(ScreenRoutes.QR_CODE_PROFILE) {
                         AddByQrCode(
                             navController = navController,
                             profileViewModel = profileViewModel,
                         )
-                        logOpenScreenEvent("qr_code_profile")
+                        logOpenScreenEvent(ScreenRoutes.QR_CODE_PROFILE)
                     }
-                    composable("add_by_nickname") {
+                    composable(ScreenRoutes.ADD_BY_NICKNAME) {
                         AddByNickname(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             userViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("add_by_nickname")
+                        logOpenScreenEvent(ScreenRoutes.ADD_BY_NICKNAME)
                     }
-                    composable("preview_friend") {
+                    composable(ScreenRoutes.PREVIEW_FRIEND) {
                         PreviewFriendScreen(
                             navController = navController,
                             profileViewModel = profileViewModel,
                             userViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("preview_friend")
+                        logOpenScreenEvent(ScreenRoutes.PREVIEW_FRIEND)
                     }
 
-                    composable("contacts_list") {
+                    composable(ScreenRoutes.CONTACTS_LIST) {
                         ContactsScreen(
                             navController = navController,
                             contactsViewModel = contactsViewModel,
                             profileViewModel = profileViewModel,
                             userViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("contacts_list")
+                        logOpenScreenEvent(ScreenRoutes.CONTACTS_LIST)
                     }
 
-                    composable("edit_profile") {
+                    composable(ScreenRoutes.EDIT_PROFILE) {
                         EditProfileScreen(
                             profileViewModel = profileViewModel,
                             navController = navController,
                             userViewModel = userViewModel,
                         )
-                        logOpenScreenEvent("edit_profile")
+                        logOpenScreenEvent(ScreenRoutes.EDIT_PROFILE)
                     }
 
-                    composable("not_internet") {
-                        NotInternet(
-                        )
-                        logOpenScreenEvent("not_internet")
+                    composable(ScreenRoutes.NO_INTERNET) {
+                        NotInternet()
+                        logOpenScreenEvent(ScreenRoutes.NO_INTERNET)
                     }
                 }
             )

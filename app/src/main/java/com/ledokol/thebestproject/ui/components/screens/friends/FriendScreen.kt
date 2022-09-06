@@ -38,6 +38,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.*
 import com.ledokol.thebestproject.ui.components.molecules.friend.FriendTopBar
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
 fun FriendScreen(
@@ -94,11 +95,11 @@ fun FriendScreen(
             app_id = game.id,
         ))
         analytics.logEvent("open_screen") {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, "finish_inviting_friends")
-            param("from_what_screen","friend_screen")
+            param(FirebaseAnalytics.Param.SCREEN_NAME, ScreenRoutes.FINISH_INVITING_FRIENDS)
+            param("from_what_screen",ScreenRoutes.FRIEND_SCREEN)
         }
-        navController.navigate("finish_inviting_friends"){
-            popUpTo("finish_inviting_friends")
+        navController.navigate(ScreenRoutes.FINISH_INVITING_FRIENDS){
+            popUpTo(ScreenRoutes.FINISH_INVITING_FRIENDS)
             launchSingleTop = true
         }
     }

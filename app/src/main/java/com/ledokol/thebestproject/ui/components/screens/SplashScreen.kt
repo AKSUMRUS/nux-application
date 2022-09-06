@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import kotlinx.coroutines.delay
 
 @Composable
@@ -24,8 +25,8 @@ fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true){
         delay(1500)
-        navController.navigate("start_registration_screen"){
-            popUpTo("start_registration_screen"){
+        navController.navigate(ScreenRoutes.START_REGISTRATION_SCREEN){
+            popUpTo(ScreenRoutes.START_REGISTRATION_SCREEN){
                 inclusive = true
             }
             launchSingleTop = true

@@ -23,6 +23,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.ledokol.thebestproject.ui.components.screens.ShareInvite
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
 fun InviteFriend(
@@ -64,8 +65,8 @@ fun InviteFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_nickname),
                 title = stringResource(id = R.string.add_by_nickname),
                 onClick = {
-                    navController.navigate("add_by_nickname"){
-                        popUpTo("add_by_nickname")
+                    navController.navigate(ScreenRoutes.ADD_BY_NICKNAME){
+                        popUpTo(ScreenRoutes.ADD_BY_NICKNAME)
                         launchSingleTop = true
                     }
                 }
@@ -75,8 +76,8 @@ fun InviteFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_from_contacts),
                 title = stringResource(id = R.string.add_from_contacts),
                 onClick = {
-                    navController.navigate("contacts_list"){
-                        popUpTo("contacts_list")
+                    navController.navigate(ScreenRoutes.CONTACTS_LIST){
+                        popUpTo(ScreenRoutes.CONTACTS_LIST)
                         launchSingleTop = true
                     }
                 }
@@ -86,8 +87,8 @@ fun InviteFriend(
                 icon = ImageBitmap.imageResource(id = R.drawable.add_by_qr),
                 title = stringResource(id = R.string.add_by_qr),
                 onClick = {
-                    navController.navigate("qr_code_profile"){
-                        popUpTo("qr_code_profile")
+                    navController.navigate(ScreenRoutes.QR_CODE_PROFILE){
+                        popUpTo(ScreenRoutes.QR_CODE_PROFILE)
                         launchSingleTop = true
                     }
                 }
