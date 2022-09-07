@@ -78,7 +78,11 @@ fun UploadAvatar(
     }
 
     if(profileViewModel.state.isLoading){
-        LoadingView()
+        Box(
+            modifier = Modifier.padding(5.dp)
+        ){
+            LoadingView()
+        }
     }else{
         AsyncImage(
             model = profile_pic,

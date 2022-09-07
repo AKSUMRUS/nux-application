@@ -4,7 +4,6 @@ import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -12,9 +11,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -81,10 +78,7 @@ fun GamesListProfile(
                 GameInList(
                     packageName = game.android_package_name,
                     name = game.name,
-//                    Временно!
                     icon = game.icon_preview!!,
-                    iconLarge = game.icon_large!!,
-                    backgroundImage = ImageBitmap.imageResource(id = R.drawable.sample_background_game),
                     openGame = true,
                     onClick = {
                         openDialog = true
@@ -106,8 +100,8 @@ fun GamesListProfile(
             description = stringResource(id = R.string.profile_open_game_description),
             buttonTextYes = stringResource(id = R.string.yes),
             buttonTextNo = stringResource(id = R.string.cancel),
-            onAction = { openGame(selectedGame, context);openDialog = false; selectedGame = "" },
-            onClose = { openDialog = false; selectedGame = "" }
+            onActionPrimary = { openGame(selectedGame, context);openDialog = false; selectedGame = "" },
+            onActionSecondary = { openDialog = false; selectedGame = "" }
         )
     }
 

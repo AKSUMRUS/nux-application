@@ -1,7 +1,6 @@
 package com.ledokol.thebestproject.presentation
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,8 +29,12 @@ class GamesViewModel @Inject constructor(
             is GamesEvent.PushGamesIcons -> {
                 pushGamesIcons(
                     games = event.games,
-                    packageManager = event.packageManager,
+                    context = event.context,
                 )
+            }
+
+            is GamesEvent.ShareGames -> {
+                shareGames(games = event.games, context = event.context)
             }
         }
     }
@@ -129,13 +132,13 @@ class GamesViewModel @Inject constructor(
     }
 
     private fun pushGamesIcons(
-        games: List<ApplicationInfo>,
-        packageManager: PackageManager,
+        games: List<String>?,
+        context: Context,
     ) {
         viewModelScope.launch {
             repository.pushGamesIcons(
                 games = games,
-                packageManager = packageManager,
+                context = context,
             )
         }
     }
@@ -148,17 +151,24 @@ class GamesViewModel @Inject constructor(
 
     fun shareGames(
         games: List<StatusJSON>,
-        ){
+        context: Context,
+    ){
         viewModelScope.launch {
             repository.shareGames(games)
                 .collect{result ->
                     when(result){
                         is Resource.Success -> {
                             state = state.copy(
-                                games = result.data
+                                games = result.data!!.apps
+                            )
+
+                            pushGamesIcons(result.data.send_icons_apps_ids, context)
+                        }
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
                             )
                         }
-                        is Resource.Loading -> Unit
                         is Resource.Error -> Unit
                     }
                 }

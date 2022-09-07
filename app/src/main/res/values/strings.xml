@@ -132,7 +132,7 @@
     <string name="search_by_nickname">Найти!</string>
     <string name="title_invite_by_qr_code">Привет, добавляй меня в &appname;</string>
     <string name="invite_one_friend_alert_dialog_title">Пригласить в игру?</string>
-    <string name="invite_one_friend_alert_dialog_description">Друг получит уведомление, о том что ты зовешь его играть</string>
+    <string name="invite_one_friend_alert_dialog_description">Пригласи друг играть, он получит уведомление, о том что ты позвал его</string>
     <string name="empty_friend_title">Хм, похоже такого человека тут еще нет</string>
     <string name="empty_friend_description">Попробуйте найти его другими способами</string>
     <string name="friend_requests">Запросы в друзья</string>

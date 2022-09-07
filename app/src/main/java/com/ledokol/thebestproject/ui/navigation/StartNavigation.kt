@@ -66,7 +66,7 @@ fun StartNavigation(
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
 
-    LaunchedEffect(true){
+    LaunchedEffect(profile.profile){
         if(profile.profile!=null){
             updateGames(context, gamesViewModel)
         }
@@ -318,15 +318,16 @@ fun StartNavigation(
 fun updateGames(context: Context, gamesViewModel: GamesViewModel){
     gamesViewModel.clearGames()
     val games = getInstalledAppGamesList(context.packageManager)
-    pushGamesIcons(games, gamesViewModel,context.packageManager)
+//    pushGamesIcons(games, gamesViewModel,context.packageManager)
     gamesViewModel.shareGames(
         convertListApplicationToListStatusJSON(context, context.packageManager, games),
+        context = context
     )
 }
 
-fun pushGamesIcons(games: List<ApplicationInfo>, gamesViewModel: GamesViewModel, packageManager: PackageManager){
-    gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
-        games = games,
-        packageManager = packageManager,
-    ))
-}
+//fun pushGamesIcons(games: List<ApplicationInfo>, gamesViewModel: GamesViewModel, packageManager: PackageManager){
+//    gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
+//        games = games,
+//        packageManager = packageManager,
+//    ))
+//}

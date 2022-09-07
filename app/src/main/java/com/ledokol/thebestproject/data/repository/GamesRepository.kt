@@ -1,15 +1,18 @@
 package com.ledokol.thebestproject.data.repository
 
+import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.data.local.game.GamesDao
 import com.ledokol.thebestproject.data.local.user.Apps
 import com.ledokol.thebestproject.data.remote.RetrofitServices
+import com.ledokol.thebestproject.domain.games.AppsGameResponse
 import com.ledokol.thebestproject.domain.games.AppsStatus
 import com.ledokol.thebestproject.domain.games.GameJSON
 import com.ledokol.thebestproject.domain.games.StatusJSON
@@ -53,12 +56,18 @@ class GamesRepository @Inject constructor(
     }
 
     fun pushGamesIcons(
-        games: List<ApplicationInfo>,
-        packageManager: PackageManager,
+        games: List<String>?,
+        context: Context,
     ) {
+        Log.e("pushGamesIcons",games.toString())
+
+        if(games == null){
+            return
+        }
+
         for(game in games){
-            game.packageName.let { packageName ->
-                val icon = packageManager.getApplicationIcon(packageName).toBitmap()
+            game.let { packageName ->
+                val icon = context.packageManager.getApplicationIcon(packageName).toBitmap()
                 val out = convertBitmapToPNG(icon)
 
                 val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
@@ -67,7 +76,7 @@ class GamesRepository @Inject constructor(
 //                val iconString = convertBitmapToString(icon)
 
                 val pushGamesIconsCall = api.pushGamesIcon(
-                    package_name = game.packageName,
+                    package_name = packageName,
                     icon_preview = icon_preview
                 )
 
@@ -132,18 +141,23 @@ class GamesRepository @Inject constructor(
 
     fun shareGames(
         games: List<StatusJSON>,
-    ): Flow<Resource<List<Game>?>> {
+    ): Flow<Resource<AppsGameResponse>> {
         return flow {
+            emit(Resource.Loading(true))
             Log.e("shareGames", AppsStatus(games).toString())
             val ans = api.shareGames(games = AppsStatus(games)).awaitResponse().body()
 
             //ans?.send_icons_apps_ids
 
-            Log.e("shareGames", ans.toString())
+            Log.e("shareGames", "Ответ: ${ans.toString()}")
             dao.insertGames(fromGameJSONToGame(ans?.apps))
             emit(Resource.Success(
-                data = fromGameJSONToGame(ans?.apps)
+                data = AppsGameResponse(
+                    apps = fromGameJSONToGame(ans?.apps),
+                    send_icons_apps_ids = ans?.send_icons_apps_ids ?: listOf()
+                )
             ))
+            emit(Resource.Loading(false))
         }
     }
 

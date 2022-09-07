@@ -102,7 +102,7 @@ fun PreviewFriend(
 
             if(showButtonAddFriend){
                 ButtonFull(
-                    text = if(!sendInvite) "Добавить в друзья" else "Приглашение отправлено",
+                    text = if(!sendInvite) "Добавить в друзья" else "Готово",
                     onClick = {
                         if(!sendInvite){
                             inviteFriends()

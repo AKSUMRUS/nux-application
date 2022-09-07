@@ -8,6 +8,7 @@ data class UserState(
     val friendUser: User? = null,
     val isLoading: Boolean = false,
     val isLoadingUser: Boolean = false,
+    val isLoadingGames: Boolean = false,
     val isRefreshing: Boolean = true,
     val searchQuery: String = "",
     val existsUser: Boolean? = null,

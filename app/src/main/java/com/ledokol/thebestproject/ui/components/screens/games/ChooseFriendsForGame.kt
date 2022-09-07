@@ -95,9 +95,9 @@ fun ChooseFriendsForGame(
                             Row(
                                 modifier = Modifier.padding(top = 100.dp, bottom = 20.dp)
                             ) {
-                                if(gamesViewModel.state.game?.icon_large!=null){
+                                if(gamesViewModel.state.game?.icon_preview!=null){
                                     AsyncImage(
-                                        model = gamesViewModel.state.game?.icon_large,
+                                        model = gamesViewModel.state.game?.icon_preview,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .size(height = 100.dp, width = 100.dp)
@@ -143,7 +143,10 @@ fun ChooseFriendsForGame(
                             )
                         }
 
-                        items(state.users!!.filter { it.nickname.contains(textSearch) }) { friend ->
+                        items(state.users!!
+                            .filter { it.nickname.contains(textSearch) }
+                            .sortedBy { !it.status.in_app }
+                        ) { friend ->
                             val user = friend
 
 //                            LaunchedEffect(state.clickedUsers){

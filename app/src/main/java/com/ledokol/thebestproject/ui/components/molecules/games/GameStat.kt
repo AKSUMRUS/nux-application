@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,11 +23,9 @@ fun GameStat(
     packageName: String,
     name: String,
     icon: String,
-    iconLarge: String,
-    backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
     openGame: Boolean = false,
-    usageTime: String? = null,
+    usageTime: Int,
 ){
 
     Box(
@@ -68,14 +65,34 @@ fun GameStat(
                     fontWeight = FontWeight.Medium,
                 )
 
-                Body1(text = "Играл ${usageTime} минуты",
+                Body1(text = "Играл ${usageTime} ${getTextMinutes(usageTime)}",
                     modifier = Modifier
                         .padding(start = 0.dp)
                     ,
-                    color = MaterialTheme.colors.onBackground,
+                    color = MaterialTheme.colors.onPrimary,
                 )
             }
 
+        }
+    }
+}
+
+fun getTextMinutes(number: Int): String{
+    when(number%10){
+        in 5..10 -> {
+            return "минут"
+        }
+        0 -> {
+            return "минут"
+        }
+        1 -> {
+            return "минута"
+        }
+        in 2..4 -> {
+            return "минуты"
+        }
+        else -> {
+            return "минут"
         }
     }
 }

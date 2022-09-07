@@ -148,30 +148,6 @@ fun UserInformationProfile(
 
     val state = profileViewModel.state.profile
 
-    val launcher = rememberLauncherForActivityResult(contract =
-    ActivityResultContracts.GetContent()) { uri: Uri? ->
-        imageUri = uri
-
-
-        val options = BitmapFactory.Options()
-        options.inSampleSize = calculateInSampleSize(options, 10,10);
-        options.inJustDecodeBounds = false
-
-        Log.e("uploadAvatar", imageUri.toString())
-
-        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
-            context.getContentResolver(),
-            Uri.parse(imageUri.toString()),
-        )
-
-            profileViewModel.onEvent(ProfileEvent.UpdateAvatar(
-                accessToken = profileViewModel.state.profile!!.access_token,
-                profile_pic = bitmap
-                )
-            )
-        userViewModel.onEvent(UserEvent.OpenScreen(screen = "profile"))
-    }
-
 
     val top: Dp = if (!profile) 70.dp else 120.dp
 
@@ -186,28 +162,16 @@ fun UserInformationProfile(
                     .padding(end = 20.dp, bottom = 20.dp)
                     .size(69.dp)
                     .clip(CircleShape)
-                    .background(color = MaterialTheme.colors.secondary)
-                    .clickable {
-                        launcher.launch("image/*")
-                    },
+                    .background(color = MaterialTheme.colors.secondary),
             ){
-                AsyncImage(
-                    model = profile_pic,
-                    contentDescription = "Аватарка",
-                    modifier = Modifier
-                        .size(64.dp)
-                        .clip(CircleShape)
-                        .align(Alignment.Center),
-//                           .padding(end = 20.dp, bottom = 20.dp)
-                    contentScale = ContentScale.Crop,
-                )
+                UploadAvatar(profile_pic = profile_pic, profileViewModel = profileViewModel, userViewModel = userViewModel)
             }
             Column(
                 modifier = Modifier
                     .padding(start = 10.dp)
             ) {
                 HeadlineH5(
-                    text = name,
+                    text = state!!.name,
                     color = MaterialTheme.colors.onBackground,
                     fontWeight = FontWeight.W700,
                 )
