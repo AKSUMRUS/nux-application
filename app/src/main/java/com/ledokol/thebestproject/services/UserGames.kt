@@ -2,6 +2,7 @@ package com.ledokol.thebestproject.services
 
 import android.annotation.SuppressLint
 import android.app.AppOpsManager
+import android.app.usage.UsageEvents
 import android.app.usage.UsageStats
 import android.app.usage.UsageStatsManager
 import android.content.Context
@@ -116,7 +117,7 @@ class GamesStatistic{
     public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
         val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
         val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
-        if (userManager.isUserUnlocked && (VERSION.SDK_INT >= VERSION_CODES.KITKAT_WATCH && powerManager!!.isInteractive || VERSION.SDK_INT < VERSION_CODES.KITKAT_WATCH && powerManager!!.isScreenOn)) {
+        if (userManager.isUserUnlocked && powerManager!!.isInteractive ) {
             val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
             val time = System.currentTimeMillis()
             val appList =
@@ -148,6 +149,26 @@ class GamesStatistic{
 
         return null
     }
+
+    public fun getActiveApp2(context: Context, packageManager: PackageManager): String?{
+        val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
+        val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
+        if (userManager.isUserUnlocked && powerManager!!.isInteractive ) {
+            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            var foregroundAppPackageName : String? = null
+            val currentTime = System.currentTimeMillis()
+
+            val usageEvents = usageStatsManager.queryEvents( currentTime - (1000*60*10) , currentTime )
+            val usageEvent = UsageEvents.Event()
+            while ( usageEvents.hasNextEvent() ) {
+                usageEvents.getNextEvent( usageEvent )
+                Log.e( "APP" , "${usageEvent.packageName} ${usageEvent.timeStamp}" )
+            }
+        }
+
+        return null
+    }
+
 
     fun getStatisticGames(context: Context, packageManager: PackageManager): MutableList<UsageStats> {
         val usageStatsManager = context.getSystemService("usagestats") as UsageStatsManager

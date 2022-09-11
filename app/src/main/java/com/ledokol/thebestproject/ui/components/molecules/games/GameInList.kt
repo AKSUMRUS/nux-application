@@ -21,8 +21,6 @@ fun GameInList(
     packageName: String,
     name: String,
     icon: String,
-    iconLarge: String,
-    backgroundImage: ImageBitmap,
     onClick: () -> Unit = {},
     openGame: Boolean = false,
     usageTime: String? = null,
@@ -62,7 +60,7 @@ fun GameInList(
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(CenterHorizontally)
-                    .padding(bottom = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp,bottom = 8.dp)
             )
 
         }

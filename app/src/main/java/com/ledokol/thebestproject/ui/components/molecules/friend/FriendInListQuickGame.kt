@@ -120,9 +120,9 @@ fun FriendInListQuickGame(
                 .clip(RoundedCornerShape(0.dp))
             ,
             colors = CheckboxDefaults.colors(
-                checkedColor = MaterialTheme.colors.primary,
+                checkedColor = MaterialTheme.colors.secondary,
                 uncheckedColor = MaterialTheme.colors.secondaryVariant,
-                checkmarkColor = MaterialTheme.colors.onPrimary,
+                checkmarkColor = MaterialTheme.colors.onBackground,
 
             )
         )

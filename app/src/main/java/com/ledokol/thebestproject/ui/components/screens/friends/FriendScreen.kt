@@ -10,13 +10,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 //import com.google.accompanist.swiperefresh.SwipeRefresh
 //import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
@@ -27,13 +24,12 @@ import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.user.CurrentApp
-import com.ledokol.thebestproject.data.local.user.UserEvent
+import com.ledokol.thebestproject.openApp
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogShow
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.*
@@ -53,24 +49,8 @@ fun FriendScreen(
     val state = userViewModel.state
     val context: Context = LocalContext.current
     var openDialog by remember{ mutableStateOf(false)}
-    var selectedGame by remember{ mutableStateOf("")}
-    var sendInvite by remember { mutableStateOf(false) }
-    var showButtonAddFriend by remember{ mutableStateOf(true)}
-
-    LaunchedEffect(userViewModel.state.users, user){
-        val users = userViewModel.state.users
-        if(user!=null && user.id == profileViewModel.state.profile!!.id){
-            showButtonAddFriend = false
-        }
-        if(users!=null&&user!=null&&user.id!=profileViewModel.state.profile!!.id){
-            Log.e("UsersFriendScreen", users.toString())
-            for(userInList in users){
-                if(user.id == userInList.id){
-                    showButtonAddFriend = false
-                }
-            }
-        }
-    }
+    var selectedGamePackage by remember{ mutableStateOf("")}
+    var selectedGameName by remember{ mutableStateOf("")}
 
     fun inviteFriend(game: CurrentApp){
         gamesViewModel.setSelectedGame(
@@ -119,6 +99,7 @@ fun FriendScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 40.dp)
+                    .padding(start = 20.dp, end = 20.dp)
             ){
                 item(
                     span = { GridItemSpan(2) },
@@ -126,7 +107,10 @@ fun FriendScreen(
                     FriendTopBar(user = user)
                 }
 
-                if(state.friendUser!!.status.app != null) {
+                if(state.friendUser!!.status.in_app
+                    && state.friendUser!!.status.app != null
+                    && state.friendUser.status.app!!.category == "GAME,online"
+                ) {
                     item(
                         span = { GridItemSpan(2) },
                     ) {
@@ -143,7 +127,7 @@ fun FriendScreen(
                                 HeadlineH5(
                                     text = textActivity,
                                     modifier = Modifier
-                                        .padding(start = 20.dp),
+                                        .padding(start = 0.dp),
                                     fontWeight = W700
                                 )
 
@@ -161,36 +145,42 @@ fun FriendScreen(
                 }
 
 
-                if(state.games != null && state.games!!.isNotEmpty()) {
+                if(state.isLoadingGames){
                     item(
                         span = { GridItemSpan(2) },
-                    ) {
-                        Column() {
-                            HeadlineH5(
-                                text = stringResource(id = R.string.games),
-                                modifier = Modifier
-                                    .padding(start = 20.dp)
-                                    .fillMaxWidth(),
-                                fontWeight = W700
+                    ){
+                        LoadingView()
+                    }
+                }else{
+                    if(state.games != null && state.games!!.isNotEmpty()) {
+                        item(
+                            span = { GridItemSpan(2) },
+                        ) {
+                            Column() {
+                                HeadlineH5(
+                                    text = stringResource(id = R.string.games),
+                                    modifier = Modifier
+                                        .padding(start = 0.dp)
+                                        .fillMaxWidth(),
+                                    fontWeight = W700
+                                )
+                            }
+                        }
+
+                        items(
+                            state.games!!,
+                        ) { game ->
+                            GameInList(
+                                packageName = game.android_package_name,
+                                name = game.name,
+                                icon = game.icon_preview,
+                                onClick = {
+                                    selectedGamePackage = game.android_package_name
+                                    selectedGameName = game.name
+                                    openDialog = true
+                                }
                             )
                         }
-                    }
-
-                    items(
-                        state.games!!,
-                    ) { game ->
-                        GameInQuickGamesFriend(
-                            packageName = game.android_package_name,
-//                            icon = "https://storage.yandexcloud.net/nux/icons/icon_preview/"+game.android_package_name+".png",
-//                            iconLarge = "https://storage.yandexcloud.net/nux/icons/icon_large/"+game.android_package_name+".png",
-                            icon = game.icon_preview,
-                            iconLarge = game.icon_large,
-                            backgroundImage = ImageBitmap.imageResource(id = R.drawable.anonymous),
-                            onClick = {
-                                selectedGame = game.android_package_name
-                                openDialog = true
-                            }
-                        )
                     }
                 }
             }
@@ -208,21 +198,29 @@ fun FriendScreen(
 
         AlertDialogShow(
             openDialog = openDialog,
-            label = stringResource(id = R.string.invite_one_friend_alert_dialog_title),
+            label = selectedGameName,
             description = stringResource(id = R.string.invite_one_friend_alert_dialog_description),
             buttonTextYes = stringResource(id = R.string.invite),
-            buttonTextNo = stringResource(id = R.string.cancel),
-            onAction = {
+            buttonTextNo = stringResource(id = R.string.open_game),
+            onActionPrimary = {
                 var game: CurrentApp = CurrentApp()
                 for(game_local in state.games!!){
-                    if(game_local.android_package_name == selectedGame){
+                    if(game_local.android_package_name == selectedGamePackage){
                         game = game_local
                         break
                     }
                 }
                 inviteFriend(game)
                        },
-            onClose = { openDialog = false; selectedGame = "" }
+            onActionSecondary = {
+                openApp(packageName = selectedGamePackage,context = context)
+                openDialog = false;
+                selectedGamePackage = ""
+            },
+            onClose = {
+                openDialog = false;
+                selectedGamePackage = ""
+            }
         )
     }else{
         LoadingView()

@@ -408,7 +408,7 @@ UserViewModel @Inject constructor(
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
                             state = state.copy(
-                                isLoadingUser = result.isLoading
+                                isLoadingGames = result.isLoading
                             )
                         }
                     }

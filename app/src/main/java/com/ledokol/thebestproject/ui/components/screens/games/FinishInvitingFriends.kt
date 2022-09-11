@@ -52,7 +52,7 @@ fun FinishInvitingFriends(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colors.secondary)
             .padding(20.dp)
         ,
 
@@ -106,7 +106,7 @@ fun FinishInvitingFriends(
                     clickFinish()
                 },
                 colorBackground = MaterialTheme.colors.onBackground,
-                colorText = MaterialTheme.colors.background
+                colorText = MaterialTheme.colors.secondary
             )
 
             ButtonBorder(
@@ -118,9 +118,10 @@ fun FinishInvitingFriends(
                 onClick = {
                     clickFinish()
                 },
-                colorBackground = MaterialTheme.colors.background,
+                colorBackground = MaterialTheme.colors.secondary,
                 colorText = MaterialTheme.colors.onBackground,
                 colorBorder = MaterialTheme.colors.onBackground,
+                padding = 5.dp
             )
         }
     }

@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
                 val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
                 bundle.clear()
                 if(gamePackageName!=null && gamePackageName!=""){
-                    openAppRating(context = this, packageName = gamePackageName)
+                    openApp(context = this, packageName = gamePackageName)
                 }
             }
         }
@@ -144,7 +144,7 @@ private const val flags = PackageManager.GET_META_DATA or
         PackageManager.GET_SHARED_LIBRARY_FILES or
         PackageManager.GET_UNINSTALLED_PACKAGES
 
-fun openAppRating(
+fun openApp(
     context: Context,
     packageName: String
 ) {

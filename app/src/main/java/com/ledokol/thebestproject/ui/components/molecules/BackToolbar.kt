@@ -50,6 +50,7 @@ fun BackToolbar(
             Body1(
                 text = stringResource(id = R.string.back).uppercase(),
                 modifier = Modifier.padding(start = 10.dp),
+                color = MaterialTheme.colors.onBackground
             )
         }
 

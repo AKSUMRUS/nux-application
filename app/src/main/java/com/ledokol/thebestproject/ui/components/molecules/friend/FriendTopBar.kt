@@ -19,7 +19,7 @@ fun FriendTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, top = 80.dp, bottom = 10.dp)
+            .padding(start = 0.dp, end = 0.dp, top = 80.dp, bottom = 10.dp)
     ){
         Column(
             modifier = Modifier
@@ -32,7 +32,7 @@ fun FriendTopBar(
                 fontWeight = FontWeight.W700,
             )
 
-            FriendStatus(user = user)
+            StripFriend(user = user)
         }
 
         Row(

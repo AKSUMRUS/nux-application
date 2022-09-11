@@ -145,7 +145,7 @@ fun Friends(
             sheetContent = {
                 Scaffold(
                     modifier = Modifier
-                        .fillMaxHeight(0.9f)
+//                        .fillMaxHeight(0.9f)
                     ,
 
 //                        .fillMaxSize()
@@ -236,7 +236,8 @@ fun Friends(
                             }
 
                             if(state.users != null && state.users!!.isNotEmpty()){
-                                items(state.users!!.filter { it.nickname.contains(textSearch) }) { friend ->
+                                var arrayFriends = state.users!!.filter { it.nickname.contains(textSearch) }
+                                items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
                                     FriendInList(
                                         user = friend,
                                         onClick = {
