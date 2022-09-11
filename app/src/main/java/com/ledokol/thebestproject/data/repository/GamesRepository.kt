@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
+import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.data.local.game.GamesDao
 import com.ledokol.thebestproject.data.local.user.Apps
@@ -108,13 +109,8 @@ class GamesRepository @Inject constructor(
 
                 myResponse
 
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -135,7 +131,13 @@ class GamesRepository @Inject constructor(
     ): Flow<Resource<List<Game>?>> {
         return flow {
             Log.e("shareGames", AppsStatus(games).toString())
-            val ans = api.shareGames(games = AppsStatus(games)).awaitResponse().body()
+            val ans =
+                try {
+                    api.shareGames(games = AppsStatus(games)).awaitResponse().body()
+                } catch(e: Exception) {
+                    emit(Resource.Error(ErrorRemote.NoInternet))
+                    null
+                }
 
             //ans?.send_icons_apps_ids
 
@@ -183,13 +185,8 @@ class GamesRepository @Inject constructor(
             val game = try {
                 Log.e("PACKAGE GAME",packageName)
                 dao.getGame(packageName)
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
             Log.e("Game",game.toString())

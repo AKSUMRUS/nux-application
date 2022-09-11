@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.data.repository
 
+import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.contact.Contact
 import com.ledokol.thebestproject.data.local.contact.ContactsDao
 import com.ledokol.thebestproject.data.remote.RetrofitServices
@@ -37,9 +38,8 @@ class ContactsRepository @Inject constructor(
 
             val contacts = try{
                 dao.getContacts(query)
-            }catch(e: IOException){
-                e.printStackTrace()
-                emit(Resource.Error("Error"))
+            }catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 

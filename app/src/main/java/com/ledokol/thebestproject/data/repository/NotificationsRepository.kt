@@ -1,6 +1,7 @@
 package com.ledokol.thebestproject.data.repository
 
 import android.util.Log
+import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsDao
 import com.ledokol.thebestproject.data.remote.RetrofitServices
@@ -29,7 +30,7 @@ class NotificationsRepository @Inject constructor(
             }
             catch (e : Exception){
                 emit(Resource.Loading(false))
-                emit(Resource.Error(e.message ?: "Error"))
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 return@flow
             }
 
@@ -59,7 +60,7 @@ class NotificationsRepository @Inject constructor(
                 api.addFriend(addFriend = AddFriend(user_id = notificationEntity.from_user.id)).awaitResponse()
             } catch (e: Exception) {
                 emit(Resource.Loading(false))
-                emit(Resource.Error(e.message ?: "Error"))
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 return@flow
             }
 

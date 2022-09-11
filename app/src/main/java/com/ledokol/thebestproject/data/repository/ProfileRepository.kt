@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.profile.DoNotDisturb
 import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileDao
@@ -103,14 +104,8 @@ class ProfileRepository @Inject constructor(
                 val profile = callUpdateAvatar.awaitResponse().body()
 
                 profile
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -140,16 +135,11 @@ class ProfileRepository @Inject constructor(
                     responseApi.body()
                 }
                 else{
-                    emit(Resource.Error("Что-то пошло не так... Попробуй еще раз"))
+                    emit(Resource.Error(ErrorRemote.NoInternet))
                     null
                 }
-            }catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't connect to server"))
+            }catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -212,14 +202,8 @@ class ProfileRepository @Inject constructor(
                 val profile = updateCall.awaitResponse().body()
 
                 profile
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -256,14 +240,8 @@ class ProfileRepository @Inject constructor(
                 val myResponse = callRegister.awaitResponse().body()
 
                 myResponse
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -337,14 +315,8 @@ class ProfileRepository @Inject constructor(
                 val myResponse = callRegister.awaitResponse().body()
 
                 myResponse
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -386,14 +358,8 @@ class ProfileRepository @Inject constructor(
                 val myResponse = callLogin.awaitResponse().body()
 
                 myResponse
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -430,14 +396,8 @@ class ProfileRepository @Inject constructor(
                 myResponse?.access_token = token
 
                 myResponse
-            }
-            catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -466,7 +426,13 @@ class ProfileRepository @Inject constructor(
 
             val callProfilePics = api.getDefaultProfilePics()
 
-            val profilePics = callProfilePics.awaitResponse().body()
+            val profilePics =  try {
+                callProfilePics.awaitResponse().body()
+            } catch(e: Exception) {
+                emit(Resource.Loading(false))
+                emit(Resource.Error(ErrorRemote.NoInternet))
+                return@flow
+            }
 
             Log.e("profilePics", profilePics.toString())
 

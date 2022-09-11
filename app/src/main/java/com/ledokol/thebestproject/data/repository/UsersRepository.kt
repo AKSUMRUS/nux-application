@@ -1,6 +1,8 @@
 package com.ledokol.thebestproject.data.repository
 
 import android.util.Log
+import com.ledokol.thebestproject.data.error.ErrorCatcher
+import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.user.CurrentApp
 import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 import retrofit2.awaitResponse
 import java.io.IOException
 import javax.inject.Inject
@@ -23,7 +26,7 @@ class UsersRepository @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val api : RetrofitServices,
     private val dao : UsersDao,
-){
+) : BasicRepository() {
     fun insertUser(user: User) {
         dao.insertUser(user)
     }
@@ -38,17 +41,12 @@ class UsersRepository @Inject constructor(
                 val myResponse = getUser.awaitResponse()
 
                 if(myResponse.code() != 200){
-                    emit(Resource.Error("Не удалось найти пользователя"))
+                    emit(Resource.Error(ErrorCatcher.catch(myResponse.code())))
                 }
 
                 myResponse.body()
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -74,13 +72,8 @@ class UsersRepository @Inject constructor(
                 val myResponse = getUser.awaitResponse().body()
 
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -124,13 +117,8 @@ class UsersRepository @Inject constructor(
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -165,13 +153,8 @@ class UsersRepository @Inject constructor(
                 val myResponse: String? = addFriend.awaitResponse().body()
 
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -191,13 +174,8 @@ class UsersRepository @Inject constructor(
                 val myResponse: User? = friendCall.awaitResponse().body()
 
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
             Log.e("FRIEND",friend.toString())
@@ -216,13 +194,8 @@ class UsersRepository @Inject constructor(
                 val gamesCall = api.getUserGames(id)
                 val myResponse: List<CurrentApp> = gamesCall.awaitResponse().body()!!.apps
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
             Log.e("FRIEND_GAMES",games.toString())
@@ -235,67 +208,90 @@ class UsersRepository @Inject constructor(
 
     fun checkExistsNickname(
         nickname: String
-    ): Flow<Resource<ExistsUserJSON>>{
-        return flow{
-            emit(Resource.Loading(true))
-            val TAG = "checkExistsNickname"
-            Log.e(TAG, "start $nickname")
-            val callExistsUser = api.checkExistsNickname(
-                nickname = nickname
-            )
-
-            val checkUser = try{
-                callExistsUser.awaitResponse().body()
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
+    ): Flow<Resource<ExistsUserJSON>> {
+        return doSafeWork(
+            doAsync = {
+                val callExistsUser = api.checkExistsNickname(
+                    nickname = nickname
+                )
+                callExistsUser.awaitResponse()
+            },
+            getResult = { checkUser ->
+                checkUser.body()
             }
-
-            checkUser?.let{
-                emit(Resource.Success(
-                    data = checkUser
-                ))
-            }
-            emit(Resource.Loading(false))
-        }
+        )
+//        return flow{
+//            emit(Resource.Loading(true))
+//            val TAG = "checkExistsNickname"
+//            Log.e(TAG, "start $nickname")
+//            val callExistsUser = api.checkExistsNickname(
+//                nickname = nickname
+//            )
+//
+//            val checkUser = try{
+//                callExistsUser.awaitResponse().body()
+//            } catch(e: IOException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            } catch (e: HttpException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            }
+//
+//            checkUser?.let{
+//                emit(Resource.Success(
+//                    data = checkUser
+//                ))
+//            }
+//            emit(Resource.Loading(false))
+//        }
     }
 
 
     fun checkExistsPhone(
         phone: String
     ): Flow<Resource<ExistsUserJSON>>{
-        return flow{
-            emit(Resource.Loading(true))
-            val TAG = "checkExistsPhone"
-            Log.e(TAG, "start $phone")
-            val callExistsUser = api.checkExistsPhone(
-                phone = phone
-            )
 
-            val checkUser = try{
-                callExistsUser.awaitResponse().body()
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
+       return doSafeWork(
+            doAsync = {
+                val callExistsUser = api.checkExistsPhone(
+                    phone = phone
+                )
+                callExistsUser.awaitResponse()
+            },
+            getResult = { checkUser ->
+                    checkUser.body()
             }
-
-            checkUser?.let{
-                emit(Resource.Success(
-                    data = checkUser
-                ))
-            }
-            emit(Resource.Loading(false))
-        }
+        )
+//        return flow{
+//            emit(Resource.Loading(true))
+//            val TAG = "checkExistsPhone"
+//            Log.e(TAG, "start $phone")
+//            val callExistsUser = api.checkExistsPhone(
+//                phone = phone
+//            )
+//
+//            val checkUser = try{
+//                callExistsUser.awaitResponse().body()
+//            } catch(e: IOException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            } catch (e: HttpException) {
+//                e.printStackTrace()
+//                emit(Resource.Error("Couldn't load data"))
+//                null
+//            }
+//
+//            checkUser?.let{
+//                emit(Resource.Success(
+//                    data = checkUser
+//                ))
+//            }
+//            emit(Resource.Loading(false))
+//        }
     }
 
     fun getUsersFindFriend(
@@ -324,13 +320,8 @@ class UsersRepository @Inject constructor(
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
-            } catch(e: IOException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
-                null
-            } catch (e: HttpException) {
-                e.printStackTrace()
-                emit(Resource.Error("Couldn't load data"))
+            } catch(e: Exception) {
+                emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
@@ -348,14 +339,6 @@ class UsersRepository @Inject constructor(
                 emit(Resource.Loading(false))
             }
 
-        }
-    }
-
-    suspend fun doAsync(
-        block: suspend () -> Unit
-    ) {
-        withContext(Dispatchers.IO) {
-            block()
         }
     }
 

@@ -245,7 +245,7 @@ UserViewModel @Inject constructor(
                         }
                         is Resource.Error -> {
                             state = state.copy(
-                                error = result.message
+                                error = result.message.toString()
                             )
                         }
                     }
