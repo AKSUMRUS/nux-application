@@ -11,8 +11,8 @@ android {
         applicationId = "com.ledokol.thebestproject"
         minSdk = 26
         targetSdk = 31
-        versionCode = 7
-        versionName = "1.0.7"
+        versionCode = 15
+        versionName = "1.1.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
