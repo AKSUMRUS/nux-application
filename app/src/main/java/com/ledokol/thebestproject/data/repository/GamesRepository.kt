@@ -67,40 +67,50 @@ class GamesRepository @Inject constructor(
         }
 
         for(game in games){
-            game.let { packageName ->
-                val icon = context.packageManager.getApplicationIcon(packageName).toBitmap()
-                val out = convertBitmapToPNG(icon)
+            game.let { packageName -> // на разбор
+                try {
+                    val icon = context.packageManager.getApplicationIcon(packageName).toBitmap()
+                    val out = convertBitmapToPNG(icon)
 
-                val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
-                val icon_preview: MultipartBody.Part = MultipartBody.Part.createFormData("icon_preview", "icon_preview.png", requestBody)
+                    val requestBody: RequestBody =
+                        RequestBody.create("image/png".toMediaTypeOrNull(), out)
+                    val icon_preview: MultipartBody.Part = MultipartBody.Part.createFormData(
+                        "icon_preview",
+                        "icon_preview.png",
+                        requestBody
+                    )
 
 //                val iconString = convertBitmapToString(icon)
 
-                val pushGamesIconsCall = api.pushGamesIcon(
-                    package_name = packageName,
-                    icon_preview = icon_preview
-                )
+                    val pushGamesIconsCall = api.pushGamesIcon(
+                        package_name = packageName,
+                        icon_preview = icon_preview
+                    )
 
-                pushGamesIconsCall.enqueue(object : Callback<Any> {
-                    override fun onResponse(
-                        call: Call<Any>,
-                        response: Response<Any>
-                    ) {
-                        Log.d("GamesRepository", "Successfully pushed game icon")
-                        if (response.isSuccessful) {
+                    pushGamesIconsCall.enqueue(object : Callback<Any> {
+                        override fun onResponse(
+                            call: Call<Any>,
+                            response: Response<Any>
+                        ) {
                             Log.d("GamesRepository", "Successfully pushed game icon")
-                        } else {
+                            if (response.isSuccessful) {
+                                Log.d("GamesRepository", "Successfully pushed game icon")
+                            } else {
+                                Log.d("GamesRepository", "Failed to push game icon")
+                            }
+                        }
+
+                        override fun onFailure(
+                            call: Call<Any>,
+                            t: Throwable
+                        ) {
                             Log.d("GamesRepository", "Failed to push game icon")
                         }
-                    }
-
-                    override fun onFailure(
-                        call: Call<Any>,
-                        t: Throwable
-                    ) {
-                        Log.d("GamesRepository", "Failed to push game icon")
-                    }
-                })
+                    })
+                }
+                catch (e: Exception){
+                    Log.e("GamesRepository", "Failed to push game icon")
+                }
             }
         }
     }

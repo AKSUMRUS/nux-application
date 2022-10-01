@@ -181,7 +181,6 @@ UserViewModel @Inject constructor(
                             )
                         }
                     }
-
                     is Resource.Loading -> {
                         state = state.copy(
                             isLoadingUser = result.isLoading

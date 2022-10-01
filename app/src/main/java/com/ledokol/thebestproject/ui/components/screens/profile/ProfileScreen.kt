@@ -164,7 +164,7 @@ fun ProfileScreen(
 
             if (games != null) {
                 items(games.sortedBy {
-                    -(stats.get(it.android_package_name)!!.totalTimeInForeground.toInt()/60000)
+                    -((stats[it.android_package_name]?.totalTimeInForeground?.toInt() ?: 0) / 60000)
                 }) { game ->
                     GameStat(
                         packageName = game.android_package_name,
