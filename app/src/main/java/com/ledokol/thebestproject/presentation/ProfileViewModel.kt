@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.presentation
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -14,8 +15,10 @@ import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.data.repository.ProfileRepository
 import com.ledokol.thebestproject.domain.profile.UpdateProfile
 import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
+import com.ledokol.thebestproject.presentation.error.ErrorMapper
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,11 +26,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val repository: ProfileRepository,
-    private val api: RetrofitServices,
-
+    private val api: RetrofitServices
 ): ViewModel() {
     var state by mutableStateOf(ProfileState())
+    private val errorMapper = ErrorMapper(context)
 
     var job = Job()
         get() {
@@ -159,7 +163,7 @@ class ProfileViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         state = state.copy(
-                            verifyErrorMessage = result.message.toString()
+                            verifyErrorMessage = errorMapper.map(result.message) ?: ""
                         )
                     }
                 }

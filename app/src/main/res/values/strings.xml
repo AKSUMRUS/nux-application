@@ -141,6 +141,11 @@
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>
+    <string name="error_no_internet">Нет интернета</string>
+    <string name="error_bad_request">Ошибка запроса</string>
+    <string name="error_unauthorized">Ошибка авторизации</string>
+    <string name="error_forbidden">Ошибка доступа</string>
+    <string name="error_not_found">Не найдено</string>
 
 <!--    Contacts-->
     <string name = "enter_name_friend_from_contacts">Введи имя друга</string>

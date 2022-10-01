@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.presentation
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,9 +11,11 @@ import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.data.local.user.UserState
 import com.ledokol.thebestproject.data.repository.UsersRepository
+import com.ledokol.thebestproject.presentation.error.ErrorMapper
 import com.ledokol.thebestproject.ui.navigation.TAG
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,11 +24,13 @@ import javax.inject.Inject
 @HiltViewModel
 class
 UserViewModel @Inject constructor(
-    private val repository: UsersRepository,
+    @ApplicationContext private val context: Context,
+    private val repository: UsersRepository
 ): ViewModel() {
 
     var accessToken: String = ""
     var state by mutableStateOf(UserState())
+    private val errorMapper = ErrorMapper(context)
 
     private var searchUser: Job? = null
 
@@ -122,13 +127,15 @@ UserViewModel @Inject constructor(
                             )
                         }
                     }
-
                     is Resource.Loading -> {
                         state = state.copy(
                             isLoadingUser = result.isLoading
                         )
                     }
                     is Resource.Error -> {
+                        state = state.copy(
+                            error = errorMapper.map(result.message)
+                        )
                     }
                 }
             }
@@ -154,6 +161,9 @@ UserViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
+                    state = state.copy(
+                        error = errorMapper.map(result.message)
+                    )
                 }
             }
         }
@@ -245,7 +255,7 @@ UserViewModel @Inject constructor(
                         }
                         is Resource.Error -> {
                             state = state.copy(
-                                error = result.message.toString()
+                                error = errorMapper.map(result.message)
                             )
                         }
                     }
