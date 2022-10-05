@@ -61,7 +61,7 @@ fun ShareInvite(
 
     fun onClick(app: String?){
         val dynamicLinkUri = getLinkProfile(profile_id = profile_id)
-        Log.e("dynamicLinkUri", dynamicLinkUri.toString())
+        Log.e("dynamicLinkUri", dynamicLinkUri)
 
         val intent= Intent()
         intent.action = Intent.ACTION_SEND
