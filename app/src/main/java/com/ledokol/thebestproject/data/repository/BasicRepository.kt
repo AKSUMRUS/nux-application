@@ -26,8 +26,6 @@ open class BasicRepository {
 
                 emit(Resource.Error(message = ErrorRemote.NoInternet))
 
-                Log.e("REMOVE FRIEND", "doSafeWork: ${e.message}", e)
-
                 return@flow
             }
 

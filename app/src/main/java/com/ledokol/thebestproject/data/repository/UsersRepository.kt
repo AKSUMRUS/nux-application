@@ -236,16 +236,8 @@ class UsersRepository @Inject constructor(
     ): Flow<Resource<String> > {
         return doSafeWork(
             doAsync = {
-                Log.e("REMOVE FRIEND1",friendId)
-                val removeFriend = api.removeFriend(
-                    RemoveFriend(friend_id = friendId)
-                )
-
-                Log.e("REMOVE FRIEND2",friendId)
-
+                val removeFriend = api.removeFriend(friend_id = friendId)
                 val myResponse = removeFriend.awaitResponse()
-
-                Log.e("REMOVE FRIEND3",myResponse.toString())
                 myResponse
             },
             getResult = { response ->
@@ -259,9 +251,7 @@ class UsersRepository @Inject constructor(
     ) : Flow<Resource<String>> {
         return doSafeWork(
             doAsync = {
-                val rejectInvite = api.rejectInvite(
-                    RejectInvite(from_user_id = userId)
-                )
+                val rejectInvite = api.rejectInvite(from_user_id = userId)
 
                 val myResponse = rejectInvite.awaitResponse()
 

@@ -166,14 +166,14 @@ interface RetrofitServices {
         @Body updateProfile: UpdateProfileJSON
     ): Call<User>
 
-    @HTTP(method = "DELETE", path = "friends/remove_friend", hasBody = true)
+    @DELETE("friends/remove_friend")
     fun removeFriend(
-        @Body friend: RemoveFriend
+        @Query("friend_id") friend_id: String,
     ): Call<Any>
 
-    @HTTP(method = "DELETE", path = "friends/reject_invite", hasBody = true)
+    @DELETE("friends/reject_invite")
     fun rejectInvite(
-        @Body rejectInvite: RejectInvite
+        @Query("from_user_id") from_user_id: String,
     ): Call<String>
 
 }
