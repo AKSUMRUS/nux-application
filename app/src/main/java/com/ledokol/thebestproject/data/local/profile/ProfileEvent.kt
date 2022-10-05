@@ -13,7 +13,7 @@ sealed class ProfileEvent{
         val friends_ids: List<String>,
         val app_id: String
         ) : ProfileEvent()
-    class UpdateAvatar(val accessToken: String, val profile_pic: Bitmap): ProfileEvent()
+    class UpdateAvatar(val profile_pic: Bitmap): ProfileEvent()
     class ConfirmationPhone(val phone: String, val reason: String): ProfileEvent()
     class SetCurrentFirebaseToken(val token: String, val accessToken: String) : ProfileEvent()
     class SetFinishRegister(val accessToken: String) : ProfileEvent()

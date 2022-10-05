@@ -99,6 +99,12 @@ UserViewModel @Inject constructor(
             is UserEvent.OpenScreen -> {
                 openScreen(event.screen)
             }
+            is UserEvent.RemoveFriend -> {
+                removeFriend(event.friendId)
+            }
+            is UserEvent.RejectInvite -> {
+                rejectInvite(event.userId)
+            }
             else -> {
                 Log.e("UserViewModel", "unknown event: $event")
             }
@@ -486,6 +492,50 @@ UserViewModel @Inject constructor(
             state = state.copy(
                 existsUser = null,
             )
+        }
+    }
+
+    private fun removeFriend(
+        friendId: String
+    ) {
+        viewModelScope.launch {
+            repository.removeFriend(friendId = friendId)
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            Log.e("removeFriend", "viewModel ${result.data.toString()}")
+                        }
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                        is Resource.Error -> {
+                            Log.e("removeFriend", errorMapper.map(result.message).toString())
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun rejectInvite(
+        userId: String
+    ) {
+        viewModelScope.launch{
+            repository.rejectInvite(userId = userId)
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            Log.e("rejectInvite", "viewModel ${result.data.toString()}")
+                        }
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
+                        is Resource.Error -> Unit
+                    }
+                }
         }
     }
 

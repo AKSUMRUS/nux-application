@@ -8,32 +8,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileState
-import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.data.repository.ProfileRepository
-import com.ledokol.thebestproject.domain.profile.UpdateProfile
 import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 import com.ledokol.thebestproject.presentation.error.ErrorMapper
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val repository: ProfileRepository,
-    private val api: RetrofitServices
+    private val repository: ProfileRepository
 ): ViewModel() {
     var state by mutableStateOf(ProfileState())
     private val errorMapper = ErrorMapper(context)
 
-    var job = Job()
+    private var job = Job()
         get() {
             if (field.isCancelled) field = Job()
             return field
@@ -52,7 +47,7 @@ class ProfileViewModel @Inject constructor(
                 )
             }
             is ProfileEvent.UpdateAvatar -> {
-                updateAvatar(accessToken = event.accessToken, profile_pic = event.profile_pic)
+                updateAvatar(profile_pic = event.profile_pic)
             }
             is ProfileEvent.GetDefaultProfilePics -> {
                 getDefaultProfilePics()
@@ -114,6 +109,7 @@ class ProfileViewModel @Inject constructor(
                             isLoading = result.isLoading
                         )
                     }
+                    is Resource.Error -> Unit
                 }
             }
         }
@@ -161,6 +157,7 @@ class ProfileViewModel @Inject constructor(
                             verifyErrorMessage = ""
                         )
                     }
+                    is Resource.Loading -> Unit
                     is Resource.Error -> {
                         state = state.copy(
                             verifyErrorMessage = errorMapper.map(result.message) ?: ""
@@ -180,13 +177,11 @@ class ProfileViewModel @Inject constructor(
                     result ->
                     when(result){
                         is Resource.Success -> {
-//                            state.profile!!.name = result.data!!.name
-
                             val newProfileState = state.profile
                             newProfileState!!.name = result.data!!.name
                             newProfileState.nickname = result.data.nickname
 
-                            Log.e("updateProfile", "Finish ${newProfileState}")
+                            Log.d("updateProfile", "Finish $newProfileState")
                             state = state.copy(
                                 profile = newProfileState
                             )
@@ -205,13 +200,13 @@ class ProfileViewModel @Inject constructor(
     private fun getProfile(){
         viewModelScope.launch {
             val response = repository.getProfile()
-            if(response != null) {
-                state = state.copy(
+            state = if(response != null) {
+                state.copy(
                     profile = response,
                     finish_register = response.finishRegister
                 )
             } else{
-                state = state.copy(
+                state.copy(
                     profile = response
                 )
             }
@@ -219,18 +214,16 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun updateAvatar(
-        accessToken: String,
         profile_pic: Bitmap
     ){
         viewModelScope.launch {
             repository.uploadAvatar(
-                accessToken = accessToken,
                 profile_pic_bitmap = profile_pic,
             ).collect{ result ->
                 when(result){
                     is Resource.Success -> {
                         if(result.data != null) {
-                            getMe(accessToken = accessToken)
+                            getMe()
                         }
                     }
                     is Resource.Error -> Unit
@@ -244,9 +237,8 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
+    private fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
         viewModelScope.launch {
-            Log.e("INVITE","SENT")
             repository.inviteFriends(
                 accessToken = accessToken,
                 friends_ids = friends_ids,
@@ -288,7 +280,7 @@ class ProfileViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null) {
-                                getMe(accessToken = result.data.access_token)
+                                getMe()
                             }
                         }
                         is Resource.Error -> Unit
@@ -323,8 +315,8 @@ class ProfileViewModel @Inject constructor(
                     when(result){
                         is Resource.Success -> {
                             if(result.data != null){
-                                Log.e("singUpRepository", result.data.toString())
-                                getMe(accessToken = result.data.access_token)
+                                Log.i("singUpRepository", result.data.toString())
+                                getMe()
                             }
                         }
                         is Resource.Error -> Unit
@@ -344,11 +336,9 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    private fun getMe(
-        accessToken: String = repository.data.access_token
-    ){
+    private fun getMe(){
         viewModelScope.launch {
-            repository.getMe(accessToken)
+            repository.getMe()
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {

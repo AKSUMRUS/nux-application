@@ -14,7 +14,8 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 
 @Composable
 fun FriendTopBar(
-    user: User
+    user: User,
+    onRemoveFriend: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -32,7 +33,10 @@ fun FriendTopBar(
                 fontWeight = FontWeight.W700,
             )
 
-            StripFriend(user = user)
+            StripFriend(
+                user = user,
+                onRemoveFriend = onRemoveFriend,
+            )
         }
 
         Row(

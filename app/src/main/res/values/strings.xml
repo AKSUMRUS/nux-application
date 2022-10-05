@@ -89,7 +89,6 @@
     <string name="reason_permission_data">Для полного игрового опыта</string>
     <string name="explain_permission_data">Позволь нам мониторить твою игровую активность</string>
     <string name="allow_permission_data">Разрешить!</string>
-
     <string name="hello_permission_contacts">Куда же без друзей? 🙈️</string>
     <string name="need_permission_contacts">Предоставь, пожалуйста, разрешение</string>
     <string name="reason_permission_contacts">Чтобы следить за активностью друзей</string>
@@ -138,6 +137,7 @@
     <string name="friend_requests">Запросы в друзья</string>
     <string name="my_friends">Мои друзья</string>
     <string name="no_friends">Нет друзей</string>
+    <string name="remove_friend">Удалить из друзей</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>

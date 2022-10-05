@@ -6,6 +6,7 @@ import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileToken
 import com.ledokol.thebestproject.data.local.user.Apps
 import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.domain.games.*
 import com.ledokol.thebestproject.domain.profile.*
 import com.ledokol.thebestproject.domain.users.AddFriend
@@ -105,7 +106,6 @@ interface RetrofitServices {
     @GET("app/{app_id}")
     fun getGame(
         @Path("app_id") app_id: String,
-
     ) : Call<Profile>
 
     @Multipart
@@ -157,7 +157,6 @@ interface RetrofitServices {
 
     @GET("friends/pending_invites")
     fun getFriendPendingInvites(
-        @Header("Authorization") authHeader: String,
     ): Call<List<NotificationEntity>>
 
 
@@ -167,5 +166,14 @@ interface RetrofitServices {
         @Body updateProfile: UpdateProfileJSON
     ): Call<User>
 
+    @HTTP(method = "DELETE", path = "friends/remove_friend", hasBody = true)
+    fun removeFriend(
+        @Body friend: RemoveFriend
+    ): Call<Any>
+
+    @HTTP(method = "DELETE", path = "friends/reject_invite", hasBody = true)
+    fun rejectInvite(
+        @Body rejectInvite: RejectInvite
+    ): Call<String>
 
 }

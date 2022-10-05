@@ -29,7 +29,7 @@ class NotificationsViewModel @Inject constructor(
                 getFriendRequestNotifications(token = event.token)
             }
             is NotificationsEvent.AddFriend -> {
-                addFriend(event.token, event.notificationEntity)
+                addFriend(event.notificationEntity)
             }
         }
     }
@@ -63,11 +63,10 @@ class NotificationsViewModel @Inject constructor(
     }
 
     private fun addFriend(
-        token : String,
         notificationEntity : NotificationEntity
     ) {
         viewModelScope.launch {
-            repository.addFriend(token = token, notificationEntity = notificationEntity)
+            repository.addFriend(notificationEntity = notificationEntity)
                 .collect{ result ->
                     when(result){
                         is Resource.Success -> {

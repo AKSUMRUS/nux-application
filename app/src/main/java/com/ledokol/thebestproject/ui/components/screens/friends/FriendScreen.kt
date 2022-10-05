@@ -24,12 +24,16 @@ import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.user.CurrentApp
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.openApp
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogShow
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.*
@@ -91,11 +95,9 @@ fun FriendScreen(
                 .background(
                     MaterialTheme.colors.background
                 )
-//            .verticalScroll(rememberScrollState())
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-//                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 40.dp)
@@ -104,7 +106,13 @@ fun FriendScreen(
                 item(
                     span = { GridItemSpan(2) },
                 ) {
-                    FriendTopBar(user = user)
+                    FriendTopBar(
+                        user = user,
+                        onRemoveFriend = {
+                            userViewModel.onEvent(UserEvent.RemoveFriend(friendId = state.friendUser!!.id))
+//                            navController.popBackStack()
+                        }
+                    )
                 }
 
                 if(state.friendUser!!.status.in_app

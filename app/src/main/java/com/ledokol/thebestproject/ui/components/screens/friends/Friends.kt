@@ -92,7 +92,7 @@ fun Friends(
     fun onClick(
         notificationEntity: NotificationEntity
     ){
-        notificationsViewModel.onEvent(NotificationsEvent.AddFriend(token, notificationEntity))
+        notificationsViewModel.onEvent(NotificationsEvent.AddFriend(notificationEntity))
     }
 
     val coroutineScope = rememberCoroutineScope()

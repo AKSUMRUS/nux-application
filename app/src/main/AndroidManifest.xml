@@ -47,6 +47,15 @@
         <package android:name="com.robtopx.geometryjumplite" />
         <package android:name="com.FDGEntertainment.redball4.gp" />
         <package android:name="com.mediocre.smashhit" />
+        <package android:name="com.gamepie.airpolice"/>
+        <package android:name="com.kitkagames.fallbuddies"/>
+        <package android:name="com.matteljv.uno"/>
+        <package android:name="com.gamedevltd.modernstrike"/>
+        <package android:name="com.madfingergames.legends"/>
+        <package android:name="com.riotgames.league.wildrif"/>
+        <package android:name="com.extremedevelopers.strikerzone"/>
+        <package android:name="ocean.nomad.online.survival.simulator"/>
+        <package android:name="com.masomo.basketballarena"/>
     </queries>
 
     <application

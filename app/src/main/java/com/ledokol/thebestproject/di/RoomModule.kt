@@ -72,21 +72,12 @@ interface RoomModule {
         fun provideTokenDao(myDatabase: MyDatabase): TokenDao =
             myDatabase.tokenDao()
 
-//    @Provides
-//    @Singleton
-//    fun provideGamesDao(myDatabase: MyDatabase) : StatusRepository = myDatabase.gamesDao()
-
-//    @Provides
-//    @Singleton
-//    fun provideStatus(statusRepository: )
-
-
         @Provides
         @Singleton
         fun provideRetrofitServices(client: OkHttpClient): Retrofit {
 //        val BASE_URL = "https://storage.yandexcloud.net/"
 //        val BASE_URL = "http://192.168.222.142:8080/" // Для телефона
-        val BASE_URL = "http://51.250.100.21/"
+        val BASE_URL = "http://51.250.100.21"
 //        val BASE_URL = "http://10.0.2.2:8080/" // Для эмулятора
 
             return Retrofit.Builder()

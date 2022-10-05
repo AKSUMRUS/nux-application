@@ -15,42 +15,53 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepository @Inject constructor(
-    private val tokenRepository: TokenRepository,
     val dao : NotificationsDao,
     val api : RetrofitServices
-) {
+) : BasicRepository() {
 
     fun getFriendRequestNotifications(token : String)
     : Flow<Resource<List<NotificationEntity>>> {
-        return flow{
-            emit(Resource.Loading(true))
-
-            val notificationsCall = try{
-                api.getFriendPendingInvites(authHeader = "Bearer $token").awaitResponse()
-            }
-            catch (e : Exception){
-                emit(Resource.Loading(false))
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                return@flow
-            }
-
-            Log.e("NotificationsRepository", "notificationsCall: ${notificationsCall.body()}")
-
-            emit(Resource.Loading(false))
-
-            if (notificationsCall.isSuccessful){
+//        return flow{
+//            emit(Resource.Loading(true))
+//
+//            val notificationsCall = try{
+//                api.getFriendPendingInvites(authHeader = "Bearer $token").awaitResponse()
+//            }
+//            catch (e : Exception){
+//                emit(Resource.Loading(false))
+//                emit(Resource.Error(ErrorRemote.NoInternet))
+//                return@flow
+//            }
+//
+//            Log.e("NotificationsRepository", "notificationsCall: ${notificationsCall.body()}")
+//
+//            emit(Resource.Loading(false))
+//
+//            if (notificationsCall.isSuccessful){
+//                val notifications = notificationsCall.body() ?: emptyList()
+//                dao.clearNotifications()
+//                dao.insertNotifications(notifications)
+//
+//                emit(Resource.Success(dao.getNotifications()))
+//            }
+//
+//        }
+        return doSafeWork(
+            doAsync = {
+                api.getFriendPendingInvites().awaitResponse()
+            },
+            doOnSuccess = { notificationsCall ->
                 val notifications = notificationsCall.body() ?: emptyList()
                 dao.clearNotifications()
                 dao.insertNotifications(notifications)
-
-                emit(Resource.Success(dao.getNotifications()))
+            },
+            getResult = {
+                dao.getNotifications()
             }
-
-        }
+        )
     }
 
     fun addFriend(
-        token : String,
         notificationEntity: NotificationEntity
     ) : Flow<Resource<List<NotificationEntity>>> {
         return flow {

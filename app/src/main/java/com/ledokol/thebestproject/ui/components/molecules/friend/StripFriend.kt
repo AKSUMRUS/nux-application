@@ -18,8 +18,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.ui.components.atoms.Search
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
@@ -29,6 +31,7 @@ fun StripFriend(
     user: User,
     addFriend: Boolean = false,
     onClick: () -> Unit = {},
+    onRemoveFriend: () -> Unit = {},
 ){
 
     if(addFriend){
@@ -71,6 +74,12 @@ fun StripFriend(
                 color = MaterialTheme.colors.secondaryVariant,
             )
         }
+        ButtonFull(
+            text = stringResource(id = R.string.remove_friend),
+            onClick = {
+                onRemoveFriend()
+            }
+        )
     }
 
 }

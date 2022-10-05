@@ -73,41 +73,48 @@ class MyService: Service() {
         val handler = Handler()
         var runnable: Runnable? = null
         runnable = Runnable {
-            val activeAppPackage = gamesStatistic.getActiveApp(context, packageManager)
+            try {
+                val activeAppPackage = gamesStatistic.getActiveApp(context, packageManager)
 
-            if(activeAppPackage==null){
-                logApps("Сейчас нету запущенных приложений")
-                if(lastApp!=null){
-                    if(!checkLeave){
-                        lastApp = null
-                        checkLeave = true
-                        statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                if (activeAppPackage == null) {
+                    logApps("Сейчас нету запущенных приложений")
+                    if (lastApp != null) {
+                        if (!checkLeave) {
+                            lastApp = null
+                            checkLeave = true
+                            statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                        }
                     }
-                }
-            }else{
-                val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
-                val packageApp = activeAppInfo.packageName
-                val labelApp = getApplicationLabel(packageManager, activeAppInfo)
-                val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
+                } else {
+                    val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage, 0)
+                    val packageApp = activeAppInfo.packageName
+                    val labelApp = getApplicationLabel(packageManager, activeAppInfo)
+                    val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
 
-                Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
+                    Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                if(lastApp!=packageApp){
-                    profileRepository.data.let{
+                    if (lastApp != packageApp) {
+                        profileRepository.data.let {
 
-                        Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
-                        statusRepository.setStatus(
-                            packageApp,
-                            labelApp,
-                            categoryApp,
-                            accessToken = profileRepository.data.access_token
-                        )
+                            Log.i(
+                                "STATUS!!!!",
+                                "$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}"
+                            )
+                            statusRepository.setStatus(
+                                packageApp,
+                                labelApp,
+                                categoryApp,
+                                accessToken = profileRepository.data.access_token
+                            )
+                        }
+                        lastApp = packageApp
                     }
-                    lastApp = packageApp
-                }
 
-                checkLeave = false
-                logApps("Сейчас запущено приложение $activeAppPackage")
+                    checkLeave = false
+                    logApps("Сейчас запущено приложение $activeAppPackage")
+                }
+            } catch(e: Exception){
+                Log.e("Service", e.toString())
             }
             runnable?.let { handler.postDelayed(it, 20000) }
         }
