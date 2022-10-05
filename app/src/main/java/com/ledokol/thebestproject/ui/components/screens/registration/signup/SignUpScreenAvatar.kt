@@ -56,7 +56,7 @@ fun SignUpScreenAvatar(
 
             LazyVerticalGrid(columns = GridCells.Fixed(3), content = {
                 items(avatars){ avatar ->
-                    val modifier = if(avatar.url == avatarSelected) Modifier.border(3.dp, MaterialTheme.colors.primary) else Modifier.border(1.dp, MaterialTheme.colors.secondaryVariant)
+                    val modifier = if(avatar.url == avatarSelected) Modifier.border(3.dp, MaterialTheme.colors.secondary) else Modifier.border(1.dp, MaterialTheme.colors.secondaryVariant)
                     AsyncImage(
                         model = avatar.url,
                         contentDescription = null,

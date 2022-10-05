@@ -12,15 +12,15 @@ import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.MainActivity
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.repository.ProfileRepository
 import com.ledokol.thebestproject.data.repository.StatusRepository
-import com.ledokol.thebestproject.ui.components.screens.games.TAG
+import com.yandex.metrica.impl.ob.pm
+import com.yandex.metrica.impl.ob.pn
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 private const val NOTIFICATION_ID = 101
 private const val CHANNEL_ID = "LEDOKOL"
@@ -85,29 +85,33 @@ class MyService: Service() {
                     }
                 }
             }else{
-                val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
-                val packageApp = activeAppInfo.packageName
-                val labelApp = getApplicationLabel(packageManager, activeAppInfo)
-                val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
+                try {
+                    val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
+                    val packageApp = activeAppInfo.packageName
+                    val labelApp = getApplicationLabel(packageManager, activeAppInfo)
+                    val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
 
-                Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
+                    Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                if(lastApp!=packageApp){
-                    profileRepository.data.let{
+                    if(lastApp!=packageApp){
+                        profileRepository.data.let{
 
-                        Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
-                        statusRepository.setStatus(
-                            packageApp,
-                            labelApp,
-                            categoryApp,
-                            accessToken = profileRepository.data.access_token
-                        )
+                            Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
+                            statusRepository.setStatus(
+                                packageApp,
+                                labelApp,
+                                categoryApp,
+                                accessToken = profileRepository.data.access_token
+                            )
+                        }
+                        lastApp = packageApp
                     }
-                    lastApp = packageApp
-                }
 
-                checkLeave = false
-                logApps("Сейчас запущено приложение $activeAppPackage")
+                    checkLeave = false
+                    logApps("Сейчас запущено приложение $activeAppPackage")
+                } catch (e: PackageManager.NameNotFoundException) {
+                    //LOG the exception
+                }
             }
             runnable?.let { handler.postDelayed(it, 20000) }
         }

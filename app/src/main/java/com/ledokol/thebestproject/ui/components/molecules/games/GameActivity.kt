@@ -1,15 +1,20 @@
-package com.ledokol.thebestproject.ui.components.molecules
+package com.ledokol.thebestproject.ui.components.molecules.games
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonEmpty
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,8 +25,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun GameActivity(
     packageName: String,
+    gameName: String,
     iconPreview: String?,
-    imageWide: String?,
     in_app: Boolean,
     startTime: String = "",
     finishTime: String = "",
@@ -83,22 +88,13 @@ fun GameActivity(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colors.primary)
             .clickable {
                 onClick()
             }
-            .padding(top = 20.dp),
+            .padding(top = 0.dp),
     ) {
-        AsyncImage(
-            model = imageWide,
-            contentDescription = "GameImage",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-                .alpha(0.3f),
-            contentScale = ContentScale.Crop,
-        )
-
         Row(
             modifier = Modifier
                 .fillMaxSize()
@@ -120,11 +116,17 @@ fun GameActivity(
                 modifier = Modifier
                     .padding(start = 10.dp)
             ){
+                Body1(
+                    text = gameName,
+                    color = MaterialTheme.colors.onBackground,
+                    modifier = Modifier.padding(bottom =5.dp)
+                )
+
                 if(!in_app){
-                    Body1(text = "Играл ${getDay(localDateTimeFinish)}")
-                    Body1(text = "c ${getTime(localDateTimeStart)} до ${getTime(localDateTimeFinish)} ")
+                    Body1(text = "Был ${getDay(localDateTimeFinish)} c ${getTime(localDateTimeStart)} до ${getTime(localDateTimeFinish)} ")
+//                    Body1(text = "")
                 }else{
-                    Body1(text = "Сейчас играет")
+                    Body1(text = "Сейчас использует")
                 }
             }
         }

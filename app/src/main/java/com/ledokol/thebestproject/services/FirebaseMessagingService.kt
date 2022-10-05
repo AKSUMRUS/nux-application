@@ -60,59 +60,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         data["type"].toString()
                     )
             }else if(data["type"] == "friend_entered_app"){
-                Glide.with(this)
-                    .asBitmap()
-                    .load(data["app.icon_preview"].toString())
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            sendNotificationFriendEnteredApp(
-                                data["user.nickname"].toString(),
-                                "Начал играть в ${data["app.name"]}",
-                                data["app.android_package_name"].toString(),
-                                resource,
-                                data["user.id"].toString(),
-                                data["type"].toString()
-                            )
-                        }
-
-                        override fun onLoadFailed(errorDrawable: Drawable?) {}
-
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-                    })
-
+                loadIconFriendEnteredApp(this, data)
             }else if(data["type"] == "invite_to_app"){
-                Glide.with(this)
-                    .asBitmap()
-                    .load(data["app.icon_preview"].toString())
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                            sendNotificationInviteToApp(
-                                data["user.nickname"].toString(),
-                                "Приглашает в игру ${data["app.name"]}",
-                                data["app.android_package_name"].toString(),
-                                resource,
-                                data["user.id"].toString(),
-                                data["type"].toString()
-                            )
-                        }
-
-                        override fun onLoadFailed(errorDrawable: Drawable?) {}
-
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-                    })
+                loadIconInviteToApp(data)
             }else{
                 val intentService = Intent(this, MyService::class.java)
                 intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 this.startForegroundService(intentService)
             }
-
-//            if (/* Check if data needs to be processed by long running job */ false) {
-//                // For long-running tasks (10 seconds or more) use WorkManager.
-//                scheduleJob()
-//            } else {
-//                // Handle message within 10 seconds
-//                handleNow()
-//            }
         }
 
         // Check if message contains a notification payload.
@@ -122,6 +77,50 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
+    }
+
+    private fun loadIconInviteToApp(data: Map<String, String>) {
+        Glide.with(this)
+            .asBitmap()
+            .load(data["app.icon_preview"].toString())
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    sendNotificationInviteToApp(
+                        data["user.nickname"].toString(),
+                        "Приглашает в игру ${data["app.name"]}",
+                        data["app.android_package_name"].toString(),
+                        resource,
+                        data["user.id"].toString(),
+                        data["type"].toString()
+                    )
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {}
+
+                override fun onLoadCleared(placeholder: Drawable?) {}
+            })
+    }
+
+    private fun loadIconFriendEnteredApp(myFirebaseMessagingService: MyFirebaseMessagingService, data: Map<String, String>) {
+        Glide.with(this)
+            .asBitmap()
+            .load(data["app.icon_preview"].toString())
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    sendNotificationFriendEnteredApp(
+                        data["user.nickname"].toString(),
+                        "Начал играть в ${data["app.name"]}",
+                        data["app.android_package_name"].toString(),
+                        resource,
+                        data["user.id"].toString(),
+                        data["type"].toString()
+                    )
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {}
+
+                override fun onLoadCleared(placeholder: Drawable?) {}
+            })
     }
     // [END receive_message]
 
@@ -184,6 +183,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationId: String,
         notificationType: String,
     ) {
+        Log.e(TAG, "Start Function")
+
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.putExtra("notification_id", notificationId)

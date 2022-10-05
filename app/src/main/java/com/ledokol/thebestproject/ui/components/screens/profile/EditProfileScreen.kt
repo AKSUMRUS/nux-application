@@ -59,7 +59,7 @@ fun EditProfileScreen(
     fun onSave(){
         if(!checkCorrectName(name)||!checkCorrectNickname(nickname)){
             Toast.makeText(context, "Данные некорректны", Toast.LENGTH_LONG).show()
-        }else if(!userViewModel.state.existsUser!! || nickname == state!!.nickname){
+        }else if((userViewModel.state.existsUser == null || !userViewModel.state.existsUser!!) || nickname == state!!.nickname){
             if(!isSaved) {
                 isSaved = true
                 profileViewModel.onEvent(
@@ -140,7 +140,6 @@ fun EditProfileScreen(
             )
         }
 
-//        )
     }
 
 }

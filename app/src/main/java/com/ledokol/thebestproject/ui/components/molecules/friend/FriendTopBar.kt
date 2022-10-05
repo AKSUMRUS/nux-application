@@ -10,11 +10,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonEmpty
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun FriendTopBar(
-    user: User
+    user: User,
+    onClickClaim: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier
@@ -27,12 +30,20 @@ fun FriendTopBar(
                 .weight(2f),
         ){
             HeadlineH4(
-                text = user.nickname,
+                text = user.name,
                 color = MaterialTheme.colors.onBackground,
                 fontWeight = FontWeight.W700,
             )
 
+            HeadlineH6(
+                text = "@${user.nickname}",
+                color = MaterialTheme.colors.onSecondary,
+                fontWeight = FontWeight.W700,
+            )
+
             StripFriend(user = user)
+
+            ButtonEmpty(text = "Пожаловаться", onClick = {onClickClaim()})
         }
 
         Row(
