@@ -31,16 +31,9 @@ import javax.inject.Singleton
 
 @Singleton
 class GamesRepository @Inject constructor(
-    private val tokenRepository: TokenRepository,
     private val api: RetrofitServices,
     private val dao: GamesDao
 ) {
-
-    private fun convertBitmapToString(bitmap: Bitmap): String {
-        return bitmap.asImageBitmap().toString()
-    }
-
-
 
     fun insertGame(game: Game){
         dao.insertGame(game)

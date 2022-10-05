@@ -69,7 +69,6 @@ fun UploadAvatar(
 
             profileViewModel.onEvent(
                 ProfileEvent.UpdateAvatar(
-                accessToken = profileViewModel.state.profile!!.access_token,
                 profile_pic = bitmap
             )
             )

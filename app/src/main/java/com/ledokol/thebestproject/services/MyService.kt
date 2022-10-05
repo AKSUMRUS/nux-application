@@ -12,6 +12,8 @@ import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.MainActivity
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.repository.ProfileRepository
@@ -73,30 +75,33 @@ class MyService: Service() {
         val handler = Handler()
         var runnable: Runnable? = null
         runnable = Runnable {
-            val activeAppPackage = gamesStatistic.getActiveApp(context, packageManager)
+            try {
+                val activeAppPackage = gamesStatistic.getActiveApp(context, packageManager)
 
-            if(activeAppPackage==null){
-                logApps("Сейчас нету запущенных приложений")
-                if(lastApp!=null){
-                    if(!checkLeave){
-                        lastApp = null
-                        checkLeave = true
-                        statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                if (activeAppPackage == null) {
+                    logApps("Сейчас нету запущенных приложений")
+                    if (lastApp != null) {
+                        if (!checkLeave) {
+                            lastApp = null
+                            checkLeave = true
+                            statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                        }
                     }
-                }
-            }else{
-                try {
-                    val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage,0)
+                } else {
+                    val activeAppInfo = packageManager.getApplicationInfo(activeAppPackage, 0)
                     val packageApp = activeAppInfo.packageName
                     val labelApp = getApplicationLabel(packageManager, activeAppInfo)
                     val categoryApp = getApplicationCategory(packageManager, activeAppInfo)
 
                     Log.i("DataActiveApp", "$packageApp $labelApp $categoryApp")
 
-                    if(lastApp!=packageApp){
-                        profileRepository.data.let{
+                    if (lastApp != packageApp) {
+                        profileRepository.data.let {
 
-                            Log.i("STATUS!!!!","$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}")
+                            Log.i(
+                                "STATUS!!!!",
+                                "$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}"
+                            )
                             statusRepository.setStatus(
                                 packageApp,
                                 labelApp,
@@ -109,9 +114,9 @@ class MyService: Service() {
 
                     checkLeave = false
                     logApps("Сейчас запущено приложение $activeAppPackage")
-                } catch (e: PackageManager.NameNotFoundException) {
-                    //LOG the exception
                 }
+            } catch(e: Exception){
+                Log.e("Service", e.toString())
             }
             runnable?.let { handler.postDelayed(it, 20000) }
         }

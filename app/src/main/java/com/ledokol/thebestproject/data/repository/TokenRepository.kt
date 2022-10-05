@@ -14,10 +14,6 @@ class TokenRepository @Inject constructor(
         dao.addToken(token = TokenEntity(token = token))
     }
 
-    fun clearToken(){
-        dao.clearToken()
-    }
-
     fun getToken() : String {
         val response = dao.getToken()
         return response?.token ?: ""

@@ -13,7 +13,6 @@ import javax.inject.Singleton
 
 @Singleton
 class StatusRepository @Inject constructor(
-    private val tokenRepository: TokenRepository,
     private val api : RetrofitServices
 ) {
 

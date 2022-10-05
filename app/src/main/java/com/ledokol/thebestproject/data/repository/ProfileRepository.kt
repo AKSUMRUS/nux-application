@@ -66,21 +66,7 @@ class ProfileRepository @Inject constructor(
         return byteArrayOutputStream.toByteArray()
     }
 
-    fun convertBitmapToJPEG(bitmap: Bitmap): ByteArray {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-//        val compressedImageFile = Compressor.compress(this, byteArray) {
-//            resolution(1280, 720)
-//            quality(80)
-//            format(Bitmap.CompressFormat.WEBP)
-//            size(2_097_152) // 2 MB
-//        }
-        return byteArrayOutputStream.toByteArray()
-    }
-
     fun uploadAvatar(
-        accessToken: String,
         profile_pic_bitmap: Bitmap,
     ): Flow<Resource<Profile>>{
 
@@ -381,9 +367,7 @@ class ProfileRepository @Inject constructor(
         }
     }
 
-    fun getMe(
-        accessToken: String
-    ): Flow<Resource<Profile>> {
+    fun getMe(): Flow<Resource<Profile>> {
         return flow {
 
             val token = tokenRepository.getToken()

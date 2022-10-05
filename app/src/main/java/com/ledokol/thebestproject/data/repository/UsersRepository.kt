@@ -8,6 +8,8 @@ import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.domain.profile.ExistsUserJSON
+import com.ledokol.thebestproject.domain.profile.RejectInvite
+import com.ledokol.thebestproject.domain.profile.RemoveFriend
 import com.ledokol.thebestproject.domain.users.AddFriend
 import com.ledokol.thebestproject.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -23,73 +25,38 @@ import javax.inject.Singleton
 
 @Singleton
 class UsersRepository @Inject constructor(
-    private val tokenRepository: TokenRepository,
     private val api : RetrofitServices,
     private val dao : UsersDao,
 ) : BasicRepository() {
-    fun insertUser(user: User) {
-        dao.insertUser(user)
-    }
 
     fun getUserByNickname(nickname: String): Flow<Resource<User> > {
-        return flow{
-            emit(Resource.Loading(true))
-
-            val user = try {
+        return doSafeWork(
+            doAsync = {
                 val getUser = api.getUserByNickname(nickname)
 
                 val myResponse = getUser.awaitResponse()
 
-                if(myResponse.code() != 200){
-                    emit(Resource.Error(ErrorCatcher.catch(myResponse.code())))
-                }
-
-                myResponse.body()
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
+                myResponse
+            },
+            getResult = { user ->
+                user.body()
             }
-
-            Log.e("addFrined", user.toString())
-
-            user?.let {
-                emit(Resource.Success(
-                    data = user
-                ))
-            }
-
-            emit(Resource.Loading(false))
-        }
+        )
     }
 
     fun getUserByPhone(phone: String): Flow<Resource<User> > {
-        return flow{
-            emit(Resource.Loading(true))
-
-            val user = try {
+        return doSafeWork(
+            doAsync = {
                 val getUser = api.getUserByPhone(phone)
 
-                val myResponse = getUser.awaitResponse().body()
+                val myResponse = getUser.awaitResponse()
 
                 myResponse
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
+            },
+            getResult = { user ->
+                user.body()
             }
-
-            user?.let {
-                emit(Resource.Success(
-                    data = user
-                ))
-            }
-
-            emit(Resource.Loading(false))
-        }
-    }
-
-
-    fun uploadImage(){
-//        api.uploadImage()
+        )
     }
 
     fun getFriends(
@@ -141,69 +108,46 @@ class UsersRepository @Inject constructor(
     fun addFriend(
         friendId: String
     ): Flow<Resource<String> > {
-        return flow{
-            emit(Resource.Loading(true))
-
-
-            val response = try{
+        return doSafeWork(
+            doAsync = {
                 val addFriend = api.addFriend(
                     addFriend = AddFriend(user_id = friendId)
                 )
 
-                val myResponse: String? = addFriend.awaitResponse().body()
+                val myResponse = addFriend.awaitResponse()
 
                 myResponse
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
+            },
+            getResult = { response ->
+                response.body()
             }
-
-            emit(Resource.Success(
-                data = response
-            ))
-            emit(Resource.Loading(false))
-        }
+        )
     }
 
     fun getUser(id: String): Flow<Resource<User>> {
-        return flow {
-            Log.e("FRIEND","Start")
-            emit(Resource.Loading(true))
-            val friend = try {
+        return doSafeWork(
+            doAsync = {
                 val friendCall = api.getUser(id)
-                val myResponse: User? = friendCall.awaitResponse().body()
-
+                val myResponse = friendCall.awaitResponse()
                 myResponse
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
+            },
+            getResult = { friend ->
+                friend.body()
             }
-            Log.e("FRIEND",friend.toString())
-            emit(Resource.Success(
-                data = friend
-            ))
-
-            emit(Resource.Loading(false))
-        }
+        )
     }
 
     fun getUserGames(id: String): Flow<Resource<List<CurrentApp>>> {
-        return flow {
-            emit(Resource.Loading(true))
-            val games = try {
+        return doSafeWork(
+            doAsync = {
                 val gamesCall = api.getUserGames(id)
-                val myResponse: List<CurrentApp> = gamesCall.awaitResponse().body()!!.apps
+                val myResponse = gamesCall.awaitResponse()
                 myResponse
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
+            },
+            getResult = { games ->
+                games.body()!!.apps
             }
-            Log.e("FRIEND_GAMES",games.toString())
-            emit(Resource.Success(
-                data = games
-            ))
-            emit(Resource.Loading(false))
-        }
+        )
     }
 
     fun checkExistsNickname(
@@ -220,40 +164,12 @@ class UsersRepository @Inject constructor(
                 checkUser.body()
             }
         )
-//        return flow{
-//            emit(Resource.Loading(true))
-//            val TAG = "checkExistsNickname"
-//            Log.e(TAG, "start $nickname")
-//            val callExistsUser = api.checkExistsNickname(
-//                nickname = nickname
-//            )
-//
-//            val checkUser = try{
-//                callExistsUser.awaitResponse().body()
-//            } catch(e: IOException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            } catch (e: HttpException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            }
-//
-//            checkUser?.let{
-//                emit(Resource.Success(
-//                    data = checkUser
-//                ))
-//            }
-//            emit(Resource.Loading(false))
-//        }
     }
 
 
     fun checkExistsPhone(
         phone: String
     ): Flow<Resource<ExistsUserJSON>>{
-
        return doSafeWork(
             doAsync = {
                 val callExistsUser = api.checkExistsPhone(
@@ -265,33 +181,6 @@ class UsersRepository @Inject constructor(
                     checkUser.body()
             }
         )
-//        return flow{
-//            emit(Resource.Loading(true))
-//            val TAG = "checkExistsPhone"
-//            Log.e(TAG, "start $phone")
-//            val callExistsUser = api.checkExistsPhone(
-//                phone = phone
-//            )
-//
-//            val checkUser = try{
-//                callExistsUser.awaitResponse().body()
-//            } catch(e: IOException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            } catch (e: HttpException) {
-//                e.printStackTrace()
-//                emit(Resource.Error("Couldn't load data"))
-//                null
-//            }
-//
-//            checkUser?.let{
-//                emit(Resource.Success(
-//                    data = checkUser
-//                ))
-//            }
-//            emit(Resource.Loading(false))
-//        }
     }
 
     fun getUsersFindFriend(
@@ -340,6 +229,38 @@ class UsersRepository @Inject constructor(
             }
 
         }
+    }
+
+    fun removeFriend(
+        friendId: String
+    ): Flow<Resource<String> > {
+        return doSafeWork(
+            doAsync = {
+                val removeFriend = api.removeFriend(friend_id = friendId)
+                val myResponse = removeFriend.awaitResponse()
+                myResponse
+            },
+            getResult = { response ->
+                response.body().toString()
+            }
+        )
+    }
+
+    fun rejectInvite(
+        userId: String
+    ) : Flow<Resource<String>> {
+        return doSafeWork(
+            doAsync = {
+                val rejectInvite = api.rejectInvite(from_user_id = userId)
+
+                val myResponse = rejectInvite.awaitResponse()
+
+                myResponse
+            },
+            getResult = { response ->
+                response.body()
+            }
+        )
     }
 
 }

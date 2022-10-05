@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.data.repository
 
+import android.util.Log
 import com.ledokol.thebestproject.data.error.ErrorCatcher
 import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.util.Resource
@@ -7,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 
-open class BasicRepository() {
+open class BasicRepository {
 
     open fun <T,M> doSafeWork(
         doAsync: suspend () -> Response<M>,

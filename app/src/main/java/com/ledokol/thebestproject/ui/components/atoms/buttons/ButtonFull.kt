@@ -36,8 +36,6 @@ fun ButtonFull(
             backgroundColor = colorBackground,
         ),
         contentPadding = padding,
-
-//        elevation = ButtonElevation.elevation(null)
     ) {
         HeadlineH6(
             text = text,
