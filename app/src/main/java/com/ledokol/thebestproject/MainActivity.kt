@@ -33,10 +33,8 @@ import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.StartNavigation
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -86,10 +84,7 @@ class MainActivity : ComponentActivity() {
                     deepLink.getBooleanQueryParameter("profile_id", false)) {
                         val profileId = deepLink.getQueryParameter("profile_id")
                         Log.e(TAG, profileId.toString())
-                        runBlocking {
-                            launch { userViewModel.onEvent(UserEvent.GetFriendUser(profileId.toString())) }.join()
-                            launch { userViewModel.onEvent(UserEvent.OpenScreen(screen = ScreenRoutes.PREVIEW_FRIEND)) }
-                        }
+                        userViewModel.onEvent(UserEvent.OpenFriendViaLink(profileId.toString()))
                     }
             }
 

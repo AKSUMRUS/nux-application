@@ -12,6 +12,7 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.data.local.user.UserState
 import com.ledokol.thebestproject.data.repository.UsersRepository
 import com.ledokol.thebestproject.presentation.error.ErrorMapper
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.TAG
 import com.ledokol.thebestproject.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,6 +100,9 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.OpenScreen -> {
                 openScreen(event.screen)
+            }
+            is UserEvent.OpenFriendViaLink -> {
+                openFriendViaLink(event.userId)
             }
             is UserEvent.RemoveFriend -> {
                 removeFriend(event.friendId)
@@ -345,30 +350,73 @@ UserViewModel @Inject constructor(
     private fun getUser(
         id: String
     ){
-        viewModelScope.launch {
-            repository.getUser(id = id)
-                .collect{ result ->
-                    when(result){
-                        is Resource.Success -> {
-                            result.data.let {
-                                    user ->
-                                state = state.copy(
-                                    friendUser = user
-                                )
-                                if(user!=null){
-                                    onEvent(UserEvent.GetFriendGames(user))
+            viewModelScope.launch {
+                repository.getUser(id = id)
+                    .collect { result ->
+                        when (result) {
+                            is Resource.Success -> {
+                                result.data.let { user ->
+                                    state = state.copy(
+                                        friendUser = user
+                                    )
+                                    if (user != null) {
+                                        onEvent(UserEvent.GetFriendGames(user))
+                                    }
                                 }
+                                Log.e("JOB", "ended2")
+                                Log.e("User View Model Friend", state.toString())
                             }
-                            Log.e("User View Model Friend",state.toString())
-                        }
-                        is Resource.Error -> Unit
-                        is Resource.Loading -> {
-                            state = state.copy(
-                                isLoadingUser = result.isLoading
-                            )
+                            is Resource.Error -> Unit
+                            is Resource.Loading -> {
+                                state = state.copy(
+                                    isLoadingUser = result.isLoading
+                                )
+                            }
                         }
                     }
+            }
+    }
+
+    private suspend fun getUserNotAsync(
+        id: String
+    ){
+        repository.getUser(id = id)
+            .collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.let { user ->
+                            state = state.copy(
+                                friendUser = user
+                            )
+                            if (user != null) {
+                                onEvent(UserEvent.GetFriendGames(user))
+                            }
+                        }
+                        Log.e("User View Model Friend", state.toString())
+                    }
+                    is Resource.Error -> Unit
+                    is Resource.Loading -> {
+                        state = state.copy(
+                            isLoadingUser = result.isLoading
+                        )
+                    }
                 }
+            }
+        Log.e("JOB", "ended1")
+    }
+
+    private fun openFriendViaLink(
+        userId: String
+    ) {
+        viewModelScope.launch {
+            val job = launch{
+                getUserNotAsync(userId)
+                Log.e("JOB","ended2")
+            }
+            job.join()
+
+            Log.e("JOB","ended3")
+            openScreen(ScreenRoutes.PREVIEW_FRIEND)
         }
     }
 
