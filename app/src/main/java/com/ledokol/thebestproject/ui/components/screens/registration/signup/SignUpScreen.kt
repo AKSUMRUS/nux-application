@@ -207,7 +207,7 @@ fun checkCorrectName(name: String): Boolean {
     var verifyNickname: Boolean = (name.isNotEmpty())
 
     for(symbol in name){
-        if(symbol=='_' || symbol in '0'..'9' || symbol==' ') {
+        if(symbol == '_') {
             verifyNickname = false
             break
         }
