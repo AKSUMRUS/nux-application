@@ -31,7 +31,6 @@ fun StripFriend(
     user: User,
     addFriend: Boolean = false,
     onClick: () -> Unit = {},
-    onRemoveFriend: () -> Unit = {},
 ){
 
     if(addFriend){
@@ -74,12 +73,6 @@ fun StripFriend(
                 color = MaterialTheme.colors.secondaryVariant,
             )
         }
-        ButtonFull(
-            text = stringResource(id = R.string.remove_friend),
-            onClick = {
-                onRemoveFriend()
-            }
-        )
     }
 
 }

@@ -20,6 +20,7 @@ import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.molecules.EmptyScreen
 import com.ledokol.thebestproject.ui.components.molecules.GameInList
 import com.ledokol.thebestproject.ui.components.molecules.TitleQuickGame
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
@@ -96,13 +97,19 @@ fun GridGames(
             }
         }
 
-        items(games) { game ->
-            GameInList(
-                packageName = game.android_package_name,
-                name = game.name,
-                icon = game.icon_preview!!,
-                onClick = { onClick(game.android_package_name) },
-            )
+        if(games!=null && games.isEmpty()){
+            item(span = {GridItemSpan(2)}){
+                EmptyScreen(title = "У вас нету скачанных игр")
+            }
+        }else {
+            items(games) { game ->
+                GameInList(
+                    packageName = game.android_package_name,
+                    name = game.name,
+                    icon = game.icon_preview!!,
+                    onClick = { onClick(game.android_package_name) },
+                )
+            }
         }
     }
 }

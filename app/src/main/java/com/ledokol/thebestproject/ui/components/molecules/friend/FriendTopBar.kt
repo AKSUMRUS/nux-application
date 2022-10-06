@@ -6,15 +6,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonEmpty
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonLittleBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun FriendTopBar(
     user: User,
+    onClickClaim: () -> Unit = {},
     onRemoveFriend: () -> Unit = {},
 ) {
     Row(
@@ -28,15 +36,32 @@ fun FriendTopBar(
                 .weight(2f),
         ){
             HeadlineH4(
-                text = user.nickname,
+                text = user.name,
                 color = MaterialTheme.colors.onBackground,
+                fontWeight = FontWeight.W700,
+            )
+
+            HeadlineH6(
+                text = "@${user.nickname}",
+                color = MaterialTheme.colors.onSecondary,
                 fontWeight = FontWeight.W700,
             )
 
             StripFriend(
                 user = user,
-                onRemoveFriend = onRemoveFriend,
             )
+
+            ButtonLittleBorder(
+                text = stringResource(id = R.string.remove_friend),
+                onClick = {
+                    onRemoveFriend()
+                },
+                padding = 0.dp,
+                colorBorder = MaterialTheme.colors.error,
+            )
+
+
+            ButtonEmpty(text = "Пожаловаться", onClick = {onClickClaim()})
         }
 
         Row(

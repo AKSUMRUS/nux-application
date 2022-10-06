@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject
 
+import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
@@ -32,6 +34,8 @@ import com.ledokol.thebestproject.services.MyReceiver
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.StartNavigation
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
+import com.yandex.metrica.YandexMetrica
+import com.yandex.metrica.YandexMetricaConfig
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -52,6 +56,14 @@ class MainActivity : ComponentActivity() {
         userViewModel.state = userViewModel.state.copy(
             openScreen = null
         )
+
+        val config: YandexMetricaConfig = YandexMetricaConfig.newConfigBuilder("6cccb005-2017-485c-881b-8b1792cd7357").build()
+        // Initializing the AppMetrica SDK.
+        // Initializing the AppMetrica SDK.
+        YandexMetrica.activate(applicationContext, config)
+        // Automatic tracking of user activity.
+        // Automatic tracking of user activity.
+        YandexMetrica.enableActivityAutoTracking(application)
 
         if(bundle!=null&& bundle.containsKey("notification_id")){
             Log.e(TAG, bundle.toString())

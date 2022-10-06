@@ -2,6 +2,7 @@ package com.ledokol.thebestproject.ui.components.screens.friends
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -34,10 +35,12 @@ import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogSh
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithIcon
+import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.*
 import com.ledokol.thebestproject.ui.components.molecules.friend.FriendTopBar
+import com.ledokol.thebestproject.ui.components.molecules.games.GameActivity
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
@@ -53,6 +56,7 @@ fun FriendScreen(
     val state = userViewModel.state
     val context: Context = LocalContext.current
     var openDialog by remember{ mutableStateOf(false)}
+    var openDialogClaim by remember{ mutableStateOf(false)}
     var selectedGamePackage by remember{ mutableStateOf("")}
     var selectedGameName by remember{ mutableStateOf("")}
 
@@ -95,9 +99,11 @@ fun FriendScreen(
                 .background(
                     MaterialTheme.colors.background
                 )
+//            .verticalScroll(rememberScrollState())
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
+//                contentPadding = PaddingValues(top = 0.dp, start = 20.dp, end = 20.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 40.dp)
@@ -111,13 +117,17 @@ fun FriendScreen(
                         onRemoveFriend = {
                             userViewModel.onEvent(UserEvent.RemoveFriend(friendId = state.friendUser!!.id))
 //                            navController.popBackStack()
-                        }
+                        },
+                        onClickClaim = {openDialogClaim = true;}
                     )
                 }
 
-                if(state.friendUser!!.status.in_app
-                    && state.friendUser!!.status.app != null
-                    && state.friendUser.status.app!!.category == "GAME,online"
+                if(state.friendUser!!.status.app != null
+//                    && (
+//                            state.friendUser.status.app!!.category == "GAME"
+//                                    ||
+//                                    state.friendUser.status.app!!.category == "GAME,online"
+//                            )
                 ) {
                     item(
                         span = { GridItemSpan(2) },
@@ -141,11 +151,11 @@ fun FriendScreen(
 
                                 GameActivity(
                                     packageName = game.android_package_name,
+                                    gameName = game.name,
                                     iconPreview = game.icon_preview,
-                                    imageWide = game.image_wide,
                                     in_app = state.friendUser.status.in_app,
                                     startTime = state.friendUser.status.dt_entered_app,
-                                    finishTime = state.friendUser.status.dt_leaved_app
+                                    finishTime = state.friendUser.status.dt_leaved_app,
                                 )
                             }
                         }
@@ -228,6 +238,25 @@ fun FriendScreen(
             onClose = {
                 openDialog = false;
                 selectedGamePackage = ""
+            }
+        )
+
+
+        AlertDialogShow(
+            openDialog = openDialogClaim,
+            label = "Пожаловаться на пользователя?",
+            description = "Ваша жалоба будет рассмотрена модерацией",
+            buttonTextYes = stringResource(id = R.string.claim),
+            buttonTextNo = stringResource(id = R.string.close),
+            onActionPrimary = {
+              Toast.makeText(context, "Жалоба успешно отправлена!", Toast.LENGTH_LONG).show()
+                openDialogClaim = false;
+            },
+            onActionSecondary = {
+                openDialogClaim = false;
+            },
+            onClose = {
+                openDialogClaim = false;
             }
         )
     }else{

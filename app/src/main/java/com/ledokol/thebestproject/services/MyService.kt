@@ -18,9 +18,11 @@ import com.ledokol.thebestproject.MainActivity
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.repository.ProfileRepository
 import com.ledokol.thebestproject.data.repository.StatusRepository
-import com.ledokol.thebestproject.ui.components.screens.games.TAG
+import com.yandex.metrica.impl.ob.pm
+import com.yandex.metrica.impl.ob.pn
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
 
 private const val NOTIFICATION_ID = 101
 private const val CHANNEL_ID = "LEDOKOL"

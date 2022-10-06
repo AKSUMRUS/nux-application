@@ -162,10 +162,17 @@ fun ProfileScreen(
                 )
             }
 
-            if (games != null) {
-                items(games.sortedBy {
-                    -((stats[it.android_package_name]?.totalTimeInForeground?.toInt() ?: 0) / 60000)
-                }) { game ->
+            if (games != null && games.size>0) {
+                items(
+                games.sortedBy {
+                    if(stats.containsKey(it.android_package_name)){
+                        -(stats[it.android_package_name]!!.totalTimeInForeground.toInt()/60000)
+                    }else{
+                        0
+                    }
+//                    stats[it.android_package_name]
+                }
+                ) { game ->
                     GameStat(
                         packageName = game.android_package_name,
                         name = game.name,
@@ -193,7 +200,7 @@ fun ProfileScreen(
                             .padding(10.dp)
                     ) {
                         HeadlineH5(
-                            text = "У вас нету ни одной игры",
+                            text = "У вас нету скачанных игр",
                             textAlign = TextAlign.Center,
                         )
                     }

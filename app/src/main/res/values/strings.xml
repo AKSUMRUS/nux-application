@@ -17,7 +17,7 @@
     <string name = "start_auth">Давай начнем</string>
     <string name="i_already_have_an_account">У меня уже есть аккаунт</string>
     <string name="forget_password">Забыл пароль?</string>
-    <string name="dont_have_an_account">Нету аккаунта? Зарегистрируйся</string>
+    <string name="dont_have_an_account">Нет аккаунта? Зарегистрируйся</string>
     <string name="already_have_an_account">Уже есть аккаунт? Войди</string>
     <string name="description_signup_first">Мы хотим узнать тебя получше</string>
     <string name="description_login">Рады видеть вас вновь</string>
@@ -68,6 +68,7 @@
     <string name = "back">Назад</string>
     <string name = "next">Дальше</string>
     <string name = "invite">Пригласить</string>
+    <string name = "claim">Пожаловаться</string>
     <string name = "step">Шаг</string>
     <string name = "close">Закрыть</string>
     <string name = "yes">Да</string>
@@ -102,7 +103,7 @@
     <string name="repost_another_app">Использовать другое приложение</string>
 
     <!--  Profile  -->
-    <string name="games">Игры</string>
+    <string name="games">Статистика</string>
     <string name="latest_activity">Активность</string>
     <string name="share">Поделиться</string>
     <string name="share_with_friends">Поделиться с друзьями</string>
