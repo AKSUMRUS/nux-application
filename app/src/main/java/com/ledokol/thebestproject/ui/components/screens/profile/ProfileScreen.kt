@@ -162,7 +162,7 @@ fun ProfileScreen(
                 )
             }
 
-            if (games != null && games.size>0) {
+            if (games != null && games.isNotEmpty()) {
                 items(
                 games.sortedBy {
                     if(stats.containsKey(it.android_package_name)){

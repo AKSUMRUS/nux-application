@@ -3,9 +3,8 @@ package com.ledokol.thebestproject.ui.navigation
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -13,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -22,7 +22,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
-import com.ledokol.thebestproject.data.local.game.GamesEvent
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.internet.ConnectionState
 import com.ledokol.thebestproject.internet.connectivityState
@@ -30,9 +29,12 @@ import com.ledokol.thebestproject.presentation.*
 import com.ledokol.thebestproject.services.GamesStatistic.Companion.convertListApplicationToListStatusJSON
 import com.ledokol.thebestproject.services.GamesStatistic.Companion.getInstalledAppGamesList
 import com.ledokol.thebestproject.services.MyService
-import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
 import com.ledokol.thebestproject.ui.components.molecules.AddByQrCode
-import com.ledokol.thebestproject.ui.components.screens.*
+import com.ledokol.thebestproject.ui.components.molecules.BottomNavigation
+import com.ledokol.thebestproject.ui.components.screens.ContactsScreen
+import com.ledokol.thebestproject.ui.components.screens.NotInternet
+import com.ledokol.thebestproject.ui.components.screens.NotificationsScreen
+import com.ledokol.thebestproject.ui.components.screens.SplashScreen
 import com.ledokol.thebestproject.ui.components.screens.friends.*
 import com.ledokol.thebestproject.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
@@ -44,6 +46,7 @@ import com.ledokol.thebestproject.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.StartRegistrationScreen
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
+import com.ledokol.thebestproject.R
 
 const val TAG = "StartNavigation"
 
@@ -113,9 +116,11 @@ fun StartNavigation(
         }
     }
 
-    val start: String = if(!isConnected){
-        ScreenRoutes.NO_INTERNET
-    }else if(profile.profile==null){
+    if(!isConnected) {
+        Toast.makeText(context, stringResource(id = R.string.error_no_internet), Toast.LENGTH_LONG).show()
+    }
+
+    val start: String = if(profile.profile==null){
         ScreenRoutes.SPLASH_SCREEN
     } else if(!profile.finish_register){
         Log.e(TAG,"openScreenRegister $profile")
