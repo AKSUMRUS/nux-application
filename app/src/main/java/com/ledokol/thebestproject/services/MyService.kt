@@ -131,7 +131,7 @@ class MyService: Service() {
         val intent = Intent(applicationContext, MyService::class.java)
         intent.action = Intent.ACTION_MAIN;
 
-        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent

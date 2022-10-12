@@ -76,15 +76,15 @@ dependencies {
 //    implementation(Dependencies.Lifecycle.viewModelCompose)
 //    implementation(Dependencies.Lifecycle.activityCompose)
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'com.google.android.gms:play-services-measurement-api:21.0.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'com.google.android.gms:play-services-measurement-api:21.1.1'
     implementation "com.google.accompanist:accompanist-pager:0.12.0"
     implementation 'com.opencsv:opencsv:5.5.2'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
 //    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation "androidx.navigation:navigation-compose:2.5.1"
+    implementation 'androidx.activity:activity-compose:1.6.0'
+    implementation "androidx.navigation:navigation-compose:2.5.2"
     implementation 'javax.inject:javax.inject:1'
     implementation 'com.google.android.datatransport:transport-runtime:3.1.7'
     testImplementation 'junit:junit:4.13.2'
@@ -92,7 +92,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation 'androidx.activity:activity-compose:1.6.0'
     implementation 'io.github.raamcosta.compose-destinations:core:1.1.2-beta'
     implementation "com.google.accompanist:accompanist-permissions:0.24.13-rc"
     implementation 'id.zelory:compressor:3.0.1'
@@ -106,8 +106,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
 
 //    Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
 //    Lifecycle
     implementation 'androidx.lifecycle:lifecycle-service:2.5.1'
@@ -141,8 +141,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
+    implementation platform('com.google.firebase:firebase-bom')
+    implementation 'com.google.firebase:firebase-iid:21.1.0'
     implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.1'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 
 //    Coil
@@ -152,9 +154,7 @@ dependencies {
 //    Канарейка
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
-
-    implementation 'com.google.zxing:core:3.2.0'
+    implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 
     //AppMetrica
