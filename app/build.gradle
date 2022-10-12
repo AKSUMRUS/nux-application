@@ -152,8 +152,6 @@ dependencies {
 //    Канарейка
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
-
     implementation 'com.google.zxing:core:3.2.0'
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 

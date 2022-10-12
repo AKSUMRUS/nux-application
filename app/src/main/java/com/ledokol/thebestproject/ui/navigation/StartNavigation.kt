@@ -323,16 +323,8 @@ fun StartNavigation(
 fun updateGames(context: Context, gamesViewModel: GamesViewModel){
     gamesViewModel.clearGames()
     val games = getInstalledAppGamesList(context.packageManager)
-//    pushGamesIcons(games, gamesViewModel,context.packageManager)
     gamesViewModel.shareGames(
         convertListApplicationToListStatusJSON(context, context.packageManager, games),
         context = context
     )
 }
-
-//fun pushGamesIcons(games: List<ApplicationInfo>, gamesViewModel: GamesViewModel, packageManager: PackageManager){
-//    gamesViewModel.onEvent(GamesEvent.PushGamesIcons(
-//        games = games,
-//        packageManager = packageManager,
-//    ))
-//}
