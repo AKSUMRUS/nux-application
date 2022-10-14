@@ -249,7 +249,7 @@ fun Friends(
                                     }
                                     if(user != null) {
                                         item {
-                                            FriendInNotification(
+                                            AddFriendInSearch(
                                                 user = user,
                                                 addFriend = {
                                                     userViewModel.onEvent(UserEvent.AddFriend(user.id))
