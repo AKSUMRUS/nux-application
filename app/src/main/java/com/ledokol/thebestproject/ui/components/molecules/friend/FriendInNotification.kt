@@ -12,10 +12,13 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonLittleBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
@@ -24,6 +27,7 @@ fun FriendInNotification(
     user: User,
     addFriend: () -> Unit,
     openFriend: () -> Unit,
+    rejectFriend: () -> Unit,
     clicked: Boolean = false,
 ){
 
@@ -86,6 +90,16 @@ fun FriendInNotification(
                 StripFriend(user = user, addFriend = true, onClick = {
                     addFriend()
                 })
+
+                ButtonLittleBorder(
+                    text = stringResource(id = R.string.reject_invite_friend),
+                    onClick = {
+                        rejectFriend()
+                    },
+                    padding = 0.dp,
+                    colorBorder = MaterialTheme.colors.error,
+                )
+
             }
 
         }

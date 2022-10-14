@@ -203,6 +203,9 @@ fun Friends(
                                     val user = usersList[friend].from_user
                                     FriendInNotification(
                                         user = user,
+                                        rejectFriend = {
+                                            userViewModel.onEvent(UserEvent.RejectInvite(user.id))
+                                        },
                                         addFriend = {
                                             onClick(
                                                 notificationEntity = usersList[friend]
