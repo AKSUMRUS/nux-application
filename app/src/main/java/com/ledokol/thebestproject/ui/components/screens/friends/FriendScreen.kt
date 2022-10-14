@@ -116,7 +116,7 @@ fun FriendScreen(
                         user = user,
                         onRemoveFriend = {
                             userViewModel.onEvent(UserEvent.RemoveFriend(friendId = state.friendUser!!.id))
-//                            navController.popBackStack()
+                            navController.popBackStack()
                         },
                         onClickClaim = {openDialogClaim = true;}
                     )

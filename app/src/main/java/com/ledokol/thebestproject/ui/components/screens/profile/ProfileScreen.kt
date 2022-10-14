@@ -200,7 +200,7 @@ fun ProfileScreen(
                             .padding(10.dp)
                     ) {
                         HeadlineH5(
-                            text = "У вас нету скачанных игр",
+                            text = stringResource(id = R.string.not_online_games),
                             textAlign = TextAlign.Center,
                         )
                     }

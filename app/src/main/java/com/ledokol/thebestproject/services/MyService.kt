@@ -116,6 +116,9 @@ class MyService: Service() {
                     logApps("Сейчас запущено приложение $activeAppPackage")
                 }
             } catch(e: Exception){
+                lastApp = null
+                checkLeave = true
+                statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
                 Log.e("Service", e.toString())
             }
             runnable?.let { handler.postDelayed(it, 20000) }

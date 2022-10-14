@@ -99,7 +99,7 @@ fun GridGames(
 
         if(games!=null && games.isEmpty()){
             item(span = {GridItemSpan(2)}){
-                EmptyScreen(title = "У вас нету скачанных игр")
+                EmptyScreen(title = stringResource(id = R.string.not_online_games))
             }
         }else {
             items(games) { game ->

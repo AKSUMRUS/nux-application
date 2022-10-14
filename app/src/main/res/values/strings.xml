@@ -75,6 +75,7 @@
     <string name = "no">Нет</string>
     <string name = "cancel">Отмена</string>
     <string name = "enter_nickname_search">Поиск по никам</string>
+    <string name="not_online_games">У тебя нету скачанных мультиплеерных игр</string>
     <string name = "good_evening">Добрый вечер, </string>
     <string name = "loading"> Загрузка…</string>
     <string name = "empty_screen_title">Здесь пока пусто 😕</string>
@@ -139,6 +140,7 @@
     <string name="my_friends">Мои друзья</string>
     <string name="no_friends">Нет друзей</string>
     <string name="remove_friend">Удалить из друзей</string>
+    <string name="reject_invite_friend">Отклонить приглашение</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>
