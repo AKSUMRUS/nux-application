@@ -26,6 +26,7 @@ import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
+import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
@@ -161,7 +162,6 @@ fun Friends(
             },
             sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
             sheetElevation = 10.dp,
-//            sheetPeekHeight = 100.dp,
         ) {
             Column(
                 modifier = Modifier
@@ -174,7 +174,7 @@ fun Friends(
                 } else {
                     LazyColumn(
                         content = {
-                            item() {
+                            item {
 
                                 Box(
                                     modifier = Modifier.height(90.dp)
@@ -192,14 +192,14 @@ fun Friends(
                                 )
                             }
 
-                            if(usersList!=null && usersList.size>0){
-                                item(){
-                                    Column(){
+                            if(usersList!=null && usersList.isNotEmpty()){
+                                item{
+                                    Column{
                                         TitleFriends(text = stringResource(id = R.string.friend_requests))
                                     }
                                 }
 
-                                items(usersList!!.size) { friend ->
+                                items(usersList.size) { friend ->
                                     val user = usersList[friend].from_user
                                     FriendInNotification(
                                         user = user,
@@ -224,7 +224,6 @@ fun Friends(
                                     TitleFriends(text = stringResource(id = R.string.my_friends),)
 
                                     ShowSearch(
-                                        userViewModel = userViewModel,
                                         textSearch = textSearch,
                                         onValueChange = {
                                             textSearch = it
@@ -236,19 +235,47 @@ fun Friends(
                             }
 
                             if(state.users != null && state.users!!.isNotEmpty()){
-                                var arrayFriends = state.users!!.filter { it.nickname.contains(textSearch) }
-                                items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
-                                    FriendInList(
-                                        user = friend,
-                                        onClick = {
-                                            onClick(
-                                                navController = navController,
-                                                id = friend.id
+                                val arrayFriends = state.users!!.filter { it.nickname.contains(textSearch) }
+
+                                if(arrayFriends.isEmpty()){
+                                    userViewModel.onEvent(UserEvent.GetUserByNickname(textSearch))
+                                    val user = if(state.friendUser?.nickname == textSearch) {
+                                        state.friendUser
+                                    } else {
+                                        null
+                                    }
+                                    if(user != null) {
+                                        item {
+                                            FriendInNotification(
+                                                user = user,
+                                                addFriend = {
+                                                    userViewModel.onEvent(UserEvent.AddFriend(user.id))
+                                                },
+                                                openFriend = {
+                                                    userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
+                                                    navController.navigate(ScreenRoutes.PREVIEW_FRIEND){
+                                                        popUpTo(ScreenRoutes.PREVIEW_FRIEND)
+                                                        launchSingleTop = true
+                                                    }
+                                                }
                                             )
-                                        })
+                                        }
+                                    }
+                                }
+                                else {
+                                    items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                        FriendInList(
+                                            user = friend,
+                                            onClick = {
+                                                onClick(
+                                                    navController = navController,
+                                                    id = friend.id
+                                                )
+                                            })
+                                    }
                                 }
                             }else{
-                                item(){
+                                item{
                                     EmptyScreenFriend(title = stringResource(id = R.string.no_friends))
                                 }
                             }

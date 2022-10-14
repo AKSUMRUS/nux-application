@@ -135,7 +135,6 @@ fun ChooseFriendsForGame(
                                 description = stringResource(id = R.string.description_crew),
                             )
                             ShowSearch(
-                                userViewModel = userViewModel,
                                 textSearch = textSearch,
                                 onValueChange = {
                                     textSearch = it

@@ -19,7 +19,6 @@ import com.ledokol.thebestproject.presentation.UserViewModel
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ShowSearch(
-    userViewModel: UserViewModel,
     textSearch: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,

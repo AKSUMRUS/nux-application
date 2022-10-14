@@ -59,7 +59,6 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.AddFriend -> {
                 addFriend(
-                    accessToken = event.access_token,
                     nickname = event.nickname,
                     phone = event.phone,
                 )
@@ -224,7 +223,6 @@ UserViewModel @Inject constructor(
     }
 
     fun addFriend(
-        accessToken: String = "",
         nickname: String?,
         phone: String?
     ){

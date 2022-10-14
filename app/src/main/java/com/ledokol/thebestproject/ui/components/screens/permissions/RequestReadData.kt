@@ -90,7 +90,7 @@ fun RequestReadData(
                 )
 
                 HeadlineH3(text = stringResource(id = R.string.reason_permission_data),
-                    color = MaterialTheme.colors.primary,
+                    color = MaterialTheme.colors.onBackground,
                     modifier = Modifier
                         .fillMaxWidth()
                     ,
@@ -104,7 +104,7 @@ fun RequestReadData(
 
             ){
                 Body1(text = stringResource(id = R.string.explain_permission_data),
-                    color = MaterialTheme.colors.primary,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 20.dp)
@@ -114,6 +114,7 @@ fun RequestReadData(
 
                 ButtonFull(
                     text = stringResource(id = R.string.allow_permission_data),
+                    colorText = MaterialTheme.colors.onBackground,
                     onClick = {
                         context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                     },

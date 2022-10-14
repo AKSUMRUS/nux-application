@@ -55,17 +55,12 @@ android {
         }
     }
 
-
     kotlinOptions {
         freeCompilerArgs += [
                 "-Xjvm-default=all",
         ]
     }
 }
-
-//repositories {
-//    mavenCentral()
-//}
 
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
@@ -77,7 +72,7 @@ dependencies {
 //    implementation(Dependencies.Lifecycle.activityCompose)
 
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'com.google.android.gms:play-services-measurement-api:21.1.1'
+//    implementation 'com.google.android.gms:play-services-measurement-api:21.1.1'
     implementation "com.google.accompanist:accompanist-pager:0.12.0"
     implementation 'com.opencsv:opencsv:5.5.2'
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -141,10 +136,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-perf-ktx'
-    implementation platform('com.google.firebase:firebase-bom')
-    implementation 'com.google.firebase:firebase-iid:21.1.0'
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.8'
-    implementation 'com.google.firebase:firebase-firestore-ktx:24.3.1'
+//    implementation platform('com.google.firebase:firebase-bom')
+//    implementation 'com.google.firebase:firebase-iid:21.1.0'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.4.0'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 
 //    Coil

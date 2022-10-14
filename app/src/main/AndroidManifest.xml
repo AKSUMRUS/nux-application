@@ -18,36 +18,36 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <queries>
-        <package android:name="com.innersloth.spacemafia" />
-        <package android:name="com.carxtech.carxdr" />
-        <package android:name="com.hitrock.hideonline" />
-        <package android:name="com.ludia.tmnt" />
-        <package android:name="com.sevenpirates.infinitywar" />
-        <package android:name="com.stgl.global" />
-        <package android:name="zombie.survival.craft.z" />
-        <package android:name="com.ChillyRoom.DungeonShooter" />
-        <package android:name="com.lilithgame.hgame.gp" />
-        <package android:name="com.thxgames.triviador" />
-        <package android:name="com.chess" />
-        <package android:name="com.mobile.legends" />
-        <package android:name="net.wargaming.wot.blitz" />
-        <package android:name="com.tankionline.mobile.production" />
-        <package android:name="com.activision.callofduty.shooter" />
-        <package android:name="com.supercell.brawlstars" />
-        <package android:name="com.tencent.ig" />
-        <package android:name="com.supercell.clashofclans" />
-        <package android:name="com.ea.gp.fifamobile" />
-        <package android:name="com.roblox.client" />
-        <package android:name="com.supercell.clashroyale" />
-        <package android:name="com.axlebolt.standoff2" />
-        <package android:name="com.rstgames.durak" />
-        <package android:name="com.miHoYo.GenshinImpact" />
-        <package android:name="com.blizzard.wtcg.hearthstone" />
-        <package android:name="com.robtopx.geometryjumplite" />
-        <package android:name="com.FDGEntertainment.redball4.gp" />
-        <package android:name="com.mediocre.smashhit" />
-    </queries>
+<!--    <queries>-->
+<!--        <package android:name="com.innersloth.spacemafia" />-->
+<!--        <package android:name="com.carxtech.carxdr" />-->
+<!--        <package android:name="com.hitrock.hideonline" />-->
+<!--        <package android:name="com.ludia.tmnt" />-->
+<!--        <package android:name="com.sevenpirates.infinitywar" />-->
+<!--        <package android:name="com.stgl.global" />-->
+<!--        <package android:name="zombie.survival.craft.z" />-->
+<!--        <package android:name="com.ChillyRoom.DungeonShooter" />-->
+<!--        <package android:name="com.lilithgame.hgame.gp" />-->
+<!--        <package android:name="com.thxgames.triviador" />-->
+<!--        <package android:name="com.chess" />-->
+<!--        <package android:name="com.mobile.legends" />-->
+<!--        <package android:name="net.wargaming.wot.blitz" />-->
+<!--        <package android:name="com.tankionline.mobile.production" />-->
+<!--        <package android:name="com.activision.callofduty.shooter" />-->
+<!--        <package android:name="com.supercell.brawlstars" />-->
+<!--        <package android:name="com.tencent.ig" />-->
+<!--        <package android:name="com.supercell.clashofclans" />-->
+<!--        <package android:name="com.ea.gp.fifamobile" />-->
+<!--        <package android:name="com.roblox.client" />-->
+<!--        <package android:name="com.supercell.clashroyale" />-->
+<!--        <package android:name="com.axlebolt.standoff2" />-->
+<!--        <package android:name="com.rstgames.durak" />-->
+<!--        <package android:name="com.miHoYo.GenshinImpact" />-->
+<!--        <package android:name="com.blizzard.wtcg.hearthstone" />-->
+<!--        <package android:name="com.robtopx.geometryjumplite" />-->
+<!--        <package android:name="com.FDGEntertainment.redball4.gp" />-->
+<!--        <package android:name="com.mediocre.smashhit" />-->
+<!--    </queries>-->
 
     <application
         android:name=".StockApplication"
