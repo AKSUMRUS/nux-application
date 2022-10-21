@@ -26,6 +26,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 @Composable
 fun TitleFriends(
     text: String,
+    modifier: Modifier = Modifier,
 ){
 
     HeadlineH5(
@@ -34,6 +35,7 @@ fun TitleFriends(
         color = MaterialTheme.colors.onBackground,
         modifier = Modifier
             .padding(top = 20.dp, bottom = 0.dp)
+            .then(modifier)
     )
 
 

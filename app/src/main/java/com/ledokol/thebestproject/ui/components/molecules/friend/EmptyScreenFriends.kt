@@ -14,6 +14,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 @Composable
 fun EmptyScreenFriend(
     title: String,
+    modifier: Modifier = Modifier,
 ){
 
     Box(
@@ -30,6 +31,7 @@ fun EmptyScreenFriend(
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.Center)
+                .then(modifier)
         ,
         )
     }

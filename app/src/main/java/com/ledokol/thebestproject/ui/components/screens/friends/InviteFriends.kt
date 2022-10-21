@@ -5,13 +5,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Log
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
@@ -109,7 +112,7 @@ fun InviteFriend(
     LazyColumn(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+            .padding(start = 20.dp, end = 20.dp, top = 40.dp)
             .fillMaxSize()
             .nestedScroll(rememberNestedScrollInteropConnection())
     ){
@@ -164,17 +167,23 @@ fun InviteFriend(
             )
         }
 
-        items(socialApps.size) { id ->
-            val app = socialApps[id]
-            if (appInstalledOrNot(context,app)) {
-                Icon(
-                    getIcon(context, context.packageManager, app)!!.asImageBitmap(),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier
-                        .clickable { onClick(app) }
-                        .padding(15.dp)
-                )
+
+        item {
+            Row(
+                modifier = Modifier.horizontalScroll(rememberScrollState())
+            ) {
+                socialApps.forEach { app ->
+                    if (appInstalledOrNot(context, app)) {
+                        Icon(
+                            getIcon(context, context.packageManager, app)!!.asImageBitmap(),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier
+                                .clickable { onClick(app) }
+                                .padding(15.dp)
+                        )
+                    }
+                }
             }
         }
 
@@ -183,7 +192,7 @@ fun InviteFriend(
                 text = stringResource(id = R.string.repost_another_app),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 0.dp, end = 0.dp, top = 10.dp, bottom = 10.dp),
+                    .padding(start = 0.dp, end = 0.dp, top = 10.dp, bottom = 0.dp),
                 onClick = { onClick(null) },
                 icon = Icons.Default.Share,
             )
@@ -195,7 +204,10 @@ fun InviteFriend(
             }
         } else if(friends != null) {
             item {
-                TitleFriends(text = stringResource(id = R.string.recommended_friends))
+                TitleFriends(
+                    text = stringResource(id = R.string.recommended_friends),
+                    modifier = Modifier.padding(top = 0.dp, bottom = 10.dp)
+                )
             }
             items(friends.size) { id ->
                 val friend = friends[id]

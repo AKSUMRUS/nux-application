@@ -118,21 +118,14 @@ fun FriendScreen(
                     )
                 }
 
-                if(state.friendUser!!.status.app != null
-//                    && (
-//                            state.friendUser.status.app!!.category == "GAME"
-//                                    ||
-//                                    state.friendUser.status.app!!.category == "GAME,online"
-//                            )
-                ) {
+                if(state.friendUser!!.status.app != null) {
                     item(
                         span = { GridItemSpan(2) },
                     ) {
 
                         state.friendUser.status.app?.let { game ->
-                            if(game.android_package_name!=""){
-                                var textActivity: String = "";
-                                textActivity = if(user.status.in_app){
+                            if(game.android_package_name!="") {
+                                val textActivity = if(user.status.in_app){
                                     stringResource(id = R.string.game_now_friend)
                                 }else{
                                     stringResource(id = R.string.last_game_friend)
@@ -166,11 +159,11 @@ fun FriendScreen(
                         LoadingView()
                     }
                 }else{
-                    if(state.games != null && state.games!!.isNotEmpty()) {
+                    if(state.games != null && state.games.isNotEmpty()) {
                         item(
                             span = { GridItemSpan(2) },
                         ) {
-                            Column() {
+                            Column {
                                 HeadlineH5(
                                     text = stringResource(id = R.string.games),
                                     modifier = Modifier
@@ -182,7 +175,7 @@ fun FriendScreen(
                         }
 
                         items(
-                            state.games!!,
+                            state.games,
                         ) { game ->
                             GameInList(
                                 packageName = game.android_package_name,
@@ -201,7 +194,6 @@ fun FriendScreen(
 
             BackToolbar (
                 buttonBackClick = {
-//                    navController.popBackStack()
                     navController.navigate("team"){
                         popUpTo("team")
                         launchSingleTop = true
@@ -217,7 +209,7 @@ fun FriendScreen(
             buttonTextYes = stringResource(id = R.string.invite),
             buttonTextNo = stringResource(id = R.string.open_game),
             onActionPrimary = {
-                var game: CurrentApp = CurrentApp()
+                var game = CurrentApp()
                 for(game_local in state.games!!){
                     if(game_local.android_package_name == selectedGamePackage){
                         game = game_local
@@ -228,11 +220,11 @@ fun FriendScreen(
                        },
             onActionSecondary = {
                 openApp(packageName = selectedGamePackage,context = context)
-                openDialog = false;
+                openDialog = false
                 selectedGamePackage = ""
             },
             onClose = {
-                openDialog = false;
+                openDialog = false
                 selectedGamePackage = ""
             }
         )
@@ -246,13 +238,13 @@ fun FriendScreen(
             buttonTextNo = stringResource(id = R.string.close),
             onActionPrimary = {
               Toast.makeText(context, "Жалоба успешно отправлена!", Toast.LENGTH_LONG).show()
-                openDialogClaim = false;
+                openDialogClaim = false
             },
             onActionSecondary = {
-                openDialogClaim = false;
+                openDialogClaim = false
             },
             onClose = {
-                openDialogClaim = false;
+                openDialogClaim = false
             }
         )
     }else{

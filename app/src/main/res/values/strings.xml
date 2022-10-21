@@ -143,6 +143,7 @@
     <string name="reject_invite_friend">Отклонить приглашение</string>
     <string name="invite_sent">Приглашение в друзья отправлено</string>
     <string name="recommended_friends">Возможные друзья</string>
+    <string name="recommended_friends_main">у вас еще нет друзей, можете добавить кого-то из наших рекоммендаций</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>

@@ -13,10 +13,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -56,6 +54,8 @@ fun Friends(
     val token = profileViewModel.state.profile?.access_token.toString()
     val usersList = notificationsViewModel.state.friendInvites
     val context = LocalContext.current
+
+    val recommendedFriends = state.recommendedFriends
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -106,8 +106,6 @@ fun Friends(
             it != ModalBottomSheetValue.HalfExpanded
         },
     )
-
-    var isSheetOpened by remember { mutableStateOf(false) }
 
     BackHandler {
         coroutineScope.launch {
@@ -175,7 +173,6 @@ fun Friends(
                                 ButtonAddFriend(
                                     onClick = {
                                         coroutineScope.launch {
-                                            isSheetOpened = true
                                             modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
                                         }
                                     }
@@ -268,10 +265,36 @@ fun Friends(
                                             })
                                     }
                                 }
-                            }else{
+                            }else if(recommendedFriends != null){
+                                item {
+                                    EmptyScreenFriend(
+                                        title = stringResource(id = R.string.recommended_friends_main),
+                                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                                    )
+                                }
+                                items(recommendedFriends.size) { id ->
+                                    val friend = recommendedFriends[id]
+                                    AddFriendInSearch(
+                                        user = friend,
+                                        addFriend = {
+                                            userViewModel.onEvent(UserEvent.AddFriend(friend.id))
+                                            Toast.makeText(
+                                                context,
+                                                context.getString(R.string.invite_sent),
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            recommendedFriends.remove(friend)
+                                        },
+                                        openFriend = {
+
+                                        })
+                                }
+                            }
+                            else{
                                 item{
                                     EmptyScreenFriend(title = stringResource(id = R.string.no_friends))
                                 }
+                                userViewModel.onEvent(UserEvent.GetRecommendedFriends)
                             }
                         },
                     )
