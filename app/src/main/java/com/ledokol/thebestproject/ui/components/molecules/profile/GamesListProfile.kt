@@ -21,7 +21,7 @@ import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogShow
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-import com.ledokol.thebestproject.ui.components.molecules.GameInList
+import com.ledokol.thebestproject.ui.components.molecules.games.GameInList
 import java.util.*
 
 @Composable

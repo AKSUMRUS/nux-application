@@ -19,9 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -40,7 +38,7 @@ import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogSh
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
-import com.ledokol.thebestproject.ui.components.molecules.GameStat
+import com.ledokol.thebestproject.ui.components.molecules.games.GameStat
 import com.ledokol.thebestproject.ui.components.molecules.profile.AdditionalBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.ProfileTopBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.openGame

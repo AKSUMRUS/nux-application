@@ -19,5 +19,6 @@ sealed class UserEvent {
     object AddFriendById : UserEvent()
     object ClearError : UserEvent()
     object ClearFriendUser: UserEvent()
+    object GetRecommendedFriends: UserEvent()
 }
 

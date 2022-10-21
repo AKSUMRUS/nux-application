@@ -32,15 +32,11 @@ import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogShow
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithIcon
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-import com.ledokol.thebestproject.ui.components.molecules.*
 import com.ledokol.thebestproject.ui.components.molecules.friend.FriendTopBar
 import com.ledokol.thebestproject.ui.components.molecules.games.GameActivity
+import com.ledokol.thebestproject.ui.components.molecules.games.GameInList
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable

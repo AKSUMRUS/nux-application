@@ -176,4 +176,8 @@ interface RetrofitServices {
         @Query("from_user_id") from_user_id: String,
     ): Call<String>
 
+    @GET("friends/recommended")
+    fun getRecommendedFriends(
+    ): Call<List<User>>
+
 }

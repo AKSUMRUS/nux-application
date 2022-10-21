@@ -109,6 +109,9 @@ UserViewModel @Inject constructor(
             is UserEvent.RejectInvite -> {
                 rejectInvite(event.userId)
             }
+            is UserEvent.GetRecommendedFriends -> {
+                getRecommendedFriends()
+            }
             else -> {
                 Log.e("UserViewModel", "unknown event: $event")
             }
@@ -580,6 +583,30 @@ UserViewModel @Inject constructor(
                             )
                         }
                         is Resource.Error -> Unit
+                    }
+                }
+        }
+    }
+
+    private fun getRecommendedFriends(){
+        viewModelScope.launch {
+            repository.getRecommendedFriends()
+                .collect{ result ->
+                    when(result){
+                        is Resource.Success -> {
+                            result.data.let {
+                                    users ->
+                                state = state.copy(
+                                    recommendedFriends = users?.toMutableList(),
+                                )
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
         }

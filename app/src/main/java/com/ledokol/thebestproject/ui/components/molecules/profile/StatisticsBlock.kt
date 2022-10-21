@@ -1,28 +1,17 @@
 package com.ledokol.thebestproject.ui.components.molecules.profile
 
 import android.app.usage.UsageStats
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.game.Game
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
-import com.ledokol.thebestproject.ui.components.molecules.GameStat
+import com.ledokol.thebestproject.ui.components.molecules.games.GameStat
 
 @Composable
 fun StatisticsBlock(

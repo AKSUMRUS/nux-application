@@ -1,12 +1,8 @@
 package com.ledokol.thebestproject.data.repository
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.drawable.toBitmap
 import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.game.Game
@@ -25,7 +21,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.*
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -67,17 +62,17 @@ class GamesRepository @Inject constructor(
 
                     val requestBody: RequestBody =
                         RequestBody.create("image/png".toMediaTypeOrNull(), out)
-                    val icon_preview: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    val iconPreview: MultipartBody.Part = MultipartBody.Part.createFormData(
                         "icon_preview",
                         "icon_preview.png",
                         requestBody
                     )
 
-//                val iconString = convertBitmapToString(icon)
+                    Log.e("pushGamesIcons", "$packageName $iconPreview")
 
                     val pushGamesIconsCall = api.pushGamesIcon(
                         package_name = packageName,
-                        icon_preview = icon_preview
+                        icon_preview = iconPreview
                     )
 
                     pushGamesIconsCall.enqueue(object : Callback<Any> {
@@ -89,7 +84,7 @@ class GamesRepository @Inject constructor(
                             if (response.isSuccessful) {
                                 Log.d("GamesRepository", "Successfully pushed game icon")
                             } else {
-                                Log.d("GamesRepository", "Failed to push game icon")
+                                Log.d("GamesRepository", "Failed to push game icon ${response.errorBody()}")
                             }
                         }
 
@@ -97,12 +92,12 @@ class GamesRepository @Inject constructor(
                             call: Call<Any>,
                             t: Throwable
                         ) {
-                            Log.d("GamesRepository", "Failed to push game icon")
+                            Log.d("GamesRepository", "Failed to push game icon ${t.toString()}")
                         }
                     })
                 }
                 catch (e: Exception){
-                    Log.e("GamesRepository", "Failed to push game icon")
+                    Log.e("GamesRepository", "Failed to push game icon $e")
                 }
             }
         }

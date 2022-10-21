@@ -263,4 +263,21 @@ class UsersRepository @Inject constructor(
         )
     }
 
+    fun getRecommendedFriends(
+
+    ) : Flow<Resource<List<User>>> {
+        return doSafeWork(
+            doAsync = {
+                val recommendedFriends = api.getRecommendedFriends()
+
+                val myResponse = recommendedFriends.awaitResponse()
+
+                myResponse
+            },
+            getResult = { response ->
+                response.body()
+            }
+        )
+    }
+
 }

@@ -1,8 +1,8 @@
 package com.ledokol.thebestproject.ui.components.screens.friends
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,30 +11,32 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.rememberNestedScrollInteropConnection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
-import com.ledokol.thebestproject.data.local.user.UserEvent
-import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
-import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
-import com.ledokol.thebestproject.data.local.user.User
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
+import com.ledokol.thebestproject.presentation.UserViewModel
+import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import kotlinx.coroutines.launch
 
-@SuppressLint("CoroutineCreationDuringComposition")
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun Friends(
     navController: NavController,
@@ -53,6 +55,7 @@ fun Friends(
     var runnable: Runnable? = null
     val token = profileViewModel.state.profile?.access_token.toString()
     val usersList = notificationsViewModel.state.friendInvites
+    val context = LocalContext.current
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -106,7 +109,6 @@ fun Friends(
 
     var isSheetOpened by remember { mutableStateOf(false) }
 
-
     BackHandler {
         coroutineScope.launch {
             modalBottomSheetState.hide() // trigger the LaunchedEffect
@@ -116,7 +118,6 @@ fun Friends(
     LaunchedEffect(true) {
         notificationsViewModel.onEvent(NotificationsEvent.GetFriendsRequests(token))
     }
-
 
     var textSearch by remember { mutableStateOf("") }
 
@@ -142,23 +143,12 @@ fun Friends(
         ModalBottomSheetLayout(
             sheetBackgroundColor = MaterialTheme.colors.background,
             sheetState = modalBottomSheetState,
-
             sheetContent = {
-                Scaffold(
-                    modifier = Modifier
-//                        .fillMaxHeight(0.9f)
-                    ,
-
-//                        .fillMaxSize()
-//                        .padding(top = 100.dp)
-//                        .border(3.dp, MaterialTheme.colors.primary, shape = RoundedCornerShape(18.dp))
-                ){
-                    InviteFriend(
-                        navController = navController,
-                        userViewModel = userViewModel,
-                        profileViewModel = profileViewModel,
-                    )
-                }
+                InviteFriend(
+                    navController = navController,
+                    userViewModel = userViewModel,
+                    profileViewModel = profileViewModel,
+                )
             },
             sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
             sheetElevation = 10.dp,
@@ -253,6 +243,7 @@ fun Friends(
                                                 user = user,
                                                 addFriend = {
                                                     userViewModel.onEvent(UserEvent.AddFriend(user.id))
+                                                    Toast.makeText(context, context.getString(R.string.invite_sent), Toast.LENGTH_SHORT).show()
                                                 },
                                                 openFriend = {
                                                     userViewModel.onEvent(UserEvent.GetFriendUser(user.id))

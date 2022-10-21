@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.molecules
+package com.ledokol.thebestproject.ui.components.molecules.games
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
@@ -19,11 +19,6 @@ fun TitleQuickGame(
     Column(
         modifier = modifier,
     ){
-//        Body1(
-//            text = stringResource(id = R.string.step)+" "+step.toString(),
-//            color = MaterialTheme.colors.primary,
-//            fontWeight = FontWeight.W500,
-//        )
         HeadlineH4(
             text = title,
             color = MaterialTheme.colors.onBackground,

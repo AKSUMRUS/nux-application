@@ -162,6 +162,8 @@ class GamesViewModel @Inject constructor(
                                 games = result.data!!.apps
                             )
 
+                            Log.e("shareGames_ViewModel",result.data.send_icons_apps_ids.toString())
+
                             pushGamesIcons(result.data.send_icons_apps_ids, context)
                         }
                         is Resource.Loading -> {

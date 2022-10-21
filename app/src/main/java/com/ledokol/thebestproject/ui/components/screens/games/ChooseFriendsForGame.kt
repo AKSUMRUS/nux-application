@@ -35,7 +35,7 @@ import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-import com.ledokol.thebestproject.ui.components.molecules.TitleQuickGame
+import com.ledokol.thebestproject.ui.components.molecules.games.TitleQuickGame
 import com.ledokol.thebestproject.ui.components.molecules.friend.FriendInListQuickGame
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
