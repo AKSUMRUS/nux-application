@@ -174,6 +174,7 @@ fun Friends(
                 LoadingView()
             } else {
                 LazyColumn(
+                    modifier = Modifier.padding(bottom = 65.dp),
                     content = {
                         item {
 

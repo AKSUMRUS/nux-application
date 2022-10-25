@@ -57,6 +57,7 @@ fun FriendInList(
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
+                    .align(Alignment.CenterVertically)
                 ,
                 contentScale = Crop,
             )
@@ -66,9 +67,7 @@ fun FriendInList(
                     .fillMaxHeight()
                     .padding(start = 20.dp, end = 50.dp)
             ){
-                Row(
-                    modifier = Modifier.padding(0.dp)
-                ){
+                Column{
                     HeadlineH6(
                         text = user.name,
                         modifier = Modifier,
@@ -77,14 +76,9 @@ fun FriendInList(
                     )
 
                     Body1(text = "@${user.nickname}",
-                        modifier = Modifier
-                            .padding(start = 10.dp)
-                            .height(25.dp)
-                        ,
                         color = MaterialTheme.colors.onPrimary,
                     )
                 }
-
                 StripFriend(user = user)
             }
         }
