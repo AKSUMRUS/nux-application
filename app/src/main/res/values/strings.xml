@@ -104,7 +104,7 @@
     <string name="repost_another_app">Использовать другое приложение</string>
 
     <!--  Profile  -->
-    <string name="games">Статистика</string>
+    <string name="games">Игры</string>
     <string name="latest_activity">Активность</string>
     <string name="share">Поделиться</string>
     <string name="share_with_friends">Поделиться с друзьями</string>
@@ -118,7 +118,7 @@
     <string name="edit_profile">Редактировать</string>
     <string name="profile_open_game_title">"Открыть игру?"</string>
     <string name="profile_open_game_description">"Нажми да, если хочешь запустить игру прямо сейчас"</string>
-    <string name = "share_my_profile">Добавляй меня в друзья в Dvor %1$s</string>
+    <string name ="share_my_profile">Добавляй меня в друзья в Dvor %1$s</string>
 
 <!--    Friend-->
     <string name="game_now_friend">Сейчас играет </string>
@@ -144,6 +144,8 @@
     <string name="invite_sent">Приглашение в друзья отправлено</string>
     <string name="recommended_friends">Возможные друзья</string>
     <string name="recommended_friends_main">у вас еще нет друзей, можете добавить кого-то из наших рекоммендаций</string>
+    <string name="invite_to_game">Пригласить</string>
+    <string name="invite_to_game_title">Пригласить в игру</string>
 
     <!--    Error-->
     <string name = "wrong_phone_number">Неправильный номер телефон</string>

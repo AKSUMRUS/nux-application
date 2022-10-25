@@ -11,8 +11,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -29,6 +31,7 @@ import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
@@ -44,7 +47,7 @@ fun Friends(
     notificationsViewModel: NotificationsViewModel,
 ){
     val state = userViewModel.state
-    var isFindingNewFriends = false
+    val isFindingNewFriends = false
     val shouldWork by remember {
         mutableStateOf(true)
     }
@@ -54,6 +57,8 @@ fun Friends(
     val token = profileViewModel.state.profile?.access_token.toString()
     val usersList = notificationsViewModel.state.friendInvites
     val context = LocalContext.current
+
+    var isInviteButtonClicked = false
 
     val recommendedFriends = state.recommendedFriends
 
@@ -130,177 +135,199 @@ fun Friends(
         handler.postDelayed(runnable!!, 100)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                MaterialTheme.colors.background
-            )
-    ) {
-
-        ModalBottomSheetLayout(
-            sheetBackgroundColor = MaterialTheme.colors.background,
-            sheetState = modalBottomSheetState,
-            sheetContent = {
+    ModalBottomSheetLayout(
+        sheetBackgroundColor = MaterialTheme.colors.background,
+        sheetState = modalBottomSheetState,
+        sheetContent = {
                 InviteFriend(
                     navController = navController,
                     userViewModel = userViewModel,
                     profileViewModel = profileViewModel,
                 )
             },
-            sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
-            sheetElevation = 10.dp,
+        sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
+        sheetElevation = 10.dp,
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 20.dp, end = 20.dp)
+                .background(
+                    MaterialTheme.colors.background
+                )
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, end = 20.dp)
-            ) {
 
-                if (state.isLoading) {
-                    LoadingView()
-                } else {
-                    LazyColumn(
-                        content = {
-                            item {
+            if (state.isLoading) {
+                LoadingView()
+            } else {
+                LazyColumn(
+                    content = {
+                        item {
 
-                                Box(
-                                    modifier = Modifier.height(90.dp)
-                                ){
+//                            Box(
+//                                modifier = Modifier.height(90.dp)
+//                            ) {
+//
+//                            }
 
+                            TitleFriends(
+                                text = stringResource(id = R.string.invite_to_game_title),
+                                modifier = Modifier
+                                    .padding(top = 30.dp, bottom = 20.dp,)
+                            )
+
+                            ButtonAddFriend(
+                                onClick = {
+                                    coroutineScope.launch {
+                                        modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                    }
                                 }
+                            )
+                        }
 
-                                ButtonAddFriend(
-                                    onClick = {
-                                        coroutineScope.launch {
-                                            modalBottomSheetState.animateTo(ModalBottomSheetValue.Expanded)
+                        if (usersList != null && usersList.isNotEmpty()) {
+                            item {
+                                Column {
+                                    TitleFriends(text = stringResource(id = R.string.friend_requests))
+                                }
+                            }
+
+                            items(usersList.size) { friend ->
+                                val user = usersList[friend].from_user
+                                FriendInNotification(
+                                    user = user,
+                                    rejectFriend = {
+                                        userViewModel.onEvent(UserEvent.RejectInvite(user.id))
+                                    },
+                                    addFriend = {
+                                        onClick(
+                                            notificationEntity = usersList[friend]
+                                        )
+                                    },
+                                    openFriend = {
+                                        userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
+                                        navController.navigate(ScreenRoutes.PREVIEW_FRIEND) {
+                                            popUpTo(ScreenRoutes.PREVIEW_FRIEND)
+                                            launchSingleTop = true
                                         }
                                     }
                                 )
                             }
+                        }
 
-                            if(usersList!=null && usersList.isNotEmpty()){
-                                item{
-                                    Column{
-                                        TitleFriends(text = stringResource(id = R.string.friend_requests))
-                                    }
-                                }
+                        item {
+                            Column {
+                                ShowSearch(
+                                    textSearch = textSearch,
+                                    onValueChange = {
+                                        textSearch = it
+                                    },
+                                    modifier = Modifier.padding(top = 0.dp)
+                                )
 
-                                items(usersList.size) { friend ->
-                                    val user = usersList[friend].from_user
-                                    FriendInNotification(
-                                        user = user,
-                                        rejectFriend = {
-                                            userViewModel.onEvent(UserEvent.RejectInvite(user.id))
-                                        },
-                                        addFriend = {
-                                            onClick(
-                                                notificationEntity = usersList[friend]
-                                            )
-                                        },
-                                        openFriend = {
-                                            userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
-                                            navController.navigate(ScreenRoutes.PREVIEW_FRIEND){
-                                                popUpTo(ScreenRoutes.PREVIEW_FRIEND)
-                                                launchSingleTop = true
-                                            }
-                                        }
-                                    )
-                                }
                             }
+                        }
 
-                            item{
-                                Column{
-                                    TitleFriends(text = stringResource(id = R.string.my_friends),)
+                        if (state.users != null && state.users!!.isNotEmpty()) {
+                            val arrayFriends =
+                                state.users!!.filter { it.nickname.contains(textSearch) }
 
-                                    ShowSearch(
-                                        textSearch = textSearch,
-                                        onValueChange = {
-                                            textSearch = it
-                                        },
-                                        modifier = Modifier.padding(top = 0.dp)
-                                    )
-
+                            if (arrayFriends.isEmpty()) {
+                                userViewModel.onEvent(UserEvent.GetUserByNickname(textSearch))
+                                val user = if (state.friendUser?.nickname == textSearch) {
+                                    state.friendUser
+                                } else {
+                                    null
                                 }
-                            }
-
-                            if(state.users != null && state.users!!.isNotEmpty()){
-                                val arrayFriends = state.users!!.filter { it.nickname.contains(textSearch) }
-
-                                if(arrayFriends.isEmpty()){
-                                    userViewModel.onEvent(UserEvent.GetUserByNickname(textSearch))
-                                    val user = if(state.friendUser?.nickname == textSearch) {
-                                        state.friendUser
-                                    } else {
-                                        null
-                                    }
-                                    if(user != null) {
-                                        item {
-                                            AddFriendInSearch(
-                                                user = user,
-                                                addFriend = {
-                                                    userViewModel.onEvent(UserEvent.AddFriend(user.id))
-                                                    Toast.makeText(context, context.getString(R.string.invite_sent), Toast.LENGTH_SHORT).show()
-                                                },
-                                                openFriend = {
-                                                    userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
-                                                    navController.navigate(ScreenRoutes.PREVIEW_FRIEND){
-                                                        popUpTo(ScreenRoutes.PREVIEW_FRIEND)
-                                                        launchSingleTop = true
-                                                    }
+                                if (user != null) {
+                                    item {
+                                        AddFriendInSearch(
+                                            user = user,
+                                            addFriend = {
+                                                userViewModel.onEvent(UserEvent.AddFriend(user.id))
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.invite_sent),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            },
+                                            openFriend = {
+                                                userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
+                                                navController.navigate(ScreenRoutes.PREVIEW_FRIEND) {
+                                                    popUpTo(ScreenRoutes.PREVIEW_FRIEND)
+                                                    launchSingleTop = true
                                                 }
-                                            )
-                                        }
+                                            }
+                                        )
                                     }
                                 }
-                                else {
-                                    items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
-                                        FriendInList(
-                                            user = friend,
-                                            onClick = {
-                                                onClick(
-                                                    navController = navController,
-                                                    id = friend.id
-                                                )
-                                            })
-                                    }
-                                }
-                            }else if(recommendedFriends != null){
-                                item {
-                                    EmptyScreenFriend(
-                                        title = stringResource(id = R.string.recommended_friends_main),
-                                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
-                                    )
-                                }
-                                items(recommendedFriends.size) { id ->
-                                    val friend = recommendedFriends[id]
-                                    AddFriendInSearch(
+                            } else {
+                                items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                    FriendInList(
                                         user = friend,
-                                        addFriend = {
-                                            userViewModel.onEvent(UserEvent.AddFriend(friend.id))
-                                            Toast.makeText(
-                                                context,
-                                                context.getString(R.string.invite_sent),
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            recommendedFriends.remove(friend)
-                                        },
-                                        openFriend = {
-
+                                        onClick = {
+                                            onClick(
+                                                navController = navController,
+                                                id = friend.id
+                                            )
                                         })
                                 }
                             }
-                            else{
-                                item{
-                                    EmptyScreenFriend(title = stringResource(id = R.string.no_friends))
-                                }
-                                userViewModel.onEvent(UserEvent.GetRecommendedFriends)
+                        } else if (recommendedFriends != null) {
+                            item {
+                                EmptyScreenFriend(
+                                    title = stringResource(id = R.string.recommended_friends_main),
+                                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)
+                                )
                             }
-                        },
-                    )
-                }
+                            items(recommendedFriends.size) { id ->
+                                val friend = recommendedFriends[id]
+                                AddFriendInSearch(
+                                    user = friend,
+                                    addFriend = {
+                                        userViewModel.onEvent(UserEvent.AddFriend(friend.id))
+                                        Toast.makeText(
+                                            context,
+                                            context.getString(R.string.invite_sent),
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        recommendedFriends.remove(friend)
+                                    },
+                                    openFriend = {
+
+                                    })
+                            }
+                        } else {
+                            item {
+                                EmptyScreenFriend(title = stringResource(id = R.string.no_friends))
+                            }
+                            userViewModel.onEvent(UserEvent.GetRecommendedFriends)
+                        }
+                    },
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 10.dp)
+            ) {
+                ButtonWithChangeableColor(
+                    isClicked = isInviteButtonClicked,
+                    onClick = { },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                    ,
+                    text1 = stringResource(id = R.string.invite_to_game),
+                    text2 = stringResource(id = R.string.invite_to_game),
+                    color1 = MaterialTheme.colors.surface,
+                    color1Text = MaterialTheme.colors.secondaryVariant,
+                    color2 = MaterialTheme.colors.secondary,
+                    color2Text = MaterialTheme.colors.onSurface,
+                )
             }
         }
     }
+
 }
 

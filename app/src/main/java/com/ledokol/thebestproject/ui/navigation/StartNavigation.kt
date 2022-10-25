@@ -135,7 +135,7 @@ fun StartNavigation(
             Log.e(TAG, "openScreenFinish $openScreen")
             "$openScreen"
         }else{
-            BottomNavItemMain.QuickGame.screen_route
+            BottomNavItemMain.Friends.screen_route
         }
     }
 
