@@ -21,9 +21,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 fun BottomNavigation(navController: NavController,bottomBarState: MutableState<Boolean>) {
     val items = listOf(
         BottomNavItemMain.Profile,
-        BottomNavItemMain.QuickGame,
         BottomNavItemMain.Friends,
-//        BottomNavItemMain.Notifications
     )
     
     AnimatedVisibility(visible = bottomBarState.value) {

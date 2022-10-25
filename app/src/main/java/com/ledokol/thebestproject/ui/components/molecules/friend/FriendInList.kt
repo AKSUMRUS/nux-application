@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.components.molecules.friend
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,23 +11,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale.Companion.Crop
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.ui.components.atoms.Status
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun FriendInList(
     user: User,
-    onClick: () -> Unit,
-    clicked: Boolean = false,
+    onClickFriend: () -> Unit,
+    onAdd: () -> Unit,
+    clickedFriend: Boolean = false,
+    clickedAdd: Boolean = false
 ){
-
-    val modifier: Modifier = if (clicked) Modifier
+    val modifier: Modifier = if (clickedFriend) Modifier
         .padding(bottom = 5.dp)
         .border(3.dp, MaterialTheme.colors.primary)
         .fillMaxWidth()
@@ -43,11 +47,9 @@ fun FriendInList(
 
         Row(
             modifier = Modifier
-//                .height(80.dp)
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(0))
-                .background(MaterialTheme.colors.primary)
-                .clickable(onClick = onClick)
+                .clickable(onClick = onClickFriend)
                 .padding(10.dp)
         ){
             AsyncImage(
@@ -62,7 +64,7 @@ fun FriendInList(
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .padding(start = 20.dp)
+                    .padding(start = 20.dp, end = 50.dp)
             ){
                 Row(
                     modifier = Modifier.padding(0.dp)
@@ -77,6 +79,7 @@ fun FriendInList(
                     Body1(text = "@${user.nickname}",
                         modifier = Modifier
                             .padding(start = 10.dp)
+                            .height(25.dp)
                         ,
                         color = MaterialTheme.colors.onPrimary,
                     )
@@ -84,7 +87,23 @@ fun FriendInList(
 
                 StripFriend(user = user)
             }
-
         }
+
+        val imageId = if (clickedAdd) {
+            R.drawable.check_circle
+        } else {
+            R.drawable.add_circle
+        }
+
+        Image(
+            imageVector = ImageVector.vectorResource(id = imageId),
+            contentDescription = "Add",
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clickable(onClick = {
+                    onAdd()
+                })
+                .padding(10.dp)
+        )
     }
 }

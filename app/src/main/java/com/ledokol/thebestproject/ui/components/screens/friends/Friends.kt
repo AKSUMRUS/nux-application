@@ -12,9 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -26,6 +24,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
+import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
@@ -37,13 +36,12 @@ import com.ledokol.thebestproject.ui.components.molecules.friend.*
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Friends(
     navController: NavController,
     userViewModel: UserViewModel,
     profileViewModel: ProfileViewModel,
-    needUpdate: Boolean = true,
     notificationsViewModel: NotificationsViewModel,
 ){
     val state = userViewModel.state
@@ -58,7 +56,9 @@ fun Friends(
     val usersList = notificationsViewModel.state.friendInvites
     val context = LocalContext.current
 
-    var isInviteButtonClicked = false
+    var isInviteButtonClicked by remember {
+        mutableStateOf(state.inviteFriends.isNotEmpty())
+    }
 
     val recommendedFriends = state.recommendedFriends
 
@@ -87,7 +87,16 @@ fun Friends(
         }
     }
 
-    fun onClick(
+    fun onAddFriend(
+        friend: User
+    ){
+        userViewModel.onEvent(UserEvent.SelectUser(friend))
+
+        Log.e("Friends_ADD", state.inviteFriends.toString())
+
+    }
+
+    fun onClickFriend(
         navController: NavController,
         id: String,
     ){
@@ -135,6 +144,10 @@ fun Friends(
         handler.postDelayed(runnable!!, 100)
     }
 
+    LaunchedEffect(state.inviteFriends){
+        isInviteButtonClicked = state.inviteFriends.isNotEmpty()
+    }
+
     ModalBottomSheetLayout(
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetState = modalBottomSheetState,
@@ -163,12 +176,6 @@ fun Friends(
                 LazyColumn(
                     content = {
                         item {
-
-//                            Box(
-//                                modifier = Modifier.height(90.dp)
-//                            ) {
-//
-//                            }
 
                             TitleFriends(
                                 text = stringResource(id = R.string.invite_to_game_title),
@@ -262,15 +269,35 @@ fun Friends(
                                     }
                                 }
                             } else {
-                                items(arrayFriends.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                items(arrayFriends.filter { state.inviteFriends.contains(it.id) }.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
                                     FriendInList(
                                         user = friend,
-                                        onClick = {
-                                            onClick(
+                                        onClickFriend = {
+                                            onClickFriend(
                                                 navController = navController,
                                                 id = friend.id
                                             )
-                                        })
+                                        },
+                                        onAdd = {
+                                            onAddFriend(friend)
+                                        },
+                                        clickedAdd = true
+                                    )
+                                }
+                                items(arrayFriends.filter { !state.inviteFriends.contains(it.id) }.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                    FriendInList(
+                                        user = friend,
+                                        onClickFriend = {
+                                            onClickFriend(
+                                                navController = navController,
+                                                id = friend.id
+                                            )
+                                        },
+                                        onAdd = {
+                                            onAddFriend(friend)
+                                        },
+                                        clickedAdd = false
+                                    )
                                 }
                             }
                         } else if (recommendedFriends != null) {
@@ -306,7 +333,7 @@ fun Friends(
                     },
                 )
             }
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
@@ -314,10 +341,12 @@ fun Friends(
             ) {
                 ButtonWithChangeableColor(
                     isClicked = isInviteButtonClicked,
-                    onClick = { },
                     modifier = Modifier
                         .fillMaxWidth()
                     ,
+                    onClick = {
+                        navController.navigate(ScreenRoutes.CHOOSE_GAMES)
+                              },
                     text1 = stringResource(id = R.string.invite_to_game),
                     text2 = stringResource(id = R.string.invite_to_game),
                     color1 = MaterialTheme.colors.surface,

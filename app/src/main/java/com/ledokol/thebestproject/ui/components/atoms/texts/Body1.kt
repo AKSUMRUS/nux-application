@@ -20,25 +20,8 @@ fun Body1(
     Text(
         text = text,
         color = color,
-//        style = MaterialTheme.typography.body1,
         modifier = modifier,
         fontWeight = fontWeight,
         textAlign = textAlign,
     )
 }
-//
-//@Composable
-//fun getColorText(type: String): Color {
-//    val color: Color
-//
-//    when(type) {
-//        "surface" -> color = MaterialTheme.colors.onSurface
-//        "primary" -> color = MaterialTheme.colors.onPrimary
-//        "primaryInit" -> color = MaterialTheme.colors.primary
-//        "secondary" -> color = MaterialTheme.colors.onSecondary
-//        "background" -> color = MaterialTheme.colors.onBackground
-//        else -> color = MaterialTheme.colors.onError
-//    }
-//
-//    return color
-//}

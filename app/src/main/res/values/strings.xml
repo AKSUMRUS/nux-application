@@ -48,7 +48,7 @@
 
 <!--    QuickGame-->
     <string name="title_game">Игра</string>
-    <string name="choose_game">Выбирай игру</string>
+    <string name="choose_game">Куда пойдем?</string>
     <string name="description_choose_game">куда ты хочешь позвать друзей</string>
     <string name="choose_crew_for_quick_game">Пригласить друзей</string>
     <string name="open_game">Открыть игру</string>

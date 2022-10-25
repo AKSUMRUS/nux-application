@@ -43,6 +43,7 @@ import com.ledokol.thebestproject.ui.components.molecules.profile.AdditionalBloc
 import com.ledokol.thebestproject.ui.components.molecules.profile.ProfileTopBlock
 import com.ledokol.thebestproject.ui.components.molecules.profile.openGame
 import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import java.util.*
 
 
@@ -107,40 +108,38 @@ fun ProfileScreen(
                         navController = navController,
                         userViewModel = userViewModel,
                     )
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .align(CenterHorizontally)
-                    ) {
-
-                        AdditionalBlock(
-                            text = "Игры",
-                            openText = "Смотреть",
-                            onClick = {
-                                      navController.navigate(BottomNavItemMain.QuickGame.screen_route){
-                                          popUpTo(BottomNavItemMain.Profile.screen_route)
-                                      }
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 0.dp, end = 5.dp)
-                        )
-
-                        AdditionalBlock(
-                            text = "Друзья",
-                            openText = "Добавить",
-                            onClick = {
-                                navController.navigate(BottomNavItemMain.Friends.screen_route){
-                                    popUpTo(BottomNavItemMain.Profile.screen_route)
-                                }
-                            },
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 20.dp, end = 0.dp)
-                        )
-
-                    }
+//                    Row(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .align(CenterHorizontally)
+//                    ) {
+//
+//                        AdditionalBlock(
+//                            text = "Игры",
+//                            openText = "Смотреть",
+//                            onClick = {
+//                                      navController.navigate(ScreenRoutes.CHOOSE_GAMES){
+//                                          popUpTo(BottomNavItemMain.Profile.screen_route)
+//                                      }
+//                            },
+//                            modifier = Modifier
+//                                .weight(1f)
+//                                .padding(start = 0.dp, end = 5.dp)
+//                        )
+//
+//                        AdditionalBlock(
+//                            text = "Друзья",
+//                            openText = "Добавить",
+//                            onClick = {
+//                                navController.navigate(BottomNavItemMain.Friends.screen_route){
+//                                    popUpTo(BottomNavItemMain.Profile.screen_route)
+//                                }
+//                            },
+//                            modifier = Modifier
+//                                .weight(1f)
+//                                .padding(start = 20.dp, end = 0.dp)
+//                        )
+//                    }
 
                 }
             }

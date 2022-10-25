@@ -10,10 +10,9 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 
 @Composable
 fun TitleQuickGame(
-    step: Int,
     title: String,
-    description: String,
     modifier: Modifier = Modifier,
+    description: String = "",
 ){
 
     Column(

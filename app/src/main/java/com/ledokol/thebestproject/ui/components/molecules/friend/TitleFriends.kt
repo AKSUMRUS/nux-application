@@ -19,9 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.ui.components.atoms.Search
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
+import com.ledokol.thebestproject.ui.components.atoms.texts.*
 
 @Composable
 fun TitleFriends(
@@ -29,7 +27,7 @@ fun TitleFriends(
     modifier: Modifier = Modifier,
 ){
 
-    HeadlineH5(
+    HeadlineH4(
         text = text,
         fontWeight = FontWeight.Medium,
         color = MaterialTheme.colors.onBackground,

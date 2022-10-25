@@ -8,7 +8,6 @@ object ScreenRoutes {
     const val SPLASH_SCREEN = "splash_screen"
     const val FRIEND_SCREEN = "friend_screen"
     const val FINISH_INVITING_FRIENDS = "finish_inviting_friends"
-    const val CHOOSE_FRIENDS_QUICK_GAME = "choose_friends_quick_game"
     const val REQUEST_PERMISSION_DATA = "request_permission_data"
     const val INVITE_FRIENDS = "invite_friends"
     const val QR_CODE_PROFILE = "qr_code_profile"
@@ -17,5 +16,6 @@ object ScreenRoutes {
     const val CONTACTS_LIST = "contacts_list"
     const val EDIT_PROFILE = "edit_profile"
     const val NO_INTERNET = "no_internet"
+    const val CHOOSE_GAMES = "choose_games"
 
 }

@@ -13,10 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.game.Game
 import com.ledokol.thebestproject.data.local.game.GamesEvent
+import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.presentation.GamesViewModel
+import com.ledokol.thebestproject.presentation.ProfileViewModel
+import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.molecules.EmptyScreen
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
@@ -25,21 +30,28 @@ fun InstalledGamesList(
     games: List<Game>,
     navController: NavController,
     gamesViewModel: GamesViewModel,
+    profileViewModel: ProfileViewModel,
+    userViewModel: UserViewModel
 ) {
 
     fun onClick(packageName: String){
         gamesViewModel.getGame(packageName)
-        navController.navigate(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME){
-            popUpTo(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME){
-                inclusive = true
-            }
+        profileViewModel.onEvent(
+            ProfileEvent.InviteFriends(
+                accessToken = profileViewModel.state.profile!!.access_token,
+                friends_ids = userViewModel.state.inviteFriends.toList(),
+                app_id = gamesViewModel.state.game!!.id
+            )
+        )
+        navController.navigate(ScreenRoutes.FINISH_INVITING_FRIENDS) {
+            popUpTo(ScreenRoutes.FINISH_INVITING_FRIENDS)
             launchSingleTop = true
         }
     }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(top = 120.dp, start = 0.dp, end = 0.dp),
+        contentPadding = PaddingValues(top = 80.dp, start = 0.dp, end = 0.dp),
         modifier = Modifier
         ,
     ) {
@@ -53,9 +65,7 @@ fun InstalledGamesList(
                 ,
             ){
                 TitleQuickGame(
-                    step = 1,
                     title = stringResource(id = R.string.choose_game),
-                    description = stringResource(id = R.string.description_choose_game),
                 )
             }
         }

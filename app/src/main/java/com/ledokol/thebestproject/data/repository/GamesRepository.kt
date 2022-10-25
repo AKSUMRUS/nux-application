@@ -161,14 +161,6 @@ class GamesRepository @Inject constructor(
         }
     }
 
-//    private fun fromGameToStatusJSON(games: List<Game>): List<StatusJSON> {
-//        val res: MutableList<StatusJSON> = mutableListOf()
-//        for (game in games){
-//            res.add(StatusJSON(game.android_package_name,game.name,game.category))
-//        }
-//        return res.toList()
-//    }
-
     private fun fromGameJSONToGame(games: List<GameJSON>?): List<Game> {
         val res: MutableList<Game> = mutableListOf()
         if(games != null) {

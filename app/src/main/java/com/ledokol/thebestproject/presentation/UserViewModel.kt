@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestproject.data.local.user.User
@@ -88,7 +89,7 @@ UserViewModel @Inject constructor(
                 viewModelScope.launch {
                     val shouldRemove = checkSelectedUser(event.user)
                     if (shouldRemove) {
-                        removeSelectedUser(event.user)
+                        removeSelectedUser(event.user.id)
                     } else {
                         insertSelectedUser(event.user)
                     }
@@ -111,6 +112,9 @@ UserViewModel @Inject constructor(
             }
             is UserEvent.GetRecommendedFriends -> {
                 getRecommendedFriends()
+            }
+            is UserEvent.ClearInviteFriend -> {
+                clearInviteFriends()
             }
             else -> {
                 Log.e("UserViewModel", "unknown event: $event")
@@ -421,10 +425,10 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private fun removeSelectedUser(selectedUser: User){
+    private fun removeSelectedUser(selectedUser: String){
         Log.d("SELECTEDUSER", "REMOVE")
         state = state.copy(
-            clickedUsers = state.clickedUsers.toMutableList().filter { user -> user.userId!=selectedUser.userId }.toList(),
+            inviteFriends = state.inviteFriends.toMutableList().filter { user -> user!=selectedUser }.toMutableList()
         )
 
         Log.d("SELECTEDUSER", "REMOVE "+state.users!!.size.toString())
@@ -432,7 +436,7 @@ UserViewModel @Inject constructor(
 
     fun insertSelectedUser(selectedUser: User){
         state = state.copy(
-            clickedUsers = state.clickedUsers.toMutableList().apply { add(selectedUser) }.toList(),
+            inviteFriends = state.inviteFriends.toMutableList().apply { add(selectedUser.id) }.toMutableList(),
         )
         Log.d("SELECTEDUSER", "INSERT "+state.users!!.size.toString())
     }
@@ -440,8 +444,8 @@ UserViewModel @Inject constructor(
     fun checkSelectedUser(selectedUser: User): Boolean{
         Log.d("SELECTEDUSER", "CHECK")
         var inList = false
-        for(user in state.clickedUsers){
-            if (user.userId == selectedUser.userId){
+        for(user in state.inviteFriends){
+            if (user == selectedUser.id){
                 inList = true
                 break
             }
@@ -452,7 +456,7 @@ UserViewModel @Inject constructor(
 
     fun clearSelectedUser(){
         state = state.copy(
-            clickedUsers = listOf(),
+            inviteFriends = mutableListOf(),
         )
     }
 
@@ -610,6 +614,12 @@ UserViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    private fun clearInviteFriends(){
+        state = state.copy(
+            inviteFriends = mutableListOf(),
+        )
     }
 
 }

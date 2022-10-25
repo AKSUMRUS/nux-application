@@ -16,6 +16,7 @@ sealed class UserEvent {
     class RemoveFriend(val friendId: String): UserEvent()
     class RejectInvite(val userId: String): UserEvent()
     class OpenFriendViaLink(val userId: String): UserEvent()
+    object ClearInviteFriend : UserEvent()
     object AddFriendById : UserEvent()
     object ClearError : UserEvent()
     object ClearFriendUser: UserEvent()

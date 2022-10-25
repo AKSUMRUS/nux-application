@@ -36,9 +36,8 @@ import com.ledokol.thebestproject.ui.components.screens.NotInternet
 import com.ledokol.thebestproject.ui.components.screens.NotificationsScreen
 import com.ledokol.thebestproject.ui.components.screens.SplashScreen
 import com.ledokol.thebestproject.ui.components.screens.friends.*
-import com.ledokol.thebestproject.ui.components.screens.games.ChooseFriendsForGame
 import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
-import com.ledokol.thebestproject.ui.components.screens.games.QuickGameScreen
+import com.ledokol.thebestproject.ui.components.screens.games.ChooseGameScreen
 import com.ledokol.thebestproject.ui.components.screens.permissions.RequestReadData
 import com.ledokol.thebestproject.ui.components.screens.profile.EditProfileScreen
 import com.ledokol.thebestproject.ui.components.screens.profile.ProfileScreen
@@ -102,9 +101,6 @@ fun StartNavigation(
     Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
 
     when (navBackStackEntry?.destination?.route) {
-        BottomNavItemMain.QuickGame.screen_route -> {
-            bottomBarState.value = true
-        }
         BottomNavItemMain.Profile.screen_route -> {
             bottomBarState.value = true
         }
@@ -157,14 +153,16 @@ fun StartNavigation(
                 navController = navController,
                 startDestination = start,
                 builder = {
-                    composable(BottomNavItemMain.QuickGame.screen_route) {
+                    composable(ScreenRoutes.CHOOSE_GAMES) {
                         TheBestProjectEverTheme {
-                            QuickGameScreen(
+                            ChooseGameScreen(
                                 navController = navController,
                                 gamesViewModel = gamesViewModel,
+                                profileViewModel = profileViewModel,
+                                userViewModel = userViewModel,
                             )
                         }
-                        logOpenScreenEvent(BottomNavItemMain.QuickGame.screen_route)
+                        logOpenScreenEvent(ScreenRoutes.CHOOSE_GAMES)
                     }
                     composable(BottomNavItemMain.Profile.screen_route) {
                         ProfileScreen(
@@ -238,16 +236,6 @@ fun StartNavigation(
                             userViewModel = userViewModel,
                         )
                         logOpenScreenEvent(ScreenRoutes.FINISH_INVITING_FRIENDS)
-                    }
-                    composable(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME) {
-                        ChooseFriendsForGame(
-                            navController = navController,
-                            userViewModel = userViewModel2,
-                            profileViewModel = profileViewModel,
-                            gamesViewModel = gamesViewModel,
-                            analytics = analytics
-                        )
-                        logOpenScreenEvent(ScreenRoutes.CHOOSE_FRIENDS_QUICK_GAME)
                     }
                     composable(ScreenRoutes.REQUEST_PERMISSION_DATA) {
                         RequestReadData(

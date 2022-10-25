@@ -21,6 +21,9 @@ import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.data.local.user.UserEvent
+import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
+import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
 fun FinishInvitingFriends(
@@ -31,12 +34,13 @@ fun FinishInvitingFriends(
     val context: Context = LocalContext.current
 
     fun clickFinish(){
-        navController.navigate("quick_game"){
-            popUpTo("quick_game"){
+        navController.navigate(BottomNavItemMain.Friends.screen_route){
+            popUpTo(BottomNavItemMain.Friends.screen_route){
                 inclusive = true
             }
             launchSingleTop = true
         }
+        userViewModel.onEvent(UserEvent.ClearInviteFriend)
     }
 
     fun openGame(){
@@ -44,10 +48,6 @@ fun FinishInvitingFriends(
             gamesViewModel.state.game!!.android_package_name)
         launchIntent?.let { context.startActivity(it) }
     }
-
-//    LaunchedEffect(key1 = true){
-//        delay(3000)
-//    }
 
     Box(
         modifier = Modifier
@@ -64,8 +64,8 @@ fun FinishInvitingFriends(
         ) {
             HeadlineH4(text = context.resources.getQuantityString(
                 R.plurals.finish_invite_friends,
-                userViewModel.state.clickedUsers.size,
-                userViewModel.state.clickedUsers.size,
+                userViewModel.state.inviteFriends.size,
+                userViewModel.state.inviteFriends.size,
             ),
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
