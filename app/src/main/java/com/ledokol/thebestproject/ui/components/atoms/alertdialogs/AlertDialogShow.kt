@@ -3,7 +3,10 @@ package com.ledokol.thebestproject.ui.components.atoms.alertdialogs
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,7 +24,7 @@ fun AlertDialogShow(
     onActionPrimary: () -> Unit,
     onClose: () -> Unit = onActionSecondary,
 ) {
-    if(openDialog){
+    if (openDialog) {
         AlertDialog(
             onDismissRequest = {
                 onClose()
@@ -34,7 +37,9 @@ fun AlertDialogShow(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        modifier = Modifier.weight(1f).padding(10.dp),
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(10.dp),
                         onClick = { onActionSecondary() }
                     ) {
                         Body1(text = buttonTextNo)

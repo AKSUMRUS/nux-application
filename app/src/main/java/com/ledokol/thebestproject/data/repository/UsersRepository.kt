@@ -1,37 +1,27 @@
 package com.ledokol.thebestproject.data.repository
 
 import android.util.Log
-import com.ledokol.thebestproject.data.error.ErrorCatcher
 import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.user.Apps
-import com.ledokol.thebestproject.data.local.user.CurrentApp
 import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
 import com.ledokol.thebestproject.data.remote.RetrofitServices
-import com.ledokol.thebestproject.domain.games.App
 import com.ledokol.thebestproject.domain.profile.ExistsUserJSON
-import com.ledokol.thebestproject.domain.profile.RejectInvite
-import com.ledokol.thebestproject.domain.profile.RemoveFriend
 import com.ledokol.thebestproject.domain.users.AddFriend
 import com.ledokol.thebestproject.util.Resource
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import retrofit2.Response
 import retrofit2.awaitResponse
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UsersRepository @Inject constructor(
-    private val api : RetrofitServices,
-    private val dao : UsersDao,
+    private val api: RetrofitServices,
+    private val dao: UsersDao,
 ) : BasicRepository() {
 
-    fun getUserByNickname(nickname: String): Flow<Resource<User> > {
+    fun getUserByNickname(nickname: String): Flow<Resource<User>> {
         return doSafeWork(
             doAsync = {
                 val getUser = api.getUserByNickname(nickname)
@@ -46,7 +36,7 @@ class UsersRepository @Inject constructor(
         )
     }
 
-    fun getUserByPhone(phone: String): Flow<Resource<User> > {
+    fun getUserByPhone(phone: String): Flow<Resource<User>> {
         return doSafeWork(
             doAsync = {
                 val getUser = api.getUserByPhone(phone)
@@ -66,42 +56,46 @@ class UsersRepository @Inject constructor(
         query: String,
         shouldReload: Boolean
     ): Flow<Resource<List<User>>> {
-        return flow{
-            if(shouldReload) {
+        return flow {
+            if (shouldReload) {
                 emit(Resource.Loading(true))
             }
             val localUsers = dao.getUsers(query)
-            emit(Resource.Success(
-                data = localUsers
-            ))
+            emit(
+                Resource.Success(
+                    data = localUsers
+                )
+            )
 
             val isDbEmpty = localUsers.isEmpty() && query.isBlank()
             val shouldLoadFromCache = !isDbEmpty && !fetchFromRemote
-            if(shouldLoadFromCache){
+            if (shouldLoadFromCache) {
                 emit(Resource.Loading(false))
                 return@flow
             }
-            val remoteUsers = try{
+            val remoteUsers = try {
                 val usersCall = api.getFriends()
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            Log.e("USERS",remoteUsers.toString())
+            Log.e("USERS", remoteUsers.toString())
 
             remoteUsers?.let { users ->
                 dao.clearUsers()
                 dao.insertUsers(
                     users
                 )
-                Log.e("DAO Users",dao.getUsers(query).toString())
-                emit(Resource.Success(
-                    data = dao.getUsers(query)
-                ))
+                Log.e("DAO Users", dao.getUsers(query).toString())
+                emit(
+                    Resource.Success(
+                        data = dao.getUsers(query)
+                    )
+                )
             }
             emit(Resource.Loading(false))
         }
@@ -109,7 +103,7 @@ class UsersRepository @Inject constructor(
 
     fun addFriend(
         friendId: String
-    ): Flow<Resource<String> > {
+    ): Flow<Resource<String>> {
         return doSafeWork(
             doAsync = {
                 val addFriend = api.addFriend(
@@ -171,8 +165,8 @@ class UsersRepository @Inject constructor(
 
     fun checkExistsPhone(
         phone: String
-    ): Flow<Resource<ExistsUserJSON>>{
-       return doSafeWork(
+    ): Flow<Resource<ExistsUserJSON>> {
+        return doSafeWork(
             doAsync = {
                 val callExistsUser = api.checkExistsPhone(
                     phone = phone
@@ -180,7 +174,7 @@ class UsersRepository @Inject constructor(
                 callExistsUser.awaitResponse()
             },
             getResult = { checkUser ->
-                    checkUser.body()
+                checkUser.body()
             }
         )
     }
@@ -191,42 +185,46 @@ class UsersRepository @Inject constructor(
         accessToken: String,
         shouldReload: Boolean
     ): Flow<Resource<List<User>>> {
-        return flow{
-            if(shouldReload) {
+        return flow {
+            if (shouldReload) {
                 emit(Resource.Loading(true))
             }
             val localUsers = dao.getUsers(query)
-            emit(Resource.Success(
-                data = localUsers
-            ))
+            emit(
+                Resource.Success(
+                    data = localUsers
+                )
+            )
 
             val isDbEmpty = localUsers.isEmpty() && query.isBlank()
             val shouldLoadFromCache = !isDbEmpty && !fetchFromRemote
-            if(shouldLoadFromCache){
+            if (shouldLoadFromCache) {
                 emit(Resource.Loading(false))
                 return@flow
             }
-            val remoteUsers = try{
+            val remoteUsers = try {
                 val usersCall = api.getFindFriends(authHeader = "Bearer $accessToken")
                 val myResponse: List<User>? = usersCall.awaitResponse().body()
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            Log.e("USERS",remoteUsers.toString())
+            Log.e("USERS", remoteUsers.toString())
 
             remoteUsers?.let { users ->
                 dao.clearUsers()
                 dao.insertUsers(
                     users
                 )
-                Log.e("DAO Users",dao.getUsers(query).toString())
-                emit(Resource.Success(
-                    data = dao.getUsers(query)
-                ))
+                Log.e("DAO Users", dao.getUsers(query).toString())
+                emit(
+                    Resource.Success(
+                        data = dao.getUsers(query)
+                    )
+                )
                 emit(Resource.Loading(false))
             }
 
@@ -235,7 +233,7 @@ class UsersRepository @Inject constructor(
 
     fun removeFriend(
         friendId: String
-    ): Flow<Resource<String> > {
+    ): Flow<Resource<String>> {
         return doSafeWork(
             doAsync = {
                 val removeFriend = api.removeFriend(friend_id = friendId)
@@ -250,7 +248,7 @@ class UsersRepository @Inject constructor(
 
     fun rejectInvite(
         userId: String
-    ) : Flow<Resource<String>> {
+    ): Flow<Resource<String>> {
         return doSafeWork(
             doAsync = {
                 val rejectInvite = api.rejectInvite(from_user_id = userId)
@@ -267,7 +265,7 @@ class UsersRepository @Inject constructor(
 
     fun getRecommendedFriends(
 
-    ) : Flow<Resource<List<User>>> {
+    ): Flow<Resource<List<User>>> {
         return doSafeWork(
             doAsync = {
                 val recommendedFriends = api.getRecommendedFriends()

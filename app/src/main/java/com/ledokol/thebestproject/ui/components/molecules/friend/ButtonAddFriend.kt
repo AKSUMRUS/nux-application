@@ -17,16 +17,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.ui.components.atoms.Search
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun ButtonAddFriend(
     onClick: () -> Unit,
-){
+) {
 
     Row(
         modifier = Modifier
@@ -35,14 +32,14 @@ fun ButtonAddFriend(
             .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colors.primary)
             .clickable { onClick() }
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .align(CenterVertically)
                 .padding(start = 10.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(MaterialTheme.colors.secondary)
-        ){
+        ) {
             Icon(
                 ImageBitmap.imageResource(id = R.drawable.plus),
                 contentDescription = null,
@@ -50,8 +47,7 @@ fun ButtonAddFriend(
                 modifier = Modifier
                     .align(Alignment.Center)
                     .size(50.dp, 50.dp)
-                    .padding(13.dp)
-                ,
+                    .padding(13.dp),
             )
         }
 
@@ -59,20 +55,18 @@ fun ButtonAddFriend(
             modifier = Modifier
                 .padding(top = 10.dp, bottom = 10.dp, start = 20.dp)
                 .align(CenterVertically)
-        ){
+        ) {
             HeadlineH6(
                 text = stringResource(id = R.string.add_friend_title),
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
-                    .padding(bottom = 5.dp)
-            ,
+                    .padding(bottom = 5.dp),
                 fontWeight = FontWeight.Bold,
             )
             Body1(
                 text = stringResource(id = R.string.add_friend_description),
-                modifier = Modifier
+                modifier = Modifier,
 //                    .padding(bottom = 10.dp)
-            ,
                 color = MaterialTheme.colors.onPrimary,
                 fontWeight = FontWeight.Bold,
             )

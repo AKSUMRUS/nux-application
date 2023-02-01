@@ -15,15 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
-import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
 @Composable
 fun FinishInvitingFriends(
@@ -33,9 +32,9 @@ fun FinishInvitingFriends(
 ) {
     val context: Context = LocalContext.current
 
-    fun clickFinish(){
-        navController.navigate(BottomNavItemMain.Friends.screen_route){
-            popUpTo(BottomNavItemMain.Friends.screen_route){
+    fun clickFinish() {
+        navController.navigate(BottomNavItemMain.Friends.screen_route) {
+            popUpTo(BottomNavItemMain.Friends.screen_route) {
                 inclusive = true
             }
             launchSingleTop = true
@@ -43,9 +42,10 @@ fun FinishInvitingFriends(
         userViewModel.onEvent(UserEvent.ClearInviteFriend)
     }
 
-    fun openGame(){
+    fun openGame() {
         val launchIntent = context.packageManager.getLaunchIntentForPackage(
-            gamesViewModel.state.game!!.android_package_name)
+            gamesViewModel.state.game!!.android_package_name
+        )
         launchIntent?.let { context.startActivity(it) }
     }
 
@@ -53,36 +53,35 @@ fun FinishInvitingFriends(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.secondary)
-            .padding(20.dp)
-        ,
+            .padding(20.dp),
 
-        ){
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)
         ) {
-            HeadlineH4(text = context.resources.getQuantityString(
-                R.plurals.finish_invite_friends,
-                userViewModel.state.inviteFriends.size,
-                userViewModel.state.inviteFriends.size,
-            ),
+            HeadlineH4(
+                text = context.resources.getQuantityString(
+                    R.plurals.finish_invite_friends,
+                    userViewModel.state.inviteFriends.size,
+                    userViewModel.state.inviteFriends.size,
+                ),
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(CenterHorizontally)
                     .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                ,
+                    .wrapContentSize(Alignment.Center),
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W500,
             )
-            HeadlineH4(text = "В ${gamesViewModel.state.game!!.name}",
+            HeadlineH4(
+                text = "В ${gamesViewModel.state.game!!.name}",
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentSize(Alignment.Center)
-                    .padding(top = 50.dp)
-                ,
+                    .padding(top = 50.dp),
                 fontWeight = FontWeight.W700,
             )
 
@@ -90,8 +89,7 @@ fun FinishInvitingFriends(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .align(BottomCenter)
-            ,
+                .align(BottomCenter),
 
             verticalArrangement = Arrangement.Bottom,
         ) {
@@ -99,8 +97,7 @@ fun FinishInvitingFriends(
                 text = stringResource(id = R.string.open_game),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .fillMaxWidth()
-                ,
+                    .fillMaxWidth(),
                 onClick = {
                     openGame()
                     clickFinish()
@@ -113,8 +110,7 @@ fun FinishInvitingFriends(
                 text = stringResource(id = R.string.close),
                 modifier = Modifier
                     .padding(top = 20.dp)
-                    .fillMaxWidth()
-                ,
+                    .fillMaxWidth(),
                 onClick = {
                     clickFinish()
                 },

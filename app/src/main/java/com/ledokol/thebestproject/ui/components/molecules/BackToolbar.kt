@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 
 @Composable
 fun BackToolbar(
@@ -29,7 +29,7 @@ fun BackToolbar(
             .background(MaterialTheme.colors.background)
             .fillMaxWidth()
             .padding(top = 50.dp),
-    ){
+    ) {
         Row(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
@@ -39,7 +39,7 @@ fun BackToolbar(
                     onClick = { buttonBackClick() },
                 )
                 .padding(10.dp),
-        ){
+        ) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
@@ -59,13 +59,12 @@ fun BackToolbar(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Center),
-        ){
+        ) {
             Image(
                 bitmap = ImageBitmap.imageResource(id = R.drawable.star),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(25.dp)
-                ,
+                    .size(25.dp),
             )
         }
     }

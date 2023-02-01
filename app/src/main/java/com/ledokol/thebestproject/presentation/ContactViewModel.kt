@@ -19,25 +19,24 @@ import javax.inject.Inject
 class ContactViewModel @Inject constructor(
     private val repository: ContactsRepository,
     private val usersRepository: UsersRepository,
-): ViewModel() {
+) : ViewModel() {
     var state by mutableStateOf(ContactState())
 
 
-    fun insertContacts(contacts: List<Contact>){
+    fun insertContacts(contacts: List<Contact>) {
         viewModelScope.launch {
             repository.insertContacts(contacts)
         }
     }
 
-    fun insertContact(contact: Contact){
+    fun insertContact(contact: Contact) {
         viewModelScope.launch {
-            usersRepository.checkExistsPhone(contact.phones).collect{
-                result ->
-                when(result) {
+            usersRepository.checkExistsPhone(contact.phones).collect { result ->
+                when (result) {
                     is Resource.Success -> {
                         contact.registered = result.data!!.exists
-                        if(contact.registered){
-                            Log.e("REGISTERED_CONTACT","EEEEEEEEEE")
+                        if (contact.registered) {
+                            Log.e("REGISTERED_CONTACT", "EEEEEEEEEE")
                         }
                         repository.insertContact(contact)
                     }
@@ -50,18 +49,17 @@ class ContactViewModel @Inject constructor(
         }
     }
 
-    fun clearContacts(){
+    fun clearContacts() {
         viewModelScope.launch {
             repository.clearContacts()
         }
     }
 
-    fun getContacts(query: String){
+    fun getContacts(query: String) {
         val TAG = "getContactsViewModel"
-            viewModelScope.launch {
-            repository.getContacts(query).collect{
-                result ->
-                when(result) {
+        viewModelScope.launch {
+            repository.getContacts(query).collect { result ->
+                when (result) {
                     is Resource.Success -> {
                         Log.e(TAG, result.data.toString())
                         result.data.let { contacts ->

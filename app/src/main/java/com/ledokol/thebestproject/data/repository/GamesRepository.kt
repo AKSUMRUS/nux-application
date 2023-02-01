@@ -13,14 +13,17 @@ import com.ledokol.thebestproject.domain.games.AppsGameResponse
 import com.ledokol.thebestproject.domain.games.AppsStatus
 import com.ledokol.thebestproject.domain.games.GameJSON
 import com.ledokol.thebestproject.domain.games.StatusJSON
-import com.ledokol.thebestproject.domain.statistics.GameSessionStatisticsList
 import com.ledokol.thebestproject.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.*
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.awaitResponse
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,11 +34,11 @@ class GamesRepository @Inject constructor(
     private val dao: GamesDao
 ) : BasicRepository() {
 
-    fun insertGame(game: Game){
+    fun insertGame(game: Game) {
         dao.insertGame(game)
     }
 
-    fun clearGames(){
+    fun clearGames() {
         dao.clearGames()
     }
 
@@ -49,13 +52,13 @@ class GamesRepository @Inject constructor(
         games: List<String>?,
         context: Context,
     ) {
-        Log.e("pushGamesIcons",games.toString())
+        Log.e("pushGamesIcons", games.toString())
 
-        if(games == null){
+        if (games == null) {
             return
         }
 
-        for(game in games){
+        for (game in games) {
             game.let { packageName -> // на разбор
                 try {
                     val icon = context.packageManager.getApplicationIcon(packageName).toBitmap()
@@ -85,7 +88,10 @@ class GamesRepository @Inject constructor(
                             if (response.isSuccessful) {
                                 Log.d("GamesRepository", "Successfully pushed game icon")
                             } else {
-                                Log.d("GamesRepository", "Failed to push game icon ${response.errorBody()}")
+                                Log.d(
+                                    "GamesRepository",
+                                    "Failed to push game icon ${response.errorBody()}"
+                                )
                             }
                         }
 
@@ -93,11 +99,10 @@ class GamesRepository @Inject constructor(
                             call: Call<Any>,
                             t: Throwable
                         ) {
-                            Log.d("GamesRepository", "Failed to push game icon ${t.toString()}")
+                            Log.d("GamesRepository", "Failed to push game icon $t")
                         }
                     })
-                }
-                catch (e: Exception){
+                } catch (e: Exception) {
                     Log.e("GamesRepository", "Failed to push game icon $e")
                 }
             }
@@ -113,7 +118,7 @@ class GamesRepository @Inject constructor(
             val ans =
                 try {
                     api.shareGames(games = AppsStatus(games)).awaitResponse().body()
-                } catch(e: Exception) {
+                } catch (e: Exception) {
                     emit(Resource.Error(ErrorRemote.NoInternet))
                     null
                 }
@@ -122,19 +127,21 @@ class GamesRepository @Inject constructor(
 
             Log.e("shareGames", "Ответ: ${ans.toString()}")
             dao.insertGames(fromGameJSONToGame(ans?.apps))
-            emit(Resource.Success(
-                data = AppsGameResponse(
-                    apps = fromGameJSONToGame(ans?.apps),
-                    send_icons_apps_ids = ans?.send_icons_apps_ids ?: listOf()
+            emit(
+                Resource.Success(
+                    data = AppsGameResponse(
+                        apps = fromGameJSONToGame(ans?.apps),
+                        send_icons_apps_ids = ans?.send_icons_apps_ids ?: listOf()
+                    )
                 )
-            ))
+            )
             emit(Resource.Loading(false))
         }
     }
 
     private fun fromGameJSONToGame(games: List<GameJSON>?): List<Game> {
         val res: MutableList<Game> = mutableListOf()
-        if(games != null) {
+        if (games != null) {
             for (game in games) {
                 res.add(
                     Game(
@@ -158,22 +165,24 @@ class GamesRepository @Inject constructor(
         return flow {
             emit(Resource.Loading(true))
             val game = try {
-                Log.e("PACKAGE GAME",packageName)
+                Log.e("PACKAGE GAME", packageName)
                 dao.getGame(packageName)
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
-            Log.e("Game",game.toString())
-            emit(Resource.Success(
-                data = game
-            ))
+            Log.e("Game", game.toString())
+            emit(
+                Resource.Success(
+                    data = game
+                )
+            )
 
             emit(Resource.Loading(false))
         }
     }
 
-    fun getMyGames() : Flow<Resource<List<Apps>>> {
+    fun getMyGames(): Flow<Resource<List<Apps>>> {
         return doSafeWork(
             doAsync = {
                 val gamesCall = api.getMyGames()

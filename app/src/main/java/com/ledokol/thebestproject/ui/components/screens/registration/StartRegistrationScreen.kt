@@ -26,17 +26,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonRightIcon
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun StartRegistrationScreen(
     navController: NavController,
-){
+) {
     val context: Context = LocalContext.current
 
     fun onClickSignUp() {
@@ -56,17 +55,15 @@ fun StartRegistrationScreen(
     Box(
         modifier = Modifier
             .background(MaterialTheme.colors.secondary)
-            .fillMaxSize()
-        ,
-    ){
+            .fillMaxSize(),
+    ) {
         Image(
             ImageVector.vectorResource(id = R.drawable.background_onboarding),
             contentDescription = null,
             modifier = Modifier
                 .padding(end = 40.dp)
                 .fillMaxWidth()
-                .align(TopStart)
-        ,
+                .align(TopStart),
             contentScale = ContentScale.FillWidth
         )
 
@@ -74,12 +71,11 @@ fun StartRegistrationScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .align(BottomCenter)
-                .padding(start = 23.dp, end = 23.dp, bottom = 50.dp)
-            ,
+                .padding(start = 23.dp, end = 23.dp, bottom = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom,
 //            verticalArrangement = Arrangement.Bottom,
-        ){
+        ) {
             HeadlineH4(
                 text = stringResource(id = R.string.title_onboarding),
                 modifier = Modifier.padding(bottom = 15.dp),
@@ -99,7 +95,7 @@ fun StartRegistrationScreen(
                     .padding(bottom = 20.dp)
 //                .padding(bottom = dimensionResource(id = R.dimen.padding_medium))
                 ,
-                onClick = {onClickSignUp()},
+                onClick = { onClickSignUp() },
                 icon = ImageBitmap.imageResource(id = R.drawable.arrow_right),
                 colorText = MaterialTheme.colors.onBackground,
                 colorBackground = MaterialTheme.colors.primary
@@ -118,8 +114,7 @@ fun StartRegistrationScreen(
                             strokeWidth
                         )
                     }
-                    .clickable { onClickLogin() }
-                ,
+                    .clickable { onClickLogin() },
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colors.primary
             )

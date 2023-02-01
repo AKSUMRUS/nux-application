@@ -29,7 +29,7 @@ fun FriendInList(
     onAdd: () -> Unit,
     clickedFriend: Boolean = false,
     clickedAdd: Boolean = false
-){
+) {
     val modifier: Modifier = if (clickedFriend) Modifier
         .padding(bottom = 5.dp)
         .border(3.dp, MaterialTheme.colors.primary)
@@ -41,9 +41,8 @@ fun FriendInList(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.primary)
-        ,
-    ){
+            .background(MaterialTheme.colors.primary),
+    ) {
 
         Row(
             modifier = Modifier
@@ -51,14 +50,13 @@ fun FriendInList(
                 .clip(RoundedCornerShape(0))
                 .clickable(onClick = onClickFriend)
                 .padding(10.dp)
-        ){
+        ) {
             AsyncImage(
                 model = user.profile_pic,
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
-                    .align(Alignment.CenterVertically)
-                ,
+                    .align(Alignment.CenterVertically),
                 contentScale = Crop,
             )
 
@@ -66,8 +64,8 @@ fun FriendInList(
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 20.dp, end = 50.dp)
-            ){
-                Column{
+            ) {
+                Column {
                     HeadlineH6(
                         text = user.name,
                         modifier = Modifier,
@@ -75,7 +73,8 @@ fun FriendInList(
                         fontWeight = FontWeight.Medium,
                     )
 
-                    Body1(text = "@${user.nickname}",
+                    Body1(
+                        text = "@${user.nickname}",
                         color = MaterialTheme.colors.onPrimary,
                     )
                 }

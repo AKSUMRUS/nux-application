@@ -10,7 +10,7 @@ class ErrorMapper(
 
     fun map(error: ErrorRemote?): String? {
 
-        val message : String? = when(error){
+        val message: String? = when (error) {
 //            is ErrorRemote.NoInternet -> {
 //                context.getString(R.string.error_no_internet)
 //            }

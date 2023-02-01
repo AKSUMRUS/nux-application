@@ -1,7 +1,8 @@
 package com.ledokol.thebestproject.ui.components.molecules.profile
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +16,7 @@ fun ProfileTopBlock(
     profileViewModel: ProfileViewModel,
     navController: NavController,
     userViewModel: UserViewModel,
-){
+) {
 
     val state = profileViewModel.state
 
@@ -27,13 +28,13 @@ fun ProfileTopBlock(
             )
 //            .verticalScroll(rememberScrollState())
     ) {
-        if(state.profile != null){
+        if (state.profile != null) {
             UserInformationProfile(
                 name = state.profile!!.nickname,
                 profile_pic = state.profile!!.profile_pic!!,
                 profile = true,
                 onClickEdit = {
-                    navController.navigate(ScreenRoutes.EDIT_PROFILE){
+                    navController.navigate(ScreenRoutes.EDIT_PROFILE) {
                         popUpTo(ScreenRoutes.EDIT_PROFILE)
                         launchSingleTop = true
                     }

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class TokenEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id : Int = 0,
+    val id: Int = 0,
     @ColumnInfo(name = "token")
-    val token : String?
+    val token: String?
 )

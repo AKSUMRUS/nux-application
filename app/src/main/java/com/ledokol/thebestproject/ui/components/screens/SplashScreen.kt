@@ -23,19 +23,22 @@ fun SplashScreen(
     navController: NavController,
     profileViewModel: ProfileViewModel
 ) {
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         delay(1500)
-        navController.navigate(ScreenRoutes.START_REGISTRATION_SCREEN){
-            popUpTo(ScreenRoutes.START_REGISTRATION_SCREEN){
+        navController.navigate(ScreenRoutes.START_REGISTRATION_SCREEN) {
+            popUpTo(ScreenRoutes.START_REGISTRATION_SCREEN) {
                 inclusive = true
             }
             launchSingleTop = true
         }
     }
 
-    var text: String = stringResource(id = R.string.hello_splash_screen," ");
-    if(profileViewModel.state.profile!=null){
-        text = stringResource(id = R.string.hello_splash_screen,", ${profileViewModel.state.profile!!.nickname}")
+    var text: String = stringResource(id = R.string.hello_splash_screen, " ")
+    if (profileViewModel.state.profile != null) {
+        text = stringResource(
+            id = R.string.hello_splash_screen,
+            ", ${profileViewModel.state.profile!!.nickname}"
+        )
     }
 
     Column(
@@ -46,8 +49,7 @@ fun SplashScreen(
             color = MaterialTheme.colors.onPrimary,
             modifier = Modifier
                 .fillMaxSize()
-                .wrapContentSize(Alignment.Center)
-        ,
+                .wrapContentSize(Alignment.Center),
             fontWeight = W500,
         )
 

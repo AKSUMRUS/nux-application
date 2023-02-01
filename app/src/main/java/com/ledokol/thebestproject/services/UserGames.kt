@@ -11,7 +11,6 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
 import android.os.PowerManager
 import android.os.Process
@@ -51,28 +50,32 @@ private const val flags = PackageManager.GET_META_DATA or
         PackageManager.GET_SHARED_LIBRARY_FILES or
         PackageManager.GET_UNINSTALLED_PACKAGES
 
-class GamesStatistic{
+class GamesStatistic {
 
 
-    companion object{
+    companion object {
         fun checkForPermission(context: Context): Boolean {
             val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-            val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
+            val mode = appOps.checkOpNoThrow(
+                AppOpsManager.OPSTR_GET_USAGE_STATS,
+                Process.myUid(),
+                context.packageName
+            )
             return mode == AppOpsManager.MODE_ALLOWED
         }
 
         fun convertApplicationInfoToApps(
             packageManager: PackageManager,
             games: List<ApplicationInfo>
-        ): List<StatusJSON>{
-            var newGames: MutableList<StatusJSON> = mutableListOf()
-            for (game in games){
+        ): List<StatusJSON> {
+            val newGames: MutableList<StatusJSON> = mutableListOf()
+            for (game in games) {
                 newGames.add(
                     StatusJSON(
-                    game.packageName,
-                    getApplicationLabel(packageManager, game),
-                    getApplicationCategory(packageManager, game),
-                )
+                        game.packageName,
+                        getApplicationLabel(packageManager, game),
+                        getApplicationCategory(packageManager, game),
+                    )
                 )
             }
 
@@ -84,7 +87,7 @@ class GamesStatistic{
             val infos: List<ApplicationInfo> = packageManager.getInstalledApplications(flags)
             val installedApps: MutableList<ApplicationInfo> = ArrayList()
             for (info in infos) {
-                if(info.category == ApplicationInfo.CATEGORY_GAME){
+                if (info.category == ApplicationInfo.CATEGORY_GAME) {
                     installedApps.add(info)
                 }
             }
@@ -94,7 +97,11 @@ class GamesStatistic{
         }
 
         @RequiresApi(VERSION_CODES.O)
-        fun convertListApplicationToListStatusJSON(context: Context, packageManager: PackageManager, games: List<ApplicationInfo>): List<StatusJSON> {
+        fun convertListApplicationToListStatusJSON(
+            context: Context,
+            packageManager: PackageManager,
+            games: List<ApplicationInfo>
+        ): List<StatusJSON> {
             val newGames: MutableList<StatusJSON> = ArrayList()
 
             for (game in games) {
@@ -103,7 +110,7 @@ class GamesStatistic{
                 newGames.add(
                     StatusJSON(
                         packageName,
-                        getApplicationLabel(packageManager,game),
+                        getApplicationLabel(packageManager, game),
                         game.category,
                     )
                 )
@@ -114,10 +121,10 @@ class GamesStatistic{
     }
 
 
-    public fun getActiveApp(context: Context, packageManager: PackageManager): String?{
+    fun getActiveApp(context: Context, packageManager: PackageManager): String? {
         val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
         val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
-        if (userManager.isUserUnlocked && powerManager!!.isInteractive ) {
+        if (userManager.isUserUnlocked && powerManager!!.isInteractive) {
             val usm = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
             val time = System.currentTimeMillis()
             val appList =
@@ -150,27 +157,31 @@ class GamesStatistic{
         return null
     }
 
-    public fun getActiveApp2(context: Context, packageManager: PackageManager): String?{
+    fun getActiveApp2(context: Context, packageManager: PackageManager): String? {
         val userManager = context.getSystemService(Context.USER_SERVICE) as UserManager
         val powerManager = context.getSystemService(POWER_SERVICE) as PowerManager?
-        if (userManager.isUserUnlocked && powerManager!!.isInteractive ) {
-            val usageStatsManager = context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
-            var foregroundAppPackageName : String? = null
+        if (userManager.isUserUnlocked && powerManager!!.isInteractive) {
+            val usageStatsManager =
+                context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            var foregroundAppPackageName: String? = null
             val currentTime = System.currentTimeMillis()
 
-            val usageEvents = usageStatsManager.queryEvents( currentTime - (1000*60*10) , currentTime )
+            val usageEvents =
+                usageStatsManager.queryEvents(currentTime - (1000 * 60 * 10), currentTime)
             val usageEvent = UsageEvents.Event()
-            while ( usageEvents.hasNextEvent() ) {
-                usageEvents.getNextEvent( usageEvent )
-                Log.e( "APP" , "${usageEvent.packageName} ${usageEvent.timeStamp}" )
+            while (usageEvents.hasNextEvent()) {
+                usageEvents.getNextEvent(usageEvent)
+                Log.e("APP", "${usageEvent.packageName} ${usageEvent.timeStamp}")
             }
         }
-
         return null
     }
 
 
-    fun getStatisticGames(context: Context, packageManager: PackageManager): MutableList<UsageStats> {
+    fun getStatisticGames(
+        context: Context,
+        packageManager: PackageManager
+    ): MutableList<UsageStats> {
         val usageStatsManager = context.getSystemService("usagestats") as UsageStatsManager
 
         val usageStats = usageStatsManager.queryAndAggregateUsageStats(
@@ -178,17 +189,17 @@ class GamesStatistic{
             System.currentTimeMillis()
         )
 
-        var games: MutableList<UsageStats> = mutableListOf()
+        val games: MutableList<UsageStats> = mutableListOf()
 
-        for ((key,value) in usageStats) {
-            try{
-                val application: ApplicationInfo = packageManager.getApplicationInfo(key,0)
-                if(application.category == ApplicationInfo.CATEGORY_GAME){
+        for ((key, value) in usageStats) {
+            try {
+                val application: ApplicationInfo = packageManager.getApplicationInfo(key, 0)
+                if (application.category == ApplicationInfo.CATEGORY_GAME) {
                     games.add(value)
-                    Log.i("ADD GAME",value.toString())
+                    Log.i("ADD GAME", value.toString())
                 }
-            }catch (e: PackageManager.NameNotFoundException){
-                Log.d("APPLICATION_GAME", key + " Такой пакет не найден")
+            } catch (e: PackageManager.NameNotFoundException) {
+                Log.d("APPLICATION_GAME", "$key Такой пакет не найден")
             }
         }
 
@@ -203,7 +214,7 @@ fun getApplicationLabel(p: PackageManager, packageInfo: ApplicationInfo): String
 
 
 fun getApplicationCategory(p: PackageManager, packageInfo: ApplicationInfo): Int {
-    return p.getApplicationInfo(packageInfo.packageName,0).category
+    return p.getApplicationInfo(packageInfo.packageName, 0).category
 }
 
 @SuppressLint("WrongConstant")
@@ -211,7 +222,7 @@ fun getApplicationCategory(p: PackageManager, packageInfo: ApplicationInfo): Int
 fun UserGames() {
     val context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    val checkPermission = remember{ mutableStateOf(false) }
+    val checkPermission = remember { mutableStateOf(false) }
     val packageManager = context.packageManager
     val installedGames = remember { mutableStateOf(listOf<ApplicationInfo>()) }
     val statisticGames = remember { mutableStateOf(listOf<UsageStats>()) }
@@ -220,7 +231,7 @@ fun UserGames() {
 //
 //            val finalList: List<UsageStatsWrapper> = buildUsageStatsWrapper(installedApps, stats)
 //            view.onUsageStatsRetrieved(finalList)
-    val gamesStatistic:GamesStatistic = GamesStatistic()
+    val gamesStatistic: GamesStatistic = GamesStatistic()
 
 //    DisposableEffect(lifecycleOwner) {
 //        val observer = LifecycleEventObserver { _, event ->
@@ -243,28 +254,27 @@ fun UserGames() {
 
     Log.d("INIT_REQUEST_PERMISSION", "REQUEST_PERMISSION")
 
-    Column(
-    ){
+    Column {
         if (!checkPermission.value) {
             Text("Не получен доступ!")
             Button(
                 onClick = {
                     context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                 }
-            ){
+            ) {
                 Text("Получить разрешение")
             }
-        }else{
+        } else {
             Text("Доступ получен!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             LazyColumn(
                 content = {
                     item {
-                        Text(text = "Информация о количестве "+statisticGames.value.size.toString())
+                        Text(text = "Информация о количестве " + statisticGames.value.size.toString())
                     }
                     items(installedGames.value) { app ->
                         Row(
                             modifier = Modifier.fillMaxWidth()
-                        ){
+                        ) {
                             Icon(
                                 bitmap = (packageManager.getApplicationIcon(app.packageName) as BitmapDrawable).bitmap.asImageBitmap(),
                                 contentDescription = "Аноним",
@@ -285,7 +295,7 @@ fun UserGames() {
                     items(statisticGames.value) { app ->
                         Row(
                             modifier = Modifier.fillMaxWidth()
-                        ){
+                        ) {
 //                            Icon(
 //                                bitmap = (packageManager.getApplicationIcon(app.packageName) as BitmapDrawable).bitmap.asImageBitmap(),
 //                                contentDescription = "Аноним",
@@ -296,7 +306,9 @@ fun UserGames() {
 //                            )
 
                             Text(
-                                text = app.packageName+" "+convertLongToDate(app.lastTimeUsed)+" "+convertLongToTime(app.totalTimeInForeground),
+                                text = app.packageName + " " + convertLongToDate(app.lastTimeUsed) + " " + convertLongToTime(
+                                    app.totalTimeInForeground
+                                ),
                             )
                         }
                     }
@@ -319,9 +331,9 @@ fun convertLongToDate(time: Long): String {
 }
 
 fun convertLongToTime(time: Long): String {
-    val hours = time/3600000
-    val minutes = time%3600000/60000
-    val seconds = time%60000/1000
+    val hours = time / 3600000
+    val minutes = time % 3600000 / 60000
+    val seconds = time % 60000 / 1000
 
     return "$hours:$minutes:$seconds"
 }

@@ -15,10 +15,10 @@ fun Search(
     placeholder: String = stringResource(id = R.string.enter_nickname_search),
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-){
+) {
     Box(
         modifier = modifier,
-    ){
+    ) {
         Search(
             placeholder = placeholder,
             text = text,

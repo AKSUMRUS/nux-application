@@ -8,10 +8,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight.Companion.W700
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
@@ -26,19 +24,18 @@ fun EditProfileTopBlock(
 
     val state = profileViewModel.state.profile
 
-    state?.let{
+    state?.let {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 20.dp)
-            ,
+                .padding(bottom = 20.dp),
             horizontalAlignment = CenterHorizontally
         ) {
             UploadAvatar(
                 profile_pic = state.profile_pic.toString(),
                 profileViewModel = profileViewModel,
                 userViewModel = userViewModel,
-                modifier = Modifier.size(130.dp,130.dp)
+                modifier = Modifier.size(130.dp, 130.dp)
             )
 
             HeadlineH3(

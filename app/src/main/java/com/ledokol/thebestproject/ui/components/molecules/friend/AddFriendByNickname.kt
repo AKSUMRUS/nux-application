@@ -13,7 +13,7 @@ fun AddFriendByNickname(
     nickname: String,
     onClickButton: () -> Unit,
     onValueChange: (String) -> Unit,
-){
+) {
 
     Search(
         text = nickname,

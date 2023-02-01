@@ -27,14 +27,14 @@ fun PhoneNumber(
     onPhoneChange: (String) -> Unit,
     error: String,
     onNextClick: () -> Unit,
-){
+) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
 
-    var phone0 by remember{ mutableStateOf("+7")}
+    var phone0 by remember { mutableStateOf("+7") }
 
-    fun onPhone0Change(text: String){
+    fun onPhone0Change(text: String) {
         phone0 = text
     }
 
@@ -56,23 +56,21 @@ fun PhoneNumber(
 
     Column(
         modifier = Modifier
-    ){
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(MaterialTheme.colors.primary)
-            ,
+                .background(MaterialTheme.colors.primary),
             horizontalArrangement = Arrangement.SpaceBetween
-        ){
+        ) {
             TextField(
                 text = phone0,
                 onValueChange = { onPhoneChange(it) },
                 modifier = Modifier
                     .padding(0.dp)
-                    .weight(3f)
+                    .weight(3f),
 //                    .then(modifier)
-                ,
                 enabled = false,
                 textStyle = textStyle,
             )
@@ -83,9 +81,8 @@ fun PhoneNumber(
                     .padding(0.dp)
                     .weight(10f)
                     .align(CenterVertically)
-                    .focusRequester(focusRequester)
+                    .focusRequester(focusRequester),
 //                    .then(modifier)
-                ,
                 keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Next,
                 textStyle = textStyle2,

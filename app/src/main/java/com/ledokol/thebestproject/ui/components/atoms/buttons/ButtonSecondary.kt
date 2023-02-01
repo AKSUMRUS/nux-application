@@ -15,7 +15,7 @@ fun ButtonSecondary(
     text: String,
     modifier: Modifier,
     onClick: () -> Unit,
-){
+) {
     Button(
         onClick = onClick,
         modifier = Modifier

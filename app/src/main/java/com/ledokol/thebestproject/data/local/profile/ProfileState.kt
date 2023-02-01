@@ -2,7 +2,7 @@ package com.ledokol.thebestproject.data.local.profile
 
 import com.ledokol.thebestproject.domain.profile.DefaultProfilePic
 
-data class ProfileState (
+data class ProfileState(
     var profile: Profile? = null,
     val lastGame: String = "",
     val finish_register: Boolean = false,

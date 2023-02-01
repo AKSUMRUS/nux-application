@@ -23,7 +23,7 @@ class NotificationsViewModel @Inject constructor(
     var state by mutableStateOf(NotificationsState())
 
 
-    fun onEvent(event : NotificationsEvent) {
+    fun onEvent(event: NotificationsEvent) {
         when (event) {
             is NotificationsEvent.GetFriendsRequests -> {
                 getFriendRequestNotifications(token = event.token)
@@ -34,17 +34,17 @@ class NotificationsViewModel @Inject constructor(
         }
     }
 
-    private fun clearNotifications(){
+    private fun clearNotifications() {
         viewModelScope.launch {
             repository.clearNotifications()
         }
     }
 
-    private fun getFriendRequestNotifications(token : String){
+    private fun getFriendRequestNotifications(token: String) {
         viewModelScope.launch {
             repository.getFriendRequestNotifications(token = token)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             Log.e("NotificationsRepository", result.data.toString())
                             state = state.copy(
@@ -63,12 +63,12 @@ class NotificationsViewModel @Inject constructor(
     }
 
     private fun addFriend(
-        notificationEntity : NotificationEntity
+        notificationEntity: NotificationEntity
     ) {
         viewModelScope.launch {
             repository.addFriend(notificationEntity = notificationEntity)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             state = state.copy(
                                 friendInvites = result.data

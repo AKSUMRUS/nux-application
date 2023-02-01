@@ -27,12 +27,12 @@ fun FriendTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 0.dp, end = 0.dp, top = 80.dp, bottom = 10.dp)
-    ){
+    ) {
         Column(
             modifier = Modifier
 //                    .align(Alignment.CenterVertically)
                 .weight(2f),
-        ){
+        ) {
             HeadlineH4(
                 text = user.name,
                 color = MaterialTheme.colors.onBackground,
@@ -59,7 +59,7 @@ fun FriendTopBar(
             )
 
 
-            ButtonEmpty(text = "Пожаловаться", onClick = {onClickClaim()})
+            ButtonEmpty(text = "Пожаловаться", onClick = { onClickClaim() })
         }
 
         Row(
@@ -67,17 +67,15 @@ fun FriendTopBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 0.dp)
-                .weight(1f)
-            ,
+                .weight(1f),
             verticalAlignment = Alignment.CenterVertically,
-        ){
+        ) {
 
             AsyncImage(
                 model = user.profile_pic,
                 contentDescription = "Аноним",
                 modifier = Modifier
-                    .size(height = 120.dp, width = 120.dp)
-                ,
+                    .size(height = 120.dp, width = 120.dp),
                 contentScale = ContentScale.Crop,
             )
         }

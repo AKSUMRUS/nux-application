@@ -13,15 +13,14 @@ fun ButtonWithImage(
     onClick: () -> Unit,
     icon: Painter,
     modifier: Modifier,
-){
+) {
     Button(
         onClick = onClick,
-        modifier = modifier
+        modifier = modifier,
 //            .then(modifier)
 //            .height(30.dp)
-        ,
         shape = RoundedCornerShape(0.dp),
-    ){
+    ) {
         Image(painter = icon, contentDescription = "")
     }
 }

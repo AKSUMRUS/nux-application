@@ -24,6 +24,6 @@ fun Body2(
         modifier = modifier,
         fontWeight = fontWeight,
         textAlign = textAlign,
-        )
+    )
 }
 

@@ -3,47 +3,47 @@ package com.ledokol.thebestproject.data.repository
 import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.contact.Contact
 import com.ledokol.thebestproject.data.local.contact.ContactsDao
-import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okio.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ContactsRepository @Inject constructor(
     private val dao: ContactsDao,
-){
+) {
 
-    fun insertContacts(contacts: List<Contact>){
+    fun insertContacts(contacts: List<Contact>) {
         dao.insertContacts(contacts)
     }
 
-    fun insertContact(contact: Contact){
+    fun insertContact(contact: Contact) {
         dao.insertContact(contact)
     }
 
-    fun clearContacts(){
+    fun clearContacts() {
         dao.clearContacts()
     }
 
     fun getContacts(
         query: String,
     ): Flow<Resource<List<Contact>>> {
-        return flow{
+        return flow {
             emit(Resource.Loading(true))
 
-            val contacts = try{
+            val contacts = try {
                 dao.getContacts(query)
-            }catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            emit(Resource.Success(
-                data = contacts
-            ))
+            emit(
+                Resource.Success(
+                    data = contacts
+                )
+            )
 
             emit(Resource.Loading(false))
         }

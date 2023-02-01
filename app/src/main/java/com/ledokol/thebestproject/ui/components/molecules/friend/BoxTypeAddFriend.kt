@@ -1,15 +1,12 @@
 package com.ledokol.thebestproject.ui.components.molecules.friend
 
-import android.graphics.Bitmap
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -26,7 +23,7 @@ fun BoxTypeAddFriend(
     icon: ImageBitmap,
     title: String,
     onClick: () -> Unit,
-){
+) {
     Row(
         modifier = Modifier
             .padding(top = 7.dp, bottom = 8.dp)
@@ -38,7 +35,7 @@ fun BoxTypeAddFriend(
             .background(MaterialTheme.colors.primary)
             .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
-    ){
+    ) {
         Icon(
             icon,
             modifier = Modifier
@@ -46,18 +43,17 @@ fun BoxTypeAddFriend(
                 .size(height = 60.dp, width = 60.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(MaterialTheme.colors.secondary)
-                .padding(14.dp)
-                ,
+                .padding(14.dp),
             contentDescription = null,
             tint = Color.White,
         )
 
-            HeadlineH6(
-                text = title,
-                color = MaterialTheme.colors.onBackground,
-                modifier = Modifier
-                    .padding(start = 26.dp)
-            )
+        HeadlineH6(
+            text = title,
+            color = MaterialTheme.colors.onBackground,
+            modifier = Modifier
+                .padding(start = 26.dp)
+        )
 
     }
 

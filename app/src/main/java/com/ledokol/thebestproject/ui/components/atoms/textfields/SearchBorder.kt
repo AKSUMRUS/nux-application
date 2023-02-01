@@ -10,7 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -31,16 +31,16 @@ fun SearchBorder(
     modifier: Modifier = Modifier,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
-    trailingButtonClick: () -> Unit = {onValueChange("")},
+    trailingButtonClick: () -> Unit = { onValueChange("") },
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
 ) {
-    if(textCaption != null){
+    if (textCaption != null) {
         HeadlineH5(
             text = textCaption,
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 
@@ -54,7 +54,7 @@ fun SearchBorder(
         keyboardActions = keyboardActions,
         singleLine = true,
         trailingIcon = {
-            IconButton(onClick =  trailingButtonClick) {
+            IconButton(onClick = trailingButtonClick) {
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.onPrimary)
             }
         },

@@ -13,11 +13,11 @@ fun TitleQuickGame(
     title: String,
     modifier: Modifier = Modifier,
     description: String = "",
-){
+) {
 
     Column(
         modifier = modifier,
-    ){
+    ) {
         HeadlineH4(
             text = title,
             color = MaterialTheme.colors.onBackground,

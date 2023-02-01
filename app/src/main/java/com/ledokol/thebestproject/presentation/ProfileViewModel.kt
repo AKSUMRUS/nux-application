@@ -24,7 +24,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: ProfileRepository
-): ViewModel() {
+) : ViewModel() {
     var state by mutableStateOf(ProfileState())
     private val errorMapper = ErrorMapper(context)
 
@@ -34,8 +34,8 @@ class ProfileViewModel @Inject constructor(
             return field
         }
 
-    fun onEvent(event: ProfileEvent){
-        when(event){
+    fun onEvent(event: ProfileEvent) {
+        when (event) {
             is ProfileEvent.UpdateProfileData -> {
                 updateProfileData(event.newProfile)
             }
@@ -96,11 +96,10 @@ class ProfileViewModel @Inject constructor(
 
     private fun getDefaultProfilePics() {
         viewModelScope.launch {
-            repository.getDefaultProfilePics().collect{
-                result ->
-                when(result) {
+            repository.getDefaultProfilePics().collect { result ->
+                when (result) {
                     is Resource.Success -> {
-                        state = state.copy (
+                        state = state.copy(
                             defaultProfilePicsList = result.data!!.default_profile_pics
                         )
                     }
@@ -116,8 +115,8 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun setDoNotDisturb(
-      canDisturb: Boolean,
-      accessToken: String
+        canDisturb: Boolean,
+        accessToken: String
     ) {
         viewModelScope.launch {
             repository.setDoNotDisturb(
@@ -125,7 +124,7 @@ class ProfileViewModel @Inject constructor(
                 accessToken = accessToken
             )
                 .collect { result ->
-                    when(result){
+                    when (result) {
                         is Resource.Success -> {
                             state = state.copy(
                                 profile = result.data
@@ -143,11 +142,10 @@ class ProfileViewModel @Inject constructor(
     }
 
 
-
     private fun confirmationPhone(
         phone: String,
         reason: String,
-    ){
+    ) {
         viewModelScope.launch {
             repository.confirmationPhone(phone = phone, reason = reason).collect { result ->
                 when (result) {
@@ -168,14 +166,13 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun updateProfileData(newProfile: UpdateProfileJSON){
+    private fun updateProfileData(newProfile: UpdateProfileJSON) {
         job.cancel()
         viewModelScope.launch(job) {
             repository
                 .updateProfileData(newProfile = newProfile)
-                .collect{
-                    result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             val newProfileState = state.profile
                             newProfileState!!.name = result.data!!.name
@@ -197,32 +194,26 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun getProfile(){
+    private fun getProfile() {
         viewModelScope.launch {
             val response = repository.getProfile()
-            state = if(response != null) {
-                state.copy(
-                    profile = response,
-                    finish_register = response.finishRegister
-                )
-            } else{
-                state.copy(
-                    profile = response
-                )
-            }
+            state = state.copy(
+                profile = response,
+                finish_register = response?.finishRegister ?: state.finish_register
+            )
         }
     }
 
     private fun updateAvatar(
         profile_pic: Bitmap
-    ){
+    ) {
         viewModelScope.launch {
             repository.uploadAvatar(
                 profile_pic_bitmap = profile_pic,
-            ).collect{ result ->
-                when(result){
+            ).collect { result ->
+                when (result) {
                     is Resource.Success -> {
-                        if(result.data != null) {
+                        if (result.data != null) {
                             getMe()
                         }
                     }
@@ -237,7 +228,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String){
+    private fun inviteFriends(accessToken: String, friends_ids: List<String>, app_id: String) {
         viewModelScope.launch {
             repository.inviteFriends(
                 accessToken = accessToken,
@@ -250,15 +241,15 @@ class ProfileViewModel @Inject constructor(
     fun setCurrentFirebaseToken(
         token: String,
         accessToken: String,
-    ){
+    ) {
         viewModelScope.launch {
-            repository.setCurrentFirebaseToken(token,accessToken)
+            repository.setCurrentFirebaseToken(token, accessToken)
         }
     }
 
     private fun setFinishRegister(
         accessToken: String
-    ){
+    ) {
         viewModelScope.launch {
             repository.setFinishRegister(accessToken)
             state = state.copy(finish_register = true)
@@ -269,17 +260,17 @@ class ProfileViewModel @Inject constructor(
         id: String,
         code: String,
         phone: String,
-    ){
+    ) {
         viewModelScope.launch {
             repository.login(
                 id = id,
                 code = code,
                 phone = phone,
             )
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
-                            if(result.data != null) {
+                            if (result.data != null) {
                                 getMe()
                             }
                         }
@@ -301,7 +292,7 @@ class ProfileViewModel @Inject constructor(
         default_profile_pic_id: String,
         id: String,
         code: String,
-    ){
+    ) {
         viewModelScope.launch {
             repository.signUp(
                 nickname = nickname,
@@ -311,10 +302,10 @@ class ProfileViewModel @Inject constructor(
                 id = id,
                 code = code
             )
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
-                            if(result.data != null){
+                            if (result.data != null) {
                                 Log.i("singUpRepository", result.data.toString())
                                 getMe()
                             }
@@ -329,18 +320,19 @@ class ProfileViewModel @Inject constructor(
                 }
         }
     }
-    private fun logOut(){
+
+    private fun logOut() {
         repository.clearProfile()
         state = state.copy(
             profile = null
         )
     }
 
-    private fun getMe(){
+    private fun getMe() {
         viewModelScope.launch {
             repository.getMe()
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             state = state.copy(
                                 profile = result.data

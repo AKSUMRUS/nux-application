@@ -4,17 +4,12 @@ import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.VectorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Base64
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,38 +17,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.BottomEnd
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.core.content.res.ResourcesCompat
-import coil.compose.AsyncImage
 import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.data.local.profile.ProfileEvent
-import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestproject.ui.components.molecules.UploadAvatar
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
-import id.zelory.compressor.calculateInSampleSize
+import com.ledokol.thebestproject.ui.components.molecules.UploadAvatar
 import java.io.ByteArrayOutputStream
-import java.util.*
 
 
 class URIPathHelper {
@@ -74,8 +55,11 @@ class URIPathHelper {
 
             } else if (isDownloadsDocument(uri)) {
                 val id = DocumentsContract.getDocumentId(uri)
-                val contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
-                    return getDataColumn(context, contentUri, null, null)
+                val contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"),
+                    java.lang.Long.valueOf(id)
+                )
+                return getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":".toRegex()).toTypedArray()
@@ -100,31 +84,37 @@ class URIPathHelper {
         return null
     }
 
-    fun getDataColumn(context: Context, uri: Uri?, selection: String?, selectionArgs: Array<String>?): String? {
+    private fun getDataColumn(
+        context: Context,
+        uri: Uri?,
+        selection: String?,
+        selectionArgs: Array<String>?
+    ): String? {
         var cursor: Cursor? = null
         val column = "_data"
         val projection = arrayOf(column)
         try {
-            cursor = context.getContentResolver().query(uri!!, projection, selection, selectionArgs,null)
+            cursor = context.contentResolver
+                .query(uri!!, projection, selection, selectionArgs, null)
             if (cursor != null && cursor.moveToFirst()) {
                 val column_index: Int = cursor.getColumnIndexOrThrow(column)
                 return cursor.getString(column_index)
             }
         } finally {
-            if (cursor != null) cursor.close()
+            cursor?.close()
         }
         return null
     }
 
-    fun isExternalStorageDocument(uri: Uri): Boolean {
+    private fun isExternalStorageDocument(uri: Uri): Boolean {
         return "com.android.externalstorage.documents" == uri.authority
     }
 
-    fun isDownloadsDocument(uri: Uri): Boolean {
+    private fun isDownloadsDocument(uri: Uri): Boolean {
         return "com.android.providers.downloads.documents" == uri.authority
     }
 
-    fun isMediaDocument(uri: Uri): Boolean {
+    private fun isMediaDocument(uri: Uri): Boolean {
         return "com.android.providers.media.documents" == uri.authority
     }
 }
@@ -137,7 +127,7 @@ fun UserInformationProfile(
     onClickEdit: () -> Unit,
     profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel,
-){
+) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -155,16 +145,20 @@ fun UserInformationProfile(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 20.dp, end = 20.dp, top = top, bottom = 10.dp)
-    ){
-        Row{
+    ) {
+        Row {
             Box(
                 modifier = Modifier
                     .padding(end = 20.dp, bottom = 20.dp)
                     .size(69.dp)
                     .clip(CircleShape)
                     .background(color = MaterialTheme.colors.secondary),
-            ){
-                UploadAvatar(profile_pic = profile_pic, profileViewModel = profileViewModel, userViewModel = userViewModel)
+            ) {
+                UploadAvatar(
+                    profile_pic = profile_pic,
+                    profileViewModel = profileViewModel,
+                    userViewModel = userViewModel
+                )
             }
             Column(
                 modifier = Modifier
@@ -176,7 +170,7 @@ fun UserInformationProfile(
                     fontWeight = FontWeight.W700,
                 )
                 HeadlineH6(
-                    text = "@${state?.nickname}",
+                    text = "@${state.nickname}",
                     color = MaterialTheme.colors.onPrimary,
                     fontWeight = FontWeight.W700,
                 )

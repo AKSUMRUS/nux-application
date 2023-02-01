@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 fun ScreenTitleFriends(
     name: String,
     description: String? = null,
-    onFindFriendClick : () -> Unit = {},
+    onFindFriendClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    Row{
+    Row {
         ScreenTitle(name, description, modifier)
 //        ButtonWithImage(
 //            icon = painterResource(id = R.drawable.ic_radar),

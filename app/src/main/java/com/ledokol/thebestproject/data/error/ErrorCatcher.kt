@@ -2,9 +2,9 @@ package com.ledokol.thebestproject.data.error
 
 object ErrorCatcher {
 
-    fun catch(code : Int) : ErrorRemote{
+    fun catch(code: Int): ErrorRemote {
 
-        return when(code){
+        return when (code) {
             400 -> ErrorRemote.BadRequest
             401 -> ErrorRemote.Unauthorized
             403 -> ErrorRemote.Forbidden

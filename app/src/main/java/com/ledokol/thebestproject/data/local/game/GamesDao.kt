@@ -24,9 +24,9 @@ interface GamesDao {
             WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'
         """
     )
-    fun getGames(query: String) : List<Game>
+    fun getGames(query: String): List<Game>
 
     @Query("SELECT * FROM games WHERE package = :packageName LIMIT 1")
-    fun getGame(packageName: String) : Game
+    fun getGame(packageName: String): Game
 
 }

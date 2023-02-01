@@ -21,5 +21,4 @@ interface ProfileDao {
     fun finishRegister(access_token: String, finish_register: Boolean = true)
 
 
-
 }

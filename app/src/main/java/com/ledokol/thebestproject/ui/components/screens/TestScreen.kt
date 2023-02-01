@@ -12,7 +12,9 @@ import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 fun TestScreen(
 
 ) {
-    Column(modifier = Modifier.fillMaxSize().padding(30.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(30.dp)) {
         ButtonBorder(text = "Test Crash", onClick = { throw RuntimeException("Test Crash") })
     }
 }

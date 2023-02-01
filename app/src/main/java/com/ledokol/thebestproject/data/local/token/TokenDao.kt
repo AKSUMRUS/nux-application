@@ -10,12 +10,12 @@ interface TokenDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addToken(token : TokenEntity)
+    fun addToken(token: TokenEntity)
 
     @Query(""" DELETE FROM "token" """)
     fun clearToken()
 
     @Query("""SELECT * FROM "token" LIMIT 1 """)
-    fun getToken() : TokenEntity?
+    fun getToken(): TokenEntity?
 
 }

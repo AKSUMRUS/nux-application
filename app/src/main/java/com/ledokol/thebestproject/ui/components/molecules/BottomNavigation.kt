@@ -4,10 +4,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.*
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
@@ -15,15 +16,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 
 @Composable
-fun BottomNavigation(navController: NavController,bottomBarState: MutableState<Boolean>) {
+fun BottomNavigation(navController: NavController, bottomBarState: MutableState<Boolean>) {
     val items = listOf(
         BottomNavItemMain.Profile,
         BottomNavItemMain.Friends,
     )
-    
+
     AnimatedVisibility(visible = bottomBarState.value) {
 
         BottomNavigation(
@@ -43,8 +46,7 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                                 .align(CenterVertically)
 //                                .padding(bottom = 8.dp)
                                 .size(35.dp)
-                                .align(CenterVertically)
-                            ,
+                                .align(CenterVertically),
                         )
                     },
                     selectedContentColor = MaterialTheme.colors.onBackground,
@@ -52,13 +54,15 @@ fun BottomNavigation(navController: NavController,bottomBarState: MutableState<B
                     selected = currentRoute == item.screen_route,
                     onClick = {
                         navController.navigate(item.screen_route) {
-                            popUpTo(item.screen_route){
+                            popUpTo(item.screen_route) {
                                 inclusive = true
                             }
                             launchSingleTop = true
                         }
                     },
-                    modifier = Modifier.align(CenterVertically).padding(bottom = 5.dp),
+                    modifier = Modifier
+                        .align(CenterVertically)
+                        .padding(bottom = 5.dp),
                 )
             }
 

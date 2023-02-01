@@ -23,15 +23,14 @@ fun GameStat(
     onClick: () -> Unit = {},
     openGame: Boolean = false,
     usageTime: Int,
-){
+) {
 
     Box(
         modifier = Modifier
             .padding(bottom = 8.dp)
             .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colors.primary)
-        ,
-    ){
+            .background(MaterialTheme.colors.primary),
+    ) {
 
         Row(
             modifier = Modifier
@@ -40,13 +39,12 @@ fun GameStat(
                 .clip(RoundedCornerShape(0))
                 .clickable(onClick = onClick)
                 .padding(10.dp)
-        ){
+        ) {
             AsyncImage(
                 model = icon,
                 contentDescription = "Аноним",
                 modifier = Modifier
-                    .size(height = 60.dp, width = 60.dp)
-                ,
+                    .size(height = 60.dp, width = 60.dp),
                 contentScale = ContentScale.Crop,
             )
 
@@ -54,7 +52,7 @@ fun GameStat(
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 20.dp)
-            ){
+            ) {
                 HeadlineH6(
                     text = name,
                     modifier = Modifier,
@@ -62,10 +60,10 @@ fun GameStat(
                     fontWeight = FontWeight.Medium,
                 )
 
-                Body1(text = "Играл ${usageTime} ${getTextMinutes(usageTime)}",
+                Body1(
+                    text = "Играл $usageTime ${getTextMinutes(usageTime)}",
                     modifier = Modifier
-                        .padding(start = 0.dp)
-                    ,
+                        .padding(start = 0.dp),
                     color = MaterialTheme.colors.onPrimary,
                 )
             }
@@ -74,8 +72,8 @@ fun GameStat(
     }
 }
 
-fun getTextMinutes(number: Int): String{
-    when(number%10){
+fun getTextMinutes(number: Int): String {
+    when (number % 10) {
         in 5..10 -> {
             return "минут"
         }

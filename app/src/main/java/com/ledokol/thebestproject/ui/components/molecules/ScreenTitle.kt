@@ -18,14 +18,16 @@ fun ScreenTitle(
 ) {
 
     Column(
-        modifier = Modifier.padding(bottom = 20.dp).then(modifier),
+        modifier = Modifier
+            .padding(bottom = 20.dp)
+            .then(modifier),
     ) {
         HeadlineH4(
             text = name,
             color = MaterialTheme.colors.onBackground,
             fontWeight = FontWeight.W500,
         )
-        if(description != null) {
+        if (description != null) {
             Body1(
                 text = description,
                 color = MaterialTheme.colors.onPrimary,

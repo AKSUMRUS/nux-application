@@ -17,15 +17,15 @@ import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
 
 @Database(
-    entities = [(Profile::class),(User::class),(Game::class),(Contact::class), (NotificationEntity::class),(TokenEntity::class)],
+    entities = [(Profile::class), (User::class), (Game::class), (Contact::class), (NotificationEntity::class), (TokenEntity::class)],
     version = 10
 )
 @TypeConverters(Converters::class)
-abstract class MyDatabase: RoomDatabase() {
+abstract class MyDatabase : RoomDatabase() {
     abstract fun profileDao(): ProfileDao
     abstract fun usersDao(): UsersDao
     abstract fun gamesDao(): GamesDao
     abstract fun contactsDao(): ContactsDao
     abstract fun notificationDao(): NotificationsDao
-    abstract fun tokenDao() : TokenDao
+    abstract fun tokenDao(): TokenDao
 }

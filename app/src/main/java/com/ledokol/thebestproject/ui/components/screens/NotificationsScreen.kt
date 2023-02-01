@@ -1,30 +1,17 @@
 package com.ledokol.thebestproject.ui.components.screens
 
-import android.os.Handler
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
-import com.ledokol.thebestproject.data.local.notifications.NotificationsEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.molecules.EmptyScreen
-import com.ledokol.thebestproject.ui.components.molecules.ScreenTitle
-import com.ledokol.thebestproject.ui.components.molecules.friend.FriendInNotification
 
 @Composable
 fun NotificationsScreen(
     notificationsViewModel: NotificationsViewModel,
     profileViewModel: ProfileViewModel,
-    userViewModel : UserViewModel,
-    navController : NavController
+    userViewModel: UserViewModel,
+    navController: NavController
 ) {
 
 //    val state = notificationsViewModel.state

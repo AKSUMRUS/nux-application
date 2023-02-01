@@ -12,21 +12,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.ledokol.thebestproject.data.local.profile.ProfileEvent
-import com.ledokol.thebestproject.presentation.ProfileViewModel
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
-import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-import com.ledokol.thebestproject.ui.components.molecules.profile.EditProfileTopBlock
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.domain.profile.UpdateProfile
 import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
+import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestproject.ui.components.atoms.textfields.EditProfileInput
+import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
+import com.ledokol.thebestproject.ui.components.molecules.profile.EditProfileTopBlock
 import com.ledokol.thebestproject.ui.components.screens.registration.checkCorrectName
 import com.ledokol.thebestproject.ui.components.screens.registration.checkCorrectNickname
-import kotlinx.coroutines.Job
 
 @Composable
 fun EditProfileScreen(
@@ -37,36 +36,43 @@ fun EditProfileScreen(
     val state = profileViewModel.state.profile
     val context = LocalContext.current
 
-    var name by remember{ mutableStateOf(state!!.name) }
-    var nickname by remember{ mutableStateOf(state!!.nickname) }
+    var name by remember { mutableStateOf(state!!.name) }
+    var nickname by remember { mutableStateOf(state!!.nickname) }
     var isSaved by remember { mutableStateOf(true) }
 
-    fun onEdited(){
+    fun onEdited() {
         isSaved = false
     }
 
-    fun onEditName(newName: String){
+    fun onEditName(newName: String) {
         name = newName
         onEdited()
     }
 
-    fun onEditNickname(newNickname: String){
+    fun onEditNickname(newNickname: String) {
         nickname = newNickname
         userViewModel.onEvent(UserEvent.CheckExistsNickname(nickname = nickname))
         onEdited()
     }
 
-    fun onSave(){
-        if(!checkCorrectName(name)||!checkCorrectNickname(nickname)){
+    fun onSave() {
+        if (!checkCorrectName(name) || !checkCorrectNickname(nickname)) {
             Toast.makeText(context, "Данные некорректны", Toast.LENGTH_LONG).show()
-        }else if((userViewModel.state.existsUser == null || !userViewModel.state.existsUser!!) || nickname == state!!.nickname){
-            if(!isSaved) {
+        } else if ((userViewModel.state.existsUser == null || !userViewModel.state.existsUser!!) || nickname == state!!.nickname) {
+            if (!isSaved) {
                 isSaved = true
                 profileViewModel.onEvent(
-                    ProfileEvent.UpdateProfileData(newProfile = UpdateProfileJSON(user = UpdateProfile(nickname = nickname, name = name)))
+                    ProfileEvent.UpdateProfileData(
+                        newProfile = UpdateProfileJSON(
+                            user = UpdateProfile(
+                                nickname = nickname,
+                                name = name
+                            )
+                        )
+                    )
                 )
             }
-        }else{
+        } else {
             Toast.makeText(context, "Такой никнейм уже существует", Toast.LENGTH_LONG).show()
         }
     }
@@ -75,7 +81,7 @@ fun EditProfileScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        BackToolbar (
+        BackToolbar(
             buttonBackClick = {
                 navController.popBackStack()
             }
@@ -83,8 +89,7 @@ fun EditProfileScreen(
 
         Column(
             modifier = Modifier
-                .padding(top = 120.dp, start = 20.dp, end = 20.dp, bottom = 20.dp)
-            ,
+                .padding(top = 120.dp, start = 20.dp, end = 20.dp, bottom = 20.dp),
         ) {
             EditProfileTopBlock(
                 profileViewModel = profileViewModel,
@@ -115,9 +120,8 @@ fun EditProfileScreen(
 
             ButtonWithChangeableColor(
                 modifier = Modifier
-                    .padding(top = 10.dp, bottom = 10.dp)
-                ,
-                text1 = stringResource (id = R.string.save_changes),
+                    .padding(top = 10.dp, bottom = 10.dp),
+                text1 = stringResource(id = R.string.save_changes),
                 text2 = stringResource(id = R.string.changes_saved),
                 color1 = MaterialTheme.colors.secondary,
                 color1Text = MaterialTheme.colors.onSecondary,
@@ -135,8 +139,7 @@ fun EditProfileScreen(
                 colorBorder = MaterialTheme.colors.error,
                 padding = 2.dp,
                 modifier = Modifier
-                    .padding(top = 20.dp)
-                ,
+                    .padding(top = 20.dp),
             )
         }
 

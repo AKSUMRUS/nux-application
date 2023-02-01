@@ -37,7 +37,7 @@ fun EditProfileInput(
             fontWeight = FontWeight.W700,
         )
 
-        if(description != null) {
+        if (description != null) {
             Body2(
                 text = description,
                 modifier = Modifier.padding(bottom = 10.dp),
@@ -49,25 +49,25 @@ fun EditProfileInput(
             text = text,
             onValueChange = onValueChange,
             imeAction = ImeAction.Done,
-            keyboardActions = KeyboardActions ( onDone = {
+            keyboardActions = KeyboardActions(onDone = {
                 keyboard!!.hide()
-            } ),
+            }),
             modifier = Modifier.padding(top = 5.dp)
         )
 
-        if(!checkCorrect(text)){
+        if (!checkCorrect(text)) {
             Body2(
                 text = "Некорректный ввод",
                 color = MaterialTheme.colors.error,
             )
-        }else{
-            if(exists!=null){
-                if(!exists || init_text == text){
+        } else {
+            if (exists != null) {
+                if (!exists || init_text == text) {
                     Body2(
                         text = "Свободен",
                         color = Color.Green,
                     )
-                }else{
+                } else {
                     Body2(
                         text = "Занято",
                         color = MaterialTheme.colors.error,

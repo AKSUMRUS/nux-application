@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.data.repository
 
-import android.util.Log
 import com.ledokol.thebestproject.data.error.ErrorRemote
 import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.notifications.NotificationsDao
@@ -15,12 +14,12 @@ import javax.inject.Singleton
 
 @Singleton
 class NotificationsRepository @Inject constructor(
-    val dao : NotificationsDao,
-    val api : RetrofitServices
+    val dao: NotificationsDao,
+    private val api: RetrofitServices
 ) : BasicRepository() {
 
-    fun getFriendRequestNotifications(token : String)
-    : Flow<Resource<List<NotificationEntity>>> {
+    fun getFriendRequestNotifications(token: String)
+            : Flow<Resource<List<NotificationEntity>>> {
 //        return flow{
 //            emit(Resource.Loading(true))
 //
@@ -63,12 +62,13 @@ class NotificationsRepository @Inject constructor(
 
     fun addFriend(
         notificationEntity: NotificationEntity
-    ) : Flow<Resource<List<NotificationEntity>>> {
+    ): Flow<Resource<List<NotificationEntity>>> {
         return flow {
             emit(Resource.Loading(true))
 
             val notificationsCall = try {
-                api.addFriend(addFriend = AddFriend(user_id = notificationEntity.from_user.id)).awaitResponse()
+                api.addFriend(addFriend = AddFriend(user_id = notificationEntity.from_user.id))
+                    .awaitResponse()
             } catch (e: Exception) {
                 emit(Resource.Loading(false))
                 emit(Resource.Error(ErrorRemote.NoInternet))
@@ -85,7 +85,7 @@ class NotificationsRepository @Inject constructor(
         }
     }
 
-    fun clearNotifications(){
+    fun clearNotifications() {
         dao.clearNotifications()
     }
 

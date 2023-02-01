@@ -21,7 +21,7 @@ fun Password(
     password: String,
     placeholder: String,
     onValueChange: (String) -> Unit,
-    ){
+) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     TextField(
@@ -30,19 +30,19 @@ fun Password(
         singleLine = true,
         placeholder = {
             Text(text = placeholder)
-          },
+        },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
             val image = if (passwordVisible)
                 ImageBitmap.imageResource(id = R.drawable.visible)
-             else
+            else
                 ImageBitmap.imageResource(id = R.drawable.unvisible)
 
             // Please provide localized description for accessibility services
             val description = if (passwordVisible) "Hide password" else "Show password"
 
-            IconButton(onClick = {passwordVisible = !passwordVisible}){
+            IconButton(onClick = { passwordVisible = !passwordVisible }) {
                 Icon(
                     image,
                     description,
@@ -59,6 +59,8 @@ fun Password(
             backgroundColor = Color.Transparent,
             cursorColor = Color.DarkGray
         ),
-        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.secondary),
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.secondary),
     )
 }

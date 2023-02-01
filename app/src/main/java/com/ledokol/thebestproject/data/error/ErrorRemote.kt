@@ -1,6 +1,6 @@
 package com.ledokol.thebestproject.data.error
 
-sealed class ErrorRemote(){
+sealed class ErrorRemote {
     object NoInternet : ErrorRemote()
     object BadRequest : ErrorRemote()
     object Unauthorized : ErrorRemote()

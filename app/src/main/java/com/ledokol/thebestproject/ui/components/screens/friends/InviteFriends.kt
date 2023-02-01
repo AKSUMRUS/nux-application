@@ -5,15 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.util.Log
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -38,7 +34,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
@@ -58,10 +53,10 @@ fun InviteFriend(
     navController: NavController,
     userViewModel: UserViewModel,
     profileViewModel: ProfileViewModel,
-){
+) {
     val context = LocalContext.current
-    var nickname by remember{ mutableStateOf("")}
-    var phone by remember{ mutableStateOf("")}
+    var nickname by remember { mutableStateOf("") }
+    var phone by remember { mutableStateOf("") }
 
     val state = userViewModel.state
     val friends = state.recommendedFriends
@@ -74,30 +69,33 @@ fun InviteFriend(
         "com.snapchat.android",
         "com.facebook.katana"
     )
-    val socialApps = remember{ mutableStateListOf<String>()}
+    val socialApps = remember { mutableStateListOf<String>() }
 
     LaunchedEffect(key1 = true, block = {
         socialApps.clear()
-        for (app in socialAppsBase){
-            if(appInstalledOrNot(context,app)){
+        for (app in socialAppsBase) {
+            if (appInstalledOrNot(context, app)) {
                 socialApps.add(app)
             }
         }
     })
 
-    fun onClick(app: String?){
+    fun onClick(app: String?) {
         val dynamicLinkUri = getLinkProfile(profile_id = profileViewModel.state.profile!!.id)
         Log.e("dynamicLinkUri", dynamicLinkUri)
 
-        val intent= Intent()
+        val intent = Intent()
         intent.action = Intent.ACTION_SEND
-        intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в Dvor ${dynamicLinkUri.toString()}")
-        intent.type="text/plain"
+        intent.putExtra(
+            Intent.EXTRA_TEXT,
+            "Добавляй меня в друзья в Dvor $dynamicLinkUri"
+        )
+        intent.type = "text/plain"
 
 
-        if(app==null){
-            context.startActivity(Intent.createChooser(intent,"Поделиться"))
-        }else{
+        if (app == null) {
+            context.startActivity(Intent.createChooser(intent, "Поделиться"))
+        } else {
             intent.setPackage(app)
             context.startActivity(intent)
         }
@@ -115,7 +113,7 @@ fun InviteFriend(
             .padding(start = 20.dp, end = 20.dp, top = 40.dp)
             .fillMaxSize()
             .nestedScroll(rememberNestedScrollInteropConnection())
-    ){
+    ) {
         item {
             HeadlineH4(
                 text = stringResource(id = R.string.add_friend_title),
@@ -175,7 +173,7 @@ fun InviteFriend(
                 socialApps.forEach { app ->
                     if (appInstalledOrNot(context, app)) {
                         Icon(
-                            getIcon(context, context.packageManager, app)!!.asImageBitmap(),
+                            getIcon(context, context.packageManager, app).asImageBitmap(),
                             contentDescription = null,
                             tint = Color.Unspecified,
                             modifier = Modifier
@@ -187,7 +185,7 @@ fun InviteFriend(
             }
         }
 
-        item{
+        item {
             ButtonPrimaryLeadingIcon(
                 text = stringResource(id = R.string.repost_another_app),
                 modifier = Modifier
@@ -202,7 +200,7 @@ fun InviteFriend(
             item {
                 LoadingView()
             }
-        } else if(friends != null) {
+        } else if (friends != null) {
             item {
                 TitleFriends(
                     text = stringResource(id = R.string.recommended_friends),
@@ -221,7 +219,7 @@ fun InviteFriend(
                             Toast.LENGTH_SHORT
                         ).show()
                         friends.remove(friend)
-                                },
+                    },
                     openFriend = {
 
                     })

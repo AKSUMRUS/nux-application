@@ -12,7 +12,7 @@ interface NotificationsDao {
     fun insertNotifications(notifications: List<NotificationEntity>)
 
     @Query("SELECT * FROM notifications")
-    fun getNotifications() : List<NotificationEntity>
+    fun getNotifications(): List<NotificationEntity>
 
     @Query("DELETE FROM notifications")
     fun clearNotifications()

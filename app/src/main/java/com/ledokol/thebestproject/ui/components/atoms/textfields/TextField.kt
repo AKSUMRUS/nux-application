@@ -29,14 +29,14 @@ fun TextField(
     enabled: Boolean = true,
     textStyle: TextStyle = LocalTextStyle.current.copy(color = MaterialTheme.colors.onBackground),
     capitalization: KeyboardCapitalization = KeyboardCapitalization.None,
-    ) {
+) {
     TextField(
         value = text,
         onValueChange = { onValueChange(it) },
         placeholder = { Text(text = placeholder) },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType
-        ).copy(imeAction = imeAction,capitalization = capitalization),
+        ).copy(imeAction = imeAction, capitalization = capitalization),
         textStyle = textStyle,
         keyboardActions = keyboardActions,
         modifier = modifier
@@ -44,8 +44,7 @@ fun TextField(
             .clip(RoundedCornerShape(16.dp))
             .background(
                 MaterialTheme.colors.primary
-            )
-        ,
+            ),
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onPrimary,

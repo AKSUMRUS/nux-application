@@ -1,6 +1,7 @@
 package com.ledokol.thebestproject
 
-import android.app.Application
+//import com.yandex.metrica.YandexMetrica
+//import com.yandex.metrica.YandexMetricaConfig
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
@@ -34,24 +34,20 @@ import com.ledokol.thebestproject.services.MyReceiver
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.StartNavigation
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
-//import com.yandex.metrica.YandexMetrica
-//import com.yandex.metrica.YandexMetricaConfig
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var myReceiver: MyReceiver
-    val userViewModel: UserViewModel by viewModels<UserViewModel>()
-    val profileViewModel: ProfileViewModel by viewModels<ProfileViewModel>()
-    val TAG = "startMainActivity"
+    val userViewModel: UserViewModel by viewModels()
+    val profileViewModel: ProfileViewModel by viewModels()
+    private val TAG = "startMainActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myReceiver = MyReceiver()
         val bundle = intent.extras
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
 
         userViewModel.state = userViewModel.state.copy(
             openScreen = null
@@ -65,20 +61,21 @@ class MainActivity : ComponentActivity() {
 //        // Automatic tracking of user activity.
 //        YandexMetrica.enableActivityAutoTracking(application)
 
-        if(bundle!=null&& bundle.containsKey("notification_id")){
+        if (bundle != null && bundle.containsKey("notification_id")) {
             Log.e(TAG, bundle.toString())
             val notification_id = bundle.getString("notification_id").toString()
             val notification_type = bundle.getString("notification_type").toString()
 
-            if(notification_type == "friends_invite"){
+            if (notification_type == "friends_invite") {
                 val profile_id = bundle.getString("userId_$notification_id").toString()
-                Log.e(TAG, profile_id.toString())
-                userViewModel.onEvent(UserEvent.GetFriendUser(profile_id.toString()))
+                Log.e(TAG, profile_id)
+                userViewModel.onEvent(UserEvent.GetFriendUser(profile_id))
                 userViewModel.onEvent(UserEvent.OpenScreen(screen = ScreenRoutes.PREVIEW_FRIEND))
-            }else{
-                val gamePackageName:String = bundle.getString("gamePackageName_$notification_id").toString()
+            } else {
+                val gamePackageName: String =
+                    bundle.getString("gamePackageName_$notification_id").toString()
                 bundle.clear()
-                if(gamePackageName!=null && gamePackageName!=""){
+                if (gamePackageName != null && gamePackageName != "") {
                     openApp(context = this, packageName = gamePackageName)
                 }
             }
@@ -93,25 +90,36 @@ class MainActivity : ComponentActivity() {
                 }
 
                 if (deepLink != null &&
-                    deepLink.getBooleanQueryParameter("profile_id", false)) {
-                        val profileId = deepLink.getQueryParameter("profile_id")
-                        Log.e(TAG, profileId.toString())
-                        userViewModel.onEvent(UserEvent.OpenFriendViaLink(profileId.toString()))
-                    }
+                    deepLink.getBooleanQueryParameter("profile_id", false)
+                ) {
+                    val profileId = deepLink.getQueryParameter("profile_id")
+                    Log.e(TAG, profileId.toString())
+                    userViewModel.onEvent(UserEvent.OpenFriendViaLink(profileId.toString()))
+                }
             }
 
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(com.ledokol.thebestproject.ui.components.screens.games.TAG, "Fetching FCM registration token failed", task.exception)
+                Log.w(
+                    com.ledokol.thebestproject.ui.components.screens.games.TAG,
+                    "Fetching FCM registration token failed",
+                    task.exception
+                )
                 return@OnCompleteListener
             }
 
             val tokenGet = task.result
 
-            if(profileViewModel.state.profile != null){
-                Log.e("myFirebaseToken", "$tokenGet ${profileViewModel.state.profile!!.access_token}")
-                profileViewModel.setCurrentFirebaseToken(tokenGet, profileViewModel.state.profile!!.access_token)
+            if (profileViewModel.state.profile != null) {
+                Log.e(
+                    "myFirebaseToken",
+                    "$tokenGet ${profileViewModel.state.profile!!.access_token}"
+                )
+                profileViewModel.setCurrentFirebaseToken(
+                    tokenGet,
+                    profileViewModel.state.profile!!.access_token
+                )
             }
         })
 
@@ -128,12 +136,15 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             TheBestProjectEverTheme {
-                    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-                        StartNavigation(
-                            navController = navController,
-                            analytics = mFirebaseAnalytics
-                        )
-                    }
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
+                ) {
+                    StartNavigation(
+                        navController = navController,
+                        analytics = mFirebaseAnalytics
+                    )
+                }
 //                }
             }
         }
@@ -164,7 +175,8 @@ fun openApp(
     var marketFound = false
 
     // find all applications able to handle our rateIntent
-    val otherApps: MutableList<ApplicationInfo> = context.packageManager.getInstalledApplications(flags)
+    val otherApps: MutableList<ApplicationInfo> =
+        context.packageManager.getInstalledApplications(flags)
     for (otherApp in otherApps) {
         // look for Google Play application
         if (
@@ -180,9 +192,19 @@ fun openApp(
     // if GP not present on device, open web browser
     if (!marketFound) {
         try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$packageName")
+                )
+            )
         } catch (e: ActivityNotFoundException) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+            context.startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+                )
+            )
         }
     }
 }

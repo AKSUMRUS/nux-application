@@ -8,7 +8,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -21,20 +20,18 @@ fun ButtonBorder(
     onClick: () -> Unit,
     padding: Dp = 10.dp,
     colorBackground: Color = MaterialTheme.colors.background,
-    colorBorder:Color = MaterialTheme.colors.onBackground,
+    colorBorder: Color = MaterialTheme.colors.onBackground,
     colorText: Color = colorBorder,
-){
+) {
 
     Button(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
-            .border(2.dp, colorBorder, RoundedCornerShape(16.dp))
-    ,
+            .border(2.dp, colorBorder, RoundedCornerShape(16.dp)),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
-        )
-    ,
+        ),
         shape = RoundedCornerShape(16.dp)
     ) {
         HeadlineH6(

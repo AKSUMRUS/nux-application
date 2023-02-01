@@ -22,26 +22,24 @@ fun ButtonPrimaryLeadingIcon(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     icon: ImageVector,
-){
+) {
 
     Button(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
-            .border(2.dp, MaterialTheme.colors.secondary)
-    ,
+            .border(2.dp, MaterialTheme.colors.secondary),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.background,
         )
     ) {
-        Row(){
+        Row {
             Icon(
                 icon,
                 null,
                 modifier = Modifier
                     .size(30.dp)
-                    .align(CenterVertically)
-            ,
+                    .align(CenterVertically),
                 tint = MaterialTheme.colors.secondary,
             )
 
@@ -50,8 +48,7 @@ fun ButtonPrimaryLeadingIcon(
                 color = MaterialTheme.colors.secondary,
                 modifier = Modifier
                     .padding(start = 10.dp)
-                    .align(CenterVertically)
-                ,
+                    .align(CenterVertically),
                 fontWeight = FontWeight.W700,
             )
 

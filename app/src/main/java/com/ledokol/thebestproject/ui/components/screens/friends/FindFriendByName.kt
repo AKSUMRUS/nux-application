@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Snackbar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,12 +13,8 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.textfields.TextField
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @Composable
 fun FindFriendByName(
@@ -43,8 +39,8 @@ fun FindFriendByName(
                 .padding(top = 100.dp)
         ) {
 
-            LaunchedEffect(state){
-                if(state != null){
+            LaunchedEffect(state) {
+                if (state != null) {
                     navController.navigate("add_friend_by_name") {
                         popUpTo("find_friend_by_name")
                         launchSingleTop = false

@@ -24,6 +24,6 @@ fun HeadlineH6(
         modifier = modifier,
         fontWeight = fontWeight,
         textAlign = textAlign,
-        )
+    )
 }
 

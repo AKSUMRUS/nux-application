@@ -15,15 +15,14 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 fun EmptyScreenFriend(
     title: String,
     modifier: Modifier = Modifier,
-){
+) {
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 30.dp)
-    ,
+            .padding(top = 30.dp),
         contentAlignment = Alignment.Center,
-    ){
+    ) {
         HeadlineH5(
             text = title,
             color = MaterialTheme.colors.secondaryVariant,
@@ -31,8 +30,7 @@ fun EmptyScreenFriend(
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.Center)
-                .then(modifier)
-        ,
+                .then(modifier),
         )
     }
 

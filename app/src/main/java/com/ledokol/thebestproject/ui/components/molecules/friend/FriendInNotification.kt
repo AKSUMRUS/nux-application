@@ -29,7 +29,7 @@ fun FriendInNotification(
     openFriend: () -> Unit,
     rejectFriend: () -> Unit,
     clicked: Boolean = false,
-){
+) {
 
     val modifier: Modifier = if (clicked) Modifier
         .padding(bottom = 5.dp)
@@ -43,23 +43,21 @@ fun FriendInNotification(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colors.primary)
-            .clickable { openFriend() }
-        ,
-    ){
+            .clickable { openFriend() },
+    ) {
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(0))
                 .padding(10.dp)
-        ){
+        ) {
             AsyncImage(
                 model = user.profile_pic,
                 contentDescription = "Аноним",
                 modifier = Modifier
                     .size(height = 60.dp, width = 60.dp)
-                    .align(CenterVertically)
-                ,
+                    .align(CenterVertically),
                 contentScale = Crop,
                 alignment = Alignment.Center,
             )
@@ -68,10 +66,10 @@ fun FriendInNotification(
                 modifier = Modifier
                     .fillMaxHeight()
                     .padding(start = 20.dp)
-            ){
+            ) {
                 Row(
                     modifier = Modifier.padding(0.dp)
-                ){
+                ) {
                     HeadlineH6(
                         text = user.name,
                         modifier = Modifier,
@@ -79,10 +77,10 @@ fun FriendInNotification(
                         fontWeight = FontWeight.Medium,
                     )
 
-                    Body1(text = "@${user.nickname}",
+                    Body1(
+                        text = "@${user.nickname}",
                         modifier = Modifier
-                            .padding(start = 10.dp)
-                        ,
+                            .padding(start = 10.dp),
                         color = MaterialTheme.colors.secondaryVariant,
                     )
                 }

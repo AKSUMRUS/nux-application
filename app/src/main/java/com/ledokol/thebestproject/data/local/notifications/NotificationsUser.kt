@@ -10,4 +10,4 @@ data class NotificationsUser(
     var status: Status = Status(),
     var profile_pic: String = "",
     var do_not_disturb: String = "",
-    )
+)

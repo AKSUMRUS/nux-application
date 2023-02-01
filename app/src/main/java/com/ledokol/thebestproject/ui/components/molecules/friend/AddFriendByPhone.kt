@@ -13,7 +13,7 @@ fun AddFriendByPhone(
     phone: String,
     onClickButton: () -> Unit,
     onValueChange: (String) -> Unit,
-){
+) {
 
     Search(
         text = phone,

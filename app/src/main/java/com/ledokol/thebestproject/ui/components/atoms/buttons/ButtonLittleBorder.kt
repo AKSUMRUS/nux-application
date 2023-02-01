@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.components.atoms.buttons
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,12 +8,10 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable
 fun ButtonLittleBorder(
@@ -23,21 +20,19 @@ fun ButtonLittleBorder(
     onClick: () -> Unit,
     padding: Dp = 2.dp,
     colorBackground: Color = MaterialTheme.colors.background,
-    colorBorder:Color = MaterialTheme.colors.onBackground,
+    colorBorder: Color = MaterialTheme.colors.onBackground,
     colorText: Color = colorBorder,
-){
+) {
 
     Button(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
 //            .border(1.dp, colorBorder, RoundedCornerShape(16.dp))
-            .padding(0.dp)
-    ,
+            .padding(0.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
-        )
-    ,
+        ),
         shape = RoundedCornerShape(16.dp),
         contentPadding = PaddingValues(0.dp)
     ) {

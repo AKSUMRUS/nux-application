@@ -16,7 +16,6 @@ fun HeadlineH4(
     fontWeight: FontWeight? = MaterialTheme.typography.h4.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {
-
     Text(
         text = text,
         color = color,
@@ -24,6 +23,6 @@ fun HeadlineH4(
         modifier = modifier,
         fontWeight = fontWeight,
         textAlign = textAlign,
-        )
+    )
 }
 

@@ -33,15 +33,15 @@ fun TextFieldTrailingIcon(
     imeAction: ImeAction = ImeAction.Next,
 ) {
 
-    if(textCaption != null){
+    if (textCaption != null) {
         HeadlineH5(
             text = textCaption,
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 
-    androidx.compose.material.TextField(
+    TextField(
         value = text,
         onValueChange = { onValueChange(it) },
         textStyle = TextStyle(fontSize = 17.sp),
@@ -51,7 +51,7 @@ fun TextFieldTrailingIcon(
         keyboardActions = keyboardActions,
         singleLine = true,
         trailingIcon = {
-            IconButton(onClick =  buttonClick) {
+            IconButton(onClick = buttonClick) {
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },

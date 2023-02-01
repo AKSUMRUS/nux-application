@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ledokol.thebestproject.data.local.user.User
@@ -21,7 +20,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +27,7 @@ class
 UserViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: UsersRepository
-): ViewModel() {
+) : ViewModel() {
 
     var accessToken: String = ""
     var state by mutableStateOf(UserState())
@@ -37,8 +35,8 @@ UserViewModel @Inject constructor(
 
     private var searchUser: Job? = null
 
-    fun onEvent(event: UserEvent){
-        when(event){
+    fun onEvent(event: UserEvent) {
+        when (event) {
             is UserEvent.Refresh -> {
                 getFriends(
                     fetchRemote = true,
@@ -124,30 +122,23 @@ UserViewModel @Inject constructor(
 
     private fun openScreen(
         screen: String
-    ){
+    ) {
         viewModelScope.launch {
-            state = state.copy(
-                openScreen = screen,
-            )
+            state = state.copy(openScreen = screen,)
         }
     }
 
-    private fun getUserByNicknameScope(nickname: String){
+    private fun getUserByNicknameScope(nickname: String) {
         viewModelScope.launch {
-            repository.getUserByNickname(nickname).collect{
-                    result ->
-                when(result){
+            repository.getUserByNickname(nickname).collect { result ->
+                when (result) {
                     is Resource.Success -> {
-                        result.data.let{ user ->
-                            state = state.copy(
-                                friendUser = user
-                            )
+                        result.data.let { user ->
+                            state = state.copy(friendUser = user)
                         }
                     }
                     is Resource.Loading -> {
-                        state = state.copy(
-                            isLoadingUser = result.isLoading
-                        )
+                        state = state.copy(isLoadingUser = result.isLoading)
                     }
                     is Resource.Error -> {
                         state = state.copy(
@@ -160,22 +151,17 @@ UserViewModel @Inject constructor(
     }
 
 
-    private suspend fun getUserByNickname(nickname: String){
-        repository.getUserByNickname(nickname).collect{
-                result ->
-            when(result){
+    private suspend fun getUserByNickname(nickname: String) {
+        repository.getUserByNickname(nickname).collect { result ->
+            when (result) {
                 is Resource.Success -> {
-                    result.data.let{ user ->
-                        state = state.copy(
-                            friendUser = user
-                        )
+                    result.data.let { user ->
+                        state = state.copy(friendUser = user)
                     }
                 }
 
                 is Resource.Loading -> {
-                    state = state.copy(
-                        isLoadingUser = result.isLoading
-                    )
+                    state = state.copy(isLoadingUser = result.isLoading)
                 }
                 is Resource.Error -> {
                     state = state.copy(
@@ -186,13 +172,12 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private fun getUserByPhoneScope(phone: String){
+    private fun getUserByPhoneScope(phone: String) {
         viewModelScope.launch {
-            repository.getUserByPhone(phone).collect{
-                    result ->
-                when(result){
+            repository.getUserByPhone(phone).collect { result ->
+                when (result) {
                     is Resource.Success -> {
-                        result.data.let{ user ->
+                        result.data.let { user ->
                             state = state.copy(
                                 friendUser = user
                             )
@@ -208,12 +193,11 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getUserByPhone(phone: String){
-        repository.getUserByPhone(phone).collect{
-                result ->
-            when(result){
+    private suspend fun getUserByPhone(phone: String) {
+        repository.getUserByPhone(phone).collect { result ->
+            when (result) {
                 is Resource.Success -> {
-                    result.data.let{ user ->
+                    result.data.let { user ->
                         state = state.copy(
                             friendUser = user
                         )
@@ -232,10 +216,9 @@ UserViewModel @Inject constructor(
     fun addFriend(
         nickname: String?,
         phone: String?
-    ){
+    ) {
         Log.e("addFriend", "start")
         viewModelScope.launch {
-
             val job = launch {
                 try {
                     Log.e(TAG, "addFriend: try $nickname $phone")
@@ -249,11 +232,8 @@ UserViewModel @Inject constructor(
                     Log.e(TAG, "addFriend: finally ${state.friendUser}")
                 }
             }
-
             job.join()
-
-            Log.e(TAG,"addFriend: I have passed the job")
-
+            Log.e(TAG, "addFriend: I have passed the job")
             try {
                 Log.e("addFriend", "viewModel ${state.friendUser!!.id}")
                 repository.addFriend(
@@ -264,9 +244,7 @@ UserViewModel @Inject constructor(
                             Log.e("addFriend", "result: ${result.data.toString()}")
                         }
                         is Resource.Loading -> {
-                            state = state.copy(
-                                isLoading = result.isLoading
-                            )
+                            state = state.copy(isLoading = result.isLoading)
                         }
                         is Resource.Error -> {
                             state = state.copy(
@@ -286,34 +264,26 @@ UserViewModel @Inject constructor(
         fetchRemote: Boolean = false,
         shouldReload: Boolean = true,
     ) {
-
         viewModelScope.launch {
             repository.getFriends(
                 fetchFromRemote = fetchRemote,
                 query = query,
                 shouldReload = shouldReload
-            )
-                .collect{ result ->
-                    when(result){
-                        is Resource.Success -> {
-                            result.data.let { users ->
-                                state = state.copy(
-                                    users = users,
-                                )
-                            }
-                            Log.e("USER VIEW MODEL  GET USERS",state.toString())
+            ).collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        result.data.let { users ->
+                            state = state.copy(users = users,)
                         }
-                        is Resource.Error -> Unit
-                        is Resource.Loading -> {
-                            state = state.copy(
-                                isLoading = result.isLoading
-                            )
-                        }
-
+                        Log.e("USER VIEW MODEL  GET USERS", state.toString())
+                    }
+                    is Resource.Error -> Unit
+                    is Resource.Loading -> {
+                        state = state.copy(isLoading = result.isLoading)
                     }
                 }
+            }
         }
-
     }
 
     private fun getUsersFindFriend(
@@ -329,19 +299,19 @@ UserViewModel @Inject constructor(
                 query = query,
                 shouldReload = shouldReload
             )
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             result.data.let { users ->
                                 state = state.copy(
                                     findNewFriendsList = users,
                                 )
                             }
-                            Log.e("USER VIEW MODEL  GET NEW FRIENDS",state.toString())
+                            Log.e("USER VIEW MODEL  GET NEW FRIENDS", state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
-                            state =state.copy(
+                            state = state.copy(
                                 isLoading = result.isLoading
                             )
                         }
@@ -354,37 +324,37 @@ UserViewModel @Inject constructor(
 
     private fun getUser(
         id: String
-    ){
-            viewModelScope.launch {
-                repository.getUser(id = id)
-                    .collect { result ->
-                        when (result) {
-                            is Resource.Success -> {
-                                result.data.let { user ->
-                                    state = state.copy(
-                                        friendUser = user
-                                    )
-                                    if (user != null) {
-                                        onEvent(UserEvent.GetFriendGames(user))
-                                    }
-                                }
-                                Log.e("JOB", "ended2")
-                                Log.e("User View Model Friend", state.toString())
-                            }
-                            is Resource.Error -> Unit
-                            is Resource.Loading -> {
+    ) {
+        viewModelScope.launch {
+            repository.getUser(id = id)
+                .collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data.let { user ->
                                 state = state.copy(
-                                    isLoadingUser = result.isLoading
+                                    friendUser = user
                                 )
+                                if (user != null) {
+                                    onEvent(UserEvent.GetFriendGames(user))
+                                }
                             }
+                            Log.e("JOB", "ended2")
+                            Log.e("User View Model Friend", state.toString())
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoadingUser = result.isLoading
+                            )
                         }
                     }
-            }
+                }
+        }
     }
 
     private suspend fun getUserNotAsync(
         id: String
-    ){
+    ) {
         repository.getUser(id = id)
             .collect { result ->
                 when (result) {
@@ -414,38 +384,40 @@ UserViewModel @Inject constructor(
         userId: String
     ) {
         viewModelScope.launch {
-            val job = launch{
+            val job = launch {
                 getUserNotAsync(userId)
-                Log.e("JOB","ended2")
+                Log.e("JOB", "ended2")
             }
             job.join()
 
-            Log.e("JOB","ended3")
+            Log.e("JOB", "ended3")
             openScreen(ScreenRoutes.PREVIEW_FRIEND)
         }
     }
 
-    private fun removeSelectedUser(selectedUser: String){
+    private fun removeSelectedUser(selectedUser: String) {
         Log.d("SELECTEDUSER", "REMOVE")
         state = state.copy(
-            inviteFriends = state.inviteFriends.toMutableList().filter { user -> user!=selectedUser }.toMutableList()
+            inviteFriends = state.inviteFriends.toMutableList()
+                .filter { user -> user != selectedUser }.toMutableList()
         )
 
-        Log.d("SELECTEDUSER", "REMOVE "+state.users!!.size.toString())
+        Log.d("SELECTEDUSER", "REMOVE " + state.users!!.size.toString())
     }
 
-    fun insertSelectedUser(selectedUser: User){
+    fun insertSelectedUser(selectedUser: User) {
         state = state.copy(
-            inviteFriends = state.inviteFriends.toMutableList().apply { add(selectedUser.id) }.toMutableList(),
+            inviteFriends = state.inviteFriends.toMutableList().apply { add(selectedUser.id) }
+                .toMutableList(),
         )
-        Log.d("SELECTEDUSER", "INSERT "+state.users!!.size.toString())
+        Log.d("SELECTEDUSER", "INSERT " + state.users!!.size.toString())
     }
 
-    fun checkSelectedUser(selectedUser: User): Boolean{
+    private fun checkSelectedUser(selectedUser: User): Boolean {
         Log.d("SELECTEDUSER", "CHECK")
         var inList = false
-        for(user in state.inviteFriends){
-            if (user == selectedUser.id){
+        for (user in state.inviteFriends) {
+            if (user == selectedUser.id) {
                 inList = true
                 break
             }
@@ -454,20 +426,19 @@ UserViewModel @Inject constructor(
         return inList
     }
 
-    fun clearSelectedUser(){
+    fun clearSelectedUser() {
         state = state.copy(
             inviteFriends = mutableListOf(),
         )
     }
 
-    private fun getUsersGames(user: User){
+    private fun getUsersGames(user: User) {
         viewModelScope.launch {
             repository.getUserGames(id = user.id)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
-                            result.data.let {
-                                    games ->
+                            result.data.let { games ->
                                 state = state.copy(
                                     games = games,
                                 )
@@ -486,11 +457,10 @@ UserViewModel @Inject constructor(
 
     private fun checkExistsNickname(
         nickname: String,
-    ){
+    ) {
         viewModelScope.launch {
-            repository.checkExistsNickname(nickname = nickname).collect{
-                    result ->
-                when(result){
+            repository.checkExistsNickname(nickname = nickname).collect { result ->
+                when (result) {
                     is Resource.Success -> {
                         Log.e("checkExistsNickname", "viewModel ${result.data.toString()}")
                         state = state.copy(
@@ -498,7 +468,7 @@ UserViewModel @Inject constructor(
                         )
                     }
                     is Resource.Loading -> {
-                        if(result.isLoading){
+                        if (result.isLoading) {
                             state = state.copy(
                                 existsUser = null,
                             )
@@ -514,11 +484,11 @@ UserViewModel @Inject constructor(
 
     private fun checkExistsPhone(
         phone: String,
-    ){
+    ) {
         viewModelScope.launch {
             repository.checkExistsPhone(phone = phone)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             Log.e("checkExistsPhone", "viewModel ${result.data.toString()}")
                             state = state.copy(
@@ -526,7 +496,7 @@ UserViewModel @Inject constructor(
                             )
                         }
                         is Resource.Loading -> {
-                            if(result.isLoading){
+                            if (result.isLoading) {
                                 state = state.copy(
                                     existsUser = null,
                                 )
@@ -540,7 +510,7 @@ UserViewModel @Inject constructor(
         }
     }
 
-    fun setNullForExistsUser(){
+    fun setNullForExistsUser() {
         viewModelScope.launch {
             state = state.copy(
                 existsUser = null,
@@ -553,8 +523,8 @@ UserViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             repository.removeFriend(friendId = friendId)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             Log.e("removeFriend", "viewModel ${result.data.toString()}")
                         }
@@ -574,17 +544,15 @@ UserViewModel @Inject constructor(
     private fun rejectInvite(
         userId: String
     ) {
-        viewModelScope.launch{
+        viewModelScope.launch {
             repository.rejectInvite(userId = userId)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             Log.e("rejectInvite", "viewModel ${result.data.toString()}")
                         }
                         is Resource.Loading -> {
-                            state = state.copy(
-                                isLoading = result.isLoading
-                            )
+                            state = state.copy(isLoading = result.isLoading)
                         }
                         is Resource.Error -> Unit
                     }
@@ -592,14 +560,13 @@ UserViewModel @Inject constructor(
         }
     }
 
-    private fun getRecommendedFriends(){
+    private fun getRecommendedFriends() {
         viewModelScope.launch {
             repository.getRecommendedFriends()
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
-                            result.data.let {
-                                    users ->
+                            result.data.let { users ->
                                 state = state.copy(
                                     recommendedFriends = users?.toMutableList(),
                                 )
@@ -607,19 +574,14 @@ UserViewModel @Inject constructor(
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
-                            state = state.copy(
-                                isLoading = result.isLoading
-                            )
+                            state = state.copy(isLoading = result.isLoading)
                         }
                     }
                 }
         }
     }
 
-    private fun clearInviteFriends(){
-        state = state.copy(
-            inviteFriends = mutableListOf(),
-        )
+    private fun clearInviteFriends() {
+        state = state.copy(inviteFriends = mutableListOf(),)
     }
-
 }

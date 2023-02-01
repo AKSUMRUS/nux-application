@@ -1,8 +1,8 @@
 package com.ledokol.thebestproject.data.local.user
 
 data class UserState(
-    var users:List<User>? = mutableListOf(),
-    val findNewFriendsList:List<User>? = mutableListOf(), // результат поиска друзей
+    var users: List<User>? = mutableListOf(),
+    val findNewFriendsList: List<User>? = mutableListOf(), // результат поиска друзей
     val games: List<Apps>? = mutableListOf(),
     val recommendedFriends: MutableList<User>? = mutableListOf(),
     val inviteFriends: MutableList<String> = mutableListOf(),

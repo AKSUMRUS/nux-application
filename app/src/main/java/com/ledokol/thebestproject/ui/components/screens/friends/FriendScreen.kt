@@ -46,17 +46,17 @@ fun FriendScreen(
     gamesViewModel: GamesViewModel,
     profileViewModel: ProfileViewModel,
     analytics: FirebaseAnalytics,
-){
+) {
 
     val user = userViewModel.state.friendUser
     val state = userViewModel.state
     val context: Context = LocalContext.current
-    var openDialog by remember{ mutableStateOf(false)}
-    var openDialogClaim by remember{ mutableStateOf(false)}
-    var selectedGamePackage by remember{ mutableStateOf("")}
-    var selectedGameName by remember{ mutableStateOf("")}
+    var openDialog by remember { mutableStateOf(false) }
+    var openDialogClaim by remember { mutableStateOf(false) }
+    var selectedGamePackage by remember { mutableStateOf("") }
+    var selectedGameName by remember { mutableStateOf("") }
 
-    fun inviteFriend(game: CurrentApp){
+    fun inviteFriend(game: CurrentApp) {
         gamesViewModel.setSelectedGame(
             Game(
                 android_package_name = game.android_package_name,
@@ -71,24 +71,28 @@ fun FriendScreen(
 
         userViewModel.clearSelectedUser()
         userViewModel.insertSelectedUser(state.friendUser!!)
-        Log.e("getGame_ViewModel","inviteFriends: "+game.android_package_name+ " "+gamesViewModel.state.game.toString())
-        profileViewModel.onEvent(ProfileEvent.
-        InviteFriends(
-            accessToken = profileViewModel.state.profile!!.access_token,
-            friends_ids = listOf(state.friendUser.id),
-            app_id = game.id,
-        ))
+        Log.e(
+            "getGame_ViewModel",
+            "inviteFriends: " + game.android_package_name + " " + gamesViewModel.state.game.toString()
+        )
+        profileViewModel.onEvent(
+            ProfileEvent.InviteFriends(
+                accessToken = profileViewModel.state.profile!!.access_token,
+                friends_ids = listOf(state.friendUser.id),
+                app_id = game.id,
+            )
+        )
         analytics.logEvent("open_screen") {
             param(FirebaseAnalytics.Param.SCREEN_NAME, ScreenRoutes.FINISH_INVITING_FRIENDS)
-            param("from_what_screen",ScreenRoutes.FRIEND_SCREEN)
+            param("from_what_screen", ScreenRoutes.FRIEND_SCREEN)
         }
-        navController.navigate(ScreenRoutes.FINISH_INVITING_FRIENDS){
+        navController.navigate(ScreenRoutes.FINISH_INVITING_FRIENDS) {
             popUpTo(ScreenRoutes.FINISH_INVITING_FRIENDS)
             launchSingleTop = true
         }
     }
 
-    if(user!=null&&!state.isLoadingUser) {
+    if (user != null && !state.isLoadingUser) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -104,7 +108,7 @@ fun FriendScreen(
                     .fillMaxSize()
                     .padding(top = 40.dp)
                     .padding(start = 20.dp, end = 20.dp)
-            ){
+            ) {
                 item(
                     span = { GridItemSpan(2) },
                 ) {
@@ -114,20 +118,20 @@ fun FriendScreen(
                             userViewModel.onEvent(UserEvent.RemoveFriend(friendId = state.friendUser!!.id))
                             navController.popBackStack()
                         },
-                        onClickClaim = {openDialogClaim = true;}
+                        onClickClaim = { openDialogClaim = true; }
                     )
                 }
 
-                if(state.friendUser!!.status.app != null) {
+                if (state.friendUser!!.status.app != null) {
                     item(
                         span = { GridItemSpan(2) },
                     ) {
 
                         state.friendUser.status.app?.let { game ->
-                            if(game.android_package_name!="") {
-                                val textActivity = if(user.status.in_app){
+                            if (game.android_package_name != "") {
+                                val textActivity = if (user.status.in_app) {
                                     stringResource(id = R.string.game_now_friend)
-                                }else{
+                                } else {
                                     stringResource(id = R.string.last_game_friend)
                                 }
 
@@ -152,14 +156,14 @@ fun FriendScreen(
                 }
 
 
-                if(state.isLoadingGames){
+                if (state.isLoadingGames) {
                     item(
                         span = { GridItemSpan(2) },
-                    ){
+                    ) {
                         LoadingView()
                     }
-                }else{
-                    if(state.games != null && state.games.isNotEmpty()) {
+                } else {
+                    if (state.games != null && state.games.isNotEmpty()) {
                         item(
                             span = { GridItemSpan(2) },
                         ) {
@@ -192,9 +196,9 @@ fun FriendScreen(
                 }
             }
 
-            BackToolbar (
+            BackToolbar(
                 buttonBackClick = {
-                    navController.navigate("team"){
+                    navController.navigate("team") {
                         popUpTo("team")
                         launchSingleTop = true
                     }
@@ -210,16 +214,16 @@ fun FriendScreen(
             buttonTextNo = stringResource(id = R.string.open_game),
             onActionPrimary = {
                 var game = CurrentApp()
-                for(game_local in state.games!!){
-                    if(game_local.app.android_package_name == selectedGamePackage){
+                for (game_local in state.games!!) {
+                    if (game_local.app.android_package_name == selectedGamePackage) {
                         game = game_local.app
                         break
                     }
                 }
                 inviteFriend(game)
-                       },
+            },
             onActionSecondary = {
-                openApp(packageName = selectedGamePackage,context = context)
+                openApp(packageName = selectedGamePackage, context = context)
                 openDialog = false
                 selectedGamePackage = ""
             },
@@ -237,7 +241,7 @@ fun FriendScreen(
             buttonTextYes = stringResource(id = R.string.claim),
             buttonTextNo = stringResource(id = R.string.close),
             onActionPrimary = {
-              Toast.makeText(context, "Жалоба успешно отправлена!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Жалоба успешно отправлена!", Toast.LENGTH_LONG).show()
                 openDialogClaim = false
             },
             onActionSecondary = {
@@ -247,7 +251,7 @@ fun FriendScreen(
                 openDialogClaim = false
             }
         )
-    }else{
+    } else {
         LoadingView()
     }
 }

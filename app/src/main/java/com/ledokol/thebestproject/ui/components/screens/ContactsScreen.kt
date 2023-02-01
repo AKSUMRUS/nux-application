@@ -34,9 +34,7 @@ private const val TAG = "getContacts"
 
 // А ЭТО БЛЯТЬ ЧТО ТАКОЕ!?!?
 
-class ContactClass(val name: String, val phone: String){
-
-}
+class ContactClass(val name: String, val phone: String)
 
 @OptIn(ExperimentalPermissionsApi::class)
 @SuppressLint("Range")
@@ -49,7 +47,7 @@ fun ContactsScreen(
 ) {
 
     val context: Context = LocalContext.current
-    var textSearch by remember{ mutableStateOf("")}
+    var textSearch by remember { mutableStateOf("") }
     var showShareScreen by remember { mutableStateOf(false) }
 
     var onClickButtonRequest by remember {
@@ -68,13 +66,13 @@ fun ContactsScreen(
         contactsViewModel.clearContacts()
     })
 
-    if(permissionState.status.isGranted && contactsViewModel.state.contacts!!.isEmpty()){
+    if (permissionState.status.isGranted && contactsViewModel.state.contacts!!.isEmpty()) {
         getContactArray(
             context,
             contactsViewModel
         )
         contactsViewModel.getContacts("")
-    }else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {
+    } else if (!permissionAlreadyRequested && !permissionState.status.shouldShowRationale) {
         onClickButtonRequest = { permissionState.launchPermissionRequest() }
     } else if (permissionState.status.shouldShowRationale) {
         onClickButtonRequest = { permissionState.launchPermissionRequest() }
@@ -82,34 +80,39 @@ fun ContactsScreen(
         onClickButtonRequest = { context.openSettings() }
     }
 
-    fun inviteFriend(){
+    fun inviteFriend() {
         val dynamicLink = getLinkProfile(profile_id = profileViewModel.state.profile!!.id)
 
-        val intent= Intent()
+        val intent = Intent()
         intent.action = Intent.ACTION_SEND
         intent.putExtra(Intent.EXTRA_TEXT, "Добавляй меня в друзья в приложении Dvor $dynamicLink")
-        intent.type="text/plain"
+        intent.type = "text/plain"
 
-        context.startActivity(Intent.createChooser(intent,"Поделиться"))
+        context.startActivity(Intent.createChooser(intent, "Поделиться"))
     }
 
-    fun addFriend(phone: String){
-        userViewModel.onEvent(UserEvent.AddFriend(phone = phone, access_token = profileViewModel.state.profile!!.access_token))
+    fun addFriend(phone: String) {
+        userViewModel.onEvent(
+            UserEvent.AddFriend(
+                phone = phone,
+                access_token = profileViewModel.state.profile!!.access_token
+            )
+        )
     }
 
-    fun onValueChange(text: String){
+    fun onValueChange(text: String) {
         textSearch = text
 //        contactsViewModel.getContacts(text)
     }
 
-    if(permissionState.status.isGranted){
-        if(contactsViewModel.state.isLoading){
+    if (permissionState.status.isGranted) {
+        if (contactsViewModel.state.isLoading) {
             LoadingView()
-        }else{
-            Box(){
+        } else {
+            Box {
                 ShowMyContacts(
                     textSearch = textSearch,
-                    onValueChange = {onValueChange(it)},
+                    onValueChange = { onValueChange(it) },
                     contacts = contactsViewModel.state.contacts,
                     inviteFriend = {
                         inviteFriend()
@@ -119,7 +122,7 @@ fun ContactsScreen(
                     }
                 )
 
-                BackToolbar (
+                BackToolbar(
                     buttonBackClick = {
                         navController.popBackStack()
                     }
@@ -137,7 +140,7 @@ fun ContactsScreen(
 //            )
             }
         }
-    }else{
+    } else {
         RequestReadContacts(
             onClickButton = {
                 onClickButtonRequest()
@@ -184,14 +187,15 @@ fun getContactArray(
         ContactsContract.Contacts.CONTENT_URI,
         null, null, null, null
     )
-    if ((if (cur != null) cur.getCount() else 0) > 0) {
+    if ((cur?.count ?: 0) > 0) {
         while (cur != null && cur.moveToNext()) {
             val id: String = cur.getString(
                 cur.getColumnIndex(ContactsContract.Contacts._ID)
             )
-            if(cur.getColumnIndex(
+            if (cur.getColumnIndex(
                     ContactsContract.Contacts.DISPLAY_NAME
-                )==null) continue
+                ) == null
+            ) continue
             val name: String = cur.getString(
                 cur.getColumnIndex(
                     ContactsContract.Contacts.DISPLAY_NAME
@@ -210,38 +214,42 @@ fun getContactArray(
                 )
 
 //                array.add(ContactClass(name,""))
-                var phones: MutableList<String> = mutableListOf()
+                val phones: MutableList<String> = mutableListOf()
 
                 while (pCur!!.moveToNext()) {
-                    val phoneNo: String = pCur!!.getString(
+                    val phoneNo: String = pCur.getString(
                         pCur.getColumnIndex(
                             ContactsContract.CommonDataKinds.Phone.NUMBER
                         )
                     )
                     phones.add(phoneNo)
-                    
+
                     Log.i(TAG, "Name: $name")
                     Log.i(TAG, "Phone Number: $phoneNo")
                 }
 
-                if(phones[0][0]=='8'){
-                    phones[0] = "+7" + phones[0].subSequence(1,phones[0].length)
+                if (phones[0][0] == '8') {
+                    phones[0] = "+7" + phones[0].subSequence(1, phones[0].length)
                 }
-                contactsViewModel.insertContact(Contact(contactId = id, name = name, phones = phones[0]))
-                pCur!!.close()
+                contactsViewModel.insertContact(
+                    Contact(
+                        contactId = id,
+                        name = name,
+                        phones = phones[0]
+                    )
+                )
+                pCur.close()
             }
         }
     }
 
-    if (cur != null) {
-        cur.close()
-    }
+    cur?.close()
 }
 
 fun Context.openSettings() {
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    val uri = Uri.fromParts("package",packageName,null)
+    val uri = Uri.fromParts("package", packageName, null)
     intent.data = uri
     startActivity(intent)
 }

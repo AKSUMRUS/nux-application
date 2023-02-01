@@ -10,20 +10,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 
 @Composable
-fun NotInternet(){
+fun NotInternet() {
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.primary)
-            .padding(20.dp)
-        ,
+            .padding(20.dp),
 
-        ){
+        ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

@@ -27,9 +27,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
     lateinit var repository: UsersRepository
 
-    var counterFriendEnteredApp = 1;
-    var counterFriendInviteToApp = 1;
-    var counterAddFriend = 1;
+    private var counterFriendEnteredApp = 1
+    private var counterFriendInviteToApp = 1
+    private var counterAddFriend = 1
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // [START_EXCLUDE]
@@ -50,22 +50,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val data = remoteMessage.data
             Log.d(TAG, "Message data payload: ${remoteMessage.data}")
 
-            if(data["type"] == "friends_invite") {
-                    sendNotificationAddFriend(
-                        "Приглашение в друзья",
-                        "${data["from_user.nickname"].toString()} хочет добавить тебя в друзья",
-                        data["from_user.id"].toString(),
-                        (resources.getDrawable(R.drawable.anonymous) as BitmapDrawable?)!!.getBitmap(),
-                        data["id"].toString(),
-                        data["type"].toString()
-                    )
-            }else if(data["type"] == "friend_entered_app"){
+            if (data["type"] == "friends_invite") {
+                sendNotificationAddFriend(
+                    "Приглашение в друзья",
+                    "${data["from_user.nickname"].toString()} хочет добавить тебя в друзья",
+                    data["from_user.id"].toString(),
+                    (resources.getDrawable(R.drawable.anonymous) as BitmapDrawable?)!!.bitmap,
+                    data["id"].toString(),
+                    data["type"].toString()
+                )
+            } else if (data["type"] == "friend_entered_app") {
                 loadIconFriendEnteredApp(this, data)
-            }else if(data["type"] == "invite_to_app"){
+            } else if (data["type"] == "invite_to_app") {
                 loadIconInviteToApp(data)
-            }else{
+            } else {
                 val intentService = Intent(this, MyService::class.java)
-                intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 this.startForegroundService(intentService)
             }
         }
@@ -101,7 +101,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             })
     }
 
-    private fun loadIconFriendEnteredApp(myFirebaseMessagingService: MyFirebaseMessagingService, data: Map<String, String>) {
+    private fun loadIconFriendEnteredApp(
+        myFirebaseMessagingService: MyFirebaseMessagingService,
+        data: Map<String, String>
+    ) {
         Glide.with(this)
             .asBitmap()
             .load(data["app.icon_preview"].toString())
@@ -190,8 +193,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         intent.putExtra("notification_id", notificationId)
         intent.putExtra("userId_$notificationId", userId)
         intent.putExtra("notification_type", notificationType)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val channelId = "ChannelId1"
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -203,19 +208,24 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             )
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
-        
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId,
+            val channel = NotificationChannel(
+                channelId,
                 "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT)
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(counterFriendEnteredApp++ /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(
+            counterFriendEnteredApp++ /* ID of notification */,
+            notificationBuilder.build()
+        )
     }
 
 
@@ -228,14 +238,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationType: String,
     ) {
 
-        Log.e(TAG,"sendNotificationInviteToApp")
+        Log.e(TAG, "sendNotificationInviteToApp")
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.putExtra("notification_type", notificationType)
         intent.putExtra("notification_id", notificationId)
         intent.putExtra("gamePackageName_$notificationId", packageGame)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val context: Context = this
 
@@ -251,15 +263,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setContentIntent(pendingIntent)
 
 
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
-        val channel = NotificationChannel(channelId,
+        val channel = NotificationChannel(
+            channelId,
             "Channel human readable title",
-            NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
         notificationManager.createNotificationChannel(channel)
 
-        notificationManager.notify(counterFriendInviteToApp++ /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(
+            counterFriendInviteToApp++ /* ID of notification */,
+            notificationBuilder.build()
+        )
     }
 
 
@@ -277,8 +295,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         intent.putExtra("notification_type", notificationType)
         intent.putExtra("notification_id", notificationId)
         intent.putExtra("userId_$notificationId", userId)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0 /* Request code */, intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
 //        val image = BitmapFactory.decodeStream(iconGame.openStream())
         val context: Context = this
@@ -291,21 +311,25 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
-
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Since android Oreo notification channel is needed.
-        val channel = NotificationChannel(channelId,
+        val channel = NotificationChannel(
+            channelId,
             "Channel human readable title",
-            NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
         notificationManager.createNotificationChannel(channel)
 
         Log.e(TAG, "send!!!")
-        notificationManager.notify(counterAddFriend++ /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(
+            counterAddFriend++ /* ID of notification */,
+            notificationBuilder.build()
+        )
     }
 
     companion object {
-
         private const val TAG = "MyFirebaseMsgService"
     }
 }

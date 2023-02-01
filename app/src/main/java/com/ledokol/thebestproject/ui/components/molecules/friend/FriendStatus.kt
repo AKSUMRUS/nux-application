@@ -16,17 +16,16 @@ fun FriendStatus(
     user: User
 ) {
     Row(
-    modifier = Modifier
-            .fillMaxHeight()
-        ,
+        modifier = Modifier
+            .fillMaxHeight(),
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         Body1(
             text = if (!user.status.online) "Offline" else "Online"
         )
 
         Status(
-            status = if(!user.status.online)"offline" else "online",
+            status = if (!user.status.online) "offline" else "online",
             modifier = Modifier
                 .fillMaxHeight()
                 .padding(start = 10.dp)

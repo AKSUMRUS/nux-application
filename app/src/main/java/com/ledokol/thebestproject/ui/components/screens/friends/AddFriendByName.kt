@@ -62,7 +62,7 @@ fun AddFriendByName(
                     userViewModel.state = userViewModel.state.copy(
                         friendUser = null
                     )
-                    navController.navigate(BottomNavItemMain.Friends.screen_route){
+                    navController.navigate(BottomNavItemMain.Friends.screen_route) {
                         popUpTo(BottomNavItemMain.Friends.screen_route)
                         launchSingleTop = true
                     }

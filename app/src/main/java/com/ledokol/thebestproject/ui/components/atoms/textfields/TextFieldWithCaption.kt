@@ -28,33 +28,32 @@ fun TextFieldWithCaption(
     imeAction: ImeAction = ImeAction.Next,
 
     ) {
-        androidx.compose.material.TextField(
-            value = text,
-            onValueChange = { onValueChange(it) },
-            label = { Text(text = label) },
-            textStyle = TextStyle(fontSize = 17.sp),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = keyboardType
-            ).copy(imeAction = imeAction),
-            keyboardActions = keyboardActions,
-            singleLine = true,
-            modifier = Modifier
-                .then(modifier)
-                .fillMaxWidth()
-                .background(
-                    MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
-                    RoundedCornerShape(16.dp)
-                )
-            ,
-            placeholder = { Text(text = "Bun") },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.White,
-                placeholderColor = MaterialTheme.colors.onBackground,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                backgroundColor = Color.Transparent,
-                cursorColor = Color.DarkGray
-            )
+    androidx.compose.material.TextField(
+        value = text,
+        onValueChange = { onValueChange(it) },
+        label = { Text(text = label) },
+        textStyle = TextStyle(fontSize = 17.sp),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType
+        ).copy(imeAction = imeAction),
+        keyboardActions = keyboardActions,
+        singleLine = true,
+        modifier = Modifier
+            .then(modifier)
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colors.onBackground.copy(alpha = 0.36f),
+                RoundedCornerShape(16.dp)
+            ),
+        placeholder = { Text(text = "Bun") },
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.White,
+            placeholderColor = MaterialTheme.colors.onBackground,
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+            backgroundColor = Color.Transparent,
+            cursorColor = Color.DarkGray
         )
+    )
 }
 

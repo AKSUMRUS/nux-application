@@ -12,14 +12,10 @@ import android.util.Log
 import androidx.annotation.Nullable
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.MainActivity
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.repository.ProfileRepository
 import com.ledokol.thebestproject.data.repository.StatusRepository
-import com.yandex.metrica.impl.ob.pm
-import com.yandex.metrica.impl.ob.pn
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,10 +24,11 @@ private const val NOTIFICATION_ID = 101
 private const val CHANNEL_ID = "LEDOKOL"
 
 @AndroidEntryPoint
-class MyService: Service() {
+class MyService : Service() {
 
     @Inject
     lateinit var statusRepository: StatusRepository
+
     @Inject
     lateinit var profileRepository: ProfileRepository
 
@@ -39,13 +36,13 @@ class MyService: Service() {
     val context: Context = this
 
     @Nullable
-    override fun onBind (intent: Intent?): IBinder? {
+    override fun onBind(intent: Intent?): IBinder? {
         return null
     }
 
     override fun onCreate() {
         super.onCreate()
-        Log.e("Service onCreate",statusRepository.toString())
+        Log.e("Service onCreate", statusRepository.toString())
         profileRepository.getProfile()
 
         createNotification()
@@ -60,14 +57,14 @@ class MyService: Service() {
 //        val packageManager: PackageManager = context.packageManager
         createNotification()
 
-        return START_STICKY;
+        return START_STICKY
     }
 
-    private fun logApps(text: String){
+    private fun logApps(text: String) {
         Log.d("APP_ACTIVE", text)
     }
 
-    private fun doTask(packageManager: PackageManager){
+    private fun doTask(packageManager: PackageManager) {
         val gamesStatistic = GamesStatistic()
         var checkLeave: Boolean = false
         var lastApp: String? = null
@@ -117,7 +114,7 @@ class MyService: Service() {
                     checkLeave = false
                     logApps("Сейчас запущено приложение $activeAppPackage")
                 }
-            } catch(e: Exception){
+            } catch (e: Exception) {
                 lastApp = null
                 checkLeave = true
                 statusRepository.leaveStatus()
@@ -134,9 +131,14 @@ class MyService: Service() {
         super.onTaskRemoved(rootIntent)
 
         val intent = Intent(applicationContext, MyService::class.java)
-        intent.action = Intent.ACTION_MAIN;
+        intent.action = Intent.ACTION_MAIN
 
-        val pendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getService(
+            context,
+            1,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         alarmManager[AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + 5000] =
             pendingIntent
@@ -147,9 +149,10 @@ class MyService: Service() {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
-        intent.action = Intent.ACTION_MAIN;
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        intent.action = Intent.ACTION_MAIN
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setOngoing(true)
@@ -158,7 +161,7 @@ class MyService: Service() {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(false)
-            .setWhen(System.currentTimeMillis());
+            .setWhen(System.currentTimeMillis())
 
 
         with(NotificationManagerCompat.from(context)) {

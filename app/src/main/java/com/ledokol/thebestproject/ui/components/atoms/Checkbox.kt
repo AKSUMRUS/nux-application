@@ -4,11 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Checkbox(
+fun MyCheckbox(
     value: Boolean,
     onChange: (Boolean) -> Unit,
     modifier: Modifier,
-){
+) {
     androidx.compose.material.Checkbox(
         checked = value,
         onCheckedChange = onChange,

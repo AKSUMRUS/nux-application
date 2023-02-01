@@ -13,14 +13,12 @@ fun Status(
     status: String,
     modifier: Modifier = Modifier,
     size: Dp = 15.dp
-){
-    Canvas(modifier = modifier.size(size)
-        ,
+) {
+    Canvas(modifier = modifier.size(size),
         onDraw = {
-            if(status == "offline") {
+            if (status == "offline") {
                 drawCircle(color = Color.Gray)
-            }
-            else {
+            } else {
                 drawCircle(color = Color.Green)
             }
         })

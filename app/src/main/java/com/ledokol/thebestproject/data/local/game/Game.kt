@@ -31,4 +31,4 @@ data class Game(
     @ColumnInfo(name = "dt_last_activity")
     val dt_last_activity: String? = "",
 
-)
+    )

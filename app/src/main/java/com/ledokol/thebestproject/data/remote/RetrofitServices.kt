@@ -4,12 +4,9 @@ import com.ledokol.thebestproject.data.local.notifications.NotificationEntity
 import com.ledokol.thebestproject.data.local.profile.DoNotDisturb
 import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileToken
-import com.ledokol.thebestproject.data.local.user.Apps
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.domain.games.*
 import com.ledokol.thebestproject.domain.profile.*
-import com.ledokol.thebestproject.domain.statistics.GameSessionStatistics
 import com.ledokol.thebestproject.domain.statistics.GameSessionStatisticsList
 import com.ledokol.thebestproject.domain.users.AddFriend
 import okhttp3.MultipartBody
@@ -23,7 +20,7 @@ interface RetrofitServices {
     fun login(
         @Body profile: LoginJSON
     )
-    : Call<ProfileToken>
+            : Call<ProfileToken>
 
     @Headers("Content-Type: application/json")
     @POST("register")
@@ -76,29 +73,29 @@ interface RetrofitServices {
         @Header("Authorization") authHeader: String,
         @Body firebase_messaging_token: FirebaseToken
     )
-            :Call<String>
+            : Call<String>
 
     @GET("apps/friend/{id}/v2")
     fun getUserGames(
         @Path("id") id: String
     )
-            :Call<ListApps>
+            : Call<ListApps>
 
     @GET("apps/current_user/v2")
     fun getMyGames(
     )
-            :Call<ListApps>
+            : Call<ListApps>
 
     @POST("friends/invite")
     fun friendsInvite(
         @Header("Authorization") authHeader: String,
         @Body friends: FriendsInviteToGame
-    ) : Call<Any>
+    ): Call<Any>
 
     @GET("current_user")
     fun getMe(
         @Header("Authorization") authHeader: String
-    ) : Call<Profile>
+    ): Call<Profile>
 
     @Multipart
     @PUT("current_user/profile_pic")
@@ -110,39 +107,39 @@ interface RetrofitServices {
     @GET("app/{app_id}")
     fun getGame(
         @Path("app_id") app_id: String,
-    ) : Call<Profile>
+    ): Call<Profile>
 
     @Multipart
     @PUT("app/package/{package_name}/set_images")
     fun pushGamesIcon(
         @Path("package_name") package_name: String,
         @Part icon_preview: MultipartBody.Part,
-    ) : Call<Any>
+    ): Call<Any>
 
     @PUT("current_user/do_not_disturb")
     fun setDoNotDisturb(
         @Header("Authorization") authHeader: String,
         @Body doNotDisturb: DoNotDisturb
-    ) : Call<Profile>
+    ): Call<Profile>
 
     @POST("confirmation/phone")
     fun confirmationPhone(
         @Body confirmationPhone: ConfirmationPhone
-    ) : Call<ResponseConfirmationPhone>
+    ): Call<ResponseConfirmationPhone>
 
     @GET("users/check")
     fun checkExistsNickname(
         @Query("nickname") nickname: String,
-    ) : Call<ExistsUserJSON>
+    ): Call<ExistsUserJSON>
 
     @GET("users/check")
     fun checkExistsPhone(
         @Query("phone") phone: String,
-    ) : Call<ExistsUserJSON>
+    ): Call<ExistsUserJSON>
 
     @GET("default_profile_pics/list")
     fun getDefaultProfilePics(
-    ) : Call<DefaultProfilePicsList>
+    ): Call<DefaultProfilePicsList>
 
     @PUT("friends/add")
     fun addFriend(
@@ -186,7 +183,7 @@ interface RetrofitServices {
 
     @PUT("apps/statistics/update_from_local/android")
     fun putStatistics(
-        @Body statistics : GameSessionStatisticsList
+        @Body statistics: GameSessionStatisticsList
     ): Call<Any>
 
 }

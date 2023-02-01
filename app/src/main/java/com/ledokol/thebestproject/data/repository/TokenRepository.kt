@@ -7,14 +7,14 @@ import javax.inject.Singleton
 
 @Singleton
 class TokenRepository @Inject constructor(
-    private val dao : TokenDao
+    private val dao: TokenDao
 ) {
 
-    fun addToken(token : String){
+    fun addToken(token: String) {
         dao.addToken(token = TokenEntity(token = token))
     }
 
-    fun getToken() : String {
+    fun getToken(): String {
         val response = dao.getToken()
         return response?.token ?: ""
     }

@@ -17,12 +17,11 @@ fun TitleRegistration(
     title: String,
     description: String,
     modifier: Modifier = Modifier,
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 40.dp)
-        ,
+            .padding(bottom = 40.dp),
     ) {
         HeadlineH4(
             text = title,

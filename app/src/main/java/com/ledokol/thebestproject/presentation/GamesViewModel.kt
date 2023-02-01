@@ -20,12 +20,12 @@ import javax.inject.Inject
 @HiltViewModel
 class GamesViewModel @Inject constructor(
     private val repository: GamesRepository
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(GameState())
 
-    fun onEvent(event: GamesEvent){
-        when(event){
+    fun onEvent(event: GamesEvent) {
+        when (event) {
             is GamesEvent.PushGamesIcons -> {
                 pushGamesIcons(
                     games = event.games,
@@ -43,7 +43,7 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun clearGames(){
+    fun clearGames() {
         viewModelScope.launch {
             repository.clearGames()
         }
@@ -51,16 +51,16 @@ class GamesViewModel @Inject constructor(
 
     fun getGame(
         query: String = state.searchQuery.lowercase()
-    ){
+    ) {
         viewModelScope.launch {
             repository.getGame(query)
-                .collect{ result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             result.data.let { game ->
                                 game?.let { setSelectedGame(it) }
                             }
-                            Log.e("getGame_ViewModel",state.toString())
+                            Log.e("getGame_ViewModel", state.toString())
                         }
                         is Resource.Error -> Unit
                         is Resource.Loading -> {
@@ -86,7 +86,7 @@ class GamesViewModel @Inject constructor(
         }
     }
 
-    fun setSelectedGame(game: Game){
+    fun setSelectedGame(game: Game) {
         state = state.copy(
             game = game
         )
@@ -95,11 +95,11 @@ class GamesViewModel @Inject constructor(
     fun shareGames(
         games: List<StatusJSON>,
         context: Context,
-    ){
+    ) {
         viewModelScope.launch {
             repository.shareGames(games)
-                .collect{result ->
-                    when(result){
+                .collect { result ->
+                    when (result) {
                         is Resource.Success -> {
                             state = state.copy(
                                 games = result.data!!.apps
@@ -107,7 +107,10 @@ class GamesViewModel @Inject constructor(
 
                             getMyGames()
 
-                            Log.e("shareGames_ViewModel",result.data.send_icons_apps_ids.toString())
+                            Log.e(
+                                "shareGames_ViewModel",
+                                result.data.send_icons_apps_ids.toString()
+                            )
 
                             pushGamesIcons(result.data.send_icons_apps_ids, context)
                         }
@@ -128,8 +131,7 @@ class GamesViewModel @Inject constructor(
                 .collect { result ->
                     when (result) {
                         is Resource.Success -> {
-                            result.data.let {
-                                    games ->
+                            result.data.let { games ->
                                 if (!games.isNullOrEmpty()) {
                                     val myGames: MutableList<Game> = mutableListOf()
                                     for (game in games) {

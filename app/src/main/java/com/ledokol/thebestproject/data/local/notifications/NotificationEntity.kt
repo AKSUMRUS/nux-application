@@ -9,7 +9,7 @@ import com.ledokol.thebestproject.data.local.user.User
 data class NotificationEntity(
     @PrimaryKey
     @SerializedName("dt_sent")
-    val dt_sent : String = "",
+    val dt_sent: String = "",
     @SerializedName("from_user")
-    val from_user : User,
+    val from_user: User,
 )

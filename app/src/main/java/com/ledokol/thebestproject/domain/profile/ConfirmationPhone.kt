@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class ConfirmationPhone(
     @field:Json(name = "phone")
-    val phone : String,
+    val phone: String,
     @field:Json(name = "reason")
-    val reason : String,
+    val reason: String,
 )

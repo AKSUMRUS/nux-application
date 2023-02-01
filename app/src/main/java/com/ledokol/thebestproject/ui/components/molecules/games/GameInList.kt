@@ -21,11 +21,10 @@ fun GameInList(
     onClick: () -> Unit = {},
     openGame: Boolean = false,
     usageTime: String? = null,
-){
+) {
 
-    Column (
-        modifier = Modifier
-        ,
+    Column(
+        modifier = Modifier,
     ) {
         Column(
             modifier = Modifier
@@ -36,11 +35,9 @@ fun GameInList(
                 .background(MaterialTheme.colors.primary)
                 .clickable {
                     onClick()
-                }
-
-            ,
+                },
             verticalArrangement = Arrangement.Center,
-        ){
+        ) {
             AsyncImage(
                 model = icon,
                 contentDescription = "GameImage",
@@ -48,8 +45,7 @@ fun GameInList(
 //                .border(5.dp, MaterialTheme.colors.background)
                     .size(100.dp)
                     .align(CenterHorizontally)
-                    .padding(10.dp)
-                ,
+                    .padding(10.dp),
             )
 
             Body1(
@@ -57,7 +53,7 @@ fun GameInList(
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .align(CenterHorizontally)
-                    .padding(start = 8.dp, end = 8.dp,bottom = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
             )
 
         }

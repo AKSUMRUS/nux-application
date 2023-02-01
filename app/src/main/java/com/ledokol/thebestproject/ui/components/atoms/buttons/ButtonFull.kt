@@ -6,13 +6,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
@@ -24,13 +22,12 @@ fun ButtonFull(
     colorBackground: Color = MaterialTheme.colors.secondary,
     colorText: Color = MaterialTheme.colors.onBackground,
     padding: PaddingValues = PaddingValues(10.dp),
-){
+) {
 
     Button(
         onClick = onClick,
         modifier = Modifier
-            .then(modifier)
-    ,
+            .then(modifier),
         shape = RoundedCornerShape(34.dp),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
@@ -43,8 +40,7 @@ fun ButtonFull(
             modifier = Modifier
 //                .fillMaxWidth()
                 .align(CenterVertically)
-                .padding(bottom = 2.dp)
-        ,
+                .padding(bottom = 2.dp),
             textAlign = TextAlign.Center
         )
     }

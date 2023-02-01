@@ -1,20 +1,20 @@
 package com.ledokol.thebestproject.data.local.profile
 
 import android.graphics.Bitmap
-import com.ledokol.thebestproject.domain.profile.UpdateProfile
 import com.ledokol.thebestproject.domain.profile.UpdateProfileJSON
 
-sealed class ProfileEvent{
-    object GetProfile: ProfileEvent()
-    object LogOut: ProfileEvent()
-    object GetDefaultProfilePics: ProfileEvent()
+sealed class ProfileEvent {
+    object GetProfile : ProfileEvent()
+    object LogOut : ProfileEvent()
+    object GetDefaultProfilePics : ProfileEvent()
     class InviteFriends(
         val accessToken: String,
         val friends_ids: List<String>,
         val app_id: String
-        ) : ProfileEvent()
-    class UpdateAvatar(val profile_pic: Bitmap): ProfileEvent()
-    class ConfirmationPhone(val phone: String, val reason: String): ProfileEvent()
+    ) : ProfileEvent()
+
+    class UpdateAvatar(val profile_pic: Bitmap) : ProfileEvent()
+    class ConfirmationPhone(val phone: String, val reason: String) : ProfileEvent()
     class SetCurrentFirebaseToken(val token: String, val accessToken: String) : ProfileEvent()
     class SetFinishRegister(val accessToken: String) : ProfileEvent()
     class UpdateProfileData(val newProfile: UpdateProfileJSON) : ProfileEvent()
@@ -26,7 +26,8 @@ sealed class ProfileEvent{
         val default_profile_pic_id: String,
         val id: String,
         val code: String,
-        ) : ProfileEvent()
+    ) : ProfileEvent()
+
     class SetDoNotDisturb(
         val canDisturb: Boolean,
         val accessToken: String

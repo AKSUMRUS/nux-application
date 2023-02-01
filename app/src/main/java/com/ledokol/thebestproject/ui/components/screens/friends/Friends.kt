@@ -43,7 +43,7 @@ fun Friends(
     userViewModel: UserViewModel,
     profileViewModel: ProfileViewModel,
     notificationsViewModel: NotificationsViewModel,
-){
+) {
     val state = userViewModel.state
     val isFindingNewFriends = false
     val shouldWork by remember {
@@ -64,15 +64,14 @@ fun Friends(
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if(isFindingNewFriends){
+            if (isFindingNewFriends) {
                 if (event == Lifecycle.Event.ON_START) {
                     userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
                 } else if (event == Lifecycle.Event.ON_STOP) {
                     runnable?.let { handler.removeCallbacks(it) }
                     userViewModel.onEvent(UserEvent.OnSearchQueryChangeFindFriend(""))
                 }
-            }
-            else {
+            } else {
                 if (event == Lifecycle.Event.ON_START) {
                     userViewModel.onEvent(UserEvent.OnSearchQueryChange(""))
                 } else if (event == Lifecycle.Event.ON_STOP) {
@@ -89,7 +88,7 @@ fun Friends(
 
     fun onAddFriend(
         friend: User
-    ){
+    ) {
         userViewModel.onEvent(UserEvent.SelectUser(friend))
 
         Log.e("Friends_ADD", state.inviteFriends.toString())
@@ -99,7 +98,7 @@ fun Friends(
     fun onClickFriend(
         navController: NavController,
         id: String,
-    ){
+    ) {
         userViewModel.onEvent(UserEvent.GetFriendUser(id = id))
         navController.navigate(ScreenRoutes.FRIEND_SCREEN) {
             popUpTo(ScreenRoutes.FRIEND_SCREEN)
@@ -109,7 +108,7 @@ fun Friends(
 
     fun onClick(
         notificationEntity: NotificationEntity
-    ){
+    ) {
         notificationsViewModel.onEvent(NotificationsEvent.AddFriend(notificationEntity))
     }
 
@@ -133,7 +132,7 @@ fun Friends(
 
     var textSearch by remember { mutableStateOf("") }
 
-    LaunchedEffect(true){
+    LaunchedEffect(true) {
         runnable = Runnable {
             Log.e("FinishListFriends", "getFriends Okay $shouldWork")
             userViewModel.onEvent(UserEvent.Refresh(shouldReload = false))
@@ -144,7 +143,7 @@ fun Friends(
         handler.postDelayed(runnable!!, 100)
     }
 
-    LaunchedEffect(state.inviteFriends){
+    LaunchedEffect(state.inviteFriends) {
         isInviteButtonClicked = state.inviteFriends.isNotEmpty()
     }
 
@@ -152,12 +151,12 @@ fun Friends(
         sheetBackgroundColor = MaterialTheme.colors.background,
         sheetState = modalBottomSheetState,
         sheetContent = {
-                InviteFriend(
-                    navController = navController,
-                    userViewModel = userViewModel,
-                    profileViewModel = profileViewModel,
-                )
-            },
+            InviteFriend(
+                navController = navController,
+                userViewModel = userViewModel,
+                profileViewModel = profileViewModel,
+            )
+        },
         sheetShape = RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
         sheetElevation = 10.dp,
     ) {
@@ -181,7 +180,7 @@ fun Friends(
                             TitleFriends(
                                 text = stringResource(id = R.string.invite_to_game_title),
                                 modifier = Modifier
-                                    .padding(top = 30.dp, bottom = 20.dp,)
+                                    .padding(top = 30.dp, bottom = 20.dp)
                             )
 
                             ButtonAddFriend(
@@ -270,7 +269,8 @@ fun Friends(
                                     }
                                 }
                             } else {
-                                items(arrayFriends.filter { state.inviteFriends.contains(it.id) }.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                items(arrayFriends.filter { state.inviteFriends.contains(it.id) }
+                                    .sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
                                     FriendInList(
                                         user = friend,
                                         onClickFriend = {
@@ -285,7 +285,8 @@ fun Friends(
                                         clickedAdd = true
                                     )
                                 }
-                                items(arrayFriends.filter { !state.inviteFriends.contains(it.id) }.sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
+                                items(arrayFriends.filter { !state.inviteFriends.contains(it.id) }
+                                    .sortedBy { if (it.status.in_app) -1 else 1 }) { friend ->
                                     FriendInList(
                                         user = friend,
                                         onClickFriend = {
@@ -343,11 +344,10 @@ fun Friends(
                 ButtonWithChangeableColor(
                     isClicked = isInviteButtonClicked,
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                     onClick = {
                         navController.navigate(ScreenRoutes.CHOOSE_GAMES)
-                              },
+                    },
                     text1 = stringResource(id = R.string.invite_to_game),
                     text2 = stringResource(id = R.string.invite_to_game),
                     color1 = MaterialTheme.colors.surface,

@@ -26,7 +26,7 @@ fun LoadingView() {
                 text = stringResource(R.string.loading),
                 modifier = Modifier.padding(bottom = 20.dp),
 
-            )
+                )
             CircularProgressIndicator(
                 color = MaterialTheme.colors.secondary
             )

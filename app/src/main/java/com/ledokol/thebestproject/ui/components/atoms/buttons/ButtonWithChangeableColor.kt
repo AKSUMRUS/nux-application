@@ -24,16 +24,15 @@ fun ButtonWithChangeableColor(
     Button(
         onClick = onClick,
         modifier = Modifier
-            .then(modifier)
-        ,
+            .then(modifier),
         colors = ButtonDefaults.buttonColors(
-                backgroundColor = if(!isClicked) color1 else color2,
+            backgroundColor = if (!isClicked) color1 else color2,
         ),
         shape = RoundedCornerShape(16.dp),
     ) {
         HeadlineH6(
-            text = if(!isClicked) text1 else text2,
-            color = if(!isClicked) color1Text else color2Text,
+            text = if (!isClicked) text1 else text2,
+            color = if (!isClicked) color1Text else color2Text,
         )
     }
 }

@@ -17,7 +17,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
 @Composable
 fun GradientButton(
     text: String,
-    gradient : Brush,
+    gradient: Brush,
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.large,
     onClick: () -> Unit = { },

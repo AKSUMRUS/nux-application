@@ -9,7 +9,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -30,16 +30,16 @@ fun Search(
     modifier: Modifier = Modifier,
     textCaption: String? = null,
     onValueChange: (String) -> Unit,
-    trailingButtonClick: () -> Unit = {onValueChange("")},
+    trailingButtonClick: () -> Unit = { onValueChange("") },
     keyboardType: KeyboardType = KeyboardType.Text,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     imeAction: ImeAction = ImeAction.Next,
 ) {
-    if(textCaption != null){
+    if (textCaption != null) {
         HeadlineH5(
             text = textCaption,
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 
@@ -53,7 +53,7 @@ fun Search(
         keyboardActions = keyboardActions,
         singleLine = true,
         trailingIcon = {
-            IconButton(onClick =  trailingButtonClick) {
+            IconButton(onClick = trailingButtonClick) {
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },
@@ -66,8 +66,7 @@ fun Search(
             .background(
                 MaterialTheme.colors.primary,
                 RoundedCornerShape(0.dp)
-            )
-        ,
+            ),
         placeholder = { Text(text = placeholder) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = MaterialTheme.colors.onBackground,

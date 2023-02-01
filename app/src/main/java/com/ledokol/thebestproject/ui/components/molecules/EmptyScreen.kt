@@ -14,23 +14,21 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 @Composable
 fun EmptyScreen(
     title: String,
-){
+) {
 
     Box(
         modifier = Modifier
             .padding(top = 30.dp)
-            .fillMaxSize()
-    ,
+            .fillMaxSize(),
         contentAlignment = Alignment.Center,
-    ){
+    ) {
         HeadlineH5(
             text = title,
             color = MaterialTheme.colors.onBackground,
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.Center)
-        ,
+                .align(Alignment.Center),
         )
     }
 

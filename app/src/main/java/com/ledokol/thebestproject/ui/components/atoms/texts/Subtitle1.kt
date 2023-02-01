@@ -24,6 +24,6 @@ fun Subtitle1(
         modifier = modifier,
         fontWeight = fontWeight,
         textAlign = textAlign,
-        )
+    )
 }
 

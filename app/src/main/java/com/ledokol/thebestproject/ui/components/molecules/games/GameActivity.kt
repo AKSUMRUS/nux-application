@@ -9,12 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonEmpty
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -31,21 +29,23 @@ fun GameActivity(
     startTime: String = "",
     finishTime: String = "",
     onClick: () -> Unit = {},
-){
+) {
 
 //    startTime = startTime.subSequence(0,19).toString()
 
     val TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm")
 
-    val localDateTimeStart = LocalDateTime.parse(startTime).atOffset(ZoneOffset.UTC).atZoneSameInstant(ZoneId.systemDefault())
+    val localDateTimeStart = LocalDateTime.parse(startTime).atOffset(ZoneOffset.UTC)
+        .atZoneSameInstant(ZoneId.systemDefault())
     var localDateTimeFinish: ZonedDateTime = ZonedDateTime.now()
-    if(!in_app){
-        localDateTimeFinish = LocalDateTime.parse(finishTime).atOffset(ZoneOffset.UTC).atZoneSameInstant(ZoneId.systemDefault())
+    if (!in_app) {
+        localDateTimeFinish = LocalDateTime.parse(finishTime).atOffset(ZoneOffset.UTC)
+            .atZoneSameInstant(ZoneId.systemDefault())
     }
     val localDateTimeCurrent = LocalDateTime.now()
 
-    fun fromEnglishToRussianDay(day: String):String{
-        val russianDay = when(day){
+    fun fromEnglishToRussianDay(day: String): String {
+        val russianDay = when (day) {
             "JANUARY" -> "Января"
             "FEBRUARY" -> "Февраля"
             "MARCH" -> "Марта"
@@ -58,29 +58,33 @@ fun GameActivity(
             "OCTOBER" -> "Октября"
             "NOVEMBER" -> "Ноября"
             "DECEMBER" -> "Декабря"
-            else -> {"Неизвестно"}
+            else -> {
+                "Неизвестно"
+            }
         }
 
         return russianDay
     }
 
-    fun getDay(dateTime: ZonedDateTime): String{
-        if(dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth == localDateTimeCurrent.dayOfMonth){
+    fun getDay(dateTime: ZonedDateTime): String {
+        if (dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth == localDateTimeCurrent.dayOfMonth) {
             return "сегодня"
         }
-        if(dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth == localDateTimeCurrent.dayOfMonth-1){
+        if (dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth == localDateTimeCurrent.dayOfMonth - 1) {
             return "вчера"
         }
-        if(dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth >= localDateTimeCurrent.dayOfMonth-2){
+        if (dateTime.month == localDateTimeCurrent.month && dateTime.dayOfMonth >= localDateTimeCurrent.dayOfMonth - 2) {
             return "позавчера"
         }
 
-        return "${localDateTimeFinish.dayOfMonth} ${fromEnglishToRussianDay(
-            localDateTimeFinish.month.toString()
-        )}"
+        return "${localDateTimeFinish.dayOfMonth} ${
+            fromEnglishToRussianDay(
+                localDateTimeFinish.month.toString()
+            )
+        }"
     }
 
-    fun getTime(dateTime: ZonedDateTime): String{
+    fun getTime(dateTime: ZonedDateTime): String {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         return dateTime.format(formatter)
     }
@@ -98,10 +102,9 @@ fun GameActivity(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.Center)
-            ,
-            verticalAlignment = Alignment.CenterVertically
-        ){
+                .align(Alignment.Center),
+            verticalAlignment = CenterVertically
+        ) {
             AsyncImage(
                 model = iconPreview,
                 contentDescription = "GameImage",
@@ -115,17 +118,23 @@ fun GameActivity(
             Column(
                 modifier = Modifier
                     .padding(start = 10.dp)
-            ){
+            ) {
                 Body1(
                     text = gameName,
                     color = MaterialTheme.colors.onBackground,
-                    modifier = Modifier.padding(bottom =5.dp)
+                    modifier = Modifier.padding(bottom = 5.dp)
                 )
 
-                if(!in_app){
-                    Body1(text = "Был ${getDay(localDateTimeFinish)} c ${getTime(localDateTimeStart)} до ${getTime(localDateTimeFinish)} ")
+                if (!in_app) {
+                    Body1(
+                        text = "Был ${getDay(localDateTimeFinish)} c ${getTime(localDateTimeStart)} до ${
+                            getTime(
+                                localDateTimeFinish
+                            )
+                        } "
+                    )
 //                    Body1(text = "")
-                }else{
+                } else {
                     Body1(text = "Сейчас использует")
                 }
             }

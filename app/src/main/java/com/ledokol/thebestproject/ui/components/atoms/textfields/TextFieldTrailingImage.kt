@@ -19,8 +19,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 
 @Composable
 fun TextFieldTrailingImage(
@@ -37,11 +37,11 @@ fun TextFieldTrailingImage(
     keyboardOptions: KeyboardOptions = KeyboardOptions(),
 ) {
 
-    if(textCaption != null){
+    if (textCaption != null) {
         HeadlineH5(
             text = textCaption,
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 
@@ -55,7 +55,7 @@ fun TextFieldTrailingImage(
         keyboardActions = keyboardActions,
         singleLine = true,
         trailingIcon = {
-            IconButton(onClick =  buttonClick) {
+            IconButton(onClick = buttonClick) {
                 Icon(
                     image,
                     contentDescription = null,

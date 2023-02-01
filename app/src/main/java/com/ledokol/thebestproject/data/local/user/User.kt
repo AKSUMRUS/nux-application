@@ -22,4 +22,4 @@ data class User(
     @ColumnInfo(name = "do_not_disturb")
     var do_not_disturb: String,
 
-)
+    )

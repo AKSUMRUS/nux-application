@@ -33,11 +33,11 @@ fun TextFieldLeadingIcon(
     imeAction: ImeAction = ImeAction.Next,
 ) {
 
-    if(textCaption != null){
+    if (textCaption != null) {
         HeadlineH5(
             text = textCaption,
             fontWeight = FontWeight.W700,
-            modifier = Modifier.padding(top=10.dp)
+            modifier = Modifier.padding(top = 10.dp)
         )
     }
 
@@ -51,7 +51,7 @@ fun TextFieldLeadingIcon(
         keyboardActions = keyboardActions,
         singleLine = true,
         leadingIcon = {
-            IconButton(onClick =  buttonClick) {
+            IconButton(onClick = buttonClick) {
                 Icon(icon, contentDescription = null, tint = MaterialTheme.colors.secondaryVariant)
             }
         },

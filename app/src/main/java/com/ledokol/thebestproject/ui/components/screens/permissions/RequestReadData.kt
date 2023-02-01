@@ -25,10 +25,10 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
+import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 
 @Composable
 fun RequestReadData(
@@ -39,16 +39,16 @@ fun RequestReadData(
 ) {
     val context: Context = LocalContext.current
     val lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current
-    var checkPermission by remember{ mutableStateOf(true) }
+    var checkPermission by remember { mutableStateOf(true) }
 
     DisposableEffect(lifecycleOwner, checkPermission) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START || event == Lifecycle.Event.ON_RESUME) {
 
-                if(checkPermissionReadData(context)){
+                if (checkPermissionReadData(context)) {
 
                     profileViewModel.onEvent(ProfileEvent.SetFinishRegister(accessToken = profileViewModel.state.profile!!.access_token))
-                }else{
+                } else {
                     checkPermission = false
                 }
             }
@@ -59,41 +59,40 @@ fun RequestReadData(
         }
     }
 
-    if(!checkPermission){
+    if (!checkPermission) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colors.background)
-                .padding(top = 100.dp, bottom = 100.dp,start = 30.dp, end = 30.dp)
-            ,
+                .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = CenterHorizontally,
 
-            ){
+            ) {
 
             Column(
                 modifier = Modifier.weight(3f)
-            ){
-                HeadlineH5(text = stringResource(id = R.string.hello_permission_data),
+            ) {
+                HeadlineH5(
+                    text = stringResource(id = R.string.hello_permission_data),
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                     fontWeight = FontWeight.W500,
                 )
-                HeadlineH5(text = stringResource(id = R.string.need_permission_data),
+                HeadlineH5(
+                    text = stringResource(id = R.string.need_permission_data),
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                     fontWeight = FontWeight.W500,
                 )
 
-                HeadlineH3(text = stringResource(id = R.string.reason_permission_data),
+                HeadlineH3(
+                    text = stringResource(id = R.string.reason_permission_data),
                     color = MaterialTheme.colors.onBackground,
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                     fontWeight = FontWeight.W500,
                 )
             }
@@ -102,13 +101,13 @@ fun RequestReadData(
                 modifier = Modifier.weight(3f),
                 verticalArrangement = Arrangement.Bottom
 
-            ){
-                Body1(text = stringResource(id = R.string.explain_permission_data),
+            ) {
+                Body1(
+                    text = stringResource(id = R.string.explain_permission_data),
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 20.dp)
-                    ,
+                        .padding(bottom = 20.dp),
                     fontWeight = FontWeight.W500,
                 )
 
@@ -119,8 +118,7 @@ fun RequestReadData(
                         context.startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                     },
                     modifier = Modifier
-                        .fillMaxWidth()
-                    ,
+                        .fillMaxWidth(),
                 )
             }
 
@@ -130,7 +128,11 @@ fun RequestReadData(
 
 fun checkPermissionReadData(context: Context): Boolean {
     val appOps = context.getSystemService(Context.APP_OPS_SERVICE) as AppOpsManager
-    val mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, Process.myUid(), context.packageName)
+    val mode = appOps.checkOpNoThrow(
+        AppOpsManager.OPSTR_GET_USAGE_STATS,
+        Process.myUid(),
+        context.packageName
+    )
     return mode == AppOpsManager.MODE_ALLOWED
 }
 

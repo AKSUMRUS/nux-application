@@ -10,11 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithIcon
 import com.ledokol.thebestproject.ui.components.atoms.textfields.PhoneNumber
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.TitleRegistration
-import com.ledokol.thebestproject.R
 
 
 @Composable
@@ -24,14 +24,14 @@ fun SignUpScreenPhone(
     buttonNextClick: () -> Unit,
     buttonBackClick: () -> Unit,
     error: String = "",
-){
-    fun onPhoneChange(text: String){
+) {
+    fun onPhoneChange(text: String) {
         var str = text
-        str = str.replace("(","")
-        str = str.replace(")","")
-        str = str.replace("-","")
+        str = str.replace("(", "")
+        str = str.replace(")", "")
+        str = str.replace("-", "")
 
-        if(str.length>20){
+        if (str.length > 20) {
             return
         }
         setPhone(str)
@@ -40,13 +40,12 @@ fun SignUpScreenPhone(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        BackToolbar(buttonBackClick = {buttonBackClick()})
+        BackToolbar(buttonBackClick = { buttonBackClick() })
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp)
-            ,
+                .padding(start = 20.dp, end = 20.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start,
         ) {
@@ -58,9 +57,9 @@ fun SignUpScreenPhone(
 
             PhoneNumber(
                 phone = phone,
-                onPhoneChange = {onPhoneChange(it)},
+                onPhoneChange = { onPhoneChange(it) },
                 error = error,
-                onNextClick = {buttonNextClick()}
+                onNextClick = { buttonNextClick() }
             )
 
             Row(

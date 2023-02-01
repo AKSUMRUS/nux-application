@@ -10,7 +10,6 @@ import com.ledokol.thebestproject.data.local.profile.DoNotDisturb
 import com.ledokol.thebestproject.data.local.profile.Profile
 import com.ledokol.thebestproject.data.local.profile.ProfileDao
 import com.ledokol.thebestproject.data.local.profile.ProfileToken
-import com.ledokol.thebestproject.data.local.token.TokenEntity
 import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.remote.RetrofitServices
 import com.ledokol.thebestproject.domain.games.FriendsInviteToGame
@@ -21,9 +20,11 @@ import kotlinx.coroutines.flow.flow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.awaitResponse
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -31,36 +32,36 @@ import javax.inject.Singleton
 @Singleton
 class ProfileRepository @Inject constructor(
     private val tokenRepository: TokenRepository,
-    private val api : RetrofitServices,
+    private val api: RetrofitServices,
     private val dao: ProfileDao
-    ) {
+) {
 
     var data by mutableStateOf(Profile(access_token = ""))
 
     fun setCurrentFirebaseToken(
         token: String,
         accessToken2: String
-    ){
+    ) {
         val accessToken = tokenRepository.getToken()
-        Log.e("myFirebaseToken","$token $accessToken")
+        Log.e("myFirebaseToken", "$token $accessToken")
         val callSetCurrentToken = api.setCurrentFirebaseToken(
             authHeader = "Bearer $accessToken",
             FirebaseToken(firebase_messaging_token = token)
         )
 
-        callSetCurrentToken.enqueue(object : Callback<String>{
+        callSetCurrentToken.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Log.e("myFirebaseToken","Success ${response.body().toString()}")
+                Log.e("myFirebaseToken", "Success ${response.body().toString()}")
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                Log.e("myFirebaseToken","Errrr")
+                Log.e("myFirebaseToken", "Errrr")
             }
 
         })
     }
 
-    fun convertBitmapToPNG(bitmap: Bitmap): ByteArray {
+    private fun convertBitmapToPNG(bitmap: Bitmap): ByteArray {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         return byteArrayOutputStream.toByteArray()
@@ -68,9 +69,9 @@ class ProfileRepository @Inject constructor(
 
     fun uploadAvatar(
         profile_pic_bitmap: Bitmap,
-    ): Flow<Resource<Profile>>{
+    ): Flow<Resource<Profile>> {
 
-        return flow{
+        return flow {
             emit(Resource.Loading(true))
             val TAG = "uploadAvatar"
 
@@ -78,11 +79,12 @@ class ProfileRepository @Inject constructor(
 
             val out = convertBitmapToPNG(profile_pic_bitmap)
 
-            val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(),out)
-            val profile_pic: MultipartBody.Part = MultipartBody.Part.createFormData("profile_pic", "profile_pic.png", requestBody)
+            val requestBody: RequestBody = RequestBody.create("image/png".toMediaTypeOrNull(), out)
+            val profile_pic: MultipartBody.Part =
+                MultipartBody.Part.createFormData("profile_pic", "profile_pic.png", requestBody)
 
             Log.e(TAG, "$token")
-            val remoteProfile = try{
+            val remoteProfile = try {
                 val callUpdateAvatar = api.uploadAvatar(
                     authHeader = "Bearer $token",
                     profile_pic = profile_pic
@@ -90,15 +92,17 @@ class ProfileRepository @Inject constructor(
                 val profile = callUpdateAvatar.awaitResponse().body()
 
                 profile
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
             remoteProfile?.let { profile ->
-                emit(Resource.Success(
-                    data = profile
-                ))
+                emit(
+                    Resource.Success(
+                        data = profile
+                    )
+                )
 
                 emit(Resource.Loading(false))
             }
@@ -109,36 +113,37 @@ class ProfileRepository @Inject constructor(
         phone: String,
         reason: String,
     ): Flow<Resource<ResponseConfirmationPhone>> {
-        return flow{
-            Log.e("confirmationPhone","$phone $reason")
+        return flow {
+            Log.e("confirmationPhone", "$phone $reason")
             val callConfirmationPhone = api.confirmationPhone(
                 confirmationPhone = ConfirmationPhone(phone = phone, reason = reason)
             )
 
-            val response = try{
+            val response = try {
                 val responseApi = callConfirmationPhone.awaitResponse()
-                if(responseApi.code() == 200){
+                if (responseApi.code() == 200) {
                     responseApi.body()
-                }
-                else{
+                } else {
                     emit(Resource.Error(ErrorRemote.NoInternet))
                     null
                 }
-            }catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            response?.let{
-                emit(Resource.Success(
-                    data = response
-                ))
+            response?.let {
+                emit(
+                    Resource.Success(
+                        data = response
+                    )
+                )
             }
         }
 
     }
 
-    fun clearProfile(){
+    fun clearProfile() {
         dao.clearProfile()
     }
 
@@ -146,8 +151,11 @@ class ProfileRepository @Inject constructor(
         accessToken: String,
         friends_ids: List<String>,
         app_id: String
-    ){
-        Log.e("INVITE!!", FriendsInviteToGame(friends_ids = friends_ids, app_id = app_id).toString())
+    ) {
+        Log.e(
+            "INVITE!!",
+            FriendsInviteToGame(friends_ids = friends_ids, app_id = app_id).toString()
+        )
 
         val token = tokenRepository.getToken()
 
@@ -158,9 +166,9 @@ class ProfileRepository @Inject constructor(
                 app_id = app_id
             )
         )
-        callInvite.enqueue(object : Callback<Any>{
+        callInvite.enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                Log.e("INVITE!",response.toString())
+                Log.e("INVITE!", response.toString())
             }
 
             override fun onFailure(call: Call<Any>, t: Throwable) {
@@ -173,13 +181,13 @@ class ProfileRepository @Inject constructor(
     fun setDoNotDisturb(
         canDisturb: Boolean,
         accessToken: String
-    ) : Flow<Resource<Profile>> {
-        return flow{
+    ): Flow<Resource<Profile>> {
+        return flow {
             emit(Resource.Loading(true))
 
             val token = tokenRepository.getToken()
 
-            val remoteProfile = try{
+            val remoteProfile = try {
                 val updateCall = api.setDoNotDisturb(
                     authHeader = "Bearer $token",
                     DoNotDisturb(do_not_disturb = canDisturb)
@@ -188,7 +196,7 @@ class ProfileRepository @Inject constructor(
                 val profile = updateCall.awaitResponse().body()
 
                 profile
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
@@ -200,9 +208,11 @@ class ProfileRepository @Inject constructor(
 
                 tokenRepository.addToken(profile.access_token)
 
-                emit(Resource.Success(
-                    data = profile
-                ))
+                emit(
+                    Resource.Success(
+                        data = profile
+                    )
+                )
 
                 emit(Resource.Loading(false))
             }
@@ -212,13 +222,13 @@ class ProfileRepository @Inject constructor(
 
     fun updateProfileData(
         newProfile: UpdateProfileJSON
-    ): Flow<Resource<User>>{
+    ): Flow<Resource<User>> {
         return flow {
             emit(Resource.Loading(true))
             val token = tokenRepository.getToken()
 
-            Log.e("updateProfile", "$token ${newProfile.toString()}")
-            val remoteUser = try{
+            Log.e("updateProfile", "$token $newProfile")
+            val remoteUser = try {
                 val callRegister = api.updateProfile(
                     authHeader = "Bearer $token",
                     updateProfile = newProfile,
@@ -226,7 +236,7 @@ class ProfileRepository @Inject constructor(
                 val myResponse = callRegister.awaitResponse().body()
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
@@ -236,18 +246,20 @@ class ProfileRepository @Inject constructor(
             remoteUser?.let { profile ->
                 val newProfile = dao.getProfile()
                 newProfile!!.name = profile.name
-                newProfile!!.nickname = profile.nickname
+                newProfile.nickname = profile.nickname
 
                 dao.clearProfile()
                 dao.insertProfile(newProfile)
-                Log.e("Insert_Profile",newProfile.toString())
+                Log.e("Insert_Profile", newProfile.toString())
 
                 data = dao.getProfile()!!
 
 
-                emit(Resource.Success(
-                    data = profile
-                ))
+                emit(
+                    Resource.Success(
+                        data = profile
+                    )
+                )
 
                 emit(Resource.Loading(false))
 
@@ -258,10 +270,9 @@ class ProfileRepository @Inject constructor(
 
     fun getProfile(
         fetchRemote: Boolean = false,
-    ) : Profile?
-    {
+    ): Profile? {
 
-        if(dao.getProfile() != null) {
+        if (dao.getProfile() != null) {
             data = dao.getProfile()!!
         }
         return dao.getProfile()
@@ -269,10 +280,10 @@ class ProfileRepository @Inject constructor(
 
     fun setFinishRegister(
         accessToken: String
-    ){
+    ) {
         val token = tokenRepository.getToken()
 
-        dao.finishRegister(token,true)
+        dao.finishRegister(token, true)
     }
 
     fun signUp(
@@ -282,26 +293,28 @@ class ProfileRepository @Inject constructor(
         default_profile_pic_id: String,
         id: String,
         code: String,
-    ): Flow<Resource<ProfileToken>>{
+    ): Flow<Resource<ProfileToken>> {
         return flow {
             emit(Resource.Loading(true))
 
-            Log.e("singUpRepository","$nickname $name $phone $id $code")
-            val remoteUser = try{
-                val callRegister = api.createProfile(RegisterJSON(
-                    user = ProfileJSON(
-                        nickname = nickname,
-                        name = name,
-                        phone = phone,
-                        default_profile_pic_id = default_profile_pic_id,
-                        password = "1",
-                    ),
-                    phone_confirmation = ConfirmationPhoneAuth(id = id, code = code)
-                ))
+            Log.e("singUpRepository", "$nickname $name $phone $id $code")
+            val remoteUser = try {
+                val callRegister = api.createProfile(
+                    RegisterJSON(
+                        user = ProfileJSON(
+                            nickname = nickname,
+                            name = name,
+                            phone = phone,
+                            default_profile_pic_id = default_profile_pic_id,
+                            password = "1",
+                        ),
+                        phone_confirmation = ConfirmationPhoneAuth(id = id, code = code)
+                    )
+                )
                 val myResponse = callRegister.awaitResponse().body()
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
@@ -312,9 +325,11 @@ class ProfileRepository @Inject constructor(
 
                 tokenRepository.addToken(profile.access_token)
 
-                emit(Resource.Success(
-                    data = profile
-                ))
+                emit(
+                    Resource.Success(
+                        data = profile
+                    )
+                )
 
                 emit(Resource.Loading(false))
 
@@ -327,12 +342,12 @@ class ProfileRepository @Inject constructor(
         id: String,
         code: String,
         phone: String,
-    ): Flow<Resource<ProfileToken>>{
+    ): Flow<Resource<ProfileToken>> {
         return flow {
             emit(Resource.Loading(true))
 
             val TAG = "loginScreen"
-            Log.e(TAG,"start $id $code $phone")
+            Log.e(TAG, "start $id $code $phone")
 
             val remoteUser = try {
                 val callLogin = api.login(
@@ -344,22 +359,24 @@ class ProfileRepository @Inject constructor(
                 val myResponse = callLogin.awaitResponse().body()
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            Log.e(TAG,"res ${remoteUser.toString()}")
+            Log.e(TAG, "res ${remoteUser.toString()}")
 
             remoteUser?.let { profile ->
 
-                Log.e("AccessToken",profile.toString())
+                Log.e("AccessToken", profile.toString())
 
                 tokenRepository.addToken(profile.access_token)
 
-                emit(Resource.Success(
-                    data = profile
-                ))
+                emit(
+                    Resource.Success(
+                        data = profile
+                    )
+                )
 
                 emit(Resource.Loading(false))
             }
@@ -371,48 +388,50 @@ class ProfileRepository @Inject constructor(
         return flow {
 
             val token = tokenRepository.getToken()
-            Log.e("uploadAvatar","start")
+            Log.e("uploadAvatar", "start")
             emit(Resource.Loading(true))
 
-            val remoteProfile = try{
+            val remoteProfile = try {
                 val profileCall = api.getMe(authHeader = "Bearer $token")
                 val myResponse: Profile? = profileCall.awaitResponse().body()
                 myResponse?.access_token = token
 
                 myResponse
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 null
             }
 
-            Log.e("getMeProfile","good")
+            Log.e("getMeProfile", "good")
             remoteProfile?.let { profile ->
                 dao.clearProfile()
                 dao.insertProfile(profile)
-                Log.e("Insert_Profile",profile.toString())
+                Log.e("Insert_Profile", profile.toString())
 
                 tokenRepository.addToken(token = profile.access_token)
 
                 data = dao.getProfile()!!
 
-                emit(Resource.Success(
-                    data = dao.getProfile()
-                ))
+                emit(
+                    Resource.Success(
+                        data = dao.getProfile()
+                    )
+                )
 
                 emit(Resource.Loading(false))
             }
         }
     }
 
-    fun getDefaultProfilePics() : Flow<Resource<DefaultProfilePicsList>>{
-        return flow{
+    fun getDefaultProfilePics(): Flow<Resource<DefaultProfilePicsList>> {
+        return flow {
             emit(Resource.Loading(true))
 
             val callProfilePics = api.getDefaultProfilePics()
 
-            val profilePics =  try {
+            val profilePics = try {
                 callProfilePics.awaitResponse().body()
-            } catch(e: Exception) {
+            } catch (e: Exception) {
                 emit(Resource.Loading(false))
                 emit(Resource.Error(ErrorRemote.NoInternet))
                 return@flow
@@ -420,9 +439,11 @@ class ProfileRepository @Inject constructor(
 
             Log.e("profilePics", profilePics.toString())
 
-            emit(Resource.Success(
-                data = profilePics
-            ))
+            emit(
+                Resource.Success(
+                    data = profilePics
+                )
+            )
 
             emit(Resource.Loading(false))
         }

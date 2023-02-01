@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.navigation
 
-
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -8,7 +7,10 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
+import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.internet.ConnectionState
 import com.ledokol.thebestproject.internet.connectivityState
@@ -36,8 +39,8 @@ import com.ledokol.thebestproject.ui.components.screens.NotInternet
 import com.ledokol.thebestproject.ui.components.screens.NotificationsScreen
 import com.ledokol.thebestproject.ui.components.screens.SplashScreen
 import com.ledokol.thebestproject.ui.components.screens.friends.*
-import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestproject.ui.components.screens.games.ChooseGameScreen
+import com.ledokol.thebestproject.ui.components.screens.games.FinishInvitingFriends
 import com.ledokol.thebestproject.ui.components.screens.permissions.RequestReadData
 import com.ledokol.thebestproject.ui.components.screens.profile.EditProfileScreen
 import com.ledokol.thebestproject.ui.components.screens.profile.ProfileScreen
@@ -45,7 +48,6 @@ import com.ledokol.thebestproject.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.StartRegistrationScreen
 import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
-import com.ledokol.thebestproject.R
 
 const val TAG = "StartNavigation"
 
@@ -68,37 +70,46 @@ fun StartNavigation(
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
 
-    LaunchedEffect(profile.profile){
-        if(profile.profile!=null){
+    LaunchedEffect(profile.profile) {
+        if (profile.profile != null) {
             updateGames(context, gamesViewModel)
         }
     }
 
-    LaunchedEffect(profile.profile){
-        if(profile.profile!=null){
+    LaunchedEffect(profile.profile) {
+        if (profile.profile != null) {
             val intentService = Intent(context, MyService::class.java)
             intentService.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startForegroundService(intentService)
 
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
-                    Log.w(com.ledokol.thebestproject.ui.components.screens.games.TAG, "Fetching FCM registration token failed", task.exception)
+                    Log.w(
+                        com.ledokol.thebestproject.ui.components.screens.games.TAG,
+                        "Fetching FCM registration token failed",
+                        task.exception
+                    )
                     return@OnCompleteListener
                 }
 
                 val tokenGet = task.result
 
-                if(profileViewModel.state.profile != null){
-                    Log.e("myFirebaseToken", "$tokenGet ${profileViewModel.state.profile!!.access_token}")
-                    profileViewModel.setCurrentFirebaseToken(tokenGet, profileViewModel.state.profile!!.access_token)
+                if (profileViewModel.state.profile != null) {
+                    Log.e(
+                        "myFirebaseToken",
+                        "$tokenGet ${profileViewModel.state.profile!!.access_token}"
+                    )
+                    profileViewModel.setCurrentFirebaseToken(
+                        tokenGet,
+                        profileViewModel.state.profile!!.access_token
+                    )
                 }
             })
 
         }
     }
 
-
-    Log.e(TAG,"profile: ${userViewModel.state.openScreen.toString()} $profile")
+    Log.e(TAG, "profile: ${userViewModel.state.openScreen.toString()} $profile")
 
     when (navBackStackEntry?.destination?.route) {
         BottomNavItemMain.Profile.screen_route -> {
@@ -112,14 +123,15 @@ fun StartNavigation(
         }
     }
 
-    if(!isConnected) {
-        Toast.makeText(context, stringResource(id = R.string.error_no_internet), Toast.LENGTH_LONG).show()
+    if (!isConnected) {
+        Toast.makeText(context, stringResource(id = R.string.error_no_internet), Toast.LENGTH_LONG)
+            .show()
     }
 
-    val start: String = if(profile.profile==null){
+    val start: String = if (profile.profile == null) {
         ScreenRoutes.SPLASH_SCREEN
-    } else if(!profile.finish_register){
-        Log.e(TAG,"openScreenRegister $profile")
+    } else if (!profile.finish_register) {
+        Log.e(TAG, "openScreenRegister $profile")
 
         ScreenRoutes.REQUEST_PERMISSION_DATA
     } else {
@@ -127,27 +139,25 @@ fun StartNavigation(
         Log.e(TAG, "openScreen ${userViewModel.state.openScreen}")
         val openScreen = userViewModel.state.openScreen
 
-        if(openScreen!=null){
+        if (openScreen != null) {
             Log.e(TAG, "openScreenFinish $openScreen")
             "$openScreen"
-        }else{
+        } else {
             BottomNavItemMain.Friends.screen_route
         }
     }
 
-    fun logOpenScreenEvent(name: String){
+    fun logOpenScreenEvent(name: String) {
         analytics.logEvent("open_screen") {
             param(FirebaseAnalytics.Param.SCREEN_NAME, name)
         }
     }
 
     Scaffold(
-
         bottomBar = {
             BottomNavigation(navController = navController, bottomBarState = bottomBarState)
         },
-    ) {
-            innerPadding ->
+    ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             NavHost(
                 navController = navController,
@@ -306,7 +316,6 @@ fun StartNavigation(
         }
     }
 }
-
 
 fun updateGames(context: Context, gamesViewModel: GamesViewModel) {
     gamesViewModel.clearGames()

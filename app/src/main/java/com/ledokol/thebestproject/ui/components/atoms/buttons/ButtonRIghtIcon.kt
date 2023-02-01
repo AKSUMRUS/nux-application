@@ -26,14 +26,13 @@ fun ButtonRightIcon(
     icon: ImageBitmap,
     colorBackground: Color = MaterialTheme.colors.primary,
     colorText: Color = MaterialTheme.colors.onPrimary,
-){
+) {
 
     Button(
         onClick = onClick,
         modifier = Modifier
             .then(modifier)
-            .background(colorBackground)
-    ,
+            .background(colorBackground),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colorBackground,
         )
@@ -43,7 +42,7 @@ fun ButtonRightIcon(
                 .padding(start = 15.dp)
                 .fillMaxWidth()
                 .padding(2.dp)
-        ){
+        ) {
             HeadlineH6(
                 text = text,
                 color = colorText,

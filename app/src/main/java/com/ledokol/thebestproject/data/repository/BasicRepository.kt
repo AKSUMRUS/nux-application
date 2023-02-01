@@ -10,18 +10,17 @@ import retrofit2.Response
 
 open class BasicRepository {
 
-    open fun <T,M> doSafeWork(
+    open fun <T, M> doSafeWork(
         doAsync: suspend () -> Response<M>,
         doOnSuccess: suspend (Response<M>) -> Unit = {},
         getResult: suspend (Response<M>) -> T?
-    ) : Flow<Resource<T>> {
+    ): Flow<Resource<T>> {
         return flow {
             emit(Resource.Loading(true))
 
-            val response = try{
+            val response = try {
                 doAsync()
-            }
-            catch (e : Exception){
+            } catch (e: Exception) {
                 emit(Resource.Loading(false))
 
                 emit(Resource.Error(message = ErrorRemote.NoInternet))
@@ -31,13 +30,12 @@ open class BasicRepository {
 
             Log.i("BasicRepository", "doSafeWork: $response")
 
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 doOnSuccess(response)
                 response.body()?.let {
                     emit(Resource.Success(data = getResult(response)))
                 }
-            }
-            else{
+            } else {
                 emit(Resource.Error(message = ErrorCatcher.catch(response.code())))
             }
 

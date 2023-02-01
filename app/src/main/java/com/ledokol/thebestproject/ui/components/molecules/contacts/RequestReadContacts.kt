@@ -1,4 +1,3 @@
-
 package com.ledokol.thebestproject.ui.components.molecules.contacts
 
 import androidx.compose.foundation.background
@@ -12,13 +11,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.*
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestReadContacts(
     onClickButton: () -> Unit,
@@ -31,10 +29,10 @@ fun RequestReadContacts(
             .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = CenterHorizontally,
-    ){
+    ) {
         Column(
             modifier = Modifier.weight(3f)
-        ){
+        ) {
             HeadlineH4(
                 text = stringResource(id = R.string.hello_permission_contacts),
                 color = MaterialTheme.colors.onBackground,
@@ -47,8 +45,7 @@ fun RequestReadContacts(
                 color = MaterialTheme.colors.onBackground,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp)
-                ,
+                    .padding(top = 10.dp),
                 fontWeight = FontWeight.W500,
             )
 
@@ -64,7 +61,7 @@ fun RequestReadContacts(
         Column(
             modifier = Modifier.weight(3f),
             verticalArrangement = Arrangement.Bottom
-        ){
+        ) {
             Body1(
                 text = stringResource(id = R.string.explain_permission_contacts),
                 color = MaterialTheme.colors.onBackground,

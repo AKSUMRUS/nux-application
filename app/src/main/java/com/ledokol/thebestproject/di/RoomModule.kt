@@ -27,6 +27,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+private const val BASE_URL = "http://51.250.100.21"
+
 @Module
 @InstallIn(SingletonComponent::class)
 interface RoomModule {
@@ -75,8 +77,6 @@ interface RoomModule {
         @Provides
         @Singleton
         fun provideRetrofitServices(client: OkHttpClient): Retrofit {
-        val BASE_URL = "http://51.250.100.21"
-
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -116,6 +116,6 @@ interface RoomModule {
 
     @Binds
     @Singleton
-    fun provideTokenInterceptor(tokenInterceptor: TokenInterceptor) : Interceptor
+    fun provideTokenInterceptor(tokenInterceptor: TokenInterceptor): Interceptor
 
 }

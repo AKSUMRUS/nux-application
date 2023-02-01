@@ -1,7 +1,9 @@
 package com.ledokol.thebestproject.ui.components.molecules.profile
 
 import android.app.usage.UsageStats
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
@@ -22,15 +24,12 @@ fun StatisticsBlock(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp)
-        ,
+            .padding(20.dp),
     ) {
 
-        LazyColumn(
-
-        ){
+        LazyColumn {
             if (games != null) {
-                item(){
+                item {
                     HeadlineH4(
                         text = "Игры",
                         modifier = Modifier.padding(start = 0.dp, bottom = 10.dp),
@@ -46,11 +45,11 @@ fun StatisticsBlock(
                         icon = game.icon_preview!!,
                         openGame = true,
                         onClick = {
-                                  onClickGame(game)
+                            onClickGame(game)
                         },
-                        usageTime = if(game.android_package_name in stats.keys)
+                        usageTime = if (game.android_package_name in stats.keys)
 //                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
-                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000)
+                            (stats[game.android_package_name]!!.totalTimeInForeground.toInt() / 60000)
 //                            null
                         else 0
                     )

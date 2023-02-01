@@ -29,8 +29,7 @@ fun DisturbButton(
         onClick = onClick,
         modifier = modifier
     ) {
-        Row(
-        ) {
+        Row {
             Image(
                 painterResource(id = R.drawable.moon),
                 contentDescription = "Аноним",
