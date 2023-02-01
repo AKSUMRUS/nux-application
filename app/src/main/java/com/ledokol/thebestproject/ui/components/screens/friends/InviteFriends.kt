@@ -79,8 +79,7 @@ fun InviteFriend(
             }
         }
     })
-
-    fun onClick(app: String?) {
+    fun onClick(app: String? = null) {
         val dynamicLinkUri = getLinkProfile(profile_id = profileViewModel.state.profile!!.id)
         Log.e("dynamicLinkUri", dynamicLinkUri)
 
@@ -91,7 +90,6 @@ fun InviteFriend(
             "Добавляй меня в друзья в Dvor $dynamicLinkUri"
         )
         intent.type = "text/plain"
-
 
         if (app == null) {
             context.startActivity(Intent.createChooser(intent, "Поделиться"))
@@ -161,10 +159,8 @@ fun InviteFriend(
                         launchSingleTop = true
                     }
                 }
-
             )
         }
-
 
         item {
             Row(
@@ -190,8 +186,8 @@ fun InviteFriend(
                 text = stringResource(id = R.string.repost_another_app),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 0.dp, end = 0.dp, top = 10.dp, bottom = 0.dp),
-                onClick = { onClick(null) },
+                    .padding(top = 10.dp),
+                onClick = { onClick() },
                 icon = Icons.Default.Share,
             )
         }
@@ -228,7 +224,7 @@ fun InviteFriend(
     }
 }
 
-fun generateQR(content: String?, size: Int): Bitmap? {
+private fun generateQR(content: String?, size: Int): Bitmap? {
     var bitmap: Bitmap? = null
     try {
         val barcodeEncoder = BarcodeEncoder()
@@ -242,7 +238,7 @@ fun generateQR(content: String?, size: Int): Bitmap? {
     return bitmap
 }
 
-fun appInstalledOrNot(context: Context, str: String?): Boolean {
+private fun appInstalledOrNot(context: Context, str: String?): Boolean {
     return try {
         context.packageManager.getPackageInfo(str!!, PackageManager.GET_ACTIVITIES)
         true

@@ -155,7 +155,6 @@ fun FriendScreen(
                     }
                 }
 
-
                 if (state.isLoadingGames) {
                     item(
                         span = { GridItemSpan(2) },
@@ -177,7 +176,6 @@ fun FriendScreen(
                                 )
                             }
                         }
-
                         items(
                             state.games,
                         ) { game ->
@@ -233,10 +231,9 @@ fun FriendScreen(
             }
         )
 
-
         AlertDialogShow(
             openDialog = openDialogClaim,
-            label = "Пожаловаться на пользователя?",
+            label = stringResource(id = R.string.complain_suggest),
             description = "Ваша жалоба будет рассмотрена модерацией",
             buttonTextYes = stringResource(id = R.string.claim),
             buttonTextNo = stringResource(id = R.string.close),

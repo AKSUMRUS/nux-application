@@ -86,13 +86,9 @@ fun Friends(
         }
     }
 
-    fun onAddFriend(
-        friend: User
-    ) {
+    fun onAddFriend(friend: User) {
         userViewModel.onEvent(UserEvent.SelectUser(friend))
-
         Log.e("Friends_ADD", state.inviteFriends.toString())
-
     }
 
     fun onClickFriend(
@@ -168,7 +164,6 @@ fun Friends(
                     MaterialTheme.colors.background
                 )
         ) {
-
             if (state.isLoading) {
                 LoadingView()
             } else {
@@ -176,13 +171,11 @@ fun Friends(
                     modifier = Modifier.padding(bottom = 65.dp),
                     content = {
                         item {
-
                             TitleFriends(
                                 text = stringResource(id = R.string.invite_to_game_title),
                                 modifier = Modifier
                                     .padding(top = 30.dp, bottom = 20.dp)
                             )
-
                             ButtonAddFriend(
                                 onClick = {
                                     coroutineScope.launch {
@@ -206,11 +199,7 @@ fun Friends(
                                     rejectFriend = {
                                         userViewModel.onEvent(UserEvent.RejectInvite(user.id))
                                     },
-                                    addFriend = {
-                                        onClick(
-                                            notificationEntity = usersList[friend]
-                                        )
-                                    },
+                                    addFriend = { onClick(notificationEntity = usersList[friend]) },
                                     openFriend = {
                                         userViewModel.onEvent(UserEvent.GetFriendUser(user.id))
                                         navController.navigate(ScreenRoutes.PREVIEW_FRIEND) {
@@ -238,7 +227,6 @@ fun Friends(
                         if (state.users != null && state.users!!.isNotEmpty()) {
                             val arrayFriends =
                                 state.users!!.filter { it.nickname.contains(textSearch) }
-
                             if (arrayFriends.isEmpty()) {
                                 userViewModel.onEvent(UserEvent.GetUserByNickname(textSearch))
                                 val user = if (state.friendUser?.nickname == textSearch) {
@@ -335,29 +323,22 @@ fun Friends(
                     },
                 )
             }
-            Box(
+            ButtonWithChangeableColor(
+                isClicked = isInviteButtonClicked,
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 10.dp)
-            ) {
-                ButtonWithChangeableColor(
-                    isClicked = isInviteButtonClicked,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    onClick = {
-                        navController.navigate(ScreenRoutes.CHOOSE_GAMES)
-                    },
-                    text1 = stringResource(id = R.string.invite_to_game),
-                    text2 = stringResource(id = R.string.invite_to_game),
-                    color1 = MaterialTheme.colors.surface,
-                    color1Text = MaterialTheme.colors.secondaryVariant,
-                    color2 = MaterialTheme.colors.secondary,
-                    color2Text = MaterialTheme.colors.onSurface,
-                )
-            }
+                    .padding(bottom = 10.dp),
+                onClick = {
+                    navController.navigate(ScreenRoutes.CHOOSE_GAMES)
+                },
+                text1 = stringResource(id = R.string.invite_to_game),
+                text2 = stringResource(id = R.string.invite_to_game),
+                color1 = MaterialTheme.colors.surface,
+                color1Text = MaterialTheme.colors.secondaryVariant,
+                color2 = MaterialTheme.colors.secondary,
+                color2Text = MaterialTheme.colors.onSurface,
+            )
         }
     }
-
 }
-

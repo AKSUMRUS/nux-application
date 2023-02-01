@@ -38,7 +38,6 @@ fun FindFriendByName(
             modifier = Modifier
                 .padding(top = 100.dp)
         ) {
-
             LaunchedEffect(state) {
                 if (state != null) {
                     navController.navigate("add_friend_by_name") {

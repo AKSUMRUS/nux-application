@@ -68,8 +68,6 @@ fun AddFriendByName(
                     }
                 }
             )
-
         }
     }
-
 }

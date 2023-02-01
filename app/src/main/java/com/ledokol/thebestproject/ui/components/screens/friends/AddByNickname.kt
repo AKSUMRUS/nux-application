@@ -31,7 +31,6 @@ fun AddByNickname(
     profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel,
 ) {
-
     var nickname by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     val keyboard = LocalSoftwareKeyboardController.current
@@ -61,15 +60,13 @@ fun AddByNickname(
 
         )
 
-
         Column(
             modifier = Modifier
                 .padding(start = 40.dp, end = 40.dp, bottom = 100.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-
-            ) {
+        ) {
             SearchBorder(
                 placeholder = stringResource(id = R.string.nickname),
                 text = nickname,
@@ -84,7 +81,6 @@ fun AddByNickname(
                 text = stringResource(id = R.string.search_by_nickname),
                 onClick = {
                     userViewModel.onEvent(UserEvent.GetUserByNickname(nickname = nickname))
-
                     navController.navigate(ScreenRoutes.PREVIEW_FRIEND) {
                         popUpTo(ScreenRoutes.PREVIEW_FRIEND)
                         launchSingleTop = true
@@ -105,6 +101,5 @@ fun AddByNickname(
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 20.dp)
         )
-
     }
 }

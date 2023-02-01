@@ -157,6 +157,7 @@
 
 <!--    Contacts-->
     <string name = "enter_name_friend_from_contacts">Введи имя друга</string>
+    <string name="complain_suggest">Пожаловаться на пользователя?</string>
 
 
 </resources>
