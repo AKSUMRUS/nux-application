@@ -47,7 +47,6 @@ fun FriendScreen(
     profileViewModel: ProfileViewModel,
     analytics: FirebaseAnalytics,
 ) {
-
     val user = userViewModel.state.friendUser
     val state = userViewModel.state
     val context: Context = LocalContext.current
@@ -96,9 +95,7 @@ fun FriendScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    MaterialTheme.colors.background
-                )
+                .background(MaterialTheme.colors.background)
 //            .verticalScroll(rememberScrollState())
         ) {
             LazyVerticalGrid(
@@ -118,7 +115,7 @@ fun FriendScreen(
                             userViewModel.onEvent(UserEvent.RemoveFriend(friendId = state.friendUser!!.id))
                             navController.popBackStack()
                         },
-                        onClickClaim = { openDialogClaim = true; }
+                        onClickClaim = { openDialogClaim = true }
                     )
                 }
 

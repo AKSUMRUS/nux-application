@@ -44,9 +44,7 @@ fun RequestReadData(
     DisposableEffect(lifecycleOwner, checkPermission) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START || event == Lifecycle.Event.ON_RESUME) {
-
                 if (checkPermissionReadData(context)) {
-
                     profileViewModel.onEvent(ProfileEvent.SetFinishRegister(accessToken = profileViewModel.state.profile!!.access_token))
                 } else {
                     checkPermission = false
@@ -67,7 +65,6 @@ fun RequestReadData(
                 .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = CenterHorizontally,
-
             ) {
 
             Column(
@@ -100,7 +97,6 @@ fun RequestReadData(
             Column(
                 modifier = Modifier.weight(3f),
                 verticalArrangement = Arrangement.Bottom
-
             ) {
                 Body1(
                     text = stringResource(id = R.string.explain_permission_data),
@@ -121,7 +117,6 @@ fun RequestReadData(
                         .fillMaxWidth(),
                 )
             }
-
         }
     }
 }
