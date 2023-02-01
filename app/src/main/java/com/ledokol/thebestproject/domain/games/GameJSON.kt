@@ -14,7 +14,7 @@ data class GameJSON(
     @field:Json(name = "icon_preview")
     val icon_preview : String,
     @field:Json(name = "image_wide")
-    val image_wide : String,
+    val image_wide : String = "",
     @field:Json(name = "icon_large")
-    val icon_large : String,
+    val icon_large : String = "",
 )

@@ -88,7 +88,6 @@ fun ProfileScreen(
     calendar.add(Calendar.WEEK_OF_YEAR, -1)
     val start: Long = calendar.timeInMillis
     val end = System.currentTimeMillis()
-    val stats: Map<String, UsageStats> = usageStatsManager.queryAndAggregateUsageStats(start, end)
 
     Box(
         modifier = Modifier
@@ -160,16 +159,7 @@ fun ProfileScreen(
             }
 
             if (games != null && games.isNotEmpty()) {
-                items(
-                games.sortedBy {
-                    if(stats.containsKey(it.android_package_name)){
-                        -(stats[it.android_package_name]!!.totalTimeInForeground.toInt()/60000)
-                    }else{
-                        0
-                    }
-//                    stats[it.android_package_name]
-                }
-                ) { game ->
+                items( games ) { game ->
                     GameStat(
                         packageName = game.android_package_name,
                         name = game.name,
@@ -179,11 +169,7 @@ fun ProfileScreen(
                             openDialog = true
                             selectedGame = game.android_package_name
                         },
-                        usageTime = if(game.android_package_name in stats.keys)
-//                            (stats.get(game.android_package_name)!!.totalTimeInForeground.milliseconds).toString()
-                            (stats.get(game.android_package_name)!!.totalTimeInForeground.toInt()/60000)
-//                            null
-                        else 0
+                        usageTime = game.activity_last_two_weeks?: 0
                     )
                 }
             }else{

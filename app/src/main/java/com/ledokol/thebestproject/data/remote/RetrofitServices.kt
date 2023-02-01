@@ -9,6 +9,8 @@ import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.domain.games.*
 import com.ledokol.thebestproject.domain.profile.*
+import com.ledokol.thebestproject.domain.statistics.GameSessionStatistics
+import com.ledokol.thebestproject.domain.statistics.GameSessionStatisticsList
 import com.ledokol.thebestproject.domain.users.AddFriend
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -54,14 +56,12 @@ interface RetrofitServices {
 
     @PUT("status/in_app/android")
     fun setStatus(
-        @Header("Authorization") authHeader: String,
         @Body status: App
     )
             : Call<StatusJSON>
 
     @PUT("status/not_in_app")
     fun leaveStatus(
-        @Header("Authorization") authHeader: String
     )
             : Call<StatusJSON>
 
@@ -78,12 +78,16 @@ interface RetrofitServices {
     )
             :Call<String>
 
-    @GET("user/{id}/apps")
+    @GET("apps/friend/{id}/v2")
     fun getUserGames(
         @Path("id") id: String
     )
-            :Call<Apps>
+            :Call<ListApps>
 
+    @GET("apps/current_user/v2")
+    fun getMyGames(
+    )
+            :Call<ListApps>
 
     @POST("friends/invite")
     fun friendsInvite(
@@ -179,5 +183,10 @@ interface RetrofitServices {
     @GET("friends/recommended")
     fun getRecommendedFriends(
     ): Call<List<User>>
+
+    @PUT("apps/statistics/update_from_local/android")
+    fun putStatistics(
+        @Body statistics : GameSessionStatisticsList
+    ): Call<Any>
 
 }

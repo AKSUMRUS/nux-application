@@ -3,10 +3,12 @@ package com.ledokol.thebestproject.data.repository
 import android.util.Log
 import com.ledokol.thebestproject.data.error.ErrorCatcher
 import com.ledokol.thebestproject.data.error.ErrorRemote
+import com.ledokol.thebestproject.data.local.user.Apps
 import com.ledokol.thebestproject.data.local.user.CurrentApp
 import com.ledokol.thebestproject.data.local.user.User
 import com.ledokol.thebestproject.data.local.user.UsersDao
 import com.ledokol.thebestproject.data.remote.RetrofitServices
+import com.ledokol.thebestproject.domain.games.App
 import com.ledokol.thebestproject.domain.profile.ExistsUserJSON
 import com.ledokol.thebestproject.domain.profile.RejectInvite
 import com.ledokol.thebestproject.domain.profile.RemoveFriend
@@ -137,7 +139,7 @@ class UsersRepository @Inject constructor(
         )
     }
 
-    fun getUserGames(id: String): Flow<Resource<List<CurrentApp>>> {
+    fun getUserGames(id: String): Flow<Resource<List<Apps>>> {
         return doSafeWork(
             doAsync = {
                 val gamesCall = api.getUserGames(id)
@@ -145,7 +147,7 @@ class UsersRepository @Inject constructor(
                 myResponse
             },
             getResult = { games ->
-                games.body()!!.apps
+                games.body()?.apps_and_stats
             }
         )
     }

@@ -14,4 +14,5 @@ sealed class GamesEvent{
         val games: List<StatusJSON>,
         val context: Context,
     ): GamesEvent()
+    object GetMyGames: GamesEvent()
 }

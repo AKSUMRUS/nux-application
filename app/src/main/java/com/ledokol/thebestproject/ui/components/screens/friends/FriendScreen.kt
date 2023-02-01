@@ -178,12 +178,12 @@ fun FriendScreen(
                             state.games,
                         ) { game ->
                             GameInList(
-                                packageName = game.android_package_name,
-                                name = game.name,
-                                icon = game.icon_preview,
+                                packageName = game.app.android_package_name,
+                                name = game.app.name,
+                                icon = game.app.icon_preview,
                                 onClick = {
-                                    selectedGamePackage = game.android_package_name
-                                    selectedGameName = game.name
+                                    selectedGamePackage = game.app.android_package_name
+                                    selectedGameName = game.app.name
                                     openDialog = true
                                 }
                             )
@@ -211,8 +211,8 @@ fun FriendScreen(
             onActionPrimary = {
                 var game = CurrentApp()
                 for(game_local in state.games!!){
-                    if(game_local.android_package_name == selectedGamePackage){
-                        game = game_local
+                    if(game_local.app.android_package_name == selectedGamePackage){
+                        game = game_local.app
                         break
                     }
                 }

@@ -36,6 +36,10 @@ class GamesViewModel @Inject constructor(
             is GamesEvent.ShareGames -> {
                 shareGames(games = event.games, context = event.context)
             }
+
+            is GamesEvent.GetMyGames -> {
+                getMyGames()
+            }
         }
     }
 
@@ -101,6 +105,8 @@ class GamesViewModel @Inject constructor(
                                 games = result.data!!.apps
                             )
 
+                            getMyGames()
+
                             Log.e("shareGames_ViewModel",result.data.send_icons_apps_ids.toString())
 
                             pushGamesIcons(result.data.send_icons_apps_ids, context)
@@ -111,6 +117,50 @@ class GamesViewModel @Inject constructor(
                             )
                         }
                         is Resource.Error -> Unit
+                    }
+                }
+        }
+    }
+
+    private fun getMyGames() {
+        viewModelScope.launch {
+            repository.getMyGames()
+                .collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data.let {
+                                    games ->
+                                if (!games.isNullOrEmpty()) {
+                                    val myGames: MutableList<Game> = mutableListOf()
+                                    for (game in games) {
+                                        myGames.add(
+                                            Game(
+                                                android_package_name = game.app.android_package_name,
+                                                name = game.app.name,
+                                                id = game.app.id,
+                                                category = game.app.category,
+                                                icon_preview = game.app.icon_preview,
+                                                image_wide = game.app.image_wide,
+                                                icon_large = game.app.icon_large,
+                                                installed = game.statistics.installed,
+                                                activity_last_two_weeks = game.statistics.activityLastTwoWeeks,
+                                                activity_total = game.statistics.activityTotal,
+                                                dt_last_activity = game.statistics.lastActivityDate,
+                                            )
+                                        )
+                                    }
+                                    state = state.copy(
+                                        games = myGames,
+                                    )
+                                }
+                            }
+                        }
+                        is Resource.Error -> Unit
+                        is Resource.Loading -> {
+                            state = state.copy(
+                                isLoading = result.isLoading
+                            )
+                        }
                     }
                 }
         }

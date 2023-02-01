@@ -29,6 +29,8 @@ open class BasicRepository {
                 return@flow
             }
 
+            Log.i("BasicRepository", "doSafeWork: $response")
+
             if(response.isSuccessful){
                 doOnSuccess(response)
                 response.body()?.let {

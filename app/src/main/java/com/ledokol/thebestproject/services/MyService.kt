@@ -84,7 +84,7 @@ class MyService: Service() {
                         if (!checkLeave) {
                             lastApp = null
                             checkLeave = true
-                            statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                            statusRepository.leaveStatus()
                         }
                     }
                 } else {
@@ -100,13 +100,15 @@ class MyService: Service() {
 
                             Log.i(
                                 "STATUS!!!!",
-                                "$packageApp $labelApp $categoryApp ${profileRepository.data.access_token.toString()}"
+                                "$packageApp $labelApp $categoryApp"
                             )
+
+                            statusRepository.putStatistics()
+
                             statusRepository.setStatus(
                                 packageApp,
                                 labelApp,
                                 categoryApp,
-                                accessToken = profileRepository.data.access_token
                             )
                         }
                         lastApp = packageApp
@@ -118,7 +120,7 @@ class MyService: Service() {
             } catch(e: Exception){
                 lastApp = null
                 checkLeave = true
-                statusRepository.leaveStatus(accessToken = profileRepository.data.access_token)
+                statusRepository.leaveStatus()
                 Log.e("Service", e.toString())
             }
             runnable?.let { handler.postDelayed(it, 20000) }

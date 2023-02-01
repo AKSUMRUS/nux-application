@@ -17,23 +17,21 @@ class StatusViewModel @Inject constructor(
     androidPackageName : String,
     name : String,
     androidCategory : Int,
-    accessToken: String,
     ){
         viewModelScope.launch {
             repository.setStatus(
                 androidPackageName = androidPackageName,
                 name = name,
                 androidCategory = androidCategory,
-                accessToken = accessToken,
             )
         }
     }
 
     fun leaveStatus(
-        accessToken: String
+
     ){
         viewModelScope.launch {
-            repository.leaveStatus(accessToken = accessToken)
+            repository.leaveStatus()
         }
     }
 

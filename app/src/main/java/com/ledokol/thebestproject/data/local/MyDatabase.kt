@@ -18,7 +18,7 @@ import com.ledokol.thebestproject.data.local.user.UsersDao
 
 @Database(
     entities = [(Profile::class),(User::class),(Game::class),(Contact::class), (NotificationEntity::class),(TokenEntity::class)],
-    version = 9
+    version = 10
 )
 @TypeConverters(Converters::class)
 abstract class MyDatabase: RoomDatabase() {

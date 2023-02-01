@@ -308,7 +308,7 @@ fun StartNavigation(
 }
 
 
-fun updateGames(context: Context, gamesViewModel: GamesViewModel){
+fun updateGames(context: Context, gamesViewModel: GamesViewModel) {
     gamesViewModel.clearGames()
     val games = getInstalledAppGamesList(context.packageManager)
     gamesViewModel.shareGames(

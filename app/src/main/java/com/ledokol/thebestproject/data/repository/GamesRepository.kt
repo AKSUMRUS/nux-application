@@ -13,6 +13,7 @@ import com.ledokol.thebestproject.domain.games.AppsGameResponse
 import com.ledokol.thebestproject.domain.games.AppsStatus
 import com.ledokol.thebestproject.domain.games.GameJSON
 import com.ledokol.thebestproject.domain.games.StatusJSON
+import com.ledokol.thebestproject.domain.statistics.GameSessionStatisticsList
 import com.ledokol.thebestproject.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -28,7 +29,7 @@ import javax.inject.Singleton
 class GamesRepository @Inject constructor(
     private val api: RetrofitServices,
     private val dao: GamesDao
-) {
+) : BasicRepository() {
 
     fun insertGame(game: Game){
         dao.insertGame(game)
@@ -103,36 +104,6 @@ class GamesRepository @Inject constructor(
         }
     }
 
-    fun getGames(
-        id: String
-    ): Flow<Resource<Apps> > {
-        return flow{
-            emit(Resource.Loading(true))
-
-//            val remoteGames = dao.getGames("")
-            val remoteGames = try{
-                val gamesCall = api.getUserGames(id)
-                val myResponse: Apps? = gamesCall.awaitResponse().body()
-
-                myResponse
-
-            } catch(e: Exception) {
-                emit(Resource.Error(ErrorRemote.NoInternet))
-                null
-            }
-
-            remoteGames?.let { games ->
-                dao.clearGames()
-
-                emit(Resource.Success(
-                    data = games
-                ))
-
-                emit(Resource.Loading(false))
-            }
-        }
-    }
-
     fun shareGames(
         games: List<StatusJSON>,
     ): Flow<Resource<AppsGameResponse>> {
@@ -202,5 +173,18 @@ class GamesRepository @Inject constructor(
         }
     }
 
+    fun getMyGames() : Flow<Resource<List<Apps>>> {
+        return doSafeWork(
+            doAsync = {
+                val gamesCall = api.getMyGames()
+                val myResponse = gamesCall.awaitResponse()
+                myResponse
+            },
+            getResult = { games ->
+                Log.i("GamesRepository", "getMyGames: ${games.body()}")
+                games.body()?.apps_and_stats
+            }
+        )
+    }
 
 }
