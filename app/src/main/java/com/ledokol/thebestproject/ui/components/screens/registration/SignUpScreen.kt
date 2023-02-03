@@ -1,5 +1,6 @@
 package com.ledokol.thebestproject.ui.components.screens.registration
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -80,7 +81,7 @@ fun SignUpScreen(
                         errorName = ""
                         numberScreen++
                     } else {
-                        errorName = "Имя не может быть пустым"
+                        errorName = "Некорректно введено имя"
                     }
                 }
 
@@ -215,28 +216,9 @@ fun SignUpScreen(
 }
 
 fun checkCorrectName(name: String): Boolean {
-    var verifyNickname: Boolean = (name.isNotEmpty())
-
-    for (symbol in name) {
-        if (symbol == '_') {
-            verifyNickname = false
-            break
-        }
-    }
-
-    return verifyNickname
+    return name.matches(Regex("^[a-zA-Zа-яА-Я\\d]+$"))
 }
 
 fun checkCorrectNickname(nickname: String): Boolean {
-    var verifyNickname: Boolean = (nickname.isNotEmpty())
-
-    for (symbol in nickname) {
-        if (symbol == '_' || symbol in '0'..'9') continue
-        if (!((symbol in 'a'..'z') || (symbol in 'A'..'Z'))) {
-            verifyNickname = false
-            break
-        }
-    }
-
-    return verifyNickname
+    return nickname.matches(Regex("^[a-zA-Z]+$"))
 }
