@@ -27,7 +27,9 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.ledokol.thebestproject.core.dependencyprovider.DependencyProvider
 import com.ledokol.thebestproject.data.local.user.UserEvent
+import com.ledokol.thebestproject.features.chat.impl.ChatFeatureImpl
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.services.MyReceiver
@@ -51,6 +53,10 @@ class MainActivity : ComponentActivity() {
 
         userViewModel.state = userViewModel.state.copy(
             openScreen = null
+        )
+
+        DependencyProvider.provideImpl(
+            chatFeatureApi = ChatFeatureImpl()
         )
 
 //        val config: YandexMetricaConfig = YandexMetricaConfig.newConfigBuilder("6cccb005-2017-485c-881b-8b1792cd7357").build()

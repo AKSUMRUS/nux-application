@@ -25,6 +25,7 @@ fun BottomNavigation(navController: NavController, bottomBarState: MutableState<
     val items = listOf(
         BottomNavItemMain.Profile,
         BottomNavItemMain.Friends,
+        BottomNavItemMain.Chats,
     )
 
     AnimatedVisibility(visible = bottomBarState.value) {

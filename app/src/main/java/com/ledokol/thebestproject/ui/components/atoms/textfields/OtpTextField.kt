@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.components.atoms.textfields
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

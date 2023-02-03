@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "TheBestProjectEver"
 include ':app'
+include ':core:feature_api'
+include ':core:dependencyprovider'
+include ':features:chat:api'
+include ':features:chat:impl'

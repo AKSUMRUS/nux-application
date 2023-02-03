@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,6 +26,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ledokol.thebestproject.R
+import com.ledokol.thebestproject.core.dependencyprovider.DependencyProvider
+import com.ledokol.thebestproject.core.feature.api.FeatureApi
 import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.internet.ConnectionState
 import com.ledokol.thebestproject.internet.connectivityState
@@ -69,6 +72,18 @@ fun StartNavigation(
     val profile = profileViewModel.state
     val connection by connectivityState()
     val isConnected = connection === ConnectionState.Available
+
+    fun NavGraphBuilder.register(
+        featureApi: FeatureApi,
+        navController: NavHostController,
+        modifier: Modifier = Modifier
+    ) {
+        featureApi.registerGraph(
+            navGraphBuilder = this,
+            navController = navController,
+            modifier = modifier
+        )
+    }
 
     LaunchedEffect(profile.profile) {
         if (profile.profile != null) {
@@ -116,6 +131,9 @@ fun StartNavigation(
             bottomBarState.value = true
         }
         BottomNavItemMain.Friends.screen_route -> {
+            bottomBarState.value = true
+        }
+        BottomNavItemMain.Chats.screen_route -> {
             bottomBarState.value = true
         }
         else -> {
@@ -311,6 +329,11 @@ fun StartNavigation(
                         NotInternet()
                         logOpenScreenEvent(ScreenRoutes.NO_INTERNET)
                     }
+
+                    register(
+                        featureApi = DependencyProvider.chatFeature(),
+                        navController = navController
+                    )
                 }
             )
         }

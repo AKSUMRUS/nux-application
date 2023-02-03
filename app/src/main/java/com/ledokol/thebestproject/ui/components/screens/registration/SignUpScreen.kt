@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.components.screens.registration
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController

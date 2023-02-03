@@ -12,6 +12,13 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/dependencyprovider" />
+            <option value="$PROJECT_DIR$/core/feature_api" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/chat" />
+            <option value="$PROJECT_DIR$/features/chat/api" />
+            <option value="$PROJECT_DIR$/features/chat/impl" />
           </set>
         </option>
       </GradleProjectSettings>
