@@ -200,7 +200,11 @@ fun SignUpScreen(
                 SignUpScreenVerifyPhone(
                     phoneCode = phoneCode,
                     phone = "+7$phone",
-                    setPhoneCode = { phoneCode = it },
+                    setPhoneCode = {
+                        if(it.length <= 4) {
+                            phoneCode = it
+                        }
+                                   },
                     buttonBackClick = { buttonBackClick() },
                     buttonNextClick = { buttonClickNext() },
                     error = state.verifyErrorMessage

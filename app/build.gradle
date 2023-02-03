@@ -48,13 +48,14 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_version
+        kotlinCompilerExtensionVersion '1.2.0-rc02'
     }
     packagingOptions {
         resources {
             excludes += ['/META-INF/{AL2.0,LGPL2.1}', 'META-INF/gradle/incremental.annotation.processors', 'META-INF/DEPENDENCIES', 'META-INF/io.netty.versions.properties', 'META-INF/INDEX.LIST']
         }
     }
+    namespace 'com.ledokol.thebestproject'
 
     kotlinOptions {
         freeCompilerArgs += [

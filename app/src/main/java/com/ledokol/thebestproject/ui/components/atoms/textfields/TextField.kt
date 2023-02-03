@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TextField(
-//    label: String,
     text: String,
     modifier: Modifier = Modifier,
     placeholder: String = "",
@@ -55,10 +54,7 @@ fun TextField(
             cursorColor = Color.DarkGray,
             disabledTextColor = MaterialTheme.colors.onPrimary,
         ),
-        enabled = enabled,
-//        keyboardOptions = KeyboardOptions.Default.copy(
-//            capitalization = KeyboardCapitalization.Sentences
-//        )
+        enabled = enabled
     )
 }
 

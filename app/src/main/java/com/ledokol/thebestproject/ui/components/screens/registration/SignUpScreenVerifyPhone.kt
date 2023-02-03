@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.ledokol.thebestproject.ui.components.atoms.textfields.OtpTextField
 import com.ledokol.thebestproject.ui.components.atoms.textfields.TextField
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
@@ -69,17 +70,14 @@ fun SignUpScreenVerifyPhone(
                     color = MaterialTheme.colors.onPrimary,
                 )
 
-                TextField(
-                    text = phoneCode,
-                    onValueChange = { setPhoneCode(it) },
+                OtpTextField(
+                    otpText = phoneCode,
+                    onOtpTextChange = { value, otpInputFilled ->
+                        setPhoneCode(value)
+                    },
                     modifier = Modifier
                         .padding(top = 20.dp, bottom = 20.dp)
                         .focusRequester(focusRequester),
-                    keyboardType = KeyboardType.NumberPassword,
-                    imeAction = ImeAction.Next,
-                    keyboardActions = KeyboardActions(onNext = {
-                        buttonNextClick()
-                    }),
                 )
 
                 ButtonFull(
@@ -91,12 +89,6 @@ fun SignUpScreenVerifyPhone(
                         .padding(top = 10.dp)
                         .fillMaxWidth()
                 )
-
-//            Body1(
-//                text = stringResource(id = R.string.resend_code),
-//                textAlign = TextAlign.Center,
-//
-//            )
             } else {
                 HeadlineH4(
                     text = error,
