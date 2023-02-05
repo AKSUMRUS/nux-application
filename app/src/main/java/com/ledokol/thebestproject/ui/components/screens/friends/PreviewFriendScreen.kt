@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.molecules.friend.PreviewEmptyFriend
 import com.ledokol.thebestproject.ui.components.molecules.friend.PreviewFriend
 
@@ -77,6 +77,6 @@ fun PreviewFriendScreen(
             )
         }
     } else {
-        LoadingView()
+        LoadingViewCenter()
     }
 }

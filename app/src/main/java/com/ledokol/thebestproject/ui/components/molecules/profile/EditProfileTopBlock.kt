@@ -32,7 +32,7 @@ fun EditProfileTopBlock(
             horizontalAlignment = CenterHorizontally
         ) {
             UploadAvatar(
-                profile_pic = state.profile_pic.toString(),
+                profilePic = state.profile_pic.toString(),
                 profileViewModel = profileViewModel,
                 userViewModel = userViewModel,
                 modifier = Modifier.size(130.dp, 130.dp)

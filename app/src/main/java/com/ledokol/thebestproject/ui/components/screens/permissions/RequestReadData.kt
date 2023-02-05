@@ -65,7 +65,7 @@ fun RequestReadData(
                 .padding(top = 100.dp, bottom = 100.dp, start = 30.dp, end = 30.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = CenterHorizontally,
-            ) {
+        ) {
 
             Column(
                 modifier = Modifier.weight(3f)

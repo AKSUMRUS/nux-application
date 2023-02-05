@@ -13,9 +13,9 @@ class StatusViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun setStatus(
-        androidPackageName: String,
         name: String,
         androidCategory: Int,
+        androidPackageName: String,
     ) {
         viewModelScope.launch {
             repository.setStatus(
@@ -26,9 +26,7 @@ class StatusViewModel @Inject constructor(
         }
     }
 
-    fun leaveStatus(
-
-    ) {
+    fun leaveStatus() {
         viewModelScope.launch {
             repository.leaveStatus()
         }

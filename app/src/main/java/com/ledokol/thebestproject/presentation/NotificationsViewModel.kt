@@ -22,7 +22,6 @@ class NotificationsViewModel @Inject constructor(
 
     var state by mutableStateOf(NotificationsState())
 
-
     fun onEvent(event: NotificationsEvent) {
         when (event) {
             is NotificationsEvent.GetFriendsRequests -> {

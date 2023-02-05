@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.molecules.games.InstalledGamesList
 
 
@@ -38,7 +38,7 @@ fun ChooseGameScreen(
     ) {
 
         if (gamesViewModel.state.isLoading) {
-            LoadingView()
+            LoadingViewCenter()
         } else {
             InstalledGamesList(
                 games!!,

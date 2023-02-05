@@ -19,14 +19,14 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 @Composable
 fun EditProfileInput(
     mainText: String,
-    description: String? = null,
     text: String,
-    init_text: String? = null,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     exists: Boolean? = null,
+    modifier: Modifier = Modifier,
+    initText: String? = null,
+    description: String? = null,
     checkCorrect: (String) -> Boolean,
-) {
+    onValueChange: (String) -> Unit,
+    ) {
     val keyboard = LocalSoftwareKeyboardController.current
 
     Column(
@@ -36,7 +36,6 @@ fun EditProfileInput(
             text = mainText,
             fontWeight = FontWeight.W700,
         )
-
         if (description != null) {
             Body2(
                 text = description,
@@ -62,7 +61,7 @@ fun EditProfileInput(
             )
         } else {
             if (exists != null) {
-                if (!exists || init_text == text) {
+                if (!exists || initText == text) {
                     Body2(
                         text = "Свободен",
                         color = Color.Green,

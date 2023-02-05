@@ -155,7 +155,7 @@ fun UserInformationProfile(
                     .background(color = MaterialTheme.colors.secondary),
             ) {
                 UploadAvatar(
-                    profile_pic = profile_pic,
+                    profilePic = profile_pic,
                     profileViewModel = profileViewModel,
                     userViewModel = userViewModel
                 )

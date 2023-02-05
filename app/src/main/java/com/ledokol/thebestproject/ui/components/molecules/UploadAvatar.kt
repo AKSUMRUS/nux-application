@@ -21,14 +21,13 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import id.zelory.compressor.calculateInSampleSize
 
 @Composable
 fun UploadAvatar(
-    profile_pic: String,
-    profileViewModel: ProfileViewModel,
+    profilePic: String,
     userViewModel: UserViewModel,
+    profileViewModel: ProfileViewModel,
     modifier: Modifier = Modifier.fillMaxWidth(),
 ) {
     var imageUri by remember {
@@ -67,11 +66,11 @@ fun UploadAvatar(
         Box(
             modifier = Modifier.padding(5.dp)
         ) {
-            LoadingView()
+            LoadingViewCenter()
         }
     } else {
         AsyncImage(
-            model = profile_pic,
+            model = profilePic,
             contentDescription = "Аноним",
             modifier = Modifier
                 .then(modifier)

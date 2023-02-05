@@ -25,7 +25,6 @@ import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonRightIcon
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1

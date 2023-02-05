@@ -9,12 +9,12 @@ import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 
 @Composable
-fun TestScreen(
-
-) {
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(30.dp)) {
+fun TestScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(30.dp)
+    ) {
         ButtonBorder(text = "Test Crash", onClick = { throw RuntimeException("Test Crash") })
     }
 }

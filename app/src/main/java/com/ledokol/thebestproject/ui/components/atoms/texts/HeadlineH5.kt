@@ -16,7 +16,6 @@ fun HeadlineH5(
     fontWeight: FontWeight? = MaterialTheme.typography.h5.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {
-
     Text(
         text = text,
         color = color,

@@ -16,7 +16,6 @@ fun Body2(
     fontWeight: FontWeight? = MaterialTheme.typography.body2.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {
-
     Text(
         text = text,
         color = color,

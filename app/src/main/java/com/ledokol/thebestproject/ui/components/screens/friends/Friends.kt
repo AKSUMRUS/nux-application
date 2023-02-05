@@ -29,9 +29,9 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.molecules.friend.*
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import kotlinx.coroutines.launch
@@ -165,7 +165,7 @@ fun Friends(
                 )
         ) {
             if (state.isLoading) {
-                LoadingView()
+                LoadingViewCenter()
             } else {
                 LazyColumn(
                     modifier = Modifier.padding(bottom = 65.dp),

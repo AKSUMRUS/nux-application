@@ -7,15 +7,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import com.ledokol.thebestproject.ui.components.atoms.texts.Subtitle1
 
+/**
+ * Кликабельный текст
+ */
 @Composable
-// Кликабельный текст
 fun TextButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     shape: Shape = MaterialTheme.shapes.small
 ) {
-
     TextButton(
         onClick = onClick,
         modifier = modifier,
@@ -23,6 +24,5 @@ fun TextButton(
     ) {
         Subtitle1(text = text)
     }
-
 }
 

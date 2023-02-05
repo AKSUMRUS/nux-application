@@ -22,7 +22,6 @@ class ContactViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(ContactState())
 
-
     fun insertContacts(contacts: List<Contact>) {
         viewModelScope.launch {
             repository.insertContacts(contacts)
@@ -75,8 +74,6 @@ class ContactViewModel @Inject constructor(
                     }
                 }
             }
-
         }
     }
-
 }

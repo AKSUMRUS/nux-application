@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.components.screens.registration
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -9,7 +8,7 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.screens.registration.signup.SignUpScreenPhone
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -70,7 +69,7 @@ fun SignUpScreen(
     }
 
     if (usersViewModel.state.isLoading) {
-        LoadingView()
+        LoadingViewCenter()
     } else {
         when (numberScreen) {
             0 -> {
@@ -202,10 +201,10 @@ fun SignUpScreen(
                     phoneCode = phoneCode,
                     phone = "+7$phone",
                     setPhoneCode = {
-                        if(it.length <= 4) {
+                        if (it.length <= 4) {
                             phoneCode = it
                         }
-                                   },
+                    },
                     buttonBackClick = { buttonBackClick() },
                     buttonNextClick = { buttonClickNext() },
                     error = state.verifyErrorMessage

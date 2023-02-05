@@ -37,9 +37,9 @@ import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonPrimaryLeadingIcon
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.molecules.friend.AddFriendInSearch
 import com.ledokol.thebestproject.ui.components.molecules.friend.BoxTypeAddFriend
 import com.ledokol.thebestproject.ui.components.molecules.friend.TitleFriends
@@ -194,7 +194,7 @@ fun InviteFriend(
 
         if (state.isLoading) {
             item {
-                LoadingView()
+                LoadingViewCenter()
             }
         } else if (friends != null) {
             item {

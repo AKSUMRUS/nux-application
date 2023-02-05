@@ -16,7 +16,6 @@ fun Subtitle1(
     fontWeight: FontWeight? = MaterialTheme.typography.subtitle1.fontWeight,
     textAlign: TextAlign = TextAlign.Left,
 ) {
-
     Text(
         text = text,
         color = color,

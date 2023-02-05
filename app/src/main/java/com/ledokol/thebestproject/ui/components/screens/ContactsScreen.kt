@@ -23,8 +23,8 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.ContactViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
+import com.ledokol.thebestproject.ui.components.molecules.LoadingViewCenter
 import com.ledokol.thebestproject.ui.components.molecules.ShowMyContacts
 import com.ledokol.thebestproject.ui.components.molecules.contacts.RequestReadContacts
 import com.ledokol.thebestproject.ui.components.screens.profile.getLinkProfile
@@ -107,7 +107,7 @@ fun ContactsScreen(
 
     if (permissionState.status.isGranted) {
         if (contactsViewModel.state.isLoading) {
-            LoadingView()
+            LoadingViewCenter()
         } else {
             Box {
                 ShowMyContacts(

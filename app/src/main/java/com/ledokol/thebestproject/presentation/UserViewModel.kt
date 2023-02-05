@@ -124,7 +124,7 @@ UserViewModel @Inject constructor(
         screen: String
     ) {
         viewModelScope.launch {
-            state = state.copy(openScreen = screen,)
+            state = state.copy(openScreen = screen)
         }
     }
 
@@ -273,7 +273,7 @@ UserViewModel @Inject constructor(
                 when (result) {
                     is Resource.Success -> {
                         result.data.let { users ->
-                            state = state.copy(users = users,)
+                            state = state.copy(users = users)
                         }
                         Log.e("USER VIEW MODEL  GET USERS", state.toString())
                     }
@@ -582,6 +582,6 @@ UserViewModel @Inject constructor(
     }
 
     private fun clearInviteFriends() {
-        state = state.copy(inviteFriends = mutableListOf(),)
+        state = state.copy(inviteFriends = mutableListOf())
     }
 }

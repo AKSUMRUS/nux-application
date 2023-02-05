@@ -1,6 +1,5 @@
 package com.ledokol.thebestproject.ui.components.atoms.textfields
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,28 +14,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 
-
 @Composable
 fun OtpTextField(
-    modifier: Modifier = Modifier,
     otpText: String,
     otpCount: Int = 4,
-    onOtpTextChange: (String, Boolean) -> Unit
-    ) {
+    modifier: Modifier = Modifier,
+    onOtpTextChange: (String, Boolean) -> Unit,
+) {
     BasicTextField(
         modifier = modifier,
         value = otpText,
         onValueChange = {
-            if(it.length <= otpCount) {
+            if (it.length <= otpCount) {
                 onOtpTextChange(it, it.length == otpCount)
             }
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword, imeAction =
-        ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.NumberPassword,
+            imeAction = ImeAction.Next
+        ),
         decorationBox = {
             Row(horizontalArrangement = Arrangement.Center) {
                 repeat(otpCount) { index ->
-                    CharView(
+                    CharBox(
                         index = index,
                         text = otpText
                     )
@@ -49,12 +49,12 @@ fun OtpTextField(
 
 
 @Composable
-fun CharView(
+private fun CharBox(
     index: Int,
     text: String
 ) {
     val isFocused = index == text.length
-    val char = when{
+    val char = when {
         index > text.length -> ""
         index == text.length -> "0"
         else -> text[index].toString()
@@ -65,18 +65,19 @@ fun CharView(
             .width(40.dp)
             .padding(2.dp)
             .border(
-                1.dp, when{
+                width = 1.dp,
+                color = when {
                     isFocused -> MaterialTheme.colors.onBackground
                     else -> MaterialTheme.colors.onPrimary
-                }, RoundedCornerShape(8.dp)
+                },
+                shape = RoundedCornerShape(8.dp)
             ),
         text = char,
-        color = if(isFocused) {
+        color = if (isFocused) {
             MaterialTheme.colors.onPrimary
         } else {
             MaterialTheme.colors.onBackground
         },
         textAlign = TextAlign.Center
     )
-
 }
