@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:297120773646:android:f1bdc7a327e65017712e5f",
         "android_client_info": {
-          "package_name": "com.ledokol.thebestproject"
+          "package_name": "com.ledokol.dvor"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "297120773646-of2b8iaqhalkbj7tnrn1ci2drsf3j24l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ledokol.thebestproject",
+            "package_name": "com.ledokol.dvor",
             "certificate_hash": "16707bf7943d2c77566a178d8857b378093da2d4"
           }
         },
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:297120773646:android:013ce92a4539d9a7712e5f",
         "android_client_info": {
-          "package_name": "com.ledokol.thebestprojectever"
+          "package_name": "com.ledokol.dvor"
         }
       },
       "oauth_client": [
@@ -54,7 +54,7 @@
           "client_id": "297120773646-rbsri1an5a1069hjda71fpdpbr1oc837.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.ledokol.thebestprojectever",
+            "package_name": "com.ledokol.dvor",
             "certificate_hash": "8f99904e113aa87fb0e15769b61f54cd4d4593e4"
           }
         },
