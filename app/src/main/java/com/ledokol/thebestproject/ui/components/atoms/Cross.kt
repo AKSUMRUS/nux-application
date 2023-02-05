@@ -21,7 +21,6 @@ fun Cross(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     Box(
         modifier = Modifier
             .then(modifier)
