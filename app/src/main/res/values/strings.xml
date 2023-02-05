@@ -44,7 +44,7 @@
     <string name="nav_notifications">Запросы в друзья</string>
     <string name="description_quick_game">Выберай игру, в которую вы пойдете играть</string>
     <string name="description_find_crew">Выбери своих тиммейтов</string>
-    <string name="hint_choose_nickname">Только английские буквы, цифры и нижнее подчеркивание</string>
+    <string name="hint_choose_nickname">Только английские буквы</string>
 
 <!--    QuickGame-->
     <string name="title_game">Игра</string>
