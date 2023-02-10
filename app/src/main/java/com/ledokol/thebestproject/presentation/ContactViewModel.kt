@@ -73,6 +73,7 @@ class ContactViewModel @Inject constructor(
                             isLoading = result.isLoading
                         )
                     }
+                    is Resource.Error -> Unit
                 }
             }
 

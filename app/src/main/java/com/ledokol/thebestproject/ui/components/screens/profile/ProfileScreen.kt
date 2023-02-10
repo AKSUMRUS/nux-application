@@ -48,7 +48,7 @@ fun getIcon(context: Context, packageManager: PackageManager, packageName: Strin
 }
 
 @NonNull
-private fun getBitmapFromDrawable(@NonNull drawable: Drawable): Bitmap {
+private fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
     val bmp: Bitmap = Bitmap.createBitmap(
         drawable.intrinsicWidth,
         drawable.intrinsicHeight,

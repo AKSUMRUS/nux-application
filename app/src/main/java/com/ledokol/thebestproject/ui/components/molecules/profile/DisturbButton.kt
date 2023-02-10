@@ -20,8 +20,7 @@ import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 
 @Composable
 fun DisturbButton(
-    modifier: Modifier = Modifier
-        .background(MaterialTheme.colors.primary),
+    modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colors.onPrimary,
     onClick: () -> Unit
 ) {

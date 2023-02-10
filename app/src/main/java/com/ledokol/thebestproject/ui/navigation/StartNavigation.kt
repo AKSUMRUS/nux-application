@@ -63,7 +63,6 @@ fun StartNavigation(
     val userViewModel = hiltViewModel<UserViewModel>()
     val profileViewModel = hiltViewModel<ProfileViewModel>()
     val gamesViewModel = hiltViewModel<GamesViewModel>()
-    val userViewModel2 = hiltViewModel<UserViewModel>()
     val contactsViewModel = hiltViewModel<ContactViewModel>()
     val notificationsViewModel = hiltViewModel<NotificationsViewModel>()
     val navBackStackEntry by navController.currentBackStackEntryAsState()

@@ -96,7 +96,6 @@ class GamesStatistic {
             return installedApps
         }
 
-        @RequiresApi(VERSION_CODES.O)
         fun convertListApplicationToListStatusJSON(
             context: Context,
             packageManager: PackageManager,
@@ -182,7 +181,7 @@ class GamesStatistic {
         context: Context,
         packageManager: PackageManager
     ): MutableList<UsageStats> {
-        val usageStatsManager = context.getSystemService("usagestats") as UsageStatsManager
+        val usageStatsManager = context.getSystemService("android.content.Context.USAGE_STATS_SERVICE") as UsageStatsManager
 
         val usageStats = usageStatsManager.queryAndAggregateUsageStats(
             getStartTime(),

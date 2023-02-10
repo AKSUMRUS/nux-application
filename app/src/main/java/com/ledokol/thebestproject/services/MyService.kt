@@ -35,7 +35,6 @@ class MyService : Service() {
     private var notificationManager: NotificationManager? = null
     val context: Context = this
 
-    @Nullable
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -52,7 +51,7 @@ class MyService : Service() {
             this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    override fun onStartCommand(@Nullable intent: Intent?, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
 //        val packageManager: PackageManager = context.packageManager
         createNotification()
@@ -176,15 +175,13 @@ class MyService : Service() {
     private fun createNotificationChannel(context: Context) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Ledokol"
-            val descriptionText = "Уведомление"
-            val importance = NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-            NotificationManagerCompat.from(context).createNotificationChannel(channel)
+        val name = "Ledokol"
+        val descriptionText = "Уведомление"
+        val importance = NotificationManager.IMPORTANCE_LOW
+        val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+            description = descriptionText
         }
+        NotificationManagerCompat.from(context).createNotificationChannel(channel)
     }
 
     override fun onDestroy() {

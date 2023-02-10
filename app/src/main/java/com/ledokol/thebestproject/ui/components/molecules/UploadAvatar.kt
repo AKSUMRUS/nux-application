@@ -29,7 +29,7 @@ fun UploadAvatar(
     profile_pic: String,
     profileViewModel: ProfileViewModel,
     userViewModel: UserViewModel,
-    modifier: Modifier = Modifier.fillMaxWidth(),
+    modifier: Modifier = Modifier,
 ) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)

@@ -188,6 +188,7 @@ UserViewModel @Inject constructor(
                             isLoadingUser = result.isLoading
                         )
                     }
+                    is Resource.Error -> TODO()
                 }
             }
         }
@@ -209,6 +210,7 @@ UserViewModel @Inject constructor(
                         isLoading = result.isLoading
                     )
                 }
+                is Resource.Error -> TODO()
             }
         }
     }
@@ -477,6 +479,7 @@ UserViewModel @Inject constructor(
                             isLoading = result.isLoading
                         )
                     }
+                    is Resource.Error -> TODO()
                 }
             }
         }
@@ -505,6 +508,7 @@ UserViewModel @Inject constructor(
                                 isLoading = result.isLoading
                             )
                         }
+                        is Resource.Error -> TODO()
                     }
                 }
         }
