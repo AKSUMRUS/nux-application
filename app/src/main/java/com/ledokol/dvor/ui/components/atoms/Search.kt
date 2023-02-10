@@ -6,19 +6,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.ledokol.dvor.ui.components.atoms.textfields.Search
 import com.ledokol.dvor.R
-
-@Preview
-@Composable
-private fun SearchPreview() {
-    var text by remember { mutableStateOf("") }
-    Search(
-        text = text,
-        onValueChange = { text = it }
-    )
-}
 
 @Composable
 fun Search(
