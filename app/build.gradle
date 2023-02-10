@@ -160,6 +160,7 @@ dependencies {
 
     implementation project(":core:dependencyprovider")
     implementation project(":core:feature_api")
+    implementation project(":core:ui")
     implementation project(":features:chat:api")
     implementation project(":features:chat:impl")
 

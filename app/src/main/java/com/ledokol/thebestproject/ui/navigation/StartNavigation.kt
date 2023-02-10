@@ -50,7 +50,7 @@ import com.ledokol.thebestproject.ui.components.screens.profile.ProfileScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.LoginScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.SignUpScreen
 import com.ledokol.thebestproject.ui.components.screens.registration.StartRegistrationScreen
-import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
+import com.nux.studio.dvor.core_ui.theme.TheBestProjectEverTheme
 
 const val TAG = "StartNavigation"
 

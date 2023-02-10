@@ -35,7 +35,7 @@ import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.services.MyReceiver
 import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
 import com.ledokol.thebestproject.ui.navigation.StartNavigation
-import com.ledokol.thebestproject.ui.theme.TheBestProjectEverTheme
+import com.nux.studio.dvor.core_ui.theme.TheBestProjectEverTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
