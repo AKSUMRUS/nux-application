@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.ui.components.atoms.Cross
+import com.nux.studio.dvor.core_ui.atoms.Cross
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 

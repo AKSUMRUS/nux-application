@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.Search
+import com.nux.studio.dvor.core_ui.atoms.Search
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
 
 @Composable

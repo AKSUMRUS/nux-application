@@ -29,7 +29,7 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.NotificationsViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.nux.studio.dvor.core_ui.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonWithChangeableColor
 import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
 import com.ledokol.thebestproject.ui.components.molecules.friend.*

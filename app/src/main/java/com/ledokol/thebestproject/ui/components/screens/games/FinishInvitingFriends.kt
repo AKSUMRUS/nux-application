@@ -20,7 +20,7 @@ import com.ledokol.thebestproject.data.local.user.UserEvent
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
 import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonBorder
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.navigation.BottomNavItemMain
 

@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms
+package com.nux.studio.dvor.core_ui.atoms
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

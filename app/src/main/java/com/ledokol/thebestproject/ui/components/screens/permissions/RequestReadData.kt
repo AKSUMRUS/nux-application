@@ -25,7 +25,7 @@ import com.ledokol.thebestproject.data.local.profile.ProfileEvent
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH3
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5

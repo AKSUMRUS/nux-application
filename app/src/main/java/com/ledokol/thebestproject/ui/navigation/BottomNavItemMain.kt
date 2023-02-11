@@ -21,7 +21,7 @@ sealed class BottomNavItemMain(var title: String, var icon: Int, var screen_rout
     object Chats : BottomNavItemMain(
         "Чаты",
         R.drawable.ic_push_ups,
-        DependencyProvider.chatFeature().chatRoute()
+        DependencyProvider.chatFeature().chatsRoute()
     )
 
     object Notifications : BottomNavItemMain(

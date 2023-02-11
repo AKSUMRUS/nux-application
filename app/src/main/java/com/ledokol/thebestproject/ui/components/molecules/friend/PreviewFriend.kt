@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.ui.components.atoms.Cross
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.nux.studio.dvor.core_ui.atoms.Cross
+import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH2
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 

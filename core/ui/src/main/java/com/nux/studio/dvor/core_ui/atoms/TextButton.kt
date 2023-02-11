@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms
+package com.nux.studio.dvor.core_ui.atoms
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TextButton
@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import com.ledokol.thebestproject.ui.components.atoms.texts.Subtitle1
 
+/**
+ * Кликабельный текст
+ */
 @Composable
-// Кликабельный текст
 fun TextButton(
     text: String,
     onClick: () -> Unit,

@@ -10,7 +10,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Start
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.domain.profile.DefaultProfilePic
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
 import com.ledokol.thebestproject.ui.components.molecules.TitleRegistration

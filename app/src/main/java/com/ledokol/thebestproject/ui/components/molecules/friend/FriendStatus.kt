@@ -8,7 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.ui.components.atoms.Status
+import com.nux.studio.dvor.core_ui.atoms.Status
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 
 @Composable

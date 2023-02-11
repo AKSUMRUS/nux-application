@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.R
-import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
+import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
 @Composable

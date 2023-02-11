@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms
+package com.nux.studio.dvor.core_ui.atoms
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size

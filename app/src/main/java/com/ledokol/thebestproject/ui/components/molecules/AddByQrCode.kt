@@ -19,7 +19,7 @@ import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.ledokol.thebestproject.R
 import com.ledokol.thebestproject.presentation.ProfileViewModel
-import com.ledokol.thebestproject.ui.components.atoms.Cross
+import com.nux.studio.dvor.core_ui.atoms.Cross
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.screens.profile.getLinkProfile

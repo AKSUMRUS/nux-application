@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.buttons
+package com.nux.studio.dvor.core_ui.atoms.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -14,11 +14,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
 
+/**
+ * Rounded button with background color
+ */
 @Composable
 fun ButtonFull(
     text: String,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     colorBackground: Color = MaterialTheme.colors.secondary,
     colorText: Color = MaterialTheme.colors.onBackground,
     padding: PaddingValues = PaddingValues(10.dp),

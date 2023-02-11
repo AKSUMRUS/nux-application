@@ -17,7 +17,7 @@ import androidx.compose.ui.layout.ContentScale.Companion.Crop
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ledokol.thebestproject.data.local.user.User
-import com.ledokol.thebestproject.ui.components.atoms.Status
+import com.nux.studio.dvor.core_ui.atoms.Status
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
 import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
 

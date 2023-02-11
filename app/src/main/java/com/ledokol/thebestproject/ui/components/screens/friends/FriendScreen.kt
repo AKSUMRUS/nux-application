@@ -30,7 +30,7 @@ import com.ledokol.thebestproject.openApp
 import com.ledokol.thebestproject.presentation.GamesViewModel
 import com.ledokol.thebestproject.presentation.ProfileViewModel
 import com.ledokol.thebestproject.presentation.UserViewModel
-import com.ledokol.thebestproject.ui.components.atoms.LoadingView
+import com.nux.studio.dvor.core_ui.atoms.LoadingView
 import com.ledokol.thebestproject.ui.components.atoms.alertdialogs.AlertDialogShow
 import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
 import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
