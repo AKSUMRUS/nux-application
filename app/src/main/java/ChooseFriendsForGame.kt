@@ -1,4 +1,4 @@
-//package com.ledokol.thebestproject.ui.components.screens.games
+//package com.nux.studio.thebestproject.ui.components.screens.games
 //
 //import android.widget.Toast
 //import androidx.compose.foundation.background
@@ -25,19 +25,19 @@
 //import coil.compose.AsyncImage
 //import com.google.firebase.analytics.FirebaseAnalytics
 //import com.google.firebase.analytics.ktx.logEvent
-//import com.ledokol.thebestproject.R
-//import com.ledokol.thebestproject.data.local.profile.ProfileEvent
-//import com.ledokol.thebestproject.data.local.user.UserEvent
-//import com.ledokol.thebestproject.presentation.GamesViewModel
-//import com.ledokol.thebestproject.presentation.ProfileViewModel
-//import com.ledokol.thebestproject.presentation.UserViewModel
-//import com.ledokol.thebestproject.ui.components.atoms.LoadingView
-//import com.ledokol.thebestproject.ui.components.atoms.buttons.ButtonFull
-//import com.ledokol.thebestproject.ui.components.atoms.textfields.ShowSearch
-//import com.ledokol.thebestproject.ui.components.molecules.BackToolbar
-//import com.ledokol.thebestproject.ui.components.molecules.games.TitleQuickGame
-//import com.ledokol.thebestproject.ui.components.molecules.friend.FriendInListQuickGame
-//import com.ledokol.thebestproject.ui.navigation.ScreenRoutes
+//import com.nux.studio.thebestproject.R
+//import com.nux.studio.thebestproject.data.local.profile.ProfileEvent
+//import com.nux.studio.thebestproject.data.local.user.UserEvent
+//import com.nux.studio.thebestproject.presentation.GamesViewModel
+//import com.nux.studio.thebestproject.presentation.ProfileViewModel
+//import com.nux.studio.thebestproject.presentation.UserViewModel
+//import com.nux.studio.thebestproject.ui.components.atoms.LoadingView
+//import com.nux.studio.thebestproject.ui.components.atoms.buttons.ButtonFull
+//import com.nux.studio.thebestproject.ui.components.atoms.textfields.ShowSearch
+//import com.nux.studio.thebestproject.ui.components.molecules.BackToolbar
+//import com.nux.studio.thebestproject.ui.components.molecules.games.TitleQuickGame
+//import com.nux.studio.thebestproject.ui.components.molecules.friend.FriendInListQuickGame
+//import com.nux.studio.thebestproject.ui.navigation.ScreenRoutes
 //
 //
 //@Composable

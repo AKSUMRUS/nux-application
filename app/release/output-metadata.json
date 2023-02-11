@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.ledokol.dvor",
+  "applicationId": "com.nux.studio.dvor",
   "variantName": "release",
   "elements": [
     {
