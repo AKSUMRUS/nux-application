@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.alertdialogs
+package com.nux.dvor.ui.components.atoms.alertdialogs
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,8 +10,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
+import com.nux.studio.dvor.core_ui.atoms.texts.Body1
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH5
 
 @Composable
 fun AlertDialogShow(

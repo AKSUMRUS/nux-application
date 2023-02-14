@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.buttons
+package com.nux.dvor.ui.components.atoms.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
+import com.nux.studio.dvor.core_ui.atoms.texts.Body2
 
 @Composable
 fun GradientButton(

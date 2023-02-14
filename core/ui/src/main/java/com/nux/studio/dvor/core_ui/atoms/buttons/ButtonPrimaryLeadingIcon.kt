@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.buttons
+package com.nux.dvor.ui.components.atoms.buttons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
+import com.nux.studio.dvor.core_ui.atoms.texts.Body1
 
 @Composable
 fun ButtonPrimaryLeadingIcon(

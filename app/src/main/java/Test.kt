@@ -1,4 +1,4 @@
-//package com.ledokol.thebestprojectever.ui.components.screens
+//package com.nux.studio.thebestprojectever.ui.components.screens
 //
 ////import aws.sdk.kotlin.services.s3.S3Client
 ////import aws.sdk.kotlin.services.s3.model.GetObjectRequest
@@ -37,9 +37,9 @@
 //import com.amazonaws.client.builder.AwsClientBuilder
 //import com.amazonaws.services.s3.AmazonS3
 //import com.amazonaws.services.s3.AmazonS3ClientBuilder
-//import com.ledokol.thebestprojectever.R
-//import com.ledokol.thebestprojectever.ui.components.atoms.texts.HeadlineH4
-//import com.ledokol.thebestprojectever.ui.components.atoms.texts.Body1
+//import com.nux.studio.thebestprojectever.R
+//import com.nux.studio.thebestprojectever.ui.components.atoms.texts.HeadlineH4
+//import com.nux.studio.thebestprojectever.ui.components.atoms.texts.Body1
 //
 //
 ////private var ivSelectedImage: ImageView? = null

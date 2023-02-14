@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ledokol.thebestproject.core.dependencyprovider'
+    namespace 'com.nux.studio.dvor.core.dependencyprovider'
     compileSdk 33
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.textfields
+package com.nux.dvor.ui.components.atoms.textfields
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,8 +12,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body2
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
+import com.nux.studio.dvor.core_ui.atoms.texts.Body2
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH5
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

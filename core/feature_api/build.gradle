@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ledokol.thebestproject.core.feature.api'
+    namespace 'com.nux.studio.dvor.core.feature.api'
     compileSdk 33
 
     defaultConfig {

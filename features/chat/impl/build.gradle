@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.ledokol.thebestproject.features.chat.impl'
+    namespace 'com.nux.studio.dvor.features.chat.impl'
     compileSdk 33
 
     defaultConfig {

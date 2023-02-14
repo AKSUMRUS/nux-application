@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.buttons
+package com.nux.dvor.ui.components.atoms.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.text.font.FontWeight.Companion.W400
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH6
 
 @Composable
 fun ButtonRightIcon(

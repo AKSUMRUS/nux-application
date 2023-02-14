@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "TheBestProjectEver"
+rootProject.name = "Dvor"
 include ':app'
 include ':core:feature_api'
 include ':core:dependencyprovider'

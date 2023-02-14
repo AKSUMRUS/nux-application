@@ -11,15 +11,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.Body1
+import com.nux.studio.dvor.core_ui.atoms.texts.Body1
 import com.nux.studio.dvor.core_ui.R
 
 
 @Composable
-fun LoadingView() {
+fun LoadingView(
+    modifier: Modifier
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
-            modifier = Modifier.align(Alignment.Center),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Body1(

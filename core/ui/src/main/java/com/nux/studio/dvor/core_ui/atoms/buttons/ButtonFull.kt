@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH6
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH6
 
 /**
  * Rounded button with background color

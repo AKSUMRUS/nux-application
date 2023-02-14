@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.textfields
+package com.nux.dvor.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth

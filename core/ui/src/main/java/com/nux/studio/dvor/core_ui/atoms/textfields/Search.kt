@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.textfields
+package com.nux.dvor.ui.components.atoms.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH5
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH5
 
 @Composable
 fun Search(

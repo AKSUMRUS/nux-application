@@ -7,5 +7,5 @@ object Config {
     const val versionCode = 1
     const val versionName = "1.0"
 
-    const val packageName = "com.ledokol.thebestprojectever"
+    const val packageName = "com.nux.studio.thebestprojectever"
 }

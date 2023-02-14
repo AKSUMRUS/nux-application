@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.textfields
+package com.nux.dvor.ui.components.atoms.textfields
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.ledokol.thebestproject.ui.components.atoms.texts.HeadlineH4
+import com.nux.studio.dvor.core_ui.atoms.texts.HeadlineH4
 
 
 @Composable

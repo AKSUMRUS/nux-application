@@ -1,4 +1,4 @@
-package com.ledokol.thebestproject.ui.components.atoms.buttons
+package com.nux.dvor.ui.components.atoms.buttons
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.shape.RoundedCornerShape

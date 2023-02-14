@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.ledokol.thebestproject.ui.components.atoms.textfields.Search
+import com.nux.dvor.ui.components.atoms.textfields.Search
 import com.nux.studio.dvor.core_ui.R
 
 @Composable
