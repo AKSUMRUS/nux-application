@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Экран списка чатов-->
     <string name="status_in_search">В поиске</string>
     <string name="status_in_game">В игре</string>
     <string name="status_not_active">Неактивен</string>
     <string name="search_nothing_find">По твоему запросу ничего не найдено :(</string>
+
+    <!-- Экран чата -->
+
 </resources>

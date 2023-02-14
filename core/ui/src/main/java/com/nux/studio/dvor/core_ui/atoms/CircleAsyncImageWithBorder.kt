@@ -42,7 +42,7 @@ fun CircleAsyncImageWithBorder(
 
 @Preview
 @Composable
-fun CircleAsyncImagePreview() {
+private fun CircleAsyncImagePreview() {
     CircleAsyncImageWithBorder(
         url = "https://sun9-6.userapi.com/impg/zmzFaRBkJtt_KwMGd41ARQyNMRxIctDLPD3uCg/U3HSrag1wIw.jpg?size=1035x1280&quality=95&sign=846b0408cc33466822f75ec8a3728431&type=album",
         description = "friend avatar image",
