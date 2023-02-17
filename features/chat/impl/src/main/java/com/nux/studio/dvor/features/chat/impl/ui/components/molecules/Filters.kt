@@ -1,32 +1,60 @@
 package com.nux.studio.dvor.features.chat.impl.ui.components.molecules
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.nux.studio.dvor.core_ui.atoms.buttons.ButtonFull
-import com.nux.studio.dvor.features.chat.impl.R
+import androidx.compose.ui.unit.sp
+import com.nux.studio.dvor.features.chat.impl.filters.FilterType
+import com.nux.studio.dvor.features.chat.impl.filters.getColor
+
+@Preview
+@Composable
+private fun FiltersPreview() {
+    Filters()
+}
 
 @Composable
-fun Filters() {
-    Row {
-        ButtonFull(
-            text = stringResource(id = R.string.status_in_search),
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
-            onClick = { }
-        )
-        ButtonFull(
-            text = stringResource(id = R.string.status_in_game),
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
-            onClick = { }
-        )
-        ButtonFull(
-            text = stringResource(id = R.string.status_not_active),
-            modifier = Modifier.padding(start = 4.dp, end = 4.dp),
-            onClick = { }
-        )
+fun Filters(
+    modifier: Modifier = Modifier,
+    onFilterClick: ((FilterType) -> Unit)? = null,
+) {
+    val filterList = listOf(
+        FilterType.IN_SEARCH,
+        FilterType.IN_GAME,
+        FilterType.NOT_ACTIVE,
+    )
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        filterList.forEach {
+            Text(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .height(16.dp)
+                    .background(it.getColor())
+                    .clickable {
+                        if (onFilterClick != null) {
+                            onFilterClick(it)
+                        }
+                    },
+                color = Color.White,
+                text = "Some textasdfasdf",
+                style = TextStyle(
+                    fontSize = 10.sp
+                ),
+            )
+        }
     }
-
 }

@@ -12,17 +12,28 @@ import com.nux.studio.dvor.core_ui.atoms.Search
 @Preview
 @Composable
 private fun ChatListTopBlockPreview() {
-    ChatListTopBlock()
+    ChatListTopBlock(
+        searchText = "Some text",
+        onSearchTextChange = {}
+    )
 }
 
 @Composable
-fun ChatListTopBlock() {
+fun ChatListTopBlock(
+    searchText: String,
+    onSearchTextChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
     ) {
-        Search(text = "", onValueChange = {})
-        Filters()
+        Search(
+            text = searchText,
+            onValueChange = onSearchTextChange
+        )
+        Filters(
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
     }
 }

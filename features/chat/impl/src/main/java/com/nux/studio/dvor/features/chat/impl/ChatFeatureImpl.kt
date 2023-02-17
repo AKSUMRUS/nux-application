@@ -26,7 +26,7 @@ class ChatFeatureImpl : ChatFeatureApi {
         )
 
         navGraphBuilder.composable(chatsRoute()) {
-                ChatsList(navController = navController)
+//                ChatsList(navController = navController)
             }
 
         navGraphBuilder.composable(chatRoute()) {
