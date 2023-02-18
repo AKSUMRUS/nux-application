@@ -1,4 +1,4 @@
-package com.nux.studio.dvor.core_ui.atoms
+    package com.nux.studio.dvor.core_ui.atoms
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
